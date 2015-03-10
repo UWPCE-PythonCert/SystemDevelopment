@@ -13,5 +13,3 @@ Class lecture materials are available in a rendered version from:
 
 http://UWPCE-PythonCert.github.io/SystemDevelopment2015
 
-
-
