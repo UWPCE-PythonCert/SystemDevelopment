@@ -67,22 +67,22 @@ Basic Package Structure:
 
 ::
 
-  PackageName/
-    bin/
-    CHANGES.txt
-    docs/
-    LICENSE.txt
-    MANIFEST.in
-    README.txt
-    setup.py
-    package_name/
-        __init__.py
-        module1.py
-        module2.py
-        test/
-            __init__.py
-            test_module1.py
-            test_module2.py
+    PackageName/
+        bin/
+        CHANGES.txt
+        docs/
+        LICENSE.txt
+        MANIFEST.in
+        README.txt
+        setup.py
+        package_name/
+              __init__.py
+              module1.py
+              module2.py
+              test/
+                  __init__.py
+                  test_module1.py
+                  test_module2.py
 
 
 .. nextslide::
@@ -183,13 +183,13 @@ With a setup.py script defined, the distutils can do a lot:
 
 * builds a source distribution (defaults to tar file)::
 
-  python setup.py sdist
-  python setup.py sdist --format=zip
+    python setup.py sdist
+    python setup.py sdist --format=zip
 
 * builds binary distributions::
 
-  python setup.py bdist_rpm
-  python setup.py bdist_wininst
+    python setup.py bdist_rpm
+    python setup.py bdist_wininst
 
 (other, more obscure ones, too....)
 
@@ -199,18 +199,18 @@ But you probably want to use wheel for binary disributions now.
 
 * build from source::
 
-  python setup.py build
+    python setup.py build
 
 * and install::
 
-  python setup.py install
+    python setup.py install
 
 setuptools
 ===========
 
 ``setuptools`` is an extension to ``distutils`` that provides a number of extensions::
 
-  from setuptools import setup
+    from setuptools import setup
 
 superset of the ``distutils setup``
 

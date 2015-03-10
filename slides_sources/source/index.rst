@@ -9,14 +9,8 @@ In This Course
     | .. toctree::         | .. toctree::          |
     |     :maxdepth: 1     |     :maxdepth: 1      |
     |                      |                       |
-    |     session01        |     homework/index    |
-    |     session02        |      |
-    |     session03        |                       |
-    |     session04        |                       |
-    |     session05        |                       |
-    |     session06        |                       |
-    |     session07        |                       |
-    |     session08        |                       |
+    |     packaging        |     homework/index    |
+    |     unicode          |                       |
     +----------------------+-----------------------+
 
 .. ifnotslides::
@@ -27,14 +21,8 @@ In This Course
     .. toctree::
         :maxdepth: 1
 
-        session01
-        session02
-        session03
-        session04
-        session05
-        session06
-        session07
-        session08
+        packaging
+        unicode
 
     Materials:
     ----------
