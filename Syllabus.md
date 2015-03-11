@@ -13,7 +13,7 @@ At the end of the class, students will have completed a project of their own cho
 ### Course Website
 Lecture notes, sample code, etc will be available in the course github project:
 
-https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Spring-2014
+http://UWPCE-PythonCert.github.io/SystemDevelopment2015
 
 
 ## Instructors
