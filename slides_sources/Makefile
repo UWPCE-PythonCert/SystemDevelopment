@@ -53,7 +53,7 @@ clean:
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	ln -s ../../html_slides $(BUILDDIR)/html/html_slides
+	cp -R html_slides $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
@@ -183,6 +183,6 @@ pseudoxml:
 slides:
 	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
 	$(SASSBUILD) $(SASSOPTS) scss_sources/slides_custom.scss > $(BUILDDIR)/slides/_static/custom.css
-	ln -s ../../html_slides $(BUILDDIR)/slides/html_slides
+	cp -R html_slides $(BUILDDIR)/slides
 	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
