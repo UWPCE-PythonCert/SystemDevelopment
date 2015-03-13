@@ -28,9 +28,7 @@
   
 
   
-    <link rel="top" title="System Development With Python 1.0 documentation" href="index.html"/>
-        <link rel="next" title="Homework Materials" href="homework/index.html"/>
-        <link rel="prev" title="Building Your Own Package" href="packaging.html"/> 
+    <link rel="top" title="System Development With Python 1.0 documentation" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -57,35 +55,43 @@
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
         
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="packaging.html">Building Your Own Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#why-build-a-package">Why Build a Package?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#what-is-a-package">What is a Package?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#python-packaging-tools">Python packaging tools:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#where-do-i-go-to-figure-this-out">Where do I go to figure this out?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#basic-package-structure">Basic Package Structure:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#the-setup-py-file">The <tt class="docutils literal"><span class="pre">setup.py</span></tt> File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#setup-cfg"><tt class="docutils literal"><span class="pre">setup.cfg</span></tt></a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#running-setup-py">Running <cite>setup.py`</cite></a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#setuptools">setuptools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#wheels">wheels</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#pypi">PyPi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#under-development">Under Development</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#lab">LAB</a></li>
+            <!-- Local TOC -->
+            <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Unicode in Python 2</a><ul>
+<li><a class="reference internal" href="#history">History</a><ul>
+<li><a class="reference internal" href="#what-the-heck-is-unicode-anyway">What the heck is Unicode anyway?</a></li>
+<li><a class="reference internal" href="#enter-unicode">Enter Unicode</a></li>
+<li><a class="reference internal" href="#id1">Unicode</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Unicode in Python 2</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mechanics">Mechanics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#exercises">Exercises</a></li>
+<li><a class="reference internal" href="#mechanics">Mechanics</a><ul>
+<li><a class="reference internal" href="#what-are-strings">What are strings?</a></li>
+<li><a class="reference internal" href="#strings-vs-unicode">Strings vs unicode</a></li>
+<li><a class="reference internal" href="#id2">Unicode</a></li>
+<li><a class="reference internal" href="#using-unicode-in-py2">Using unicode in Py2</a></li>
+<li><a class="reference internal" href="#encoding-and-decoding">Encoding and Decoding</a></li>
+<li><a class="reference internal" href="#unicode-literals">Unicode Literals</a></li>
+<li><a class="reference internal" href="#using-unicode">Using Unicode</a></li>
+<li><a class="reference internal" href="#using-unicode-everywhere">Using unicode everywhere</a></li>
+<li><a class="reference internal" href="#encodings">Encodings</a></li>
+<li><a class="reference internal" href="#utf-8">UTF-8</a></li>
+<li><a class="reference internal" href="#utf-16">UTF-16</a></li>
+<li><a class="reference internal" href="#utf-16-criticism">UTF-16 criticism</a></li>
+<li><a class="reference internal" href="#latin-1">Latin-1</a></li>
+<li><a class="reference internal" href="#unicode-docs">Unicode Docs</a></li>
+<li><a class="reference internal" href="#gotchas-in-python-2">Gotchas in Python 2</a></li>
+<li><a class="reference internal" href="#unicode-in-python-3">Unicode in Python 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercises">Exercises</a><ul>
+<li><a class="reference internal" href="#basic-unicode-lab">Basic Unicode LAB</a></li>
+<li><a class="reference internal" href="#challenge-unicode-lab">Challenge Unicode LAB</a></li>
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="homework/index.html">Homework Materials</a></li>
+</li>
 </ul>
-
+</div>
         
       </div>
       &nbsp;
@@ -119,7 +125,7 @@
           <div role="main">
             
   <div class="section" id="unicode-in-python-2">
-<span id="unicode-supplement"></span><h1>Unicode in Python 2<a class="headerlink" href="#unicode-in-python-2" title="Permalink to this headline">¶</a></h1>
+<span id="unicode"></span><h1>Unicode in Python 2<a class="headerlink" href="#unicode-in-python-2" title="Permalink to this headline">¶</a></h1>
 <p>A quick run-down of Unicode, its use in Python 2, and some of the gotchas that arise.</p>
 <blockquote>
 <div><ul class="simple">
@@ -167,8 +173,8 @@
 </dd>
 </dl>
 </div>
-<div class="section" id="unicode">
-<h3>Unicode<a class="headerlink" href="#unicode" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Unicode<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>A good start:</p>
 <p>The Absolute Minimum Every Software Developer Absolutely,
 Positively Must Know About Unicode and Character Sets (No Excuses!)</p>
@@ -214,8 +220,8 @@ with combined characters: accents, etc.</p>
 <p><tt class="docutils literal"><span class="pre">bytes</span></tt> is there for py3 compatibility - -but it&#8217;s good for making your
 intentions clear, too.</p>
 </div>
-<div class="section" id="id1">
-<h3>Unicode<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Unicode<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>The <tt class="docutils literal"><span class="pre">unicode</span></tt> object lets you work with characters</p>
 <p>It has all the same methods as the string object.</p>
 <p>&#8220;encoding&#8221; is converting from a unicode object to bytes</p>
@@ -513,15 +519,6 @@ to print. Try a different terminal or IDE, or google for a solution.</p>
 
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="homework/index.html" class="btn btn-neutral float-right" title="Homework Materials"/>Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="packaging.html" class="btn btn-neutral" title="Building Your Own Package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

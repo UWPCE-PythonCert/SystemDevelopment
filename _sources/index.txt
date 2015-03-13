@@ -1,36 +1,20 @@
+==============
 In This Course
 ==============
 
-.. ifslides::
+.. rst-class:: left mlarge
 
-    +----------------------+-----------------------+
-    | Lectures:            | Materials:            |
-    +======================+=======================+
-    | .. toctree::         | .. toctree::          |
-    |     :maxdepth: 1     |     :maxdepth: 1      |
-    |                      |                       |
-    |     packaging        |     homework/index    |
-    |     unicode          |                       |
-    +----------------------+-----------------------+
+  Lectures:
 
-.. ifnotslides::
+.. rst-class:: left
 
-    Lectures:
-    ---------
+  :ref:`packaging`
 
-    .. toctree::
-        :maxdepth: 1
+  `Unit Testing and Coverage <html_slides/coverage/index.html>`_
 
-        packaging
-        unicode
+  :download:`Unit Testing and Coverage  <./html_slides/coverage/index.html>`.
 
-    Materials:
-    ----------
-
-    .. toctree::
-        :maxdepth: 2
-
-        homework/index
+  :ref:`unicode`
 
 .. rst-class:: credit
 
