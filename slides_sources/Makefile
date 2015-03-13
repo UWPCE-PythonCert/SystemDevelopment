@@ -53,6 +53,7 @@ clean:
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	ln -s ../../html_slides $(BUILDDIR)/html/html_slides
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
