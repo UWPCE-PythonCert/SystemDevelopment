@@ -35,7 +35,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     # 'sphinx.ext.pngmath',
-    'sphinx.ext.mathjax',
+#    'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
@@ -292,7 +292,7 @@ slide_theme_options = {
             'name': u'Christopher Barker',
             'email': u'PythonCHB@gmail.com',
             'github': u'https://github.com/PythonCHB',
-            'company': u'UW Professional and Continuing Education Program'
+            'company': u'UW Professional and Continuing Education'
         },
         {
             'name': 'Joseph Sheedy',

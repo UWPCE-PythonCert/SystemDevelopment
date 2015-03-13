@@ -1,6 +1,5 @@
 
-.. _unicode_supplement:
-
+.. _unicode:
 
 ===================
 Unicode in Python 2

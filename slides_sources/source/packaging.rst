@@ -1,4 +1,4 @@
-
+.. _packaging:
 
 =========================
 Building Your Own Package

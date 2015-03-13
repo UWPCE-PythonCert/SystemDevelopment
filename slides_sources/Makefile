@@ -182,5 +182,6 @@ pseudoxml:
 slides:
 	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
 	$(SASSBUILD) $(SASSOPTS) scss_sources/slides_custom.scss > $(BUILDDIR)/slides/_static/custom.css
+	ln -s ../../html_slides $(BUILDDIR)/slides/html_slides
 	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 

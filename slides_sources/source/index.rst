@@ -1,44 +1,25 @@
+==============
 In This Course
 ==============
 
-.. ifslides::
+.. rst-class:: left
 
-    +----------------------+-----------------------+
-    | Lectures:            | Materials:            |
-    +======================+=======================+
-    | .. toctree::         | .. toctree::          |
-    |     :maxdepth: 1     |     :maxdepth: 1      |
-    |                      |                       |
-    |     packaging        |     homework/index    |
-    |     unicode          |                       |
-    +----------------------+-----------------------+
+  :ref:`packaging`
 
-.. ifnotslides::
+  `Unit Testing and Coverage <html_slides/coverage/index.html>`_
 
-    Lectures:
-    ---------
+  :ref:`unicode`
 
-    .. toctree::
-        :maxdepth: 1
+|
+|
+|
+.. rst-class:: left credit
 
-        packaging
-        unicode
+  These materials copyright Christopher Barker and Joseph Sheedy.
 
-    Materials:
-    ----------
+  Licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
 
-    .. toctree::
-        :maxdepth: 2
-
-        homework/index
-
-.. rst-class:: credit
-
-These materials copyright Christopher Barker and Joseph Sheedy.
-
-Licenced under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
-
-https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  https://creativecommons.org/licenses/by-sa/4.0/legalcode
 
 
 
