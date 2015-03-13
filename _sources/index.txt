@@ -2,27 +2,24 @@
 In This Course
 ==============
 
-.. rst-class:: left mlarge
-
-  Lectures:
-
 .. rst-class:: left
 
   :ref:`packaging`
 
   `Unit Testing and Coverage <html_slides/coverage/index.html>`_
 
-  :download:`Unit Testing and Coverage  <./html_slides/coverage/index.html>`.
-
   :ref:`unicode`
 
-.. rst-class:: credit
+|
+|
+|
+.. rst-class:: left credit
 
-These materials copyright Christopher Barker and Joseph Sheedy.
+  These materials copyright Christopher Barker and Joseph Sheedy.
 
-Licenced under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+  Licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
 
-https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  https://creativecommons.org/licenses/by-sa/4.0/legalcode
 
 
 
