@@ -1,8 +1,8 @@
 .. _packaging:
 
-=========================
+-------------------------
 Building Your Own Package
-=========================
+-------------------------
 
 The very basics of what you need to know to make your own package.
 
@@ -10,7 +10,9 @@ The very basics of what you need to know to make your own package.
    :maxdepth: 2
 
 Why Build a Package?
-=====================
+====================
+
+.. rst-class:: left
 
 There are a bunch of nifty tools that help you build, install and distribute packages.
 
@@ -19,7 +21,7 @@ Using a well structured, standard layout for your package makes it easy to use t
 Even if you never want to give anyone else your code, a well structured package eases development.
 
 What is a Package?
-===================
+--------------------
 
 **A collection of modules**
 
@@ -34,7 +36,7 @@ What is a Package?
 * ... and a way to build and install it...
 
 Python packaging tools:
-========================
+------------------------
 
 The ``distutils``::
 
@@ -51,23 +53,27 @@ But it gets the job done -- and it does it well for the simple cases.
 ``wheel``: for binary distributions
 
 Where do I go to figure this out?
-===================================
+-----------------------------------
 
 This is a really good guide:
 
-The Hitchhiker’s Guide to Packaging:
+Python Packaging User Guide:
 
-  http://guide.python-distribute.org/index.html
+https://packaging.python.org/en/latest/
 
-Follow it!
+**Follow it!**
+
+And a sample project here:
+
+https://github.com/pypa/sampleproject
 
 
 Basic Package Structure:
-========================
+------------------------
 
 ::
 
-    PackageName/
+    package_name/
         bin/
         CHANGES.txt
         docs/
@@ -121,7 +127,7 @@ http://docutils.sourceforge.net/rst.html
 Or keep it at the top level.
 
 The ``setup.py`` File
-======================
+----------------------
 
 Your ``setup.py`` file is what describes your package, and tells the distutils how to pacakge, build and install it
 
@@ -157,7 +163,7 @@ But in the simple case, it is essentially declarative.
  )
 
 ``setup.cfg``
-==============
+--------------
 
 ``setup.cfg`` provides a way to give the end user some ability to customise the install
 
@@ -177,7 +183,7 @@ Note that an option spelled ``--foo-bar`` on the command-line is spelled f``foo_
 
 
 Running `setup.py``
-=====================
+---------------------
 
 With a setup.py script defined, the distutils can do a lot:
 
@@ -206,7 +212,7 @@ But you probably want to use wheel for binary disributions now.
     python setup.py install
 
 setuptools
-===========
+-----------
 
 ``setuptools`` is an extension to ``distutils`` that provides a number of extensions::
 
@@ -225,7 +231,7 @@ This buys you a bunch of additional functionality:
 http://pythonhosted.org//setuptools/
 
 wheels
-=======
+-------
 
 Wheels are a new binary format for packages.
 
@@ -256,7 +262,7 @@ Create a set of wheels (a wheelhouse)::
 ``pip install --no-use-wheel`` avoids that.
 
 PyPi
-=====
+-----
 
 The Python package index:
 
@@ -275,7 +281,7 @@ http://docs.python.org/2/distutils/packageindex.html
 
 
 Under Development
-==================
+------------------
 
 Develop mode is really really nice::
 
@@ -292,7 +298,7 @@ Good idea to use it for anything more than a single file project.
 (requires ``setuptools``)
 
 Getting Started
-================
+----------------
 
 For anything but a single-file script (and maybe even then):
 
@@ -308,7 +314,7 @@ For anything but a single-file script (and maybe even then):
 
 
 LAB
-=====
+-----
 
 * Create a small package
 
