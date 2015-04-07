@@ -5,9 +5,17 @@
 Unicode in Python 2
 ===================
 
-A quick run-down of Unicode, its use in Python 2, and some of the gotchas that arise.
+.. rst-class:: medium
 
- - Chris Barker
+  A quick run-down of Unicode,
+
+  its use in Python 2,
+
+  and some of the gotchas that arise.
+
+  |
+  | - Chris Barker
+  |
 
 History
 =======
