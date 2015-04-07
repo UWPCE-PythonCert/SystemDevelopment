@@ -71,6 +71,20 @@ Serving HTTP on 0.0.0.0 port 8000 ...
 
         <p>Code which runs your application in as close to a real environment as feasible and validates its behavior
         <p>In dynamic interpreted languages like Python even show stopping syntax errors can hide until discovered in runtime, usually at the wrongtime.
+
+        <pre><code>
+#!/usr/bin/env python
+
+def func():
+    jfdkls
+
+while True:
+    print "> ",
+    if raw_input() == 'x':
+        func()
+        </code></pre>
+</section>
+<section class="slide">
         <p>Levels of testing:
             <ul>
                 <li>Unit tests
@@ -386,6 +400,149 @@ if __name__ == '__main__':
             <li>Fix any failures in the code
             <li>Add doctests to calculator_functions.py
         </ul>
+    </section>
+
+    <section class="slide">
+        <h2>One more Python feature before getting back to testing.. the "with" statement</h2>
+    </section>
+
+    <section class="slide">
+        <h2>Context managers via the "with" statement</h2>
+        <p>Introduced in Python 2.5
+        <p>If you've been opening files using "with" (and you probably should be), you have been using context managers:</p>
+    <pre><code>
+    with open("file.txt", "w") as f:
+        f.write("foo")
+    </code></pre>
+        <p>A context manager is just a class with __enter__ and __exit__ methods defined to handle setting up and tearing down the context</p>
+        <p>Provides generalizable execution contexts in which setup and teardown of context are executed no matter what happens</p>
+        <p>This allows us to separate out exception handling code</p>
+    </section>
+
+    <section class="slide">
+        <h2>Writing a context manager</h2>
+        <p>Define __enter__(self) and __exit__(self, type, value, traceback) on a class
+        <p>If __exit__ returns a true value, a caught exception is not re-raised
+        <p>For example :
+    <pre><code>
+    import os, random, shutil, time
+
+    class TemporaryDirectory(object):
+        """A context manager for creating a temporary directory which gets destroyed on context exit"""
+
+        def __init__(self,directory):
+            self.base_directory = directory
+
+        def __enter__(self):
+            # set things up
+            self.directory = os.path.join(self.base_directory, str(random.random()))
+            os.makedirs(self.directory)
+            return self.directory
+
+        def __exit__(self, type, value, traceback):
+            # tear it down
+            shutil.rmtree(self.directory)
+
+    with TemporaryDirectory("/tmp/foo") as dir:
+        # write some temp data into dir
+        with open(os.path.join(dir, "foo.txt"), 'wb') as f:
+            f.write("foo")
+
+        time.sleep(5)
+    </code></pre>
+        <p>
+            <a target="_blank" href="http://www.python.org/dev/peps/pep-0343/">http://www.python.org/dev/peps/pep-0343/</a>
+    </p>
+    </section>
+
+    <section class="slide">
+        <h2>Context Manager exercise</h2>
+        <p>Create a context manager which prints information on all exceptions which occur in the context and continues execution</p>
+    <pre><code>
+    with YourExceptionHandler():
+        print "do some stuff here"
+        1/0
+
+    print "should still reach this point"
+
+    </code></pre>
+    <p class="slide">Why might using a context manager be better than implementing this with try..except..finally ?</p>
+    <p class="slide">Also see the <a target="_blank" href="http://docs.python.org/2/library/contextlib.html">contextlib module</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Now we've got the tools to really test</h2>
+        <p>Consider the application in the examples/wikidef directory.  Give the command line utility a subject, and it will return a definition.</p>
+    <pre><code>
+    ./define.py  Robot | html2text
+    </code></pre>
+    <p class="slide">How can we test our application code without abusing (and waiting for) Wikipedia?</p>
+    </section>
+
+    <section class="slide">
+        <h2>Using Mock objects to test an application with service dependencies</h2>
+        <p>Mock objects replace real objects in your code at runtime during test</p>
+        <p>This allows you to test code which calls these objects without having their actual code run</p>
+        <p>Useful for testing objects which depend on unimplemented code,  resources which are expensive, or resources which are unavailable during test execution</p>
+        <p>
+            <a target="_blank" href="http://www.voidspace.org.uk/python/mock">http://www.voidspace.org.uk/python/mock</a></li>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Mocks</h2>
+        <p>The MagickMock class will keep track of calls to it so we can verify that the class is being called correctly, without having to execute the code underneath</p>
+    <pre><code>
+    import mock
+
+    mock_object = mock.MagicMock()
+    mock_object.foo.return_value = "foo return"
+    print mock_object.foo.call_count
+    print mock_object.foo()
+    print mock_object.foo.call_count
+    # raise an exception by assigning to the side_effect attribute
+    mock_object.foo.side_effect = Exception
+    mock_object.foo()
+
+    </code></pre>
+    <!--     <p>Mock objects have their own asserts, see the API documentation for a listing:</p>
+        <p>
+            <a target="_blank" href="http://www.voidspace.org.uk/python/mock/mock.html">http://www.voidspace.org.uk/python/mock/mock.html</a>
+        </p> -->
+    </section>
+
+    <section class="slide">
+        <h2>Easy mocking with mock.patch</h2>
+        <p>patch acts as a function decorator, class decorator, or a context manager
+        <p> Inside the body of the function or with statement, the target is patched with a new object. When the function/with statement exits the patch is undone</p>
+    </section>
+
+    <section class="slide">
+        <h2>Using patch</h2>
+    <pre><code>
+# patch with a decorator
+@patch.object(Wikipedia, 'article')
+def test_article_success_decorator_mocked(self, mock_method):
+    article = Definitions.article("Robot")
+    mock_method.assert_called_once_with("Robot")
+
+# patch with a context manager
+def test_article_success_context_manager_mocked(self):
+    with patch.object(Wikipedia, 'article') as mock_method:
+        article = Definitions.article("Robot")
+        mock_method.assert_called_once_with("Robot")
+    </code></pre>
+    <p>
+            <a target="_blank" href="http://www.voidspace.org.uk/python/mock/patch.html">http://www.voidspace.org.uk/python/mock/patch.html</a>
+    </section>
+
+    <section class="slide">
+        <h2>Exercises</h2>
+        <p>When define.py is given the name of a non-existant article, an exception is thrown.
+        <p>Add a new test that confirms this behavior
+    <!--     <p class="slide">Decorate the Wikipedia.article method with @timer.  How long does it take?</p>
+        <p class="slide">Create a @logger decorator that logs the time called, function arguments, and function return value. Add it to Wikipedia.article</p>
+        <p class="slide">Add a "level" keyword argument to the logger decorator, @logger(level="DEBUG").  Add **kwargs to Wikipedia.article.  If kwargs["level"] == "DEBUG", print the raw HTTP response too.</p> -->
     </section>
 
     <!-- End slides. -->
