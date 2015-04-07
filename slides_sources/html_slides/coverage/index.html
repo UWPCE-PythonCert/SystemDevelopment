@@ -42,9 +42,9 @@
         <h3>Week 1 :: unit testing review / coverage</h3>
         <p>Joseph Sheedy</p>
         <p><i>joseph.sheedy@gmail.com</i></p>
-        <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Spring-2014" target="_blank">https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Spring-2014</a></p>
+        <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
     </section>
-
+<!--
     <section class="slide">
         <h2>System Development with Python</h2>
             <p>To view the slides, you can either browse to the location of your git checkout on your filesystem, or serve it with Python's SimpleHTTPServer:
@@ -57,7 +57,7 @@ Serving HTTP on 0.0.0.0 port 8000 ...
     </pre>
 
     </section>
-
+-->
     <section class="slide">
         <h1>Unit testing review, with coverage</h1>
     </section>
@@ -69,27 +69,29 @@ Serving HTTP on 0.0.0.0 port 8000 ...
     <section class="slide">
         <h2>What is testing?</h2>
 
-        <p>Code which runs your application in as close to a real environment as feasible
-        <p>Especially important in dynamic interpreted languages like Python where even syntax errors can hide until discovered in runtime, usually at the wrongtime.
-        <p>The eternal quest for 100% code coverage
+        <p>Code which runs your application in as close to a real environment as feasible and validates its behavior
+        <p>In dynamic interpreted languages like Python even show stopping syntax errors can hide until discovered in runtime, usually at the wrongtime.
         <p>Levels of testing:
             <ul>
-                <li>Black box / White box testing
+                <li>Unit tests
                 <li>High level system tests
                 <li>Integration tests
-                <li>Unit tests
+                <li>Black box / White box testing
             </ul>
     </section>
 
     <section class="slide">
         <h2>Unit testing</h2>
         <ul>
-            <li>Test smallest individual units of source code
+            <li>Test smallest discrete units of source code
             <li>Tests should be independent of each other
             <li>Easier to separate from required resources through fixtures and mocking
             <li>Automatable
             <li>Integrates with development process
         </ul>
+        <p>What should be tested?
+        <p>The percentage of code which gets run in a test is known as the coverage.
+        <p>100% coverage is an ideal to strive for.  But the decision on when and what to test should take into account the volatility of the project.  Tests require maintenance.
     </section>
 
     <section class="slide">
@@ -178,9 +180,32 @@ Out[24]: True
         </code>
         </pre>
 
+        <p>There are an infinite number of floating point numbers, so they are stored as an approximation in computing hardware.
+        <p><a target="_blank" href="https://docs.python.org/2/tutorial/floatingpoint.html">https://docs.python.org/2/tutorial/floatingpoint.html</a>
     </section>
 
+    <section class="slide">
+        <h2>levels of precision of floating point</h2>
+        <p> Floating point numbers are stored in
+        <a target="_blank" href="http://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 754</a> 64-bit double precision format,
+        which allows 1 bit for the sign, 11 bits for the exponent, and the remaining 52 for the fraction
+        <p>So we can count on 16 digits of precision in decimal:
+        <pre><code>
 
+In [39]: len(str(2**52))
+Out[39]: 16
+
+In [40]: .1+.2
+Out[40]: 0.30000000000000004
+
+In [41]: len('3000000000000000')
+Out[41]: 16
+
+# with repeated operations, the errors eventually build up: here's multiplying by '1' 10 billion times:
+In [64]: x=1
+In [69]: for i in xrange(10000000000): x *= (.1 + .2)/.3
+        </code></pre>
+    </section>
     <section class="slide">
         <h2>assertAlmostEqual</h2>
         <p>Verifies that two floating point values are close enough to each other.  Add a places keyword argument to specify the number of significant digits.
@@ -243,37 +268,40 @@ unittest.TextTestRunner(verbosity=2).run(suite)
     <section class="slide">
         <h2>nose plugins</h2>
     <p>Many plugins exist for nose, such as code coverage:
+    <!--     # or get an HTML report
+        $ nosetests --cover-html
+        -->
     <pre><code>
-    $ nosetests --with-coverage
-    # or get an HTML report
-    $ nosetests --cover-html
+    # requires full path to nosetests:
+    $ ~/virtualenvs/uwpce/bin/nosetests --with-coverage
     </code></pre>
+
     <p>or drop in to the debugger on failure
     <pre><code>
     $ nosetests --pdb
     </code></pre>
-    <p>or parallel process
+    <p>or parallel process your tests.  Remember, unit tests should be independent of each other:
     <pre><code>
     $ nosetests --processes=5
     </code></pre>
 
     </section>
-    
+
     <section class="slide">
         <h2>running coverage </h2>
            <p>To run coverage on your test suite:
         <pre><code>
-coverage run my_program.py arg1 arg2 
+coverage run my_program.py arg1 arg2
 </code></pre>
         <p>This generates a .coverage file.  To analyze it on the console:
         <pre><code>
-coverage report 
+coverage report
 </code></pre>
         <p>Else generate an HTML report in the current directory:
         <pre><code>
-coverage html 
+coverage html
 </code></pre>
-p
+
         <p>To find out coverage across the standard library, add -L:
         <pre><code>
   -L, --pylib           Measure coverage even inside the Python installed
