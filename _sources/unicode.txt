@@ -20,6 +20,8 @@ Unicode in Python 2
 History
 =======
 
+A bit about where all this mess came from...
+
 
 What the heck is Unicode anyway?
 ---------------------------------
@@ -47,7 +49,7 @@ Enter Unicode
 --------------
 
 The Unicode idea is pretty simple:
-* one "code point" for all characters in all languages
+  * one "code point" for all characters in all languages
 
 But how do you express that in bytes?
   * Early days: we can fit all the code points in a two byte integer (65536 characters)
@@ -79,10 +81,11 @@ http://www.joelonsoftware.com/articles/Unicode.html
 
 * Python provides some abstractions to make it easier to deal with bytes
 
-Unicode is a biggie
+**Unicode is a biggie**
 
-(actually, dealing with numbers rather than bytes is big -- but we take that
-for granted)
+actually, dealing with numbers rather than bytes is big
+
+-- but we take that for granted
 
 
 Mechanics
@@ -125,7 +128,7 @@ And two ways to work with binary data:
    In [86]: str is bytes
    Out[86]: True
 
-``bytes`` is there for py3 compatibility - -but it's good for making your
+``bytes`` is there for py3 compatibility -- but it's good for making your
 intentions clear, too.
 
 
@@ -136,11 +139,13 @@ The ``unicode`` object lets you work with characters
 
 It has all the same methods as the string object.
 
-"encoding" is converting from a unicode object to bytes
+**"encoding"** is converting from a unicode object to bytes
 
-"decoding" is converting from bytes to a unicode object
+**"decoding"** is converting from bytes to a unicode object
 
 (sometimes this feels backwards...)
+
+And can get even more confusing with py2 strings being *both* text and bytes!
 
 Using unicode in Py2
 ---------------------
@@ -168,7 +173,7 @@ The codecs module
 Encoding and Decoding
 ----------------------
 
-Encoding
+**Encoding:** text to bytes -- you get a bytes (str) object
 
 .. code-block:: ipython
 
@@ -178,12 +183,17 @@ Encoding
   In [18]: u"this".encode('utf-16')
   Out[18]: '\xff\xfet\x00h\x00i\x00s\x00'
 
-Decoding
+**Decoding** bytes to text -- you get a unicode object
 
 .. code-block:: ipython
 
-    In [99]: print '\xff\xfe."+"x\x00\xb2\x00'.decode('utf-16')
-    ∮∫x²
+  In [2]: text =  '\xff\xfe."+"x\x00\xb2\x00'.decode('utf-16')
+
+  In [3]: type(text)
+  Out[3]: unicode
+
+  In [4]: print text
+  ∮∫x²
 
 
 
@@ -216,9 +226,9 @@ Using Unicode
 
 Use ``unicode`` objects in all your code
 
-Decode on input
+**Decode on input**
 
-Encode on output
+**Encode on output**
 
 Many packages do this for you: *XML processing, databases, ...*
 
@@ -358,13 +368,16 @@ http://docs.python.org/howto/unicode.html
 
 "Reading Unicode from a file is therefore simple"
 
+use io.open:
+
 .. code-block:: python
 
-  import codecs
-  f = codecs.open('unicode.rst', encoding='utf-8')
+  from io import open
+  io.open('unicode.rst', encoding='utf-8')
   for line in f:
       print repr(line)
 
+(https://docs.python.org/2/library/io.html#module-interface)
 
 Encodings Built-in to Python:
   http://docs.python.org/2/library/codecs.html#standard-encodings

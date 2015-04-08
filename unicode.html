@@ -136,6 +136,7 @@
 </div>
 <div class="section" id="history">
 <h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p>A bit about where all this mess came from...</p>
 <div class="section" id="what-the-heck-is-unicode-anyway">
 <h3>What the heck is Unicode anyway?<a class="headerlink" href="#what-the-heck-is-unicode-anyway" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -158,9 +159,12 @@
 </div>
 <div class="section" id="enter-unicode">
 <h3>Enter Unicode<a class="headerlink" href="#enter-unicode" title="Permalink to this headline">¶</a></h3>
-<p>The Unicode idea is pretty simple:
-* one &#8220;code point&#8221; for all characters in all languages</p>
 <dl class="docutils">
+<dt>The Unicode idea is pretty simple:</dt>
+<dd><ul class="first last simple">
+<li>one &#8220;code point&#8221; for all characters in all languages</li>
+</ul>
+</dd>
 <dt>But how do you express that in bytes?</dt>
 <dd><ul class="first last simple">
 <li>Early days: we can fit all the code points in a two byte integer (65536 characters)</li>
@@ -186,9 +190,9 @@ Positively Must Know About Unicode and Character Sets (No Excuses!)</p>
 <li>If it&#8217;s on disk or on a network, it&#8217;s bytes</li>
 <li>Python provides some abstractions to make it easier to deal with bytes</li>
 </ul>
-<p>Unicode is a biggie</p>
-<p>(actually, dealing with numbers rather than bytes is big &#8211; but we take that
-for granted)</p>
+<p><strong>Unicode is a biggie</strong></p>
+<p>actually, dealing with numbers rather than bytes is big</p>
+<p>&#8211; but we take that for granted</p>
 </div>
 </div>
 <div class="section" id="mechanics">
@@ -219,16 +223,17 @@ with combined characters: accents, etc.</p>
 <span class="gh">Out[86]: </span><span class="go">True</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">bytes</span></tt> is there for py3 compatibility - -but it&#8217;s good for making your
+<p><tt class="docutils literal"><span class="pre">bytes</span></tt> is there for py3 compatibility &#8211; but it&#8217;s good for making your
 intentions clear, too.</p>
 </div>
 <div class="section" id="id2">
 <h3>Unicode<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>The <tt class="docutils literal"><span class="pre">unicode</span></tt> object lets you work with characters</p>
 <p>It has all the same methods as the string object.</p>
-<p>&#8220;encoding&#8221; is converting from a unicode object to bytes</p>
-<p>&#8220;decoding&#8221; is converting from bytes to a unicode object</p>
+<p><strong>&#8220;encoding&#8221;</strong> is converting from a unicode object to bytes</p>
+<p><strong>&#8220;decoding&#8221;</strong> is converting from bytes to a unicode object</p>
 <p>(sometimes this feels backwards...)</p>
+<p>And can get even more confusing with py2 strings being <em>both</em> text and bytes!</p>
 </div>
 <div class="section" id="using-unicode-in-py2">
 <h3>Using unicode in Py2<a class="headerlink" href="#using-unicode-in-py2" title="Permalink to this headline">¶</a></h3>
@@ -250,7 +255,7 @@ intentions clear, too.</p>
 </div>
 <div class="section" id="encoding-and-decoding">
 <h3>Encoding and Decoding<a class="headerlink" href="#encoding-and-decoding" title="Permalink to this headline">¶</a></h3>
-<p>Encoding</p>
+<p><strong>Encoding:</strong> text to bytes &#8211; you get a bytes (str) object</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [17]: </span><span class="s">u&quot;this&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
 <span class="gh">Out[17]: </span><span class="go">&#39;this&#39;</span>
 
@@ -258,8 +263,13 @@ intentions clear, too.</p>
 <span class="gh">Out[18]: </span><span class="go">&#39;\xff\xfet\x00h\x00i\x00s\x00&#39;</span>
 </pre></div>
 </div>
-<p>Decoding</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [99]: </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\xff\xfe</span><span class="s">.&quot;+&quot;x</span><span class="se">\x00\xb2\x00</span><span class="s">&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-16&#39;</span><span class="p">)</span>
+<p><strong>Decoding</strong> bytes to text &#8211; you get a unicode object</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="n">text</span> <span class="o">=</span>  <span class="s">&#39;</span><span class="se">\xff\xfe</span><span class="s">.&quot;+&quot;x</span><span class="se">\x00\xb2\x00</span><span class="s">&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-16&#39;</span><span class="p">)</span>
+
+<span class="gp">In [3]: </span><span class="nb">type</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="gh">Out[3]: </span><span class="go">unicode</span>
+
+<span class="gp">In [4]: </span><span class="k">print</span> <span class="n">text</span>
 <span class="go">∮∫x²</span>
 </pre></div>
 </div>
@@ -289,8 +299,8 @@ intentions clear, too.</p>
 <div class="section" id="using-unicode">
 <h3>Using Unicode<a class="headerlink" href="#using-unicode" title="Permalink to this headline">¶</a></h3>
 <p>Use <tt class="docutils literal"><span class="pre">unicode</span></tt> objects in all your code</p>
-<p>Decode on input</p>
-<p>Encode on output</p>
+<p><strong>Decode on input</strong></p>
+<p><strong>Encode on output</strong></p>
 <p>Many packages do this for you: <em>XML processing, databases, ...</em></p>
 <p><strong>Gotcha:</strong></p>
 <p>Python has a default encoding (usually ascii)</p>
@@ -391,12 +401,14 @@ intentions clear, too.</p>
 <p>Python Docs Unicode HowTo:</p>
 <p><a class="reference external" href="http://docs.python.org/howto/unicode.html">http://docs.python.org/howto/unicode.html</a></p>
 <p>&#8220;Reading Unicode from a file is therefore simple&#8221;</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;unicode.rst&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<p>use io.open:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="nb">open</span>
+<span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;unicode.rst&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
     <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>(<a class="reference external" href="https://docs.python.org/2/library/io.html#module-interface">https://docs.python.org/2/library/io.html#module-interface</a>)</p>
 <dl class="docutils">
 <dt>Encodings Built-in to Python:</dt>
 <dd><a class="reference external" href="http://docs.python.org/2/library/codecs.html#standard-encodings">http://docs.python.org/2/library/codecs.html#standard-encodings</a></dd>

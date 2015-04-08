@@ -65,7 +65,7 @@
 <li><a class="reference internal" href="#basic-package-structure">Basic Package Structure:</a></li>
 <li><a class="reference internal" href="#the-setup-py-file">The <tt class="docutils literal"><span class="pre">setup.py</span></tt> File</a></li>
 <li><a class="reference internal" href="#setup-cfg"><tt class="docutils literal"><span class="pre">setup.cfg</span></tt></a></li>
-<li><a class="reference internal" href="#running-setup-py">Running <cite>setup.py`</cite></a></li>
+<li><a class="reference internal" href="#running-setup-py">Running <tt class="docutils literal"><span class="pre">setup.py</span></tt></a></li>
 <li><a class="reference internal" href="#setuptools">setuptools</a></li>
 <li><a class="reference internal" href="#wheels">wheels</a></li>
 <li><a class="reference internal" href="#pypi">PyPi</a></li>
@@ -119,9 +119,12 @@
 </div>
 <div class="section" id="why-build-a-package">
 <h2>Why Build a Package?<a class="headerlink" href="#why-build-a-package" title="Permalink to this headline">¶</a></h2>
-<p class="left">There are a bunch of nifty tools that help you build, install and distribute packages.</p>
-<p>Using a well structured, standard layout for your package makes it easy to use those tools.</p>
-<p>Even if you never want to give anyone else your code, a well structured package eases development.</p>
+<p class="left">There are a bunch of nifty tools that help you build, install and
+distribute packages.</p>
+<p class="left">Using a well structured, standard layout for your package makes it
+easy to use those tools.</p>
+<p class="left">Even if you never want to give anyone else your code, a well
+structured package eases development.</p>
 <div class="section" id="what-is-a-package">
 <h3>What is a Package?<a class="headerlink" href="#what-is-a-package" title="Permalink to this headline">¶</a></h3>
 <p><strong>A collection of modules</strong></p>
@@ -153,6 +156,7 @@
 <p><strong>Follow it!</strong></p>
 <p>And a sample project here:</p>
 <p><a class="reference external" href="https://github.com/pypa/sampleproject">https://github.com/pypa/sampleproject</a></p>
+<p>(this has all the complexity you might need...)</p>
 </div>
 <div class="section" id="basic-package-structure">
 <h3>Basic Package Structure:<a class="headerlink" href="#basic-package-structure" title="Permalink to this headline">¶</a></h3>
@@ -178,7 +182,7 @@
 <p><tt class="docutils literal"><span class="pre">LICENSE.txt</span></tt>: text of the license you choose (do choose one!)</p>
 <p><tt class="docutils literal"><span class="pre">MANIFEST.in</span></tt>: description of what non-code files to include</p>
 <p><tt class="docutils literal"><span class="pre">README.txt</span></tt>: description of the package &#8211; should be written in reST (for PyPi):</p>
-<p><a class="reference external" href="http://docutils.sourceforge.net/rst.html">http://docutils.sourceforge.net/rst.html</a></p>
+<p>(<a class="reference external" href="http://docutils.sourceforge.net/rst.html">http://docutils.sourceforge.net/rst.html</a>)</p>
 <p><tt class="docutils literal"><span class="pre">setup.py</span></tt>: distutils script for building/installing package.</p>
 <p><tt class="docutils literal"><span class="pre">bin/</span></tt>: This is where you put top-level scripts</p>
 <blockquote>
@@ -186,15 +190,12 @@
 <p><tt class="docutils literal"><span class="pre">docs/</span></tt>: the documentation</p>
 <p><tt class="docutils literal"><span class="pre">package_name/</span></tt>: The main pacakge &#8211; this is where the code goes.</p>
 <p><tt class="docutils literal"><span class="pre">test/</span></tt>: your unit tests. Options here:</p>
-<ul>
-<li><p class="first">Put it inside the package &#8211; supports</p>
+<p>Put it inside the package &#8211; supports</p>
 <div class="highlight-python"><div class="highlight"><pre>$ pip install package_name
 &gt;&gt; import package_name.test
 &gt;&gt; package_name.test.runall()
 </pre></div>
 </div>
-</li>
-</ul>
 <p>Or keep it at the top level.</p>
 </div>
 <div class="section" id="the-setup-py-file">
@@ -203,7 +204,7 @@
 <p>It is python code, so you can add anything custom you need to it</p>
 <p>But in the simple case, it is essentially declarative.</p>
 <p><tt class="docutils literal"><span class="pre">http://docs.python.org/2/distutils/</span></tt></p>
-<div class="highlight-python"><div class="highlight"><pre> from distutils.core import setup
+<div class="highlight-python"><div class="highlight"><pre> from setuptools import setup
 
  setup(
    name=&#39;PackageName&#39;,
@@ -239,8 +240,8 @@
 <p>Note that an option spelled <tt class="docutils literal"><span class="pre">--foo-bar</span></tt> on the command-line is spelled f``foo_bar`` in configuration files.</p>
 </div>
 <div class="section" id="running-setup-py">
-<h3>Running <cite>setup.py`</cite><a class="headerlink" href="#running-setup-py" title="Permalink to this headline">¶</a></h3>
-<p>With a setup.py script defined, the distutils can do a lot:</p>
+<h3>Running <tt class="docutils literal"><span class="pre">setup.py</span></tt><a class="headerlink" href="#running-setup-py" title="Permalink to this headline">¶</a></h3>
+<p>With a <tt class="docutils literal"><span class="pre">setup.py</span></tt> script defined, the distutils can do a lot:</p>
 <ul>
 <li><p class="first">builds a source distribution (defaults to tar file):</p>
 <div class="highlight-python"><div class="highlight"><pre>python setup.py sdist
@@ -293,7 +294,9 @@ python setup.py bdist_wininst
 <h3>wheels<a class="headerlink" href="#wheels" title="Permalink to this headline">¶</a></h3>
 <p>Wheels are a new binary format for packages.</p>
 <p><a class="reference external" href="http://wheel.readthedocs.org/en/latest/">http://wheel.readthedocs.org/en/latest/</a></p>
-<p>Pretty simple, essentially an zip archive of all the stuff that gets put in <tt class="docutils literal"><span class="pre">site-packages</span></tt></p>
+<p>Pretty simple, essentially an zip archive of all the stuff that gets put
+in</p>
+<p><tt class="docutils literal"><span class="pre">site-packages</span></tt></p>
 <p>Can be just pure python or binary with compiled extensions</p>
 <p>Compatible with virtualenv.</p>
 <p>Building a wheel:</p>
@@ -326,7 +329,7 @@ python setup.py sdist bdist_wheel upload
 </div>
 <div class="section" id="under-development">
 <h3>Under Development<a class="headerlink" href="#under-development" title="Permalink to this headline">¶</a></h3>
-<p>Develop mode is really really nice:</p>
+<p>Develop mode is <em>really</em> <em>really</em> nice:</p>
 <div class="highlight-python"><div class="highlight"><pre>python setup.py develop
 </pre></div>
 </div>
