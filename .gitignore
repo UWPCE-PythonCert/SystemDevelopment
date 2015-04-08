@@ -11,4 +11,5 @@ slides_sources/build
 # ignore .gitignore, so we can each have our own.
 .gitignore
 
-# editor back-up files
+*.pyc
+build/

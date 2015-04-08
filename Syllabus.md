@@ -2,7 +2,7 @@
 
 Python 300
 Spring, 2015
-March 25 through May 27th, Tuesday, 6 PM
+April 7 through June 9th, Tuesday, 6 PM
 
 ## Brief Course Description
 
