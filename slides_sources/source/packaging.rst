@@ -148,7 +148,7 @@ But in the simple case, it is essentially declarative.
 
 ::
 
-  from distutils.core import setup
+  from setuptools import setup
 
   setup(
     name='PackageName',
@@ -242,7 +242,10 @@ Wheels are a new binary format for packages.
 
 http://wheel.readthedocs.org/en/latest/
 
-Pretty simple, essentially an zip archive of all the stuff that gets put in ``site-packages``
+Pretty simple, essentially an zip archive of all the stuff that gets put
+in
+
+``site-packages``
 
 Can be just pure python or binary with compiled extensions
 
@@ -288,7 +291,7 @@ http://docs.python.org/2/distutils/packageindex.html
 Under Development
 ------------------
 
-Develop mode is really really nice::
+Develop mode is *really* *really* nice::
 
   python setup.py develop
 
