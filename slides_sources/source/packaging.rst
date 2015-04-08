@@ -14,11 +14,14 @@ Why Build a Package?
 
 .. rst-class:: left
 
-There are a bunch of nifty tools that help you build, install and distribute packages.
+  There are a bunch of nifty tools that help you build, install and
+  distribute packages.
 
-Using a well structured, standard layout for your package makes it easy to use those tools.
+  Using a well structured, standard layout for your package makes it
+  easy to use those tools.
 
-Even if you never want to give anyone else your code, a well structured package eases development.
+  Even if you never want to give anyone else your code, a well
+  structured package eases development.
 
 What is a Package?
 --------------------
@@ -67,6 +70,8 @@ And a sample project here:
 
 https://github.com/pypa/sampleproject
 
+(this has all the complexity you might need...)
+
 
 Basic Package Structure:
 ------------------------
@@ -101,7 +106,7 @@ Basic Package Structure:
 
 ``README.txt``: description of the package -- should be written in reST (for PyPi):
 
-http://docutils.sourceforge.net/rst.html
+(http://docutils.sourceforge.net/rst.html)
 
 ``setup.py``: distutils script for building/installing package.
 
@@ -118,7 +123,7 @@ http://docutils.sourceforge.net/rst.html
 
 ``test/``: your unit tests. Options here:
 
-* Put it inside the package -- supports ::
+Put it inside the package -- supports ::
 
      $ pip install package_name
      >> import package_name.test
@@ -182,10 +187,10 @@ simple to read and write.
 Note that an option spelled ``--foo-bar`` on the command-line is spelled f``foo_bar`` in configuration files.
 
 
-Running `setup.py``
+Running ``setup.py``
 ---------------------
 
-With a setup.py script defined, the distutils can do a lot:
+With a ``setup.py`` script defined, the distutils can do a lot:
 
 * builds a source distribution (defaults to tar file)::
 
