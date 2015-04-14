@@ -1,0 +1,596 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation &mdash; System Development With Python 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="System Development With Python 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> System Development With Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <!-- Local TOC -->
+            <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Documentation</a><ul>
+<li><a class="reference internal" href="#why">Why</a><ul>
+<li><a class="reference internal" href="#sphinx">Sphinx</a></li>
+<li><a class="reference internal" href="#extendability">Extendability</a></li>
+<li><a class="reference internal" href="#automatic-documentation">Automatic Documentation</a></li>
+<li><a class="reference internal" href="#documentation-for-the-documentation-system">Documentation for the Documentation System</a></li>
+<li><a class="reference internal" href="#restructuredtext">reStructuredText</a></li>
+<li><a class="reference internal" href="#id2">reStructuredText</a></li>
+<li><a class="reference internal" href="#restructuredtext-documentation-sources">reStructuredText documentation sources</a></li>
+<li><a class="reference internal" href="#sphinx-directives-for-docstrings">Sphinx Directives for docstrings</a></li>
+<li><a class="reference internal" href="#lab">LAB:</a></li>
+<li><a class="reference internal" href="#tutorial-script">Tutorial Script:</a></li>
+<li><a class="reference internal" href="#setting-up-sphinx">Setting Up sphinx:</a></li>
+<li><a class="reference internal" href="#quickstart-cont">QuickStart (cont):</a></li>
+<li><a class="reference internal" href="#id3">QuickStart (cont):</a></li>
+<li><a class="reference internal" href="#project-structure">Project Structure:</a></li>
+<li><a class="reference internal" href="#building-the-docs">Building the docs:</a></li>
+<li><a class="reference internal" href="#getting-started-with-writing">Getting Started with Writing:</a></li>
+<li><a class="reference internal" href="#a-tiny-bit-of-rst">A tiny bit of RST</a></li>
+<li><a class="reference internal" href="#id4">A tiny bit of RST</a></li>
+<li><a class="reference internal" href="#autodoc">AutoDoc</a></li>
+<li><a class="reference internal" href="#adding-autodoc-to-your-docs">Adding Autodoc to your docs.</a></li>
+<li><a class="reference internal" href="#finding-the-members">Finding the members.</a></li>
+<li><a class="reference internal" href="#documenting-the-members">Documenting the members.</a></li>
+<li><a class="reference internal" href="#multiple-files">Multiple Files</a></li>
+<li><a class="reference internal" href="#apidoc">APIdoc</a></li>
+<li><a class="reference internal" href="#sphinx-appearance">Sphinx Appearance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/documentation.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="documentation">
+<span id="id1"></span><h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>A (very) quick run down of how to document your python package.</p>
+<ul class="simple">
+<li>Chris Barker</li>
+</ul>
+<div class="section" id="why">
+<h2>Why<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<p class="left">Documentation is a key part of software development.</p>
+<p class="left">You&#8217;ll be glad you have it, even if you are the only one that uses your code.</p>
+<p class="left">If you are writing a package you want others to use &#8211; documentation can make all the difference</p>
+<p class="left">And there are some nice tools for documenting Python code.</p>
+<p class="left">There is even a hosting service:</p>
+<blockquote class="left">
+<div><ul class="simple">
+<li><a class="reference external" href="http://readthedocs.org">http://readthedocs.org</a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="sphinx">
+<h3>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h3>
+<p>Sphinx is a documentation system build specifically for documenting Python itself:</p>
+<p><a class="reference external" href="http://spinx-doc.org">http://spinx-doc.org</a></p>
+<p>But it&#8217;s also useful for any sort of structured documentation &#8211; and is sometimes used for non-code projects.</p>
+<dl class="docutils">
+<dt>It Produces:</dt>
+<dd><ul class="first last simple">
+<li>HTML (multiple styles available)</li>
+<li>PDF(via LaTeX)</li>
+<li>ePub</li>
+<li>man pages</li>
+<li>plain text</li>
+<li>and others!</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="extendability">
+<h3>Extendability<a class="headerlink" href="#extendability" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Sphinx has an extension architecture for adding special functionality:</dt>
+<dd><ul class="first simple">
+<li>Hieroglyph (It is used for these slides...)</li>
+<li>Matplotlib added some nice stuff:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://matplotlib.org">http://matplotlib.org</a></li>
+</ul>
+</div></blockquote>
+<ul class="last simple">
+<li>Math</li>
+<li>Embedded ASCII art</li>
+<li>Embedding Excel spreadsheets</li>
+<li>Unlimited possibilities</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="automatic-documentation">
+<h3>Automatic Documentation<a class="headerlink" href="#automatic-documentation" title="Permalink to this headline">¶</a></h3>
+<p>One of the great features of Sphinx:</p>
+<p>It can extract docstrings from your code and build docs from them.</p>
+<p>Includes cross referencing of modules and classes, etc.</p>
+<p>This keeps your code and docs in sync, and encourages you to have nice docstrings.</p>
+<p>It&#8217;s a bit tricky to get it all set up though :-(</p>
+</div>
+<div class="section" id="documentation-for-the-documentation-system">
+<h3>Documentation for the Documentation System<a class="headerlink" href="#documentation-for-the-documentation-system" title="Permalink to this headline">¶</a></h3>
+<p>Sphinx is, of course, documented with sphinx itself.</p>
+<dl class="docutils">
+<dt>Its tutorial is pretty good, but can be a little confusing (particularly the autodoc stuff)</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://sphinx-doc.org/tutorial.html">http://sphinx-doc.org/tutorial.html</a></li>
+</ul>
+</dd>
+</dl>
+<p>So here are a couple other resources (and many more out there):</p>
+<dl class="docutils">
+<dt>Basic getting started tutorial:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="https://pythonhosted.org/an_example_pypi_project/sphinx.html">https://pythonhosted.org/an_example_pypi_project/sphinx.html</a></li>
+</ul>
+</dd>
+<dt>Tutorial focused on getting autodoc set up:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/">http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/</a></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="restructuredtext">
+<h3>reStructuredText<a class="headerlink" href="#restructuredtext" title="Permalink to this headline">¶</a></h3>
+<p>reStructuredText is the markup language used for Sphinx.</p>
+<p>Developed (adapted, really) for Python documentation.</p>
+<p>It&#8217;s a plain text, easy to read and write markup.</p>
+<dl class="docutils">
+<dt>Like many similar markup languages (Markdown, etc.)</dt>
+<dd><ul class="first last simple">
+<li>designed to be easy to read and write</li>
+<li>makes sense in plain text</li>
+<li>looks a lot like what you might write in plain text anyway.</li>
+</ul>
+</dd>
+</dl>
+<p>So it&#8217;s suitable for use both as plain text and for fancier formatting (i.e. docstrings)</p>
+<p>But more extensible than most others &#8211; so good for sphinx</p>
+</div>
+<div class="section" id="id2">
+<h3>reStructuredText<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>============================
+This is the top level header
+============================
+
+And now some normal text
+
+And a level-2 header
+=====================
+
+more text: **this** is bold.
+
+And ``this`` is code.
+
+::
+
+  #And now a code block
+  for i in range(10):
+      do_something_interesting(i)
+</pre></div>
+</div>
+</div>
+<div class="section" id="restructuredtext-documentation-sources">
+<h3>reStructuredText documentation sources<a class="headerlink" href="#restructuredtext-documentation-sources" title="Permalink to this headline">¶</a></h3>
+<p>RST directives:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. toctree::
+   :maxdepth: 2
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">toctree</span></tt> is a reStructuredText directive:</p>
+<p>Directives can have arguments, options and content</p>
+<p>Some docs to get started:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://docutils.sourceforge.net/rst.html">http://docutils.sourceforge.net/rst.html</a></li>
+<li><a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">http://docutils.sourceforge.net/docs/user/rst/quickstart.html</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="sphinx-directives-for-docstrings">
+<h3>Sphinx Directives for docstrings<a class="headerlink" href="#sphinx-directives-for-docstrings" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">&#39;fred&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    computes something which I would describe here.</span>
+
+<span class="sd">    :param a: the first input value</span>
+<span class="sd">    :type a:  int</span>
+
+<span class="sd">    :param b: the second input value</span>
+<span class="sd">    :type b: float</span>
+
+<span class="sd">    :param c=&#39;fred&#39;: a string flag</span>
+<span class="sd">    :type c: str</span>
+
+<span class="sd">    :returns: a useless string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">compute_something</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lab">
+<h3>LAB:<a class="headerlink" href="#lab" title="Permalink to this headline">¶</a></h3>
+<p>Set up a Sphinx project to document the package in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Examples</span><span class="o">/</span><span class="n">Capitalize</span>
+</pre></div>
+</div>
+<p>Put it in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Examples</span><span class="o">/</span><span class="n">Capitalize</span><span class="o">/</span><span class="n">doc</span>
+</pre></div>
+</div>
+<p>Set it up to autodoc</p>
+<p>Clean up the docstrings so that autodoc works well.</p>
+<p>(Or do it for your code!)</p>
+</div>
+<div class="section" id="tutorial-script">
+<h3>Tutorial Script:<a class="headerlink" href="#tutorial-script" title="Permalink to this headline">¶</a></h3>
+<p>The following as a script to follow for setting up and starting to document a pacakge with Sphinx and Autodoc.</p>
+<p>It uses the <tt class="docutils literal"><span class="pre">Capitalize</span></tt> package (included in this repo) as an example, but you can follow along with your own package if you like.</p>
+<p>First, you need the tool:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install sphinx
+</pre></div>
+</div>
+<p>(Thanks to: <a class="reference external" href="http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/">http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/</a>
+)</p>
+</div>
+<div class="section" id="setting-up-sphinx">
+<h3>Setting Up sphinx:<a class="headerlink" href="#setting-up-sphinx" title="Permalink to this headline">¶</a></h3>
+<p>You need to be in a good place to build your docs:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd code/Capitalize/doc
+</pre></div>
+</div>
+<p>Sphinx comes with a nice utility for getting your documentation set up:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sphinx-quickstart
+</pre></div>
+</div>
+<p>It will ask you a number of questions on the command line: You can use the defaults for most of these.</p>
+<p>You are already in a doc dir, so you can use <tt class="docutils literal"><span class="pre">.</span></tt> (the default) for the root path:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; Root path for the documentation [.]:
+</pre></div>
+</div>
+</div>
+<div class="section" id="quickstart-cont">
+<h3>QuickStart (cont):<a class="headerlink" href="#quickstart-cont" title="Permalink to this headline">¶</a></h3>
+<p>I like to keep the source can built docs separate:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; Separate source and build directories (y/N) [n]: y
+</pre></div>
+</div>
+<p>Give it a name and an author:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; Project name: Capitalize
+&gt; Author name(s): Chris Barker
+</pre></div>
+</div>
+<p>Use <tt class="docutils literal"><span class="pre">.rst</span></tt> for restructured text:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; Source file suffix [.rst]:
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>QuickStart (cont):<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>You absolutely want autodoc!:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; autodoc: automatically insert docstrings from modules (y/N) [n]: y
+</pre></div>
+</div>
+<p>This is kind of nice, to help you keep in line:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; coverage: checks for documentation coverage (y/N) [n]: y
+</pre></div>
+</div>
+<p>A Makefile (and/or DOS batch file) is really handy:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; Create Makefile? (Y/n) [y]: y
+&gt; Create Windows command file? (Y/n) [y]: y
+</pre></div>
+</div>
+</div>
+<div class="section" id="project-structure">
+<h3>Project Structure:<a class="headerlink" href="#project-structure" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">sphinx-quickstart</span></tt> will have created the project structure for you:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls
+Makefile   README.txt build      make.bat   source
+
+$ ls source
+_static    _templates conf.py    index.rst
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">index.rst</span></tt> is the start of your documentation</p>
+<p><tt class="docutils literal"><span class="pre">conf.py</span></tt> is the configuration that was created by <tt class="docutils literal"><span class="pre">sphinx-quickstart</span></tt> &#8211; you can edit it if you change you mind about anything.</p>
+</div>
+<div class="section" id="building-the-docs">
+<h3>Building the docs:<a class="headerlink" href="#building-the-docs" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">Makefile</span></tt> will build the docs for you in various ways:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make html
+sphinx-build -b html -d build/doctrees   source build/html
+Making output directory...
+Running Sphinx v1.1.3
+ ....
+Build finished. The HTML pages are in build/html.
+</pre></div>
+</div>
+<p>Or:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make latexpdf
+</pre></div>
+</div>
+<p>(if you have LaTeX installed...)</p>
+<p>Take a look at <tt class="docutils literal"><span class="pre">build/html/index.html</span></tt></p>
+</div>
+<div class="section" id="getting-started-with-writing">
+<h3>Getting Started with Writing:<a class="headerlink" href="#getting-started-with-writing" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">index.rst</span></tt> file will look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>Welcome to Capitalize&#39;s documentation!
+======================================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-tiny-bit-of-rst">
+<h3>A tiny bit of RST<a class="headerlink" href="#a-tiny-bit-of-rst" title="Permalink to this headline">¶</a></h3>
+<p>Underlining creates headings:</p>
+<div class="highlight-python"><div class="highlight"><pre>Welcome to Capitalize&#39;s documentation!
+======================================
+</pre></div>
+</div>
+<p>This will give you a lower level heading:</p>
+<div class="highlight-python"><div class="highlight"><pre>Welcome to a Subsection
+------------------------
+</pre></div>
+</div>
+<p>(each new underlining character you introduce goes another level down.)</p>
+</div>
+<div class="section" id="id4">
+<h3>A tiny bit of RST<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">..</span></tt> is either a comment or a &#8220;directive&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. toctree::
+   :maxdepth: 2
+</pre></div>
+</div>
+<p>if sphinx understand the directive <tt class="docutils literal"><span class="pre">toctree</span></tt>, then it is used. Otherwise, it is treated as a comment.</p>
+<p><tt class="docutils literal"><span class="pre">toctree</span></tt> builds a table of contents tree.</p>
+</div>
+<div class="section" id="autodoc">
+<h3>AutoDoc<a class="headerlink" href="#autodoc" title="Permalink to this headline">¶</a></h3>
+<p>AutoDoc extracts the docstrings from your code.</p>
+<p>In order to find them &#8211; sphinx needs to be able to import the code.</p>
+<p>Another reason to build a package and use <tt class="docutils literal"><span class="pre">develop</span></tt> mode!</p>
+<p>Alternatively, you can add the path to your code by adding this to the conf.py file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;mydir/myfile.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(Path is relative to the conf.py file)</p>
+<p>But I&#8217;m not going to do that, &#8216;cause I use <tt class="docutils literal"><span class="pre">develop</span></tt> mode</p>
+</div>
+<div class="section" id="adding-autodoc-to-your-docs">
+<h3>Adding Autodoc to your docs.<a class="headerlink" href="#adding-autodoc-to-your-docs" title="Permalink to this headline">¶</a></h3>
+<p>Add the automodule directive to your <tt class="docutils literal"><span class="pre">index.rst</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre>The Capitalize Package
+-----------------------
+
+.. automodule:: capitalize
+</pre></div>
+</div>
+<p>Then rebuild:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make html
+</pre></div>
+</div>
+<p>And reload <tt class="docutils literal"><span class="pre">index.rst</span></tt></p>
+</div>
+<div class="section" id="finding-the-members">
+<h3>Finding the members.<a class="headerlink" href="#finding-the-members" title="Permalink to this headline">¶</a></h3>
+<p>Not much there, is there? Where is the capital_mod module?</p>
+<p>Sphinx only creates the main doc for each package.</p>
+<p>You need to create a entry for each module yourself:</p>
+<div class="highlight-python"><div class="highlight"><pre>capital_mod
+............
+
+.. automodule:: capitalize.capital_mod
+   :members:
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">:members:</span></tt> directive tells Sphinx you want all the members documented as well.</p>
+</div>
+<div class="section" id="documenting-the-members">
+<h3>Documenting the members.<a class="headerlink" href="#documenting-the-members" title="Permalink to this headline">¶</a></h3>
+<p>You can specify only particular ones if you want:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. automodule:: capitalize.capital_mod
+   :members: capitalize
+</pre></div>
+</div>
+<p>For classes, there is <tt class="docutils literal"><span class="pre">autoclass</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. autoclass:: a_package.a_class
+   :members:
+</pre></div>
+</div>
+<p>You may want to set <tt class="docutils literal"><span class="pre">autoclass_content</span></tt> configuration to one of: &#8220;class&#8221;,
+&#8220;init&#8221;, or &#8220;both&#8221;</p>
+<p>(<a class="reference external" href="http://sphinx-doc.org/ext/autodoc.html">http://sphinx-doc.org/ext/autodoc.html</a>)</p>
+</div>
+<div class="section" id="multiple-files">
+<h3>Multiple Files<a class="headerlink" href="#multiple-files" title="Permalink to this headline">¶</a></h3>
+<p>For most projects, you&#8217;ll want multiple pages in your docs. You can put each in their own <cite>*.rst</cite> file, and reference them in the <tt class="docutils literal"><span class="pre">toctree</span></tt> section:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. toctree::
+   :maxdepth: 2
+
+   installation.rst
+   tutorial.rst
+   api.rst
+</pre></div>
+</div>
+<p>Then you need to create and populate those files - make sure they have a header!</p>
+<p>I put the autocdoc stuff in the api.rst file...</p>
+</div>
+<div class="section" id="apidoc">
+<h3>APIdoc<a class="headerlink" href="#apidoc" title="Permalink to this headline">¶</a></h3>
+<p>For a substantial package, hand writing all those files and autodoc directives can get pretty tedious.</p>
+<p>So you can use APIdoc:</p>
+<div class="highlight-python"><div class="highlight"><pre>sphinx-apidoc [options] -o &lt;outputdir&gt; &lt;sourcedir&gt; [pathnames ...]
+
+$ sphinx-apidoc -o test ../capitalize
+Creating file test/capitalize.rst.
+Creating file test/capitalize.test.rst.
+Creating file test/modules.rst.
+</pre></div>
+</div>
+<p>This is actually pretty slick....</p>
+</div>
+<div class="section" id="sphinx-appearance">
+<h3>Sphinx Appearance<a class="headerlink" href="#sphinx-appearance" title="Permalink to this headline">¶</a></h3>
+<p>If you don&#8217;t like the default looks, there are a number of other options, or you can build your own:</p>
+<p><a class="reference external" href="http://sphinx-doc.org/theming.html">http://sphinx-doc.org/theming.html</a></p>
+<p>In <tt class="docutils literal"><span class="pre">conf.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_theme</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span>
+</pre></div>
+</div>
+<p>Of course, this is the primary source of how to use Sphinx itself:</p>
+<p><a class="reference external" href="http://sphinx-doc.org/">http://sphinx-doc.org/</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy .
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

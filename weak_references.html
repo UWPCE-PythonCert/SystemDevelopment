@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Memory Management and Weak References &mdash; System Development With Python 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="System Development With Python 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> System Development With Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <!-- Local TOC -->
+            <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Python Memory Management and Weak References</a><ul>
+<li><a class="reference internal" href="#memory-management">Memory Management</a><ul>
+<li><a class="reference internal" href="#reference-counting">Reference Counting</a></li>
+<li><a class="reference internal" href="#what-makes-a-reference">What makes a reference?</a></li>
+<li><a class="reference internal" href="#how-do-i-see-what-s-going-on">How do I see what&#8217;s going on?</a></li>
+<li><a class="reference internal" href="#playing-with-references">Playing with References</a></li>
+<li><a class="reference internal" href="#the-power-of-reference-counting">The Power of Reference Counting</a></li>
+<li><a class="reference internal" href="#the-limits-of-reference-counting">The Limits of Reference Counting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#circular-references">Circular References</a><ul>
+<li><a class="reference internal" href="#the-garbage-collector">The Garbage Collector</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools">Tools</a><ul>
+<li><a class="reference internal" href="#process-memory-use">Process Memory Use</a></li>
+<li><a class="reference internal" href="#id-checks">id checks</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#id1">Weak References</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Python Memory Management and Weak References</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/weak_references.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="python-memory-management-and-weak-references">
+<span id="weak-references"></span><h1>Python Memory Management and Weak References<a class="headerlink" href="#python-memory-management-and-weak-references" title="Permalink to this headline">¶</a></h1>
+<p>Chris Barker</p>
+<p><tt class="docutils literal"><span class="pre">PythonCHB&#64;gmail.com</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">https://github.com/PythonCHB</span></tt></p>
+<div class="section" id="memory-management">
+<h2>Memory Management<a class="headerlink" href="#memory-management" title="Permalink to this headline">¶</a></h2>
+<ul class="left simple">
+<li>You don&#8217;t want python objects that are no longer in use taking up memory.</li>
+<li>You don&#8217;t want to keep track of all that yourself.</li>
+<li>Most &#8220;scripting languages&#8221; or &#8220;virtual machines&#8221; have some sort of
+automated memory management</li>
+</ul>
+<p class="center medium">Many ways to do &#8220;Garbage Collection&#8221;</p>
+<div class="section" id="reference-counting">
+<h3>Reference Counting<a class="headerlink" href="#reference-counting" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>How memory is managed is not part of the Python language spec:</dt>
+<dd><ul class="first last simple">
+<li>Jython uses the JVM</li>
+<li>Iron Python uses the CLR
+- Both are garbage collected</li>
+<li>PyPy uses <a class="reference external" href="https://pypy.readthedocs.org/en/release-2.4.x/garbage_collection.html#minimark-gc">Minimark</a></li>
+</ul>
+</dd>
+<dt>The CPython interpreter uses a reference counting scheme:</dt>
+<dd><ul class="first last simple">
+<li>Every time there is a new reference to a Python object, its reference
+count is increased</li>
+<li>Every time a reference is removed &#8211; the count is decreased</li>
+<li>When the reference count goes to zero: the object is deleted
+(memory freed)</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="what-makes-a-reference">
+<h3>What makes a reference?<a class="headerlink" href="#what-makes-a-reference" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Binding to a name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="n">an_object</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Putting it in a container:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Passing it to a function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">func</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Most of the time, you don&#8217;t need to think about this at all.</p>
+</div>
+<div class="section" id="how-do-i-see-what-s-going-on">
+<h3>How do I see what&#8217;s going on?<a class="headerlink" href="#how-do-i-see-what-s-going-on" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> This will always return one more than you&#8217;d expect, as passing the object to the function increases its refcount by one:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [6]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[6]: </span><span class="go">2</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>The Heisenberg Uncertainty Principle:</dt>
+<dd><ul class="first last simple">
+<li>you can&#8217;t observe it without altering it</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="playing-with-references">
+<h3>Playing with References<a class="headerlink" href="#playing-with-references" title="Permalink to this headline">¶</a></h3>
+<p>(live demo)</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [8]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[8]: </span><span class="go">2</span>
+
+<span class="gp">In [9]: </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="gp">In [10]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[10]: </span><span class="go">3</span>
+
+<span class="gp">In [11]: </span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">a</span><span class="p">]</span>
+
+<span class="gp">In [12]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[12]: </span><span class="go">4</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [13]: </span><span class="k">del</span> <span class="n">b</span>
+
+<span class="gp">In [14]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[14]: </span><span class="go">3</span>
+
+
+<span class="gp">In [15]: </span><span class="k">del</span> <span class="n">l</span>
+
+<span class="gp">In [16]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[16]: </span><span class="go">2</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="c"># function local variables</span>
+
+    <span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+       <span class="o">....</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&quot;x has a refcount of:&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+       <span class="o">....</span><span class="p">:</span>
+
+    <span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">Out</span><span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="mi">2</span>
+
+    <span class="n">In</span> <span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="n">test</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">x</span> <span class="n">has</span> <span class="n">a</span> <span class="n">refcount</span> <span class="n">of</span><span class="p">:</span> <span class="mi">4</span>
+
+    <span class="n">In</span> <span class="p">[</span><span class="mi">20</span><span class="p">]:</span> <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">Out</span><span class="p">[</span><span class="mi">20</span><span class="p">]:</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [21]: </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="gp">In [22]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gh">Out[22]: </span><span class="go">428</span>
+</pre></div>
+</div>
+<p>WHOA!!</p>
+<p>(hint: interning....)</p>
+</div>
+<div class="section" id="the-power-of-reference-counting">
+<h3>The Power of Reference Counting<a class="headerlink" href="#the-power-of-reference-counting" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">You don&#8217;t need to think about it most of the time.</p>
+</li>
+<li><p class="first">Code that creates objects doesn&#8217;t need to delete them</p>
+</li>
+<li><p class="first">Objects get deleted right away</p>
+<blockquote>
+<div><p>. They can &#8220;clean up&#8221; on deletion (files, for instance) &#8211; and it will happen right away.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Performance is predictable</p>
+</li>
+</ul>
+</div>
+<div class="section" id="the-limits-of-reference-counting">
+<h3>The Limits of Reference Counting<a class="headerlink" href="#the-limits-of-reference-counting" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Performance overhead on all operations. But the big one:</li>
+</ul>
+<p class="medium">Circular references</p>
+<p>If a python object somehow references itself &#8211; i.e. it references another object that references the first
+object:</p>
+<p>You have a circular reference ...</p>
+</div>
+</div>
+<div class="section" id="circular-references">
+<h2>Circular References<a class="headerlink" href="#circular-references" title="Permalink to this headline">¶</a></h2>
+<div class="left highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,]</span> <span class="p">;</span> <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,]</span>
+
+<span class="gp">In [9]: </span><span class="n">l1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2</span><span class="p">);</span> <span class="n">l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+
+<span class="gp">In [10]: </span><span class="n">l1</span>
+<span class="gh">Out[10]: </span><span class="go">[1, [2, [...]]]</span>
+
+<span class="gp">In [11]: </span><span class="n">l2</span>
+<span class="gh">Out[11]: </span><span class="go">[2, [1, [...]]]</span>
+
+<span class="gp">In [12]: </span><span class="n">l1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gh">Out[12]: </span><span class="go">[2, [1, [...]]]</span>
+
+<span class="gp">In [13]: </span><span class="n">l2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="gh">Out[13]: </span><span class="go">[1, [2, [...]]]</span>
+</pre></div>
+</div>
+<p>(demo) &#8211; <tt class="xref download docutils literal"><span class="pre">simple_circular.py</span></tt></p>
+<div class="section" id="the-garbage-collector">
+<h3>The Garbage Collector<a class="headerlink" href="#the-garbage-collector" title="Permalink to this headline">¶</a></h3>
+<p>As of Python 2.0 &#8211; a garbage collector was added.</p>
+<blockquote>
+<div><ul class="simple">
+<li>(<a class="reference external" href="https://docs.python.org/2/library/gc.html">https://docs.python.org/2/library/gc.html</a>)</li>
+</ul>
+</div></blockquote>
+<p>It can find and clean up &#8220;unreachable&#8221; references.</p>
+<p>It is turned on by default:</p>
+<div class="highlight-python"><div class="highlight"><pre>In [1]: import gc
+In [2]: gc.isenabled()
+Out[2]: True
+</pre></div>
+</div>
+<p>or you can force it:</p>
+<div class="highlight-python"><div class="highlight"><pre>In [4]: gc.collect()
+Out[4]: 64
+</pre></div>
+</div>
+<p>But it can be slow, and doesn&#8217;t always work!</p>
+<p>How does the garbage collector work?</p>
+<blockquote>
+<div><ul class="simple">
+<li>Not a full &#8220;mark and sweep&#8221; type.</li>
+</ul>
+</div></blockquote>
+<p>It searches for reference cycles &#8211; then cleans those up.</p>
+<blockquote>
+<div><ul class="simple">
+<li>It doesn&#8217;t have to bother checking non-container types (ints, strings, etc.)</li>
+<li>Faster, and not as dependent on having a clear &#8220;root&#8221; namespace.</li>
+</ul>
+</div></blockquote>
+<p>Details here:</p>
+<p><a class="reference external" href="http://arctrix.com/nas/python/gc/">http://arctrix.com/nas/python/gc/</a>  (or in the source!)</p>
+<p>Big issue: classes that define a <tt class="docutils literal"><span class="pre">__del__</span></tt> method are not cleaned up.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">__del__</span></tt> methods often act on references that may no be there if
+they are cleaned up in the wrong order.</li>
+</ul>
+</div></blockquote>
+<p>NOTE: you can work with gc.garbage() &#8211; but tricky and messy</p>
+</div>
+</div>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<p class="left">If these objects are no longer &#8220;reachable&#8221; &#8211; how do you find out what&#8217;s going on?</p>
+<p class="left">We saw <tt class="docutils literal"><span class="pre">sys.getrefcount()</span></tt> &#8211; but you need a reference to the object to use it.</p>
+<p class="left">You can see what the refcount is before you delete the last reference, but that isn&#8217;t always easy.</p>
+<div class="section" id="process-memory-use">
+<h3>Process Memory Use<a class="headerlink" href="#process-memory-use" title="Permalink to this headline">¶</a></h3>
+<p>A really coarse way to find a memory leak is to see if the process memory
+is growing.</p>
+<p>It can be subtle &#8211;python (and the OS) do tricks to re-use memory, etc.</p>
+<p>But if you have a &#8220;real&#8221; leak &#8211; you&#8217;ll see it. (Example to follow)</p>
+<p><tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt></p>
+<p>provides functions that report the memory use of the current running process.</p>
+<p>(*nix and Windows code)</p>
+</div>
+<div class="section" id="id-checks">
+<h3>id checks<a class="headerlink" href="#id-checks" title="Permalink to this headline">¶</a></h3>
+<p>As it happens, the Python <tt class="docutils literal"><span class="pre">id()</span></tt> function returns a memory address.</p>
+<p>It&#8217;s really dangerous, but that means we can examine an object if we know
+its <cite>id</cite>, even if we don&#8217;t hold a reference to it.</p>
+<p>Bill Bumgarner wrote a nifty extension module that returns the python
+object pointed to by an id (memory address) &#8211; &#8220;di&#8221;:</p>
+<p><a class="reference external" href="http://www.friday.com/bbum/2007/08/24/python-di/">http://www.friday.com/bbum/2007/08/24/python-di/</a></p>
+<p>I added a function that returns the reference count of an object from its id.</p>
+<p><a class="reference external" href="https://github.com/PythonCHB/di_refcount">https://github.com/PythonCHB/di_refcount</a></p>
+<p>NOTE: it would be a really bad idea to use these in production code!</p>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></tt></p>
+<p>uses the ref_by_id() function to see what&#8217;s going on with a circular
+reference and garbage collection.</p>
+<p>More real examples in iPython notebook:</p>
+<p><tt class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></tt></p>
+<p>Or: <tt class="xref download docutils literal"><span class="pre">circular.py</span></tt></p>
+<p><tt class="xref download docutils literal"><span class="pre">memcount.py</span></tt> is a test
+file that show memory growth if circular references are not cleaned up.</p>
+<p>( <tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt> )
+is code that reports process memory use.</p>
+<p>You can find this code in the main repo here:</p>
+<p><a class="reference external" href="https://github.com/PythonCHB/PythonTopics/tree/master/Sources/code/weak_references">https://github.com/PythonCHB/PythonTopics/tree/master/Sources/code/weak_references</a></p>
+</div>
+<div class="section" id="id1">
+<h3>Weak References<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>For times when you don&#8217;t want to keep objects alive, Python provides
+&#8220;weak references&#8221; &#8211; we saw this in the examples.</p>
+<p>(<a class="reference external" href="https://docs.python.org/2/library/weakref.html">https://docs.python.org/2/library/weakref.html</a>)</p>
+<ol class="arabic simple">
+<li>The built-in containers:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">WeakKeyDictionary</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WeakValueDictionary</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WeakSet</span></tt></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><tt class="docutils literal"><span class="pre">Proxy</span></tt> objects</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>act much like regular references &#8211; client code doesn&#8217;t know the difference</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><tt class="docutils literal"><span class="pre">WeakRef</span></tt> objects</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>When you want to control what happens when the referenced object is gone.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p class="left">Build a &#8220;weak cache&#8221;:</p>
+<p class="left">For large objects that are expensive to create:</p>
+<ul class="left simple">
+<li>Use a WeakValueDictionay to hold references to (probably large) objects.</li>
+<li>When the client requests an object that doesn&#8217;t exist &#8211; one is created, returned, and cached (weakly).</li>
+<li>If the object is in the cache, it is returned.</li>
+<li>when no other references exist to the object, it is NOT retained by the cache.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy .
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
