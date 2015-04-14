@@ -7,15 +7,15 @@ class ParseError(Exception):
 
 class Wikipedia(object):
     """Wikipedia API interface"""
-    
+
     api_endpoint = "http://en.wikipedia.org/w/api.php?"
 
     @classmethod
     def article(cls, title):
         """Return contents of article
 
-        arguments: 
-    
+        arguments:
+
         title -- title of article
         """
         query_params = urllib.urlencode({'action': 'parse', 'format': 'json', 'prop':'text', 'page': title})
