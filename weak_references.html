@@ -295,7 +295,7 @@ object:</p>
 <span class="gh">Out[13]: </span><span class="go">[1, [2, [...]]]</span>
 </pre></div>
 </div>
-<p>(demo) &#8211; <tt class="xref download docutils literal"><span class="pre">simple_circular.py</span></tt></p>
+<p>(demo) &#8211; <a class="reference download internal" href="_downloads/simple_circular.py"><tt class="xref download docutils literal"><span class="pre">simple_circular.py</span></tt></a></p>
 <div class="section" id="the-garbage-collector">
 <h3>The Garbage Collector<a class="headerlink" href="#the-garbage-collector" title="Permalink to this headline">¶</a></h3>
 <p>As of Python 2.0 &#8211; a garbage collector was added.</p>
@@ -353,7 +353,7 @@ they are cleaned up in the wrong order.</li>
 is growing.</p>
 <p>It can be subtle &#8211;python (and the OS) do tricks to re-use memory, etc.</p>
 <p>But if you have a &#8220;real&#8221; leak &#8211; you&#8217;ll see it. (Example to follow)</p>
-<p><tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt></p>
+<p><a class="reference download internal" href="_downloads/memcount.py"><tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt></a></p>
 <p>provides functions that report the memory use of the current running process.</p>
 <p>(*nix and Windows code)</p>
 </div>
@@ -371,18 +371,18 @@ object pointed to by an id (memory address) &#8211; &#8220;di&#8221;:</p>
 </div>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p><tt class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></tt></p>
+<p><a class="reference download internal" href="_downloads/simple_circular_di.py"><tt class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></tt></a></p>
 <p>uses the ref_by_id() function to see what&#8217;s going on with a circular
 reference and garbage collection.</p>
 <p>More real examples in iPython notebook:</p>
-<p><tt class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></tt></p>
-<p>Or: <tt class="xref download docutils literal"><span class="pre">circular.py</span></tt></p>
-<p><tt class="xref download docutils literal"><span class="pre">memcount.py</span></tt> is a test
+<p><a class="reference download internal" href="_downloads/CircularReferenceExample.ipynb"><tt class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></tt></a></p>
+<p>Or: <a class="reference download internal" href="_downloads/circular.py"><tt class="xref download docutils literal"><span class="pre">circular.py</span></tt></a></p>
+<p><a class="reference download internal" href="_downloads/memcount.py"><tt class="xref download docutils literal"><span class="pre">memcount.py</span></tt></a> is a test
 file that show memory growth if circular references are not cleaned up.</p>
-<p>( <tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt> )
+<p>( <a class="reference download internal" href="_downloads/mem_check.py"><tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt></a> )
 is code that reports process memory use.</p>
 <p>You can find this code in the main repo here:</p>
-<p><a class="reference external" href="https://github.com/PythonCHB/PythonTopics/tree/master/Sources/code/weak_references">https://github.com/PythonCHB/PythonTopics/tree/master/Sources/code/weak_references</a></p>
+<p><a class="reference external" href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/week-02-ref_counting">https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/week-02-ref_counting</a></p>
 </div>
 <div class="section" id="id1">
 <h3>Weak References<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
