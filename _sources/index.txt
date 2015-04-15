@@ -35,9 +35,7 @@ Session 2
 
   :ref:`weak_references`
 
-
-  PEP-8 (pylint/pychecker/pyflakes)
-
+  `PEP-8 (pylint/pychecker/pyflakes) <html_slides/pep8/index.html>`_
 
 
 Session 3
