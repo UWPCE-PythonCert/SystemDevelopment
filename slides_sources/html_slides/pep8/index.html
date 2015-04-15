@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>System Development with Python, Week 1 :: PEP-8 / analysis tools</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="themes/style/swiss.css">
+<!--
+  <link rel="stylesheet" media="screen" href="themes/style/web-2.0.css">
+-->
+
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="themes/transition/horizontal-slide.css">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="modernizr.custom.js"></script>
+</head>
+<body>
+  <div class="deck-container">
+
+    <!-- Begin slides. Just make elements with a class of slide. -->
+
+    <section class="slide">
+        <h2>System Development with Python</h2>
+        <h3>Week 1 :: PEP-8 / analysis tools</h3>
+        <p>Joseph Sheedy</p>
+        <p><i>joseph.sheedy@gmail.com</i></p>
+        <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Spring-2014" target="_blank">https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Spring-2014</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>System Development with Python</h2>
+            <p>To view the slides, you can either browse to the location of your git checkout on your filesystem, or serve it with Python's SimpleHTTPServer:
+    <pre>
+    <code>
+$ pushd $HOME/work/UW_Python/git/Python300-SystemDevelopmentWithPython-Spring-2014
+$ python -m SimpleHTTPServer
+Serving HTTP on 0.0.0.0 port 8000 ...
+    </code>
+    </pre>
+
+    </section>
+
+    <section class="slide">
+        <h2><a target="_blank" href="http://legacy.python.org/dev/peps/pep-0008/">PEP-8</a></h2>
+        <p>Style Guide for Python</p>
+        <p>Defines a good baseline for your own local style guide</p>
+        <p>The 'rules' are just suggestions.  From the document: <blockquote>most importantly: know when to be inconsistent -- sometimes the style guide just doesn't apply</blockquote>
+    </section>
+
+    <section class="slide">
+        <h2>Important PEP-8 recommendations</h2>
+        <ul>
+            <li><a target="_blank" href="http://legacy.python.org/dev/peps/pep-0008/#tabs-or-spaces">http://legacy.python.org/dev/peps/pep-0008/#tabs-or-spaces</a>
+            <li>Use 4 space indents.    The tabs vs. spaces wars will likely never completely come to peaceful conclusion.   But the Python community has standardized on 4 space indents. Unless you have compelling reasons not to, you should too.
+            <li>Python 3 disallows mixing of tabs and spaces.   With Python 2, you can run with the -tt flag which will force errors on mixed use of tabs and spaces.
+            <li>Let your editor help you by having it insert 4 spaces for the tab key, turning on visible whitespace markers, and/or integrating a PEP-8 plugin
+        </ul>
+        <ul>
+            
+            <li><a target="_blank" href="http://legacy.python.org/dev/peps/pep-0008/#maximum-line-length">http://legacy.python.org/dev/peps/pep-0008/#maximum-line-length</a>
+            <li>Maximum line length of 79 characters
+            <li>This is an easy one to let run away early.   If 79 characters is too short, find a line length your team can agree on and stick to it as specified in PEP-8 
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>PEP-8 recommendations (continued)</h2>
+        <ul>
+            <li><a target="_blank" href="http://legacy.python.org/dev/peps/pep-0008/#source-file-encoding">http://legacy.python.org/dev/peps/pep-0008/#source-file-encoding</a>
+            <li>The default encoding in Python 2 is ASCII, in Python 3 it is UTF-8.
+            <li>Even if you insert a non encodable character in a string literal, the interpreter will throw a SyntaxError when it reaches it.
+            <li>To change the file encoding to UTF-8 for example, insert 
+<pre><code>
+# coding: utf-8
+</code></pre>
+            near the top of the file (see examples/encoding.py)
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>PEP-8 recommendations (continued)</h2>
+        <h3>Naming conventions</h3>
+        <ul>
+            <li>variables, attributes, and modules names should be lowercase, with words separated by underscores
+            <li>class names should be CamelCase, aka StudlyCaps
+            <li><a target="_blank" hef="http://legacy.python.org/dev/peps/pep-0008/#constants">constants</a> should be ALL CAPS
+        </ul>
+        <h3>Argument conventions</h3>
+        <ul>
+            <li>instance methods should have a first argument called self
+            <li>class methods should have a first argument called cls 
+            <li>There's nothing magic about these names.  You don't have to use this convention, but not adopting it will likely confuse future readers
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>PEP-8 recommendations (continued)</h2>
+        <h3>Imports</h3>
+        <ul>
+            <li><a target="_blank" href="http://legacy.python.org/dev/peps/pep-0008/#imports">imports</a> should be near the top of the file
+            <li>imports should be grouped in the following order, separated by a blank line:
+                <ol>
+                    <li>standard library imports
+                    <li>related third party imports
+                    <li>local application/library specific imports
+                </ol>
+            </li>
+            <li>avoid wildcard imports to keep the namespace clean for both humans and automated tools
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>PEP-8 recommendations (continued)</h2>
+            <p>public and non-public class members
+            <ul>
+                <li>When in doubt make an attribute non-public
+                <li>A non-public attribute has two leading underscores and no trailing underscores, which triggers Python's name mangling
+                <li>property access should be cheap
+                <li>add public names in a module to __all__
+                <li>When comparing with singletons such as None, use "x is None", not "x == None".  
+<a target="_blank" href="http://jaredgrubb.blogspot.com/2009/04/python-is-none-vs-none.html">why?</a>
+    </section>
+
+    <section class="slide">
+        <h2>Tools to help</h2>
+        <ul>
+            <li><a target="_blank" href="http://pychecker.sourceforge.net/">PyChecker</a> - searches for bugs and style issues.   Not currently in PyPI, install from sourceforge 
+            <li><a target="_blank" href="https://pypi.python.org/pypi/pyflakes">pyflakes</a> - searches for bugs, but without importing modules 
+            <li><a target="_blank" href="http://www.pylint.org/">Pylint</a> - style guide, searches for bugs
+            <li><a target="_blank" href="https://pypi.python.org/pypi/pep8">pep8</a> - tests conformance to PEP-8 
+            <li><a target="_blank" href="https://pypi.python.org/pypi/flake8">flake8</a> combines pyflakes, pep8, and mccabe, a code complexity analyzer 
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>pychecker</h2>
+        <p>Interesting options to turn on which are off by default:
+<pre><code>
+-t, --tuple        all unused local variables, including tuples [off]
+-9, --members      all unused class data members [off]
+-q, --stdlib       ignore warnings from files under standard library [off]
+-b, --blacklist    ignore warnings from the list of modules
+</pre></code>
+        </ul> 
+        <p>Poor code example examples/Listing1.py was adapted from <a target="_blank" href="http://doughellmann.com/2008/03/01/static-code-analizers-for-python.html">Doug Hellman</a>
+        <p>What can you spot as an error, bad practice, or poor style?
+        <p class="slide">Now let's see what pychecker Listing1.py has to say about it
+    </section>
+
+    <section class="slide">
+        <h2>pylint</h2>
+        <p>Interesting options:
+<pre><code>
+-d (msg ids), --disable=(msg ids)      Disable the messages identified in the messages table
+--generate-rcfile/--rcfile             Saves/restores a configuration 
+</pre></code>
+        </ul> 
+        <p class="slide">Now let's see what pylint Listing1.py has to say
+        <p class="slide">Note the more verbose output, but did pychecker have any information not contained in pylint?
+        <p class="slide">pychecker identifies the incorrect use of self in a function
+
+
+    </section>
+
+    <section class="slide">
+        <h2>pyflakes</h2>
+        <p>Doesn't check style, just checks for functional errors
+        <p>Similar to pychecker, but does not execute code
+        <p class="slide">Now let's see what pyflakes Listing1.py has to say
+        <p class="slide">What's the overlap in pyflakes' output versus the other two tools?
+
+    </section>
+
+    <section class="slide">
+        <h2>pep8</h2>
+        <p>Only checks style
+        <p>Interesting options:
+<pre><code>
+--statistics         count errors and warnings
+--count              print total number of errors and warnings to standard error and set exit code to 1 if total is not null
+</code></pre>
+        <p class="slide">Now let's see what pep8 Listing1.py has to say
+        <p class="slide">What's the overlap in pep8's output versus the other two tools?
+
+    </section>
+
+    <section class="slide">
+        <h2>flake8</h2>
+        <p>A tool which wraps pep8, pyflakes, and mccabe
+        <p>
+            <a target="_blank" href="http://nedbatchelder.com/blog/200803/python_code_complexity_microtool.html">mccabe</a> is a "microtool" written by Ned Batchelder (author of coverage) for assessing
+            <a target="_blank" href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">Cyclomatic Complexity</a>
+        <p>Interesting options:
+        <pre><code>
+--max-complexity=N    McCabe complexity threshold 
+        </code></pre>
+
+        <p class="slide">Now let's see what flake8 Listing1.py has to say
+        <p class="slide">What's the overlap in flake8 output versus the other two tools?
+
+    </section>
+
+    <section class="slide">
+        <h2>analyzing a larger codebase in the wild</h2>
+<pre><code>
+pushd $HOME/virtualenvs/uwpce/lib/python2.7/site-packages
+
+flake8 django
+
+pylint django
+</code></pre>
+        
+    </section>
+
+    <section class="slide">
+        <h2>code analysis tool battle royale</h2>
+<pre><code>
+pychecker pylint
+pychecker flake8
+
+pylint pychecker
+pylint flake8
+
+flake8 $HOME/virtualenvs/uwpce/lib/python2.7/site-packages/pychecker/checker.py
+flake8 pylint
+</code></pre>
+
+    </section>
+
+    <section class="slide">
+        <h2>analysis tool summary</h2>
+        <ul>
+            <li>There is no magic bullet that guarantees functional, beautiful code
+            <li>Some classes of programming errors can be found before runtime
+            <li>With the PEP-8 tools, it is easy to let rules such as line length slip by
+            <li>It's up to you to determine your thresholds
+        </ul>
+    </section>
+
+    <!-- End slides. -->
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+
+    <!-- End extension snippets. -->
+  </div>
+
+<!-- Required JS files. -->
+<script src="jquery.min.js"></script>
+<script src="core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+<script src="extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>
