@@ -213,7 +213,7 @@ Circular References
         In [13]: l2[1][1][1]
         Out[13]: [1, [2, [...]]]
 
-(demo) -- :download:`simple_circular.py <../code/weak_references/simple_circular.py>`
+(demo) -- :download:`simple_circular.py <../../Examples/week-02-ref_counting/simple_circular.py>`
 
 
 The Garbage Collector
@@ -284,7 +284,7 @@ It can be subtle --python (and the OS) do tricks to re-use memory, etc.
 
 But if you have a "real" leak -- you'll see it. (Example to follow)
 
-:download:`mem_check.py <../code/weak_references/mem_check.py>`
+:download:`mem_check.py <../../Examples/week-02-ref_counting/memcount.py>`
 
 provides functions that report the memory use of the current running process.
 
@@ -312,26 +312,26 @@ NOTE: it would be a really bad idea to use these in production code!
 Examples
 ----------
 
-:download:`simple_circular_di.py <../code/weak_references/simple_circular_di.py>`
+:download:`simple_circular_di.py <../../Examples/week-02-ref_counting/simple_circular_di.py>`
 
 uses the ref_by_id() function to see what's going on with a circular
 reference and garbage collection.
 
 More real examples in iPython notebook:
 
-:download:`CircularReferenceExample.ipynb  <../code/weak_references/CircularReferenceExample.ipynb>`
+:download:`CircularReferenceExample.ipynb  <../../Examples/week-02-ref_counting/CircularReferenceExample.ipynb>`
 
-Or: :download:`circular.py <../code/weak_references/circular.py>`
+Or: :download:`circular.py <../../Examples/week-02-ref_counting/circular.py>`
 
-:download:`memcount.py <../code/weak_references/memcount.py>` is a test
+:download:`memcount.py <../../Examples/week-02-ref_counting/memcount.py>` is a test
 file that show memory growth if circular references are not cleaned up.
 
-( :download:`mem_check.py <../code/weak_references/mem_check.py>` )
+( :download:`mem_check.py <../../Examples/week-02-ref_counting//mem_check.py>` )
 is code that reports process memory use.
 
 You can find this code in the main repo here:
 
-https://github.com/PythonCHB/PythonTopics/tree/master/Sources/code/weak_references
+https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/week-02-ref_counting
 
 
 Weak References
