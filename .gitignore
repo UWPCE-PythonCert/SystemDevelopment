@@ -8,6 +8,8 @@ slides_sources/build
 #ignore sublime workspace files
 *.sublime*
 
+.project
+.pydevproject
 # ignore .gitignore, so we can each have our own.
 .gitignore
 

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Python300 week 03, metaclasses</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/style/swiss.css">
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/transition/horizontal-slide.css">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="deckjs/core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+  <div class="deck-container">
+
+      <section class="slide">
+          <h2>System Development with Python</h2>
+          <h3>Week 3 :: debugging</h3>
+          <p>Joseph Sheedy</p>
+          <p><i>joseph.sheedy@gmail.com</i></p>
+          <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
+      </section>
+
+      <section class="slide">
+          <h2>Today's topics</h2>
+          <ul>
+              <li>The call stack
+              <li>Exceptions
+              <li>Iterators
+              <li>Debugging
+          </ul>
+      </section>
+
+      <section class="slide">
+          <h1>The Call Stack</h1>
+      </section>
+
+      <section class="slide">
+          <h2>What is the call stack?</h2>
+          <ul>
+          <li>The call stack is a stack data structure that stores information about the current active function call
+          <li>The objects in the stack are known as "stack frames".  Each frame contains the arguments passed to the function, space for local variables, and the return address
+          <li>A stack is a Last-In-First-Out (LIFO) data structure
+          <li>When a function is called, a stack frame is created for it and pushed onto the stack
+          <li>When a function returns, it is popped off the stack and control is passed to the next item in the stack.  If the stack is empty, the program exits
+          </ul>
+      </section>
+
+      <section class="slide">
+          <img src="images/ProgramCallStack2.png">
+      </section>
+
+      <section class="slide">
+          <h2>How deep can that stack be?</h2>
+  <pre><code>i = 0
+
+def recurse():
+    global i
+    i += 1
+    print i
+    recurse()
+
+recurse()
+  </code></pre>
+      <p class="slide">That value can be changed with sys.setrecursionlimit(N)</p>
+      </section>
+
+      <section class="slide">
+          <h2>inspecting frames in the call stack</h2>
+  <pre><code>import sys, traceback
+
+def one():
+    one_local_var = "foo"
+    two()
+
+def two():
+    two_local_var = "foo"
+    three()
+
+def three():
+    # print the stack
+    for num in range(3):
+        frame = sys._getframe(num)
+        show_frame(num, frame)
+
+    # or,
+    traceback.print_stack()
+    # or more rudely
+    1/0
+
+def show_frame(num, frame):
+    print "  frame     = sys._getframe(%s)" % num
+    print "  function  = %s()" % frame.f_code.co_name
+    print "  file/line = %s:%s" % (frame.f_code.co_filename, frame.f_lineno)
+    print "  locals: %s" % frame.f_locals.keys()
+
+one()
+  </code></pre>
+      <p>Also see the <a target="_blank" href="https://docs.python.org/2/library/inspect.html">inspect module</a>
+      </section>
+
+      <section class="slide">
+          <h2>Exceptions</h2>
+          <h3>It's easier to ask for forgiveness than permission</h3>
+
+          <div class="slide">
+
+              <p>When either the interpreter or your own code detects an error condition, an exception may be raised</p>
+
+              <p>The exception will bubble up the call stack until it is handled.  If it's not, the interpreter will exit.
+              <p>At each level in the stack, a handler can either:
+                  <ul>
+                      <li>let it pass through (the default)
+                      <li>swallow the exception
+                      <li>catch the exception and raise it again
+                      <li>catch the exception and raise a new one
+                  </ul>
+          </div>
+
+      </section>
+
+      <section class="slide">
+          <h2>Handling exceptions</h2>
+          <p>The most basic form uses the builtins try and except
+      <pre><code>try:
+    print "do some stuff"
+    1 / 0
+    print "do some more stuff"
+except:
+    print "stuff failed"</code></pre>
+      </section>
+
+      <section class="slide">
+      <h2>A few more builtins for exception handling: finally, else, and raise</h2>
+      <pre><code>def divide(x, y):
+
+try:
+    print "line 1"
+    result = x / y
+    print "line 2"
+
+except ZeroDivisionError as e:
+    print "caught division error: %s" % str(e)
+
+except Exception as e:
+    print "unhandled exception %s.  message: %s " % (type(e), e.args)
+    raise
+
+else:
+    print "everything worked great"
+    return result
+
+finally:
+    print "this is executed no matter what"</code></pre>
+      </section>
+
+      <section class="slide">
+      <h2> Built-in exceptions</h2>
+      <pre><code>[name for name in dir(__builtin__) if "Error" in name]</code></pre>
+      <p>If one of these meets your needs, by all means use it.  Else, define a new exception type by subclassing one, perhaps Exception</p>
+      <pre><code>In [32]: import exceptions
+In [33]: exceptions?
+Type:       module
+String Form:<module 'exceptions' (built-in)>
+Docstring:
+Python's standard exception class hierarchy.
+
+Exceptions found here are defined both in the exceptions module and the
+built-in namespace.  It is recommended that user-defined exceptions
+inherit from Exception.  See the documentation for the exception
+inheritance hierarchy.</code></pre>
+
+      </section>
+
+      <section class="slide">
+      <h2>Exercise</h2>
+      <p>Modify the example program examples/wikidef
+      <p>Enforce the argument to api.Wikipedia.title to have length greater than 0
+      <p>If a 0 length argument is passed to this function, raise a new exception called ZeroLengthTitleError
+      <p>Handle this exception in the caller (Not necessarily the immediate caller, which one makes sense to you?)
+      <p>Feel free to edit the code in place.  You can throw away your changes at the end with "git reset --hard", store them for later with "git stash", or commit them!
+      </section>
+
+      <section class="slide">
+          <h2>Further reading </h2>
+      <ul>
+          <li><a target="_blank" href="https://wiki.python.org/moin/HandlingExceptions">https://wiki.python.org/moin/HandlingExceptions</a>
+          <li><a target="_blank" href="http://docs.python.org/2/library/exceptions.html">http://docs.python.org/2/library/exceptions.html</a>
+          <li><a target="_blank" href="http://docs.python.org/2/tutorial/errors.html">http://docs.python.org/2/tutorial/errors.html</a>
+      </ul>
+      </section>
+      <section class="slide">
+          <h2>Exceptions aren't just for errors</h2>
+          <p>Exception handling can be used for control flow as well
+          <p>i.e. StopIteration for iterators</p>
+      </section>
+
+      <!--
+      <section class="slide">
+      <h2>FibIterator, demonstrating StopIteration</h2>
+      <pre><code>
+      class FibIterator(object):
+
+          def __init__(self):
+              self.data = [0,1,1,2,3,5,8,13,21]
+              self.i = 0
+
+          def __iter__(self):
+              return self
+
+          def next(self):
+              if self.i >= len(self.data):
+                  raise StopIteration
+
+              value = self.data[self.i]
+              self.i += 1
+              return value
+
+      iter = FibIterator()
+      for x in iter:
+          print x
+      </code></pre>
+      </section>
+      -->
+
+
+      <section class="slide">
+          <h2>Iterators</h2>
+          <p>Iterators are objects which support a concept of iteration over a collection
+      <pre><code># looping over the lines in a file is done via an iterator:
+  with open("file.dat") as f:
+      for line in f:
+          print line
+
+  # and you can create your own
+  for x in foo():
+      print x</code></pre>
+          <p>An iterator is an object which follows the Python <a target="blank" href="https://docs.python.org/2/library/stdtypes.html#container.__iter__">iterator protocol</a>
+          <p>An iterator defines two required methods in order to iterate
+          <ul>
+              <li>__iter__() returns the iterator itself
+              <li>next() returns the next item in the sequence
+          </ul>
+          <p>
+              <a target="_blank" href="http://docs.python.org/2/library/stdtypes.html#iterator-types">http://docs.python.org/2/library/stdtypes.html#iterator-types</a>
+          </p>
+
+      </section>
+
+      <section class="slide">
+          <h2>Demonstration iterator</h2>
+  <pre><code>class CountToTen(object):
+      """an iterator which returns integers from 0 to 9, inclusive"""
+
+      def __init__(self):
+          self.data = range(10)
+
+      def __iter__(self):
+          return self
+
+      def next(self):
+          try:
+              return self.data.pop(0)
+          except IndexError:
+              raise StopIteration
+
+  for x in CountToTen():
+      print x
+
+  # or consume the whole thing at once by converting to a list:
+  list(CountToTen())
+  </code></pre>
+      </p>
+      </section>
+
+      <section class="slide">
+          <h2>Now let's build an iterator</h2>
+          <p>Calculate the first 20 values in the Fibonacci sequence: [0, 1, 1, 2, 3, 5, ... ] using an iterator
+          <p>The Fibonnaci sequence is defined as such:
+          <ul>
+          <li>The first two integers in the sequence are 0 and 1
+          <li>Each member of the sequence is the sum of the previous two elements
+          </li>
+      <pre><code>for x in FibonacciIterator(20):
+  print x
+      </code></pre>
+
+      </section>
+
+      <section class="slide">
+      <h2>generators</h2>
+      <p>A <a target="_blank" href="https://wiki.python.org/moin/Generators">generator</a> is a concrete type that implements the iterator protocol.
+      <p>Convert a function to a generator using the yield keyword</p>
+      <pre><code>def count_to_10():
+    for i in range(10):
+        yield i
+
+for x in count_to_10():
+    print x
+      </code></pre>
+      <p>(4700 upvotes on this stackoverflow question, yield is confusing at first)</p>
+      <a target="_blank" href="http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained">http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained</a>
+      </section>
+
+      <section class="slide">
+      <h2>Using a generator expression to create a generator</h2>
+      <p>Python list comprehensions allow you to build lists of values</p>
+      <pre><code>my_list = [x for x in open('file.dat')]</code></pre>
+      <p>Convert that list comprehension to a generator just by replacing '[]' with '()'
+      <pre><code>my_generator = (x for x in open('file.dat'))</code></pre>
+      <a target="_blank" href="https://wiki.python.org/moin/Generators">https://wiki.python.org/moin/Generators</a>
+      </section>
+
+      <section class="slide">
+          <h2>Python Debugging</h2>
+          <p class="slide">Debuggers are code which allows the inspection of state of other code during runtime.</p>
+
+      <div class="slide">
+          <p>Rudimentary tools
+              <ul>
+                  <li>print()</li>
+                  <li>interpreter hints</li>
+                  <li>import logging.debug</li>
+                  <li>assert()</li>
+              </ul>
+          </p>
+
+          <p >Console debuggers</p>
+              <ul>
+                  <li>pdb/ipdb</li>
+              </ul>
+          </p>
+
+          <p >GUI debuggers</p>
+              <ul>
+                  <li>Winpdb</li>
+                  <li>IDEs: Eclipse, Wing IDE, PyCharm, Visual Studio</li>
+              </ul>
+          </p>
+      </div>
+      </section>
+
+      <section class="slide">
+          <h2>help from the interpreter</h2>
+          <p>investigate import issues with -v</p>
+          <p>inspect environment after running script with -i</p>
+      </section>
+
+      <section class="slide">
+          <h2>the logging module</h2>
+          <p>A flexible logging system that comes with the standard library
+          <p>Any module using the logging api can have logging output routed the same as your code
+          <p>The four main classes of logging
+          <ul>
+              <li>Loggers - the interface for your code
+              <li>Handlers - handle log routing
+              <li>Filters - define which log messages to let through
+              <li>Formatters - how the log messages get rendered
+          </ul>
+      </section>
+
+      <section class="slide">
+          <h2>basic logging usage</h2>
+          <p>Basic handling, filtering, and formatting can be done through the logging module's basicConfig method
+          <p>More complex and configurable configurations can be created with the class interfaces for each of those tasks
+          <p>Timestamps can be included by passing the kwarg <code>format='%(asctime)s %(message)s')</code> to basicConfig
+
+  <pre><code>
+  import logging
+
+  logging.basicConfig(filename='example.log', level=logging.DEBUG)
+  logging.debug("debug level message")
+  logging.warning("debug level message")
+
+  </pre></code>
+      <p>see examples/logging/example1.py
+      </section>
+
+      <section class="slide">
+          <h2>A more complex logging setup</h2>
+  <pre><code>
+  import logging
+
+  # create logger
+  logger = logging.getLogger('simple_example')
+  logger.setLevel(logging.DEBUG)
+
+  # create console handler and set level to debug
+  handler = logging.StreamHandler()
+  handler.setLevel(logging.DEBUG)
+
+  # create formatter
+  formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+  # add formatter to handler
+  handler.setFormatter(formatter)
+
+  # add handler to logger
+  logger.addHandler(handler)
+
+  # 'application' code
+  logger.debug('debug message')
+  logger.info('info message')
+  logger.warn('warn message')
+  logger.error('error message')
+  logger.critical('critical message')
+  </code></pre>
+      </section>
+
+      <section class="slide">
+          <h2><a target="_blank" href="http://docs.python.org/2/library/pdb.html">Pdb - The Python Debugger</a></h2>
+          <p>Pros:
+              <ul>
+                  <li>You have it already, ships with the standard library
+                  <li>Easy remote debugging
+                  <li>Works with any development environment
+              </ul>
+          </p>
+          <p>Cons:
+              <ul>
+                  <li>Steep-ish learning curve
+                  <li>Easy to get lost in a deep stack
+                  <li>Watching variables isn't hard, but non-trivial
+              </ul>
+          </p>
+      </section>
+      <section class="slide">
+          <h2><a target="_blank" href="http://docs.python.org/2/library/pdb.html">Pdb - The Python Debugger</a></h2>
+          <p class="">The 4-fold ways of invoking pdb
+              <ul class="">
+                  <li>Postmortem mode
+                  <li>Run mode
+                  <li>Script mode
+                  <li>Trace mode
+              </ul>
+          </p>
+          <p>Note: in most cases where you see the word 'pdb' in the examples, you can replace it with 'ipdb'. ipdb is the ipython enhanced version of pdb which is mostly compatible, and generally easier to work with. But it doesn't ship with Python.</p>
+      </section>
+
+
+      <section class="slide">
+          <h2>Postmortem mode</h2>
+          <p>For analyzing crashes due to uncaught exceptions
+      <pre><code>
+      python -i script.py
+      import pdb; pdb.pm()
+      </pre></code>
+      </section>
+
+      <section class="slide">
+          <h2>Run mode</h2>
+      <pre><code>
+      pdb.run('some.expression()')
+      </pre></code>
+      </section>
+
+      <section class="slide">
+      <h2>Script mode</h2>
+      <pre><code>
+      python -m pdb script.py
+      </pre></code>
+      <p>"-m [module]" finds [module] in sys.path and executes it as a script
+      </section>
+
+      <section class="slide">
+          <h2>Trace mode</h2>
+          <p>Insert the following line into your code where you want execution to halt:
+      <pre><code>
+      import pdb; pdb.set_trace()
+      </pre></code>
+          <p>It's not always OK/possible to modify your code in order to debug it, but this is often the quickest way to begin inspecting state
+      </section>
+
+      <section class="slide">
+          <h2>pdb in ipython</h2>
+      <pre>
+      <code>
+      In [2]: pdb
+      Automatic pdb calling has been turned ON
+
+      %run app.py
+
+      # now halts execution on uncaught exception
+
+      </code>
+      </pre>
+      <p>
+      If you forget to turn on pdb, the magic command %debug will activate the debugger (in 'post-mortem mode').
+      </p>
+      </section>
+
+      <section class="slide">
+          <h2>Navigating pdb</h2>
+          <p>The goal of each of the preceding techniques was to get to the pdb prompt and get to work inspecting state</p>
+      <pre><code>% python -m pdb define.py robot
+  pdb&gt; break api.py:21
+  # list breakpoints
+  pdb&gt; break
+  pdb&gt; clear 1
+  # print lines of code in current context
+  pdb&gt; list
+  # print lines in range
+  pdb&gt; list 1,28
+  # print stack trace, aliased to (bt, w)
+  pdb&gt; where
+  # move one level up the stack
+  pdb&gt; up
+  # move one level down the stack
+  pdb&gt; down
+  # execute until function returns
+  pdb&gt; return
+  # Execute the current line, stop at the first possible occasion
+  pdb&gt; step
+  # Continue execution until the next line in the current function is reached or it returns.
+  pdb&gt; next
+  # Continue execution until the line with a number greater than the current one is reached or until the current frame returns.  Good for exiting loops.
+  pdb&gt; until
+  # create commands to be executed on a breakpoint
+  pdb&gt; commands
+  pdb&gt; continue</code></pre>
+      </section>
+
+      <section class="slide">
+          <h2>Breakpoints</h2>
+      <pre><code>pdb&gt; help break
+  b(reak) ([file:]lineno | function) [, condition]
+  With a line number argument, set a break there in the current
+  file.  With a function name, set a break at first executable line
+  of that function.  Without argument, list all breaks.  If a second
+  argument is present, it is a string specifying an expression
+  which must evaluate to true before the breakpoint is honored.
+
+  The line number may be prefixed with a filename and a colon,
+  to specify a breakpoint in another file (probably one that
+  hasn't been loaded yet).  The file is searched for on sys.path;
+  the .py suffix may be omitted.</code></pre>
+
+      <p>Clear (delete) breakpoints</p>
+      <pre><code>
+      clear [bpnumber [bpnumber...]]
+      </code></pre>
+
+      <p>disable breakpoints</p>
+      <pre><code>
+      disable [bpnumber [bpnumber...]]
+      </code></pre>
+
+      <p>enable breakpoints</p>
+      <pre><code>
+      enable [bpnumber [bpnumber...]]
+      </code></pre>
+
+      </section>
+
+
+      <section class="slide">
+          <h2>Conditional Breakpoints</h2>
+      <pre><code>
+      pdb&gt; help condition
+      condition bpnumber str_condition
+      str_condition is a string specifying an expression which
+      must evaluate to true before the breakpoint is honored.
+      If str_condition is absent, any existing condition is removed;
+      i.e., the breakpoint is made unconditional.
+      </code></pre>
+
+      <p>Set conditions</p>
+      <pre><code>
+      condition 1 x==1
+      </code></pre>
+
+      <p>Clear conditions</p>
+      <pre><code>
+      condition 1
+      </code></pre>
+      <p>see debugging/examples/long_loop.py</p>
+
+      </section>
+
+      <section class="slide">
+          <h2>Invoking pdb with nose</h2>
+  <p>On error condition, drop to pdb</p>
+  <pre><code>nosetests --pdb
+  </code></pre>
+  <p>
+  On test failure, drop to pdb:</p>
+  <pre><code>nosetests --pdb-failures
+  </code></pre>
+      </section>
+      <section class="slide">
+        <h1>Python IDEs</h1>
+      </section>
+      <section class="slide">
+      <h2>PyCharm</h2>
+      <p>From JetBrains, and integrates some of their vast array of development tools
+      <p>Free Community Edition (CE) is available
+      <p>Good visual debugging support
+      </section>
+      <section class="slide">
+          <h2>Eclipse</h2>
+          <p>A multi-language IDE</p>
+          <p>Python support via <a target="_blank" href="http://pydev.org/">http://pydev.org/</a>
+          <p>Automatic variable and expression watching
+          <p>Supports a lot of debugging features like conditional breakpoints, provided you look in the right places!</p>
+      <p>Further reading</p>
+          <a target="_blank" href="http://pydev.org/manual_adv_debugger.html">http://pydev.org/manual_adv_debugger.html</a>
+      </section>
+
+      <section class="slide">
+          <h2>winpdb</h2>
+          <p>A multi platform Python debugger with threading support</p>
+          <p>Easier to start up and get debugging</p>
+      <pre>
+      <code>
+      winpdb your_app.py
+      </code>
+      </pre>
+      </section>
+
+      <section class="slide">
+          <h2>Remote debugging with winpdb</h2>
+          <p>To debug an application running a different Python, even remotely:</p>
+      <pre>
+      <code>
+      import rpdb2; rpdb2.start_embedded_debugger("password")
+      </code>
+      </pre>
+      <p>
+          <a target="_blank" href="http://winpdb.org/tutorial/WinpdbTutorial.html">http://winpdb.org/tutorial/WinpdbTutorial.html</a>
+      </p>
+      </section>
+
+      <section class="slide">
+          <h2>Debugging exercise</h2>
+          <p>Find the wikidef app in the examples folder</p>
+          <p>Using (i)pdb in module mode (python -m pdb ) debug the app and find the server type that wikipedia is using by looking at response.headers.headers in Wikipedia.article</p>
+          <p>You can enter the debugger by running
+          <pre><code>python -m pdb ./define.py robot</code></pre>
+          <p>You can get to the code by walking through each line with 's'tep and 'n'ext commands, or by setting a breakpoint and 'c'ontinuing.
+          <p>What's the result?</p>
+      </section>
+
+
+  <section class="slide">
+      <h1>Questions?</h1>
+  </section>
+
+    <!-- End slides. -->
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <!--
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+    -->
+    <!-- End extension snippets. -->
+  </div>
+
+<!-- Required JS files. -->
+<script src="deckjs/jquery.min.js"></script>
+<script src="deckjs/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deckjs/extensions/menu/deck.menu.js"></script>
+<script src="deckjs/extensions/goto/deck.goto.js"></script>
+<script src="deckjs/extensions/status/deck.status.js"></script>
+<script src="deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="deckjs/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>
