@@ -1,0 +1,134 @@
+
+In [3]: a = np.zeros((3,4))
+
+In [4]: a
+Out[4]: 
+array([[ 0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.]])
+
+In [5]: a.flatten()
+Out[5]: array([ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.])
+
+In [6]: a = np.arange(10)
+
+In [7]: a
+Out[7]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+In [8]: a.strides
+Out[8]: (4,)
+
+In [9]: a.shape((2,5))
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-9-e513240c270c> in <module>()
+----> 1 a.shape((2,5))
+
+TypeError: 'tuple' object is not callable
+
+In [10]: a.shape = (2,5)
+
+In [11]: a
+Out[11]: 
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+
+In [12]: a.stride
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-12-7bebad24b593> in <module>()
+----> 1 a.stride
+
+AttributeError: 'numpy.ndarray' object has no attribute 'stride'
+
+In [13]: a.strides
+Out[13]: (20, 4)
+
+In [14]: a = np.arange(10, dtype=np.uint8)
+
+In [15]: a
+Out[15]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=uint8)
+
+In [16]: a.strides
+Out[16]: (1,)
+
+In [17]: a.shape = 2,5
+
+In [18]: a
+Out[18]: 
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]], dtype=uint8)
+
+In [19]: a.strides
+Out[19]: (5, 1)
+
+In [20]: a.shape
+Out[20]: (2, 5)
+
+In [21]: np.lib.stride_tricks.as_strided(a, (8, 3), (1,1) )
+Out[21]: 
+array([[0, 1, 2],
+       [1, 2, 3],
+       [2, 3, 4],
+       [3, 4, 5],
+       [4, 5, 6],
+       [5, 6, 7],
+       [6, 7, 8],
+       [7, 8, 9]], dtype=uint8)
+
+In [22]: a.sum(axis=0)
+Out[22]: array([ 5,  7,  9, 11, 13], dtype=uint32)
+
+In [23]: a
+Out[23]: 
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]], dtype=uint8)
+
+In [24]: b = np.lib.stride_tricks.as_strided(a, (8, 3), (1,1) )
+
+In [25]: b
+Out[25]: 
+array([[0, 1, 2],
+       [1, 2, 3],
+       [2, 3, 4],
+       [3, 4, 5],
+       [4, 5, 6],
+       [5, 6, 7],
+       [6, 7, 8],
+       [7, 8, 9]], dtype=uint8)
+
+In [26]: b.sum(axis=1)
+Out[26]: array([ 3,  6,  9, 12, 15, 18, 21, 24], dtype=uint32)
+
+In [27]: a.shape = (-1)
+
+In [28]: a
+Out[28]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=uint8)
+
+In [29]: a[3] = 9
+
+In [30]: a
+Out[30]: array([0, 1, 2, 9, 4, 5, 6, 7, 8, 9], dtype=uint8)
+
+In [31]: b
+Out[31]: 
+array([[0, 1, 2],
+       [1, 2, 9],
+       [2, 9, 4],
+       [9, 4, 5],
+       [4, 5, 6],
+       [5, 6, 7],
+       [6, 7, 8],
+       [7, 8, 9]], dtype=uint8)
+
+In [32]: b.shape
+Out[32]: (8, 3)
+
+In [33]: b.size
+Out[33]: 24
+
+In [34]: a.size
+Out[34]: 10
+
+In [35]: b.itemsize
+Out[35]: 1
