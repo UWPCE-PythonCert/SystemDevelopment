@@ -6,7 +6,7 @@ A really simple module, just to demonstrate packaging
 
 def capitalize_line(instr):
     """
-    capitalizes the input string 
+    capitalizes the input string
 
     :param instr: the string to capitalize it should be a single line.
     :type instr: string
@@ -31,7 +31,7 @@ def capitalize(infilename, outfilename):
 
     :param outfilename: the name of the new file that will be created
     :type outfilename: string
-    
+
     :returns: None
 
     :raises: IOError if infilename doesn't exist.
@@ -42,5 +42,19 @@ def capitalize(infilename, outfilename):
     for line in infile:
         outfile.write(capitalize_line(line))
         outfile.write("\n")
-    
+
     return None
+
+
+class Something(object):
+    """
+    this is the class docstring
+    """
+    def __init__(self, input):
+        """
+        the __init__ docstring
+
+        :param input: someinput
+        :type input: some_type
+        """
+        pass
