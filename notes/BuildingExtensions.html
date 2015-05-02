@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Building Extensions to Python &mdash; System Development With Python 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="System Development With Python 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> System Development With Python</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Building Extensions to Python</a><ul>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#windows">Windows:</a></li>
+<li><a class="reference internal" href="#os-x">OS-X:</a><ul>
+<li><a class="reference internal" href="#python-org-python">python.org python</a></li>
+<li><a class="reference internal" href="#apple-s-python">Apple&#8217;s Python</a></li>
+<li><a class="reference internal" href="#macports-homebrew">Macports / Homebrew</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-if-it-works">Testing if it works:</a></li>
+</ul>
+</li>
+</ul>
+</div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Building Extensions to Python</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/notes/BuildingExtensions.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="building-extensions-to-python">
+<span id="building-extensions"></span><h1>Building Extensions to Python<a class="headerlink" href="#building-extensions-to-python" title="Permalink to this headline">¶</a></h1>
+<p>To build extensions to Python, you need a C (and maybe C++) compiler that is compatible with your Python build.</p>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>Linux is pretty straightforward &#8211; most systems are set up to build stuff out of the box. If not, you&#8217;ll need to install the development tools. In ubuntu, that&#8217;s:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo apt-get install build-essential
+</pre></div>
+</div>
+<p>Other systems will have something similar.</p>
+<p>To make sure it&#8217;s working, you can make sure gcc is there with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">gcc</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+<p>at the command line, and make sure you get something!</p>
+<p>To compile Python extensions, you&#8217;ll need the some extra files that come with python. Most distros have an extra package, called something like &#8220;python-dev&#8221; that you&#8217;ll need to get the headers, etc required to build extensions:</p>
+<div class="highlight-python"><div class="highlight"><pre>apt-get install python-dev
+</pre></div>
+</div>
+<p>That should do it.</p>
+</div>
+<div class="section" id="windows">
+<h2>Windows:<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way is to use the same MS compiler as the <code class="docutils literal"><span class="pre">python.org</span></code> build.</p>
+<p>With Python2.7, that&#8217;s MS Visual Studio 2008.</p>
+<p>MS distributes an &#8220;express edition&#8221; for free &#8211; find it, install it, and you should be good to go.  It can be a trick to find older additions, but googling:</p>
+<div class="highlight-python"><div class="highlight"><pre>visual studio 2008 express
+</pre></div>
+</div>
+<p>Got me a link direct to an installer download.</p>
+<p>You want &#8220;Visual C++ 2008 Express Edition with SP1&#8221;</p>
+<p>you need C and C++ compilers, but not the DB stuff, etc. Chances are you&#8217;ll get more than you need, but so be it.</p>
+</div>
+<div class="section" id="os-x">
+<h2>OS-X:<a class="headerlink" href="#os-x" title="Permalink to this headline">¶</a></h2>
+<p>Apple moves fast with its upgrades, so it&#8217;s a bit of a trick. The latest version of XCode is free, but does not support older systems, and thus won&#8217;t work (at least not easily) for the python.org python builds.</p>
+<div class="section" id="python-org-python">
+<h3>python.org python<a class="headerlink" href="#python-org-python" title="Permalink to this headline">¶</a></h3>
+<p>For python.org Python2.7, you need XCode 4.* (I&#8217;ve got 4.6.3)</p>
+<p>for Lion (10.7 and above) &#8211; you&#8217;ll need to download it. Apple makes it a bit hard to find the older versions, but they can be found at:</p>
+<p>[developer.apple.com](<a class="reference external" href="https://developer.apple.com/downloads">https://developer.apple.com/downloads</a>)</p>
+<p>You need to login with an AppleID (or create one), then select &#8220;Developer Tools&#8221;, and search for Xcode &#8211; poke around a bit, and you&#8217;ll eventually find:</p>
+<p>XCode 4.6.3</p>
+<p>Download and install it (do it with a fast connection &#8211; it&#8217;s huge)</p>
+<p>After installing it, you may need to install the &#8220;command line tools&#8221;. Select preferences, the Downloads, and install the &#8220;Command Line Tools&#8221; if they are not already installed.</p>
+</div>
+<div class="section" id="apple-s-python">
+<h3>Apple&#8217;s Python<a class="headerlink" href="#apple-s-python" title="Permalink to this headline">¶</a></h3>
+<p>For Apple&#8217;s built-in python, you should be able to use the latest XCode for your system (should!). You can get it from the App Store (the App store only has the latest, as far as I know). After installing it, make sure you got the command line tools:</p>
+<p>To install these tools, go to the Downloads tab within the Xcode Preferences menu and click &#8220;Install&#8221; next to the Command Line Tools entry.</p>
+<p>(<a class="reference external" href="https://developer.apple.com/support/xcode/">https://developer.apple.com/support/xcode/</a>)</p>
+</div>
+<div class="section" id="macports-homebrew">
+<h3>Macports / Homebrew<a class="headerlink" href="#macports-homebrew" title="Permalink to this headline">¶</a></h3>
+<p>If you installed python with Macports or Homebrew, it should be all set up to compile extensions. If not, then you may need to intall a pyton-dev package, or somethign like that.</p>
+</div>
+</div>
+<div class="section" id="testing-if-it-works">
+<h2>Testing if it works:<a class="headerlink" href="#testing-if-it-works" title="Permalink to this headline">¶</a></h2>
+<p>In the code dir for the week-08 class, you&#8217;ll find a number of samples.</p>
+<p>Go to the: <code class="docutils literal"><span class="pre">week-08/extensions/code/c-api</span></code> dir.</p>
+<p>type:</p>
+<div class="highlight-python"><div class="highlight"><pre>python setup.py build_ext --inplace
+</pre></div>
+</div>
+<p>This should spew out a bunch of stuff while it builds the extension, then hopefully finish without an error. On Linux and the Mac, you should get an add.so file, on Windows, an add.pyd file.</p>
+<p>Try:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">py</span><span class="o">.</span><span class="n">test</span>
+</pre></div>
+</div>
+<p>and hopefully 3 tests will pass.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy .
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

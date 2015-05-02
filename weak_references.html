@@ -14,7 +14,7 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -25,6 +25,8 @@
   
   
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
   
 
   
@@ -42,9 +44,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> System Development With Python</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+        
+          <a href="index.html" class="fa fa-home"> System Development With Python</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -54,9 +59,10 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
-        
-            <!-- Local TOC -->
-            <div class="local-toc"><ul>
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Python Memory Management and Weak References</a><ul>
 <li><a class="reference internal" href="#memory-management">Memory Management</a><ul>
 <li><a class="reference internal" href="#reference-counting">Reference Counting</a></li>
@@ -83,6 +89,7 @@
 </li>
 </ul>
 </div>
+          
         
       </div>
       &nbsp;
@@ -113,13 +120,13 @@
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document">
             
   <div class="section" id="python-memory-management-and-weak-references">
 <span id="weak-references"></span><h1>Python Memory Management and Weak References<a class="headerlink" href="#python-memory-management-and-weak-references" title="Permalink to this headline">¶</a></h1>
 <p>Chris Barker</p>
-<p><tt class="docutils literal"><span class="pre">PythonCHB&#64;gmail.com</span></tt></p>
-<p><tt class="docutils literal"><span class="pre">https://github.com/PythonCHB</span></tt></p>
+<p><code class="docutils literal"><span class="pre">PythonCHB&#64;gmail.com</span></code></p>
+<p><code class="docutils literal"><span class="pre">https://github.com/PythonCHB</span></code></p>
 <div class="section" id="memory-management">
 <h2>Memory Management<a class="headerlink" href="#memory-management" title="Permalink to this headline">¶</a></h2>
 <ul class="left simple">
@@ -295,7 +302,7 @@ object:</p>
 <span class="gh">Out[13]: </span><span class="go">[1, [2, [...]]]</span>
 </pre></div>
 </div>
-<p>(demo) &#8211; <a class="reference download internal" href="_downloads/simple_circular.py"><tt class="xref download docutils literal"><span class="pre">simple_circular.py</span></tt></a></p>
+<p>(demo) &#8211; <a class="reference download internal" href="_downloads/simple_circular.py"><code class="xref download docutils literal"><span class="pre">simple_circular.py</span></code></a></p>
 <div class="section" id="the-garbage-collector">
 <h3>The Garbage Collector<a class="headerlink" href="#the-garbage-collector" title="Permalink to this headline">¶</a></h3>
 <p>As of Python 2.0 &#8211; a garbage collector was added.</p>
@@ -332,10 +339,10 @@ Out[4]: 64
 </div></blockquote>
 <p>Details here:</p>
 <p><a class="reference external" href="http://arctrix.com/nas/python/gc/">http://arctrix.com/nas/python/gc/</a>  (or in the source!)</p>
-<p>Big issue: classes that define a <tt class="docutils literal"><span class="pre">__del__</span></tt> method are not cleaned up.</p>
+<p>Big issue: classes that define a <code class="docutils literal"><span class="pre">__del__</span></code> method are not cleaned up.</p>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">__del__</span></tt> methods often act on references that may no be there if
+<li><code class="docutils literal"><span class="pre">__del__</span></code> methods often act on references that may no be there if
 they are cleaned up in the wrong order.</li>
 </ul>
 </div></blockquote>
@@ -345,7 +352,7 @@ they are cleaned up in the wrong order.</li>
 <div class="section" id="tools">
 <h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
 <p class="left">If these objects are no longer &#8220;reachable&#8221; &#8211; how do you find out what&#8217;s going on?</p>
-<p class="left">We saw <tt class="docutils literal"><span class="pre">sys.getrefcount()</span></tt> &#8211; but you need a reference to the object to use it.</p>
+<p class="left">We saw <code class="docutils literal"><span class="pre">sys.getrefcount()</span></code> &#8211; but you need a reference to the object to use it.</p>
 <p class="left">You can see what the refcount is before you delete the last reference, but that isn&#8217;t always easy.</p>
 <div class="section" id="process-memory-use">
 <h3>Process Memory Use<a class="headerlink" href="#process-memory-use" title="Permalink to this headline">¶</a></h3>
@@ -353,13 +360,13 @@ they are cleaned up in the wrong order.</li>
 is growing.</p>
 <p>It can be subtle &#8211;python (and the OS) do tricks to re-use memory, etc.</p>
 <p>But if you have a &#8220;real&#8221; leak &#8211; you&#8217;ll see it. (Example to follow)</p>
-<p><a class="reference download internal" href="_downloads/memcount.py"><tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt></a></p>
+<p><a class="reference download internal" href="_downloads/memcount.py"><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a></p>
 <p>provides functions that report the memory use of the current running process.</p>
 <p>(*nix and Windows code)</p>
 </div>
 <div class="section" id="id-checks">
 <h3>id checks<a class="headerlink" href="#id-checks" title="Permalink to this headline">¶</a></h3>
-<p>As it happens, the Python <tt class="docutils literal"><span class="pre">id()</span></tt> function returns a memory address.</p>
+<p>As it happens, the Python <code class="docutils literal"><span class="pre">id()</span></code> function returns a memory address.</p>
 <p>It&#8217;s really dangerous, but that means we can examine an object if we know
 its <cite>id</cite>, even if we don&#8217;t hold a reference to it.</p>
 <p>Bill Bumgarner wrote a nifty extension module that returns the python
@@ -371,15 +378,15 @@ object pointed to by an id (memory address) &#8211; &#8220;di&#8221;:</p>
 </div>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="_downloads/simple_circular_di.py"><tt class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></tt></a></p>
+<p><a class="reference download internal" href="_downloads/simple_circular_di.py"><code class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></code></a></p>
 <p>uses the ref_by_id() function to see what&#8217;s going on with a circular
 reference and garbage collection.</p>
 <p>More real examples in iPython notebook:</p>
-<p><a class="reference download internal" href="_downloads/CircularReferenceExample.ipynb"><tt class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></tt></a></p>
-<p>Or: <a class="reference download internal" href="_downloads/circular.py"><tt class="xref download docutils literal"><span class="pre">circular.py</span></tt></a></p>
-<p><a class="reference download internal" href="_downloads/memcount.py"><tt class="xref download docutils literal"><span class="pre">memcount.py</span></tt></a> is a test
+<p><a class="reference download internal" href="_downloads/CircularReferenceExample.ipynb"><code class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></code></a></p>
+<p>Or: <a class="reference download internal" href="_downloads/circular.py"><code class="xref download docutils literal"><span class="pre">circular.py</span></code></a></p>
+<p><a class="reference download internal" href="_downloads/memcount.py"><code class="xref download docutils literal"><span class="pre">memcount.py</span></code></a> is a test
 file that show memory growth if circular references are not cleaned up.</p>
-<p>( <a class="reference download internal" href="_downloads/mem_check.py"><tt class="xref download docutils literal"><span class="pre">mem_check.py</span></tt></a> )
+<p>( <a class="reference download internal" href="_downloads/mem_check.py"><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a> )
 is code that reports process memory use.</p>
 <p>You can find this code in the main repo here:</p>
 <p><a class="reference external" href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/week-02-ref_counting">https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/week-02-ref_counting</a></p>
@@ -394,13 +401,13 @@ is code that reports process memory use.</p>
 </ol>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">WeakKeyDictionary</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">WeakValueDictionary</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">WeakSet</span></tt></li>
+<li><code class="docutils literal"><span class="pre">WeakKeyDictionary</span></code></li>
+<li><code class="docutils literal"><span class="pre">WeakValueDictionary</span></code></li>
+<li><code class="docutils literal"><span class="pre">WeakSet</span></code></li>
 </ul>
 </div></blockquote>
 <ol class="arabic simple" start="2">
-<li><tt class="docutils literal"><span class="pre">Proxy</span></tt> objects</li>
+<li><code class="docutils literal"><span class="pre">Proxy</span></code> objects</li>
 </ol>
 <blockquote>
 <div><ul class="simple">
@@ -408,7 +415,7 @@ is code that reports process memory use.</p>
 </ul>
 </div></blockquote>
 <ol class="arabic simple" start="3">
-<li><tt class="docutils literal"><span class="pre">WeakRef</span></tt> objects</li>
+<li><code class="docutils literal"><span class="pre">WeakRef</span></code> objects</li>
 </ol>
 <blockquote>
 <div><ul class="simple">
@@ -443,7 +450,8 @@ is code that reports process memory use.</p>
     </p>
   </div>
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
 </footer>
         </div>
       </div>

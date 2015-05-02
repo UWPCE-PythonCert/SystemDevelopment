@@ -14,7 +14,7 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -25,6 +25,8 @@
   
   
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
   
 
   
@@ -42,9 +44,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> System Development With Python</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+        
+          <a href="index.html" class="fa fa-home"> System Development With Python</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -54,9 +59,10 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
-        
-            <!-- Local TOC -->
-            <div class="local-toc"><ul>
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Unicode in Python 2</a><ul>
 <li><a class="reference internal" href="#history">History</a><ul>
 <li><a class="reference internal" href="#what-the-heck-is-unicode-anyway">What the heck is Unicode anyway?</a></li>
@@ -92,6 +98,7 @@
 </li>
 </ul>
 </div>
+          
         
       </div>
       &nbsp;
@@ -122,7 +129,7 @@
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document">
             
   <div class="section" id="unicode-in-python-2">
 <span id="unicode"></span><h1>Unicode in Python 2<a class="headerlink" href="#unicode-in-python-2" title="Permalink to this headline">¶</a></h1>
@@ -210,25 +217,25 @@ with combined characters: accents, etc.</p>
 <h3>Strings vs unicode<a class="headerlink" href="#strings-vs-unicode" title="Permalink to this headline">¶</a></h3>
 <p>Python 2 has two types that let you work with text:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">str</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">unicode</span></tt></li>
+<li><code class="docutils literal"><span class="pre">str</span></code></li>
+<li><code class="docutils literal"><span class="pre">unicode</span></code></li>
 </ul>
 <p>And two ways to work with binary data:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">str</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">bytes()</span></tt>  (and <tt class="docutils literal"><span class="pre">bytearray</span></tt>)</li>
+<li><code class="docutils literal"><span class="pre">str</span></code></li>
+<li><code class="docutils literal"><span class="pre">bytes()</span></code>  (and <code class="docutils literal"><span class="pre">bytearray</span></code>)</li>
 </ul>
 <p><strong>but:</strong></p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [86]: </span><span class="nb">str</span> <span class="ow">is</span> <span class="nb">bytes</span>
 <span class="gh">Out[86]: </span><span class="go">True</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">bytes</span></tt> is there for py3 compatibility &#8211; but it&#8217;s good for making your
+<p><code class="docutils literal"><span class="pre">bytes</span></code> is there for py3 compatibility &#8211; but it&#8217;s good for making your
 intentions clear, too.</p>
 </div>
 <div class="section" id="id2">
 <h3>Unicode<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">unicode</span></tt> object lets you work with characters</p>
+<p>The <code class="docutils literal"><span class="pre">unicode</span></code> object lets you work with characters</p>
 <p>It has all the same methods as the string object.</p>
 <p><strong>&#8220;encoding&#8221;</strong> is converting from a unicode object to bytes</p>
 <p><strong>&#8220;decoding&#8221;</strong> is converting from bytes to a unicode object</p>
@@ -294,11 +301,11 @@ intentions clear, too.</p>
 <dt>One example:</dt>
 <dd><a class="reference external" href="http://inamidst.com/stuff/unidata/">http://inamidst.com/stuff/unidata/</a></dd>
 </dl>
-<p><a class="reference download internal" href="_downloads/hello_unicode.py"><tt class="xref download docutils literal"><span class="pre">hello_unicode.py</span></tt></a>.</p>
+<p><a class="reference download internal" href="_downloads/hello_unicode.py"><code class="xref download docutils literal"><span class="pre">hello_unicode.py</span></code></a>.</p>
 </div>
 <div class="section" id="using-unicode">
 <h3>Using Unicode<a class="headerlink" href="#using-unicode" title="Permalink to this headline">¶</a></h3>
-<p>Use <tt class="docutils literal"><span class="pre">unicode</span></tt> objects in all your code</p>
+<p>Use <code class="docutils literal"><span class="pre">unicode</span></code> objects in all your code</p>
 <p><strong>Decode on input</strong></p>
 <p><strong>Encode on output</strong></p>
 <p>Many packages do this for you: <em>XML processing, databases, ...</em></p>
@@ -316,7 +323,7 @@ intentions clear, too.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
 </pre></div>
 </div>
-<p>After running that line, the <tt class="docutils literal"><span class="pre">u''</span></tt> is assumed</p>
+<p>After running that line, the <code class="docutils literal"><span class="pre">u''</span></code> is assumed</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;this is a regular py2 string&quot;</span>
 <span class="gp">In [2]: </span><span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 <span class="go">&lt;type &#39;str&#39;&gt;</span>
@@ -336,7 +343,7 @@ intentions clear, too.</p>
 <p><a class="reference external" href="http://en.wikipedia.org/wiki/Comparison_of_Unicode_encodings">http://en.wikipedia.org/wiki/Comparison_of_Unicode_encodings</a></p>
 <p>But only a couple you are likely to need:</p>
 <ul class="simple">
-<li>utf-8  (<tt class="docutils literal"><span class="pre">*nix</span></tt>)</li>
+<li>utf-8  (<code class="docutils literal"><span class="pre">*nix</span></code>)</li>
 <li>utf-16  (Windows)</li>
 </ul>
 <p>and of course, still the one-bytes ones.</p>
@@ -394,7 +401,7 @@ intentions clear, too.</p>
 <li>Useful if you don&#8217;t know the encoding &#8211; at least it won&#8217;t raise an Exception</li>
 <li>Useful if you need to work with combined text+binary data.</li>
 </ul>
-<p><a class="reference download internal" href="_downloads/latin1_test.py"><tt class="xref download docutils literal"><span class="pre">latin1_test.py</span></tt></a>.</p>
+<p><a class="reference download internal" href="_downloads/latin1_test.py"><code class="xref download docutils literal"><span class="pre">latin1_test.py</span></code></a>.</p>
 </div>
 <div class="section" id="unicode-docs">
 <h3>Unicode Docs<a class="headerlink" href="#unicode-docs" title="Permalink to this headline">¶</a></h3>
@@ -427,7 +434,7 @@ intentions clear, too.</p>
 </div>
 <p>Python deals with the file system encoding for you...</p>
 <p>But: some more obscure calls don&#8217;t support unicode filenames:</p>
-<p><tt class="docutils literal"><span class="pre">os.statvfs()</span></tt> (<a class="reference external" href="http://bugs.python.org/issue18695">http://bugs.python.org/issue18695</a>)</p>
+<p><code class="docutils literal"><span class="pre">os.statvfs()</span></code> (<a class="reference external" href="http://bugs.python.org/issue18695">http://bugs.python.org/issue18695</a>)</p>
 <p>Exception messages:</p>
 <blockquote>
 <div><ul class="simple">
@@ -436,11 +443,11 @@ intentions clear, too.</p>
 <li>It is encoded with the default encoding.</li>
 </ul>
 </li>
-<li><tt class="docutils literal"><span class="pre">UnicodeDecodeError</span></tt> Inside an Exception????</li>
+<li><code class="docutils literal"><span class="pre">UnicodeDecodeError</span></code> Inside an Exception????</li>
 </ul>
 <p>NOPE: it swallows it instead.</p>
 </div></blockquote>
-<p><a class="reference download internal" href="_downloads/exception_test.py"><tt class="xref download docutils literal"><span class="pre">exception_test.py</span></tt></a>.</p>
+<p><a class="reference download internal" href="_downloads/exception_test.py"><code class="xref download docutils literal"><span class="pre">exception_test.py</span></code></a>.</p>
 </div>
 <div class="section" id="unicode-in-python-3">
 <h3>Unicode in Python 3<a class="headerlink" href="#unicode-in-python-3" title="Permalink to this headline">¶</a></h3>
@@ -463,23 +470,23 @@ intentions clear, too.</p>
 <ul class="simple">
 <li>Find some nifty non-ascii characters you might use.<ul>
 <li>Create a unicode object with them in two different ways.</li>
-<li><a class="reference download internal" href="_downloads/hello_unicode.py"><tt class="xref download docutils literal"><span class="pre">here</span></tt></a> is one example</li>
+<li><a class="reference download internal" href="_downloads/hello_unicode.py"><code class="xref download docutils literal"><span class="pre">here</span></code></a> is one example</li>
 </ul>
 </li>
 <li>Read the contents into unicode objects:</li>
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference download internal" href="_downloads/ICanEatGlass.utf8.txt"><tt class="xref download docutils literal"><span class="pre">ICanEatGlass.utf8.txt</span></tt></a></li>
-<li><a class="reference download internal" href="_downloads/ICanEatGlass.utf16.txt"><tt class="xref download docutils literal"><span class="pre">ICanEatGlass.utf16.txt</span></tt></a></li>
+<li><a class="reference download internal" href="_downloads/ICanEatGlass.utf8.txt"><code class="xref download docutils literal"><span class="pre">ICanEatGlass.utf8.txt</span></code></a></li>
+<li><a class="reference download internal" href="_downloads/ICanEatGlass.utf16.txt"><code class="xref download docutils literal"><span class="pre">ICanEatGlass.utf16.txt</span></code></a></li>
 </ul>
 </div></blockquote>
 <p>and / or</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference download internal" href="_downloads/text.utf8"><tt class="xref download docutils literal"><span class="pre">text.utf8</span></tt></a></li>
-<li><a class="reference download internal" href="_downloads/text.utf16"><tt class="xref download docutils literal"><span class="pre">text.utf16</span></tt></a></li>
-<li><a class="reference download internal" href="_downloads/text.utf32"><tt class="xref download docutils literal"><span class="pre">text.utf32</span></tt></a></li>
+<li><a class="reference download internal" href="_downloads/text.utf8"><code class="xref download docutils literal"><span class="pre">text.utf8</span></code></a></li>
+<li><a class="reference download internal" href="_downloads/text.utf16"><code class="xref download docutils literal"><span class="pre">text.utf16</span></code></a></li>
+<li><a class="reference download internal" href="_downloads/text.utf32"><code class="xref download docutils literal"><span class="pre">text.utf32</span></code></a></li>
 </ul>
 </div></blockquote>
 <ul class="simple">
@@ -524,7 +531,7 @@ to print. Try a different terminal or IDE, or google for a solution.</p>
 <p>Read:</p>
 <p><a class="reference external" href="http://axialcorps.com/2014/03/20/unicode-str/">http://axialcorps.com/2014/03/20/unicode-str/</a></p>
 <p>See if you can figure out the decorators:</p>
-<p><a class="reference download internal" href="_downloads/unicodify.py"><tt class="xref download docutils literal"><span class="pre">unicodify.py</span></tt></a>.</p>
+<p><a class="reference download internal" href="_downloads/unicodify.py"><code class="xref download docutils literal"><span class="pre">unicodify.py</span></code></a>.</p>
 <p>(This is advanced Python JuJu: Aren&#8217;t you glad I didn&#8217;t ask you to write that yourself?)</p>
 </div>
 </div>
@@ -543,7 +550,8 @@ to print. Try a different terminal or IDE, or google for a solution.</p>
     </p>
   </div>
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
 </footer>
         </div>
       </div>

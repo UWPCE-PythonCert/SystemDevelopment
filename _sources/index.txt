@@ -14,6 +14,14 @@ In This Course
 
   https://creativecommons.org/licenses/by-sa/4.0/legalcode
 
+Assorted Notes:
+===============
+
+Notes that aren't specific to a particular lecture -- or are genreal purpose, in any case.
+
+:ref:`installing_scipy`
+
+:ref:`building_extensions`
 
 Session 1
 ===========

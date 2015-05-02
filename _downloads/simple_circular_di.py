@@ -30,7 +30,7 @@ print "l2:", sys.getrefcount(l2)
 
 print "delete one"
 del l1
-print "l1:", sys.getrefcount(l2)
+print "l2:", sys.getrefcount(l2)
 
 print "delete the other"
 del l2

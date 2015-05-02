@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Python300 week 03, metaclasses</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/style/swiss.css">
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/transition/horizontal-slide.css">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="deckjs/core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+  <div class="deck-container">
+
+    <!-- Begin slides. Just make elements with a class of slide. -->
+    <section class="slide">
+        <h2>System Development with Python</h2>
+        <h3>Week 9 :: Advanced OO</h3>
+        <p>Joseph Sheedy</p>
+        <p><i>joseph.sheedy@gmail.com</i></p>
+        <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
+    </section>
+<section class="slide">
+    <h2>Old and New classes</h2>
+    <p>Python is an evolving language. As of Python 2.2, we have old-style and new-style classes.  The distinction disappears in Python 3.
+    <p>New-style classes were introduced to unify user defined classes and built-in types.
+    <p>This allows the extension of built-in types, for instance
+    <p>To make a new-style class, derive from any other new-style class, or <i>object</i></p>
+<pre>
+<code>class C(object):
+    # this is new style class
+
+class D():
+    # this is an old style class (in Python 2)
+        </code>
+</pre>
+    <p>You almost always want new-style classes.
+    <p>Some newer features of the language such as properties, super(), etc. do not work with old-style classes.
+</section>
+<section class="slide">
+  <h2>Subclassing</h2>
+<pre><code>class Shape(object):
+    def __str__(self):
+        return "Shape:{}".format(self.__class__.__name__)
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        assert(width > 0)
+        assert(height > 0)
+        self.width = width
+        self.height = height
+
+    def area(self):
+        """returns the area of this Rectangle"""
+        return self.width * self.height
+
+class Square(Rectangle):
+    def __init__(self, length):
+        self.width = length
+        self.height = length</code></pre>
+
+<p>Square inherits the area method from Rectangle
+<p>Square overrides the __init__ method so it only takes a single argument
+<p>Does Square still get the validation in Rectangle.__init__?
+
+</section>
+
+<section class="slide">
+  <h2>Referencing the parent classes with super()</h2>
+  <p>When you override a method in a subclass, it masks the definition of parent classes
+  <p>Most things aren't really hidden in Python, you can reference the parent class definitions by explicit reference:
+<pre><code>
+Square.__init__(self, length, length)
+</code></pre>
+<p>However, there might be multiple parent classes, and this method tightly couples the definition of Square with the definition of Shape.
+<p>We want to locate the method using the same traversal as Python using super()
+<pre><code>class Square(Rectangle): pass
+
+class MyClass(ParentClass):
+  def __init__(self):
+    super(MyClass, self).__init__()</code></pre>
+
+</section>
+<section class="slide">
+<h2>super()</h2>
+<p>super() returns a delegate object, which will delegate method calls to the appropriate class definition
+<p>It will return either a bound or unbound method depending on the parameters
+<pre><code>super(type, obj) -> bound super object; requires isinstance(obj, type)
+
+super(type) -> unbound super object
+
+super(type, type2) -> bound super object; requires issubclass(type2, type)</code></pre>
+
+<p>A bound method is one bound to an instance, just a normal method:
+<pre><code>
+class Foo(object):
+    def bound_method(self): pass
+    @classmethod
+    def unbound_method(): pass
+foo = Foo()
+foo.bound_method() # method is bound to the foo instance
+Foo.unbound_method() # method is not bound
+</code></pre>
+</section>
+
+<section class="slide">
+  <h2>Matching function signatures</h2>
+  <p>In a class hierarchy, super() requires function signatures to match
+  <p>If subclasses require different arguments, don't specify them explicitly but
+  use variable length argument lists for all definitions, e.g.
+<pre><code>def my_method(self, *args, **kwargs)</code></pre>
+  <p>
+<pre><code>class Shape(object):
+    def __init__(self, shapename, **kwargs):
+        self.shapename = shapename
+        super(Shape, self).__init__(**kwargs)
+
+class ColoredShape(Shape):
+    def __init__(self, color, **kwargs):
+        self.color = color
+        super(ColoredShape, self).__init__(**kwargs)
+
+cs = ColoredShape(color='red', shapename='circle')
+</code></pre>
+</section>
+
+<section class="slide">
+<h2>Multiple Inheritance</h2>
+<p>A class may be derived from multiple base classes
+<pre><code>class Combined(Super1, Super2, Super3):
+    def __init__(self, *args, **kwargs):
+        Super1.__init__(self, *args, **kwargs)
+        Super2.__init__(self, *args, **kwargs)
+        Super3.__init__(self, *args, **kwargs)
+</code></pre>
+
+</section>
+
+<section class="slide">
+    <h2>multiple inheritance</h2>
+    <p>When calling a method on an object, Python first checks to see if the method name is defined in the class.  If not, it follows the Method Resolution Order (MRO) until it either finds it or reaches the top without locating it, which will result in an AttributeError exception being thrown.</p>
+    <p>The MRO algorithm
+      <ul>
+        <li>linearizes the search order in a way that preserves the left-to-right ordering specified in each class
+        <li>ensures each class only appears once
+        <li>is monotonic (meaning that a class can be subclassed without affecting the precedence order of its parents)
+      </ul>
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Multiple Inheritance and the Diamond Problem</h2>
+    <img src="images/Diamond_inheritance.png" />
+</section>
+
+<section class="slide">
+    <h2>MRO</h2>
+    <p>The MRO of the previous diagram is [D,B,C,A], and is defined by the C3 linearization algorithm: <a target="_blank" href="http://en.wikipedia.org/wiki/C3_linearization">http://en.wikipedia.org/wiki/C3_linearization</a>
+    <p>In the previous example, what will D.my_method() produce?  Verify your answer with examples/mro.py
+    <p>Classic classes maintain their original method resolution order, depth first and then left to right.</p>
+    <p>In simple cases, this will be a good approximation.
+    <p>In general, children precede their parents and the order of appearance in __bases__ is respected.
+    <p>See examples/logging_dict.py</p>
+    <p>
+        <a target="_blank" href="http://www.python.org/download/releases/2.3/mro/">http://www.python.org/download/releases/2.3/mro/</a>
+    </p>
+</section>
+
+<section class="slide">
+<h2>Multiple Inheritance</h2>
+<pre>
+<code>class A(object):
+    def my_method(self, arg):
+        print "called A"
+
+class B(A):
+    def my_method(self, arg):
+        print "called B"
+        super(B, self).my_method(arg)
+
+class C(A):
+    def my_method(self, arg):
+        print "called C"
+        super(C, self).my_method(arg)
+
+class D(B, C):
+    def my_method(self, arg):
+        print "called D"
+        super(D, self).my_method(arg)
+
+print D.mro()
+
+</code>
+</pre>
+
+</section>
+
+<section class="slide">
+  <h2>Invalid class hierarchies</h2>
+  <p>The MRO algorithm guarantees consistency
+  <p>But it can't successfully define an order for every configuration
+  <p>See examples/invalid_mro.py
+<pre><code>O = object
+
+class X(O): pass
+class Y(O): pass
+
+class A(X,Y): pass
+class B(Y,X): pass
+
+class C(A,B): pass</code></pre>
+</section>
+
+<section class="slide">
+<h2>Other design patterns</h2>
+<p>Inheritance isn't the only way to share code among classes
+<p>Inheritance is a type of a more general design pattern called Delegation
+<p>Delegation is a general pattern for allowing one object to 'delegate' calls to another object
+<p>Another form of delegation is Composition
+<p>Another way to share methods amongst classes is with Mixin classes, which are just regular classes containing generic reusable methods
+<p>Both Composition and Mixins are capitalized, but they aren't Python constructs.  They are just generic patterns that are easily implemented in Python. See <a target="_blank" href="http://en.wikipedia.org/wiki/Design_Patterns">Design Patterns (GoF)</a> for more on design patterns.
+<p>Let's look at Mixins and Composition in Python
+</section>
+<section class="slide">
+    <h2>Mixins</h2>
+    <p>Mixins are regular classes following the Mixin design pattern
+    <p>They containing methods and properties with the intent of blending them into a new class definition.
+
+<pre><code>class BaseClass(object):
+    x = 10
+
+class Mixin1(object):
+    def method1(self):
+        print "called method1, x = %s" % self.x
+
+class Mixin2(object):
+    def method2(self):
+        print "called method2, x = %s" % self.x
+
+
+class MyClass(Mixin2, Mixin1, BaseClass):
+    pass</code></pre>
+
+</section>
+
+<section class="slide">
+  <h2>Exercise</h2>
+  <p>In examples/mixins.py, you will find a few Vehicle classes laid out in a hierarchy
+  <p>The log() method is defined on Vehicle then called on a couple of instances
+  <p>Modify the class definition for Bike to mix in fancier log() method from LoggingMixin
+  <p>Does the output change accordingly? If it didn't, look at the MRO for Bike?  Is it what you expected?
+</section>
+
+
+<section class="slide">
+    <h2>Initialization</h2>
+    <p>An object is initialized after creation by the __init__ method</p>
+<pre><code>class MyInt(int):
+    def __init__(self, d):
+        super(MyInt, self).__init__(d)</code></pre>
+</section>
+
+<section class="slide">
+    <h2>__new__, the object constructor</h2>
+    <p>__new__ is called before an instance is created, and returns an instance.  __init__ is called afterwards to initialize the object
+    <p>Unlike __init__, __new__ is a class method, not an instance method
+    <p>Called with the same arguments as __init__
+    <p>Allows for immutable types, where data is set at construction time
+    <p>Can return new or existing objects of any type
+</section>
+
+<section class="slide">
+<h2>__new__</h2>
+<pre><code>class MyClass(object):
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __new__(cls, *args, **kwargs):
+        print "creating new class %s" % cls
+        return super(MyClass,cls).__new__(cls, *args, **kwargs)</code></pre>
+    <p>cls is the class object.
+
+    <p>Unlike __init__, it needs to return a class instance – usually by directly calling the superclass __new__
+</section>
+
+<section class="slide">
+<h2>When would you need to use it</h2>
+
+<p>
+subclassing an immutable type:
+It’s too late to change it once you get to __init__
+<p>When __init__ is not called, for instance when unpickling (examples/unpickle.py)
+
+</section>
+
+<section class="slide">
+    <h2>__new__ example</h2>
+<p>Here is a replacement for int which can only take new values between 0 and 255:
+<pre><code>class ConstrainedInt(int):
+    def __new__(cls, value):
+        value = value % 256
+        self = int.__new__(cls, value)
+        return self</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Magic Methods</h2>
+    <p>They all start with and end with '__', and do things like support operators and comparisons, and provide handlers for the object lifecycle. </p>
+    <ul>
+        <li>__cmp__(self, other)
+        <li>__eq__(self, other)
+        <li>__add__(self, other)
+    </ul>
+    <p>Also, __call__, __str__, __repr__, __sizeof__, __setattr__, __getattr__, __len__, __iter__, __contains__, __lshift__, __rshift__, __xor__, __div__, __enter__, __exit__, and my personal favorite __rxor__(self,other)...... </p>
+    <p>The list is really long, it's mostly important to get a flavor of how they are used in Python so you can find and implement the right one when you need it.  See <a href="http://www.rafekettler.com/magicmethods.html">http://www.rafekettler.com/magicmethods.html</a> for more</p>
+</section>
+
+<section class="slide">
+<h2>Exercise</h2>
+<p>Our ConstrainedInt handles initialization for us, but doesn't handle modification of the value</p>
+<p>Develop ConstrainedInt until it passes all tests in test_constrainedint.py
+<pre><code>class ConstrainedInt(int):
+    """keeps value between 0 and 255"""
+    def __new__(cls, value):
+        value = value % 256
+        self = int.__new__(cls, value)
+        return self
+</code></pre>
+
+</section>
+
+<!-- <section class="slide">
+    <h2>Magic Methods</h2>
+    <p>They all start with and end with '__', and do things like support operators and comparisons, and provide handlers for the object lifecycle. </p>
+    <ul>
+        <li>__cmp__(self, other)
+        <li>__eq__(self, other)
+        <li>__add__(self, other)
+    </ul>
+    <p>Also, __call__, __str__, __repr__, __sizeof__, __setattr__, __getattr__, __len__, __iter__, __contains__, __lshift__, __rshift__, __xor__, __div__, __enter__, __exit__, and my personal favorite __rxor__(self,other)...... </p>
+    <p>The list is really long, it's mostly important to get a flavor of how they are used in Python so you can find and implement the right one when you need it.  See <a href="http://www.rafekettler.com/magicmethods.html">http://www.rafekettler.com/magicmethods.html</a> for more</p>
+</section> -->
+
+<section class="slide">
+    <h2>A class is just an object</h2>
+    <p>Objects get created from classes.  So what is the class of a class?</h2>
+    <p>The class of Class is a metaclass
+    <p>The metaclass can be used to dynamically create a class
+    <p>The metaclass, being a class, also has a metaclass
+</section>
+
+<section class="slide">
+    <h2>What is a metaclass?</h2>
+
+    <ul>
+      <li>A class is something that makes instances</li>
+      <li>A metaclass is something that makes classes</li>
+      <li>A metaclass is most commonly used as a class factory
+      <li>metaclasses allow you to do 'extra things' when creating a class, like registering the new class with some registry, adding methods dynamically, or even replace the class with something else entirely
+      <li>Every object in Python has a metaclass
+      <li>The default metaclass is type()
+
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>type()</h2>
+    <p>With one argument, <code>type()</code> returns the type of the argument
+    <p>With 3 arguments, <code>type()</code> returns a new class
+
+<pre>
+type?
+Type:       type
+String Form: &lt;type 'type'&gt;
+Namespace:  Python builtin
+Docstring:
+type(object) -> the object's type
+type(name, bases, dict) -> a new type
+
+name: string name of the class
+bases: tuple of the parent classes
+dict: dict containing attribute names and values</pre>
+</pre>
+
+</section>
+
+<section class="slide">
+<h2>using type() to build a class</h2>
+<p>The <code>class</code> keyword is syntactic sugar, we can get by without it by using type
+<pre><code>
+class MyClass(object):
+    x = 1
+</code></pre>
+<p>OR
+<p>
+<pre><code>
+MyClass = type('MyClass', (), {'x': 1})
+</code></pre>
+
+<p> (<code>object</code> is automatically a superclass)
+
+
+</section>
+
+<section class="slide">
+<h2>Adding methods to a class built with <code>type()</code></h2>
+<p>Just define a function with the correct signature and add it to the attr dictionary
+<pre><code>
+def my_method(self):
+    print "called my_method, x = %s" % self.x
+
+MyClass = type('MyClass',(), {'x': 1, 'my_method': my_method})
+o = MyClass()
+o.my_method()
+</code></pre>
+</section>
+
+<section class="slide">
+<h2>What type is type?</h2>
+<pre>
+type(type)
+Out[1]: type
+</pre>
+</p>
+
+</section>
+
+<section class="slide">
+<h2>__metaclass__</h2>
+<p>
+<pre><code>class Foo(object):
+  __metaclass__ = MyMetaClass</code></pre>
+<p>Python will look for __metaclass__ in the class definition.
+<p>If it finds it, it will use it to create the object class Foo.
+<p>If it doesn't, it will use type to create the class.
+<p>__metaclass__ can be defined at the module level
+<p>Whatever is assigned to __metaclass__ should be a callable with the same signature as type()
+</section>
+
+<section class="slide">
+<h2>Why use metaclasses?</h2>
+<p>Useful when creating an API or framework
+<p>Whenever you need to manage object creation for one or more classes
+<p>For example, see examples/singleton.py
+<p>Or consider the Django ORM:
+<code><pre>class Person(models.Model):
+  name = models.CharField(max_length=30)
+  age = models.IntegerField()
+
+person = Person(name='bob', age=35)
+print person.name</pre></code>
+<p>When the Person class is created, it is dynamically modified to integrate with the database configured backend. Thus,
+different configurations will lead to different class definitions. This is abstracted from the user of the Model class.
+<p>Here is the Django Model metaclass:
+<a target="_blank" href="https://github.com/django/django/blob/master/django/db/models/base.py#L59">https://github.com/django/django/blob/master/django/db/models/base.py#L59</a>
+</section>
+
+<section class="slide">
+    <h2>Metaclass example</h2>
+<p>Consider wanting a metaclass which mangles all attribute names to provide uppercase and lower case attributes</p>
+</section>
+
+<section class="slide">
+<h2>Metaclass example</h2>
+<p>
+<pre><code>class Foo(object):
+    __metaclass__ = NameMangler
+    x = 1
+
+f = Foo()
+print f.X
+print f.x</code></pre>
+</section>
+
+<section class="slide">
+<h2>NameMangler</h2>
+<pre><code>class NameMangler(type):
+    def __new__(cls, clsname, bases, dct):
+        uppercase_attr = {}
+        for name, val in dct.items():
+            if not name.startswith('__'):
+                uppercase_attr[name.upper()] = val
+                uppercase_attr[name] = val
+            else:
+                uppercase_attr[name] = val
+
+        return super(NameMangler, cls).__new__(cls, clsname, bases, uppercase_attr)
+
+class Foo(object):
+    __metaclass__ = NameMangler
+    x = 1
+</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Exercise: Working with NameMangler</h2>
+    <p>In the repository, find and run examples/mangler.py
+    <p>Modify the NameMangler metaclass such that setting an attribute f.x also sets f.xx
+    <p>Now create a new metaclass, MangledSingleton, composed of the NameMangler and Singleton classes in the examples/ directory. Assign it to the __metaclass__ attribute of a new class and verify that it works.
+    <p>Your code should look like this:
+
+<pre><code>class MyClass(object):
+    __metaclass__ = MangledSingleton # define this
+    x = 1
+
+o1 = MyClass()
+o2 = MyClass()
+print o1.X
+assert id(o1) == id(o2)
+</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Reference reading</h2>
+
+
+    <p><a href="http://stackoverflow.com/a/6581949/747729">What is a metaclass in Python?</a>
+
+    <p><a href="http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/">Python metaclasses by example</a>
+
+    <p><a href="http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/">A Primer on Python Metaclasses</a>
+
+</section>
+
+
+    <!-- End slides. -->
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <!--
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+    -->
+    <!-- End extension snippets. -->
+  </div>
+
+<!-- Required JS files. -->
+<script src="deckjs/jquery.min.js"></script>
+<script src="deckjs/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deckjs/extensions/menu/deck.menu.js"></script>
+<script src="deckjs/extensions/goto/deck.goto.js"></script>
+<script src="deckjs/extensions/status/deck.status.js"></script>
+<script src="deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="deckjs/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>

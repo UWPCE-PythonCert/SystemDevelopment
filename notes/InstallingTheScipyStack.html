@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing The SciPy Stack &mdash; System Development With Python 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="System Development With Python 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> System Development With Python</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Installing The SciPy Stack</a><ul>
+<li><a class="reference internal" href="#scipy">Scipy</a><ul>
+<li><a class="reference internal" href="#what-s-in-the-scipy-stack">What&#8217;s in the scipy stack?</a></li>
+<li><a class="reference internal" href="#installing-the-stack">Installing the Stack</a></li>
+<li><a class="reference internal" href="#checking-if-it-works">Checking if it works:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Installing The SciPy Stack</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/notes/InstallingTheScipyStack.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="installing-the-scipy-stack">
+<span id="installing-scipy"></span><h1>Installing The SciPy Stack<a class="headerlink" href="#installing-the-scipy-stack" title="Permalink to this headline">¶</a></h1>
+<p>There are lot of notes online about this, but this is summary of my recommendations.</p>
+<p>To build extensions to Python, you need a C (and maybe C++) compiler that is compatible with your Python build.</p>
+<div class="section" id="scipy">
+<h2>Scipy<a class="headerlink" href="#scipy" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;SciPy&#8221; is really two things:</p>
+<ol class="arabic simple">
+<li>A particular package of modules useful for computational/scientific computing: what you get when you do:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">scipy</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>A community of folks doing scientific computing, and all the packages that are developed and used &#8211; ** A LOT**</li>
+</ol>
+<p>But there are a few packages that what most people will want, regardless of domain. To help calrify all this the &#8220;scipy stack&#8221; was officially declared:</p>
+<p><a class="reference external" href="http://www.scipy.org/stackspec.html">http://www.scipy.org/stackspec.html</a></p>
+<div class="section" id="what-s-in-the-scipy-stack">
+<h3>What&#8217;s in the scipy stack?<a class="headerlink" href="#what-s-in-the-scipy-stack" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Python (<a class="reference external" href="http://www.python.org">http://www.python.org</a>)</li>
+<li>NumPy (<a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a>)</li>
+<li>SciPy library (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
+<li>Matplotlib (<a class="reference external" href="http://matplotlib.org/">http://matplotlib.org/</a>)</li>
+<li>IPython (<a class="reference external" href="http://ipython.org/">http://ipython.org/</a>)</li>
+<li>pandas (<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>)</li>
+<li>nose (<a class="reference external" href="https://nose.readthedocs.org">https://nose.readthedocs.org</a>) (for testing)</li>
+<li>Sympy (<a class="reference external" href="http://sympy.org/">http://sympy.org/</a>) (symbolic algebra)</li>
+</ul>
+</div>
+<div class="section" id="installing-the-stack">
+<h3>Installing the Stack<a class="headerlink" href="#installing-the-stack" title="Permalink to this headline">¶</a></h3>
+<p>Many of these packages are compiled code, some of it in Fortran &#8211; so it can be quite a pain to install from source. There are a number of ways to find pre-complied packages, some of which are outlined here:</p>
+<p><a class="reference external" href="http://www.scipy.org/install.html">http://www.scipy.org/install.html</a></p>
+<p>But here are my thoughts:</p>
+<ul>
+<li><p class="first">If you are doing a lot of scientific computing, and not much else:</p>
+<ul class="simple">
+<li>Install the Anaconda distribution, and use it to install the other packages you&#8217;ll need:</li>
+</ul>
+<p><a class="reference external" href="https://store.continuum.io/cshop/anaconda/">https://store.continuum.io/cshop/anaconda/</a></p>
+<p>There are free versions for Windows, Linux and OS-X.</p>
+</li>
+</ul>
+<p>If you want to just add numpy, etc. to the python.org install</p>
+<ul class="simple">
+<li>Windows and OS-X:<ul>
+<li>try <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code>: I _think_ that there are binaries up on pypi for Windows and OS-X. So</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>pip install numpy
+pip install scipy
+pip install ipython[all]
+pip install pandas
+</pre></div>
+</div>
+<ul class="simple">
+<li>Windows:</li>
+</ul>
+<p>Another good option is Chris Gohlke&#8217;s packages, which you can find here:</p>
+<p><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<p>These are binary wheels, so once downloaded, they can be installed with pip:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install numpy‑1.9.2+mkl‑cp26‑none‑win_amd64.whl
+</pre></div>
+</div>
+<p>Note that he has both 32 bit and 64 bit packages there, install the ones that match your python. Despite the name, the &#8220;amd64&#8221; packages will work with Intel processors, too.</p>
+<ul class="simple">
+<li>Linux</li>
+</ul>
+<p>These may be available from your system package manager (yum, apt-get) &#8211; try that first. If not, then you&#8217;ll need the compilers set up right, which may require some additional system packages first.</p>
+</div>
+<div class="section" id="checking-if-it-works">
+<h3>Checking if it works:<a class="headerlink" href="#checking-if-it-works" title="Permalink to this headline">¶</a></h3>
+<p>Once installed, you should be able do the following imports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+</pre></div>
+</div>
+<p>And be able to run the ipython notebook from the command line:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ipython notebook
+</pre></div>
+</div>
+<p>(that should start up your browser, pointed back at the notebook running in the dir you started it up in)</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy .
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
