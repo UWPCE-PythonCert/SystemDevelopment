@@ -231,20 +231,20 @@ count is increased</li>
 <span class="gh">Out[16]: </span><span class="go">2</span>
 </pre></div>
 </div>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="c"># function local variables</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="go"># function local variables</span>
 
-    <span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-       <span class="o">....</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&quot;x has a refcount of:&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-       <span class="o">....</span><span class="p">:</span>
+<span class="go">    In [17]: def test(x):</span>
+<span class="go">       ....:     print &quot;x has a refcount of:&quot;, sys.getrefcount(x)</span>
+<span class="go">       ....:</span>
 
-    <span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">Out</span><span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="mi">2</span>
+<span class="go">    In [18]: sys.getrefcount(a)</span>
+<span class="go">    Out[18]: 2</span>
 
-    <span class="n">In</span> <span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="n">test</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">x</span> <span class="n">has</span> <span class="n">a</span> <span class="n">refcount</span> <span class="n">of</span><span class="p">:</span> <span class="mi">4</span>
+<span class="go">    In [19]: test(a)</span>
+<span class="go">    x has a refcount of: 4</span>
 
-    <span class="n">In</span> <span class="p">[</span><span class="mi">20</span><span class="p">]:</span> <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">Out</span><span class="p">[</span><span class="mi">20</span><span class="p">]:</span> <span class="mi">2</span>
+<span class="go">    In [20]: sys.getrefcount(a)</span>
+<span class="go">    Out[20]: 2</span>
 </pre></div>
 </div>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [21]: </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>

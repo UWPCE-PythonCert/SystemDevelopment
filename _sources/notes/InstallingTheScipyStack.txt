@@ -19,7 +19,7 @@ Scipy
 
    import scipy
 
-2) A community of folks doing scientific computing, and all the packages that are developed and used -- ** A LOT**
+2) A community of folks doing scientific computing, and all the packages that are developed and used -- **A LOT**
 
 But there are a few packages that what most people will want, regardless of domain. To help calrify all this the "scipy stack" was officially declared:
 

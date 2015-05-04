@@ -115,7 +115,7 @@
 <p>To build extensions to Python, you need a C (and maybe C++) compiler that is compatible with your Python build.</p>
 <div class="section" id="linux">
 <h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
-<p>Linux is pretty straightforward &#8211; most systems are set up to build stuff out of the box. If not, you&#8217;ll need to install the development tools. In ubuntu, that&#8217;s:</p>
+<p>Linux is pretty straightforward &#8211; most systems are set up to build stuff out of the box. If not, you&#8217;ll need to install the development tools. In Ubuntu, that&#8217;s:</p>
 <div class="highlight-python"><div class="highlight"><pre>sudo apt-get install build-essential
 </pre></div>
 </div>
@@ -125,7 +125,7 @@
 </pre></div>
 </div>
 <p>at the command line, and make sure you get something!</p>
-<p>To compile Python extensions, you&#8217;ll need the some extra files that come with python. Most distros have an extra package, called something like &#8220;python-dev&#8221; that you&#8217;ll need to get the headers, etc required to build extensions:</p>
+<p>To compile Python extensions, you&#8217;ll need the some extra files that come with python. Most distros have an extra package, called something like &#8220;python-dev&#8221; that you&#8217;ll need to get the headers, etc. required to build extensions:</p>
 <div class="highlight-python"><div class="highlight"><pre>apt-get install python-dev
 </pre></div>
 </div>
@@ -135,13 +135,13 @@
 <h2>Windows:<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
 <p>The easiest way is to use the same MS compiler as the <code class="docutils literal"><span class="pre">python.org</span></code> build.</p>
 <p>With Python2.7, that&#8217;s MS Visual Studio 2008.</p>
-<p>MS distributes an &#8220;express edition&#8221; for free &#8211; find it, install it, and you should be good to go.  It can be a trick to find older additions, but googling:</p>
-<div class="highlight-python"><div class="highlight"><pre>visual studio 2008 express
+<p>MS has recently started distributing a version of the compiler set up specifically to build Python extensions:</p>
+<p><a class="reference external" href="http://www.microsoft.com/en-us/download/details.aspx?id=44266">http://www.microsoft.com/en-us/download/details.aspx?id=44266</a></p>
+<p>The trick is that this installs things a bit differently than distutils expects. But newer versions of setuptools do support it. So make sure you have an updated setuptools:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install --upgrade setuptools
 </pre></div>
 </div>
-<p>Got me a link direct to an installer download.</p>
-<p>You want &#8220;Visual C++ 2008 Express Edition with SP1&#8221;</p>
-<p>you need C and C++ compilers, but not the DB stuff, etc. Chances are you&#8217;ll get more than you need, but so be it.</p>
+<p>and that the extension you are trying to compile is using setuptools, rather than raw distutils.</p>
 </div>
 <div class="section" id="os-x">
 <h2>OS-X:<a class="headerlink" href="#os-x" title="Permalink to this headline">¶</a></h2>
@@ -164,7 +164,7 @@
 </div>
 <div class="section" id="macports-homebrew">
 <h3>Macports / Homebrew<a class="headerlink" href="#macports-homebrew" title="Permalink to this headline">¶</a></h3>
-<p>If you installed python with Macports or Homebrew, it should be all set up to compile extensions. If not, then you may need to intall a pyton-dev package, or somethign like that.</p>
+<p>If you installed python with Macports or Homebrew, it should be all set up to compile extensions. If not, then you may need to install a python-dev package, or something like that.</p>
 </div>
 </div>
 <div class="section" id="testing-if-it-works">

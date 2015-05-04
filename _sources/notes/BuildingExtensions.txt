@@ -9,7 +9,7 @@ To build extensions to Python, you need a C (and maybe C++) compiler that is com
 Linux
 ======
 
-Linux is pretty straightforward -- most systems are set up to build stuff out of the box. If not, you'll need to install the development tools. In ubuntu, that's::
+Linux is pretty straightforward -- most systems are set up to build stuff out of the box. If not, you'll need to install the development tools. In Ubuntu, that's::
 
    sudo apt-get install build-essential
 
@@ -21,31 +21,31 @@ To make sure it's working, you can make sure gcc is there with::
 
 at the command line, and make sure you get something!
 
-To compile Python extensions, you'll need the some extra files that come with python. Most distros have an extra package, called something like "python-dev" that you'll need to get the headers, etc required to build extensions::
+To compile Python extensions, you'll need the some extra files that come with python. Most distros have an extra package, called something like "python-dev" that you'll need to get the headers, etc. required to build extensions::
 
   apt-get install python-dev
 
 That should do it.
 
 Windows:
-============
+========
 
 The easiest way is to use the same MS compiler as the ``python.org`` build.
 
 With Python2.7, that's MS Visual Studio 2008.
 
-MS distributes an "express edition" for free -- find it, install it, and you should be good to go.  It can be a trick to find older additions, but googling::
+MS has recently started distributing a version of the compiler set up specifically to build Python extensions:
 
-    visual studio 2008 express
+http://www.microsoft.com/en-us/download/details.aspx?id=44266
 
-Got me a link direct to an installer download.
+The trick is that this installs things a bit differently than distutils expects. But newer versions of setuptools do support it. So make sure you have an updated setuptools::
 
-You want "Visual C++ 2008 Express Edition with SP1"
+  pip install --upgrade setuptools
 
-you need C and C++ compilers, but not the DB stuff, etc. Chances are you'll get more than you need, but so be it.
+and that the extension you are trying to compile is using setuptools, rather than raw distutils.
 
 OS-X:
-=========
+=====
 
 Apple moves fast with its upgrades, so it's a bit of a trick. The latest version of XCode is free, but does not support older systems, and thus won't work (at least not easily) for the python.org python builds.
 
@@ -78,7 +78,7 @@ To install these tools, go to the Downloads tab within the Xcode Preferences men
 Macports / Homebrew
 --------------------
 
-If you installed python with Macports or Homebrew, it should be all set up to compile extensions. If not, then you may need to intall a pyton-dev package, or somethign like that.
+If you installed python with Macports or Homebrew, it should be all set up to compile extensions. If not, then you may need to install a python-dev package, or something like that.
 
 Testing if it works:
 ======================
@@ -98,10 +98,6 @@ Try::
     py.test
 
 and hopefully 3 tests will pass.
-
-
-
-
 
 
 
