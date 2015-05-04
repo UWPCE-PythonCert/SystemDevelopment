@@ -1,15 +1,10 @@
+.. _scipy:
 
-.. numpy slides file, created by
-   hieroglyph-quickstart on Sun Apr 27 15:13:20 2014.
-
-
-**********************
+======================
 Intro to Numpy / Scipy
-**********************
+======================
 
 - Chris Barker
-
-(April 29, 2014)
 
 .. Contents:
 
@@ -18,15 +13,17 @@ Intro to Numpy / Scipy
 
 
 Scipy
------
+=====
 
-The scipy "Stack" is a collection of core packages used for scientific / numerical computing.
+.. rst-class:: left
 
-http://www.scipy.org/stackspec.html
+  The scipy "Stack" is a collection of core packages used for scientific / numerical computing.
 
-Many other domain-specific packages area available:
+  http://www.scipy.org/stackspec.html
 
-  Core "stack" is what most people will want, regardless of domain.
+  Many other domain-specific packages area available:
+
+    Core "stack" is what most people will want, regardless of domain.
 
 What's in the scipy stack?
 --------------------------
@@ -41,10 +38,27 @@ What's in the scipy stack?
 * pandas (http://pandas.pydata.org/)
 * Sympy (http://sympy.org/)
 
+Learning Resources
+------------------
+
+There are a lot of tutorials, documentation, etc. out there. IN this class, we only have a couple hours, so won't get that far. Here are some nice other options:
+
+http://scipy-lectures.github.io/
+
+https://github.com/SciTools/courses/blob/master/README.md
+
+https://github.com/jrjohansson/scientific-python-lectures
+
+(note: this one does ``import *`` -- don't do that!)
+
+
 numpy
 -----
 
-numpy is the core package that the rest of the scipy stack is built on. Mostly what I'll talk about here.
+numpy is the core package that the rest of the scipy stack is built on.
+numpy is really the core of everything.
+
+All the rest requires an understanding good understanding of what a numpy array is -- so that's mostly what I'll talk about here.
 
 Not just for lots of numbers!
 (but it's great for that!)
@@ -96,11 +110,11 @@ This Talk
 
 There are a lot of tutorials and documentation out there.
 
-So I'm not going to spend much time on the regualr old "how do you use it" stuff.
+So I'm not going to spend much time on the regular old "how do you use it" stuff.
 
 Rather, I'm going to cover a bit about the guts and some advanced issues.
 
-This is harder to find expainations for -- and will help you understand what's really going on under the hood.
+This is harder to find explanations for -- and will help you understand what's really going on under the hood.
 
 
 
