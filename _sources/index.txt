@@ -51,13 +51,56 @@ Session 3
 
 .. rst-class:: left
 
-    - "advanced OO"
+  - `Debugging (print, logging, pdb/ipdb, winpdb) <html_slides/03-debugging.html>`_
 
-      - \__new__(), super()
+  - `advanced OO <html_slides/03-advanced-oo.html>`_
 
-      - type, metaclasses
+    - \__new__(), super()
 
-      - Debugging (print, logging, pdb/ipdb, winpdb)
+    - type, metaclasses
 
 
+Session 4
+=========
 
+`Working with Databases <html_slides/04-db.html>`_
+
+
+Session 5
+=========
+
+:ref:`scipy`
+
+Session 6
+=========
+
+.. rst-class:: left
+
+  - datetime, time, pytz
+  - functools
+  - itertools
+  - Beautiful idiomatic code
+
+Session 7
+=========
+
+.. rst-class:: left
+
+  - serialization review / XML
+  - profiling
+  - multi-threading/processing
+
+Session 8
+=========
+
+C extensions( C API, ctypes, cython)
+
+Session 9
+=========
+
+Student Presentations
+
+Session 10
+==========
+
+Student Presentations

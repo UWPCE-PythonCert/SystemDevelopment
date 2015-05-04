@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Intro to Numpy / Scipy &mdash; System Development With Python 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="System Development With Python 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> System Development With Python</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Intro to Numpy / Scipy</a><ul>
+<li><a class="reference internal" href="#id1">Scipy</a><ul>
+<li><a class="reference internal" href="#what-s-in-the-scipy-stack">What&#8217;s in the scipy stack?</a></li>
+<li><a class="reference internal" href="#learning-resources">Learning Resources</a></li>
+<li><a class="reference internal" href="#numpy">numpy</a></li>
+<li><a class="reference internal" href="#why-numpy">Why numpy?</a></li>
+<li><a class="reference internal" href="#id2">Why numpy?</a></li>
+<li><a class="reference internal" href="#this-talk">This Talk</a></li>
+<li><a class="reference internal" href="#array-constructors">Array Constructors:</a></li>
+<li><a class="reference internal" href="#slicing-views">Slicing &#8211; views:</a></li>
+<li><a class="reference internal" href="#broadcasting">Broadcasting:</a></li>
+<li><a class="reference internal" href="#what-is-an-nd-array">What is an nd array?</a></li>
+<li><a class="reference internal" href="#built-in-data-types">Built-in Data Types</a></li>
+<li><a class="reference internal" href="#text-file-i-o">Text File I/O</a></li>
+<li><a class="reference internal" href="#compound-dtypes">Compound dtypes</a></li>
+<li><a class="reference internal" href="#numpy-persistence">Numpy Persistence:</a></li>
+<li><a class="reference internal" href="#working-with-compiled-code">Working with compiled code</a></li>
+<li><a class="reference internal" href="#other-stuff">Other stuff:</a></li>
+<li><a class="reference internal" href="#numpy-docs">numpy docs:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Intro to Numpy / Scipy</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/scipy.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="intro-to-numpy-scipy">
+<span id="scipy"></span><h1>Intro to Numpy / Scipy<a class="headerlink" href="#intro-to-numpy-scipy" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Chris Barker</li>
+</ul>
+<div class="section" id="id1">
+<h2>Scipy<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="left">The scipy &#8220;Stack&#8221; is a collection of core packages used for scientific / numerical computing.</p>
+<p class="left"><a class="reference external" href="http://www.scipy.org/stackspec.html">http://www.scipy.org/stackspec.html</a></p>
+<p class="left">Many other domain-specific packages area available:</p>
+<blockquote class="left">
+<div>Core &#8220;stack&#8221; is what most people will want, regardless of domain.</div></blockquote>
+<div class="section" id="what-s-in-the-scipy-stack">
+<h3>What&#8217;s in the scipy stack?<a class="headerlink" href="#what-s-in-the-scipy-stack" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Python (<a class="reference external" href="http://www.python.org">http://www.python.org</a>)</li>
+<li>NumPy (<a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a>)</li>
+<li>SciPy library (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
+<li>Matplotlib (<a class="reference external" href="http://matplotlib.org/">http://matplotlib.org/</a>)</li>
+<li>IPython (<a class="reference external" href="http://ipython.org/">http://ipython.org/</a>)</li>
+<li>nose (<a class="reference external" href="https://nose.readthedocs.org">https://nose.readthedocs.org</a>)</li>
+<li>pandas (<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>)</li>
+<li>Sympy (<a class="reference external" href="http://sympy.org/">http://sympy.org/</a>)</li>
+</ul>
+</div>
+<div class="section" id="learning-resources">
+<h3>Learning Resources<a class="headerlink" href="#learning-resources" title="Permalink to this headline">¶</a></h3>
+<p>There are a lot of tutorials, documentation, etc. out there. IN this class, we only have a couple hours, so won&#8217;t get that far. Here are some nice other options:</p>
+<p><a class="reference external" href="http://scipy-lectures.github.io/">http://scipy-lectures.github.io/</a></p>
+<p><a class="reference external" href="https://github.com/SciTools/courses/blob/master/README.md">https://github.com/SciTools/courses/blob/master/README.md</a></p>
+<p><a class="reference external" href="https://github.com/jrjohansson/scientific-python-lectures">https://github.com/jrjohansson/scientific-python-lectures</a></p>
+<p>(note: this one does <code class="docutils literal"><span class="pre">import</span> <span class="pre">*</span></code> &#8211; don&#8217;t do that!)</p>
+</div>
+<div class="section" id="numpy">
+<h3>numpy<a class="headerlink" href="#numpy" title="Permalink to this headline">¶</a></h3>
+<p>numpy is the core package that the rest of the scipy stack is built on.
+numpy is really the core of everything.</p>
+<p>All the rest requires an understanding good understanding of what a numpy array is &#8211; so that&#8217;s mostly what I&#8217;ll talk about here.</p>
+<p>Not just for lots of numbers!
+(but it&#8217;s great for that!)</p>
+<p><a class="reference external" href="http://www.numpy.org/">http://www.numpy.org/</a></p>
+<p>An N-Dimensional array object</p>
+<p>A whole pile of tools for operations on/with that object.</p>
+</div>
+<div class="section" id="why-numpy">
+<h3>Why numpy?<a class="headerlink" href="#why-numpy" title="Permalink to this headline">¶</a></h3>
+<p>Classic answer: Lots of numbers</p>
+<blockquote>
+<div><ul class="simple">
+<li>Faster</li>
+<li>Less memory</li>
+<li>More data types</li>
+</ul>
+</div></blockquote>
+<p>Even if you don&#8217;t have lot of numbers:</p>
+<blockquote>
+<div><ul class="simple">
+<li>N-d array slicing</li>
+<li>Vector operations</li>
+<li>Flexible data types</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h3>Why numpy?<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Wrapper for a block of memory:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Interfacing with C libs</li>
+<li>PyOpenGL</li>
+<li>GDAL</li>
+<li>NetCDF4</li>
+<li>Shapely</li>
+</ul>
+</div></blockquote>
+<p>Image processing:</p>
+<blockquote>
+<div><ul class="simple">
+<li>PIL</li>
+<li>WxImage</li>
+<li>ndimage</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="this-talk">
+<h3>This Talk<a class="headerlink" href="#this-talk" title="Permalink to this headline">¶</a></h3>
+<p>There are a lot of tutorials and documentation out there.</p>
+<p>So I&#8217;m not going to spend much time on the regular old &#8220;how do you use it&#8221; stuff.</p>
+<p>Rather, I&#8217;m going to cover a bit about the guts and some advanced issues.</p>
+<p>This is harder to find explanations for &#8211; and will help you understand what&#8217;s really going on under the hood.</p>
+</div>
+<div class="section" id="array-constructors">
+<h3>Array Constructors:<a class="headerlink" href="#array-constructors" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>From scratch:</dt>
+<dd><ul class="first simple">
+<li><code class="docutils literal"><span class="pre">ones(),</span> <span class="pre">zeros(),</span> <span class="pre">empty(),</span> <span class="pre">arange(),</span> <span class="pre">linspace(),</span> <span class="pre">logspace()</span></code></li>
+</ul>
+<p class="last">( Default dtype: <code class="docutils literal"><span class="pre">np.float64</span></code> )</p>
+</dd>
+<dt>From sequences:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">array(),</span> <span class="pre">asarray()</span></code> ( Build from any sequence )</li>
+</ul>
+</dd>
+<dt>From binary data:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">fromstring(),</span> <span class="pre">frombuffer(),</span> <span class="pre">fromfile()</span></code></li>
+</ul>
+</dd>
+</dl>
+<p>Assorted linear algebra standards:</p>
+<p><code class="docutils literal"><span class="pre">eye(),</span> <span class="pre">diag()</span></code>, etc.</p>
+<p>demo: <code class="docutils literal"><span class="pre">constructors.ipynb</span></code></p>
+</div>
+<div class="section" id="slicing-views">
+<h3>Slicing &#8211; views:<a class="headerlink" href="#slicing-views" title="Permalink to this headline">¶</a></h3>
+<p>a slice is a &#8220;view&#8221; on the array &#8211; new object, but shares memory:</p>
+<div class="highlight-python"><div class="highlight"><pre>In [12]: a = np.array((1,2,3,4))
+In [13]: b = a[:]
+# for lists -- [:] means copy -- not for arrays!
+In [15]: a is b
+Out[15]: False
+# it&#39;s new array, but...
+In [16]: b[2] = 5
+In [17]: a
+Out[17]: array([1, 2, 5, 4])
+# a and b share data
+</pre></div>
+</div>
+<p>demo: <code class="docutils literal"><span class="pre">slice.ipynb</span></code></p>
+</div>
+<div class="section" id="broadcasting">
+<h3>Broadcasting:<a class="headerlink" href="#broadcasting" title="Permalink to this headline">¶</a></h3>
+<p>Element-wise operations among two different rank arrays:</p>
+<p>Simple case: scalar and array:</p>
+<div class="highlight-python"><div class="highlight"><pre>In [37]: a
+Out[37]: array([1, 2, 3])
+In [38]: a*3
+Out[38]: array([3, 6, 9])
+</pre></div>
+</div>
+<p>Great for functions of more than one variable on a grid</p>
+<p>demo: <code class="docutils literal"><span class="pre">broadcasting.ipynb</span></code></p>
+</div>
+<div class="section" id="what-is-an-nd-array">
+<h3>What is an nd array?<a class="headerlink" href="#what-is-an-nd-array" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><p class="first">N-dimensional (up to 32!)</p>
+</li>
+<li><p class="first">Homogeneous array:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Every element is the same type</dt>
+<dd><p class="first last">(but that type can be a pyObject)</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Int, float, char &#8211; more exotic types</p>
+</li>
+</ul>
+</li>
+<li><p class="first">&#8220;rank&#8221; – number of dimensions</p>
+</li>
+<li><p class="first">Strided data:</p>
+<ul class="simple">
+<li>Describes how to index into block of memory</li>
+<li>PEP 3118 &#8211; Revising the buffer protocol</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>demo: <code class="docutils literal"><span class="pre">mem_struct.ipynb</span></code></p>
+</div>
+<div class="section" id="built-in-data-types">
+<h3>Built-in Data Types<a class="headerlink" href="#built-in-data-types" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Signed and unsigned Integers</dt>
+<dd><p class="first last">8, 16, 32, 64 bits</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Floating Point</dt>
+<dd><p class="first last">32, 64, 96, 128 bits (not all platforms)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Complex</dt>
+<dd><p class="first last">64, 128, 192, 256 bits</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>String and unicode</dt>
+<dd><p class="first last">Static length</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Bool &#8211;  8 bit</p>
+</li>
+<li><dl class="first docutils">
+<dt>Python Object</dt>
+<dd><p class="first last">Really a pointer</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>demo: <code class="docutils literal"><span class="pre">object.ipynb</span></code></p>
+</div>
+<div class="section" id="text-file-i-o">
+<h3>Text File I/O<a class="headerlink" href="#text-file-i-o" title="Permalink to this headline">¶</a></h3>
+<p>Loading from text (CSV, etc):</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">np.loadtxt</span></code></li>
+<li><code class="docutils literal"><span class="pre">np.genfromtxt</span></code> ( a few more features )</li>
+</ul>
+</div></blockquote>
+<p>Saving as text (CSV):</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">np.savetxt()</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="compound-dtypes">
+<h3>Compound dtypes<a class="headerlink" href="#compound-dtypes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Can define any combination of other types</dt>
+<dd><p class="first last">Still Homogeneous:  Array of structs.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Can name the fields</p>
+</li>
+<li><p class="first">Can be like a database table</p>
+</li>
+<li><p class="first">Useful for reading binary data</p>
+</li>
+</ul>
+</div></blockquote>
+<p>demo: <code class="docutils literal"><span class="pre">dtypes.ipynb</span></code></p>
+</div>
+<div class="section" id="numpy-persistence">
+<h3>Numpy Persistence:<a class="headerlink" href="#numpy-persistence" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">np.tofile()</span> <span class="pre">/</span> <span class="pre">np.fromfile()</span></code></p>
+<blockquote>
+<div>&#8211; Just the raw bytes, no metadata</div></blockquote>
+<p>pickle</p>
+<p><code class="docutils literal"><span class="pre">np.savez()</span></code>  &#8211; numpy zip format</p>
+<p>Compact: binary dump plus metadata</p>
+<dl class="docutils">
+<dt>netcdf</dt>
+<dd><ul class="first last simple">
+<li>NetCDF4</li>
+</ul>
+</dd>
+<dt>Hdf</dt>
+<dd><ul class="first last simple">
+<li>Pyhdf</li>
+<li>pytables</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="working-with-compiled-code">
+<h3>Working with compiled code<a class="headerlink" href="#working-with-compiled-code" title="Permalink to this headline">¶</a></h3>
+<p>Wrapper around a C pointer to a block of data}</p>
+<blockquote>
+<div><ul class="simple">
+<li>Some code can&#8217;t be vectorized</li>
+<li>Interface with existing libraries</li>
+</ul>
+</div></blockquote>
+<p>Tools:</p>
+<blockquote>
+<div><ul class="simple">
+<li>C API: you don&#8217;t want to do that!</li>
+<li>Cython: typed arrays</li>
+<li>Ctypes</li>
+<li>SWIG: numpy.i</li>
+<li>Boost: boost array</li>
+<li>f2py</li>
+</ul>
+</div></blockquote>
+<p>Example of numpy+cython: <a class="reference external" href="http://wiki.cython.org/examples/mandelbrot">http://wiki.cython.org/examples/mandelbrot</a></p>
+</div>
+<div class="section" id="other-stuff">
+<h3>Other stuff:<a class="headerlink" href="#other-stuff" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Masked arrays</li>
+<li>Memory-mapped files</li>
+<li>Set operations: unique, etc</li>
+<li>Random numbers</li>
+<li>Polynomials</li>
+<li>FFT</li>
+<li>Sorting and searching</li>
+<li>Linear Algebra</li>
+<li>Statistics</li>
+</ul>
+</div></blockquote>
+<p>(And all of scipy, pandas, etc.)</p>
+</div>
+<div class="section" id="numpy-docs">
+<h3>numpy docs:<a class="headerlink" href="#numpy-docs" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>www.numpy.org</dt>
+<dd>&#8211; Numpy reference Downloads, etc</dd>
+<dt>www.scipy.org</dt>
+<dd>&#8211; lots of docs</dd>
+</dl>
+<p>Scipy cookbook:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.scipy.org/Cookbook">http://www.scipy.org/Cookbook</a></div></blockquote>
+<p>&#8220;The Numpy Book&#8221;</p>
+<p><a class="reference external" href="http://www.tramy.us/numpybook.pdf">http://www.tramy.us/numpybook.pdf</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy .
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
