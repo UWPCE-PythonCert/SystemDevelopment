@@ -153,21 +153,9 @@ Then, I'm going to cover a bit about the guts and some advanced issues.
 
 This is harder to find explanations for -- and will help you understand what's really going on under the hood.
 
-First Tutorial:
----------------
 
-Lets get started by working through the start of what I think is one of the best tutorials:
-
-https://github.com/SciTools/courses/blob/master/README.md
-
-NOTE: this is said to be about a 3-1/2 hour course -- so we're only going to start it...
-
-That is an ipython notebook, which you can download and play around with.
-
-We'll be back after that.....
-
-Getting into the guts of the numpy array
-========================================
+Getting started
+================
 
 A few more deatils about what is inside an ndarray
 
@@ -177,8 +165,16 @@ Example code is in the class repo:
 
 Those are a bunch of ipython notebooks.
 
+Get your command line into that dir, then start up the iPyhton notebook:
+
+``$ ipython notebook``
+
+This should fie up your browser, and give you a list of notebooks to choose from.
+
 Array Constructors:
 -------------------
+
+How do you make an array?
 
 From scratch:
  * ``ones(), zeros(), empty(), arange(), linspace(), logspace()``
@@ -197,6 +193,15 @@ Assorted linear algebra standards:
 
 demo: ``constructors.ipynb``
 
+
+Indexing and slicing
+--------------------
+
+How do you get parts of the array out?
+
+Indexing and slicing much like regular python sequences, but extended to multi-dimensions.
+
+However: slicing is a view, not a copy!
 
 Slicing -- views:
 -----------------
@@ -219,11 +224,24 @@ a slice is a "view" on the array -- new object, but shares memory:
 
 demo: ``slice.ipynb``
 
+Reshaping:
+-----------
+
+numpy arrays have a particular shape.
+
+But they are really wrappers around a block of data
+
+So they can be re-shaped -- same data, arranged differently
+
+demo: ``reshaping.ipynb``
+
 
 Broadcasting:
 -------------
 
 Element-wise operations among two different rank arrays:
+
+This is the key power of numpy!
 
 Simple case: scalar and array:
 ::
@@ -238,8 +256,22 @@ Great for functions of more than one variable on a grid
 
 demo: ``broadcasting.ipynb``
 
-What is an nd array?
---------------------
+Fancy Indexing
+--------------
+
+As we've seen, you can slice and dice nd arrays much like regular python sequences.
+
+This model is extended to multiple dimensions.
+
+But it still only lets you extract rectangular blocks of elements.
+
+For more complex sub-selection: we use "fancy indexing":
+
+demo: ``fancy_indexing.ipynb``
+
+
+What is an nd array under the hood?
+-----------------------------------
 
   * N-dimensional (up to 32!)
   * Homogeneous array:
@@ -375,8 +407,6 @@ Other stuff:
   * Linear Algebra
   * Statistics
 
-(And all of scipy, pandas, etc.)
-
 numpy docs:
 -----------
 
@@ -436,11 +466,34 @@ Tutorial
 
 We'll run through a simple tutorial in class:
 
+``SystemDevelopment2015/Examples/week-05-matplotlib``
 
-I suggest you run through a more thourough one to really get an idea how it all works:
+there are "learner" and instructor notebooks in there. I suggest you use the learner one...
+
+If you really want to use MPL, I suggest you run through a more thorough one to really get an idea how it all works:
 
 https://github.com/WeatherGod/AnatomyOfMatplotlib
 
+This one is pretty nice -- but would take the entire class...
+
+Using numpy arrays when computation isn't critical
+--------------------------------------------------
+
+numpy arrays are mostly about performance and memory use.
+
+But you still may want to use them for toher reasons.
+
+some data naturally is in 2-d or 3-d arrays.
+
+sometimes you need to work on a sub-view of the data as an independent object.
+
+For example: A Sudoko game:
+
+ * the board is 9X9
+ * but sub-devided into 3X3 squares
+ * and you need to examine the rows and columns
+
+Example: ``sudoku-chb.py``
 
 
 
