@@ -59,6 +59,28 @@ For those familiar with MATLAB:
 
 http://wiki.scipy.org/NumPy_for_Matlab_Users
 
+The ipython "notebook"
+-----------------------
+
+We've been using iPython a lot in this class (at least I have)
+
+It provides a great interactive environment fo testing and running
+Python code.
+
+It turns out it has antoher interface: the "notebook"
+
+The notebook provides a way to interspese littel chunks of code, adn text, adn images, etc...
+
+It runs in a browser, you start it up with:
+
+.. code-block:: bash
+
+  ipython notebook
+
+It should start your browser, and show you the notebooks in the dir you started it up in.
+
+I'll be using it for lots of demos in this class.
+
 
 numpy
 =====
@@ -253,10 +275,6 @@ Built-in Data Types
 
 demo: ``object.ipynb``
 
-Strides
--------
-
-Core to how numpy works is the stri
 
 Text File I/O
 --------------
@@ -272,7 +290,6 @@ Saving as text (CSV):
 
 Compound dtypes
 ---------------
-
 
   * Can define any combination of other types
         Still Homogeneous:  Array of structs.
@@ -303,6 +320,23 @@ netcdf
 Hdf
   * Pyhdf
   * pytables
+
+
+Stride Tricks
+--------------
+
+numpy arrays are really wrappers about "strided data"
+
+This means that there is a single linear block of memory with the
+values in it.
+
+The "strides" describe how that data is aranged to look lke an array of more dimensions: 2D, 3D, 4D etc.
+
+Mostly, numpy handles all this under the hood for you, so you can logically work with the data as though it were multi-dimensional.
+
+But you can aactually manipulate the description of the data, so that it "acts" like it is arranged differently than it is:
+
+``stride_tricks.ipynb``
 
 
 Working with compiled code
@@ -400,9 +434,10 @@ Fortunately, the concepts and most of the commands are the same.
 Tutorial
 --------
 
-We'll run through a simple tutorial in class.
+We'll run through a simple tutorial in class:
 
-I suggest you run through amore thourough one to really get an idea how it all works:
+
+I suggest you run through a more thourough one to really get an idea how it all works:
 
 https://github.com/WeatherGod/AnatomyOfMatplotlib
 
