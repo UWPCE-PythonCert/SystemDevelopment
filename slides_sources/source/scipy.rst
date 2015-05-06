@@ -147,49 +147,49 @@ This Talk
 
 There are a lot of tutorials and documentation out there.
 
-So I'm going to spend about an hour on the regular old "how do you use it" stuff.
+So I'm going to spend about an hour or so on the regular old "how do you use it" stuff.
 
 Then, I'm going to cover a bit about the guts and some advanced issues.
 
 This is harder to find explanations for -- and will help you understand what's really going on under the hood.
 
+NOTE: I've been using numpy and its predecessors for long time -- so have kind of forgotten what is obvious and what is not -- so:
+
+ **ask questions**
+
+ as we go!
 
 Getting started
 ================
 
-A few more deatils about what is inside an ndarray
+.. rst-class:: left
 
-Example code is in the class repo:
+  Example code is in the class repo:
 
-``SystemDevelopment2015/Examples/week-05-numpy``
+  ``SystemDevelopment2015/Examples/week-05-numpy``
 
-Those are a bunch of ipython notebooks.
+  Those are a bunch of ipython notebooks.
 
-Get your command line into that dir, then start up the iPyhton notebook:
+  Get your command line into that dir, then start up the iPyhton notebook:
 
-``$ ipython notebook``
+  ``$ ipython notebook``
 
-This should fie up your browser, and give you a list of notebooks to choose from.
+  This should fie up your browser, and give you a list of notebooks to choose from.
 
 Array Constructors:
 -------------------
 
 How do you make an array?
 
-From scratch:
- * ``ones(), zeros(), empty(), arange(), linspace(), logspace()``
+From scratch: ``ones(), zeros(), empty(), arange(), linspace(), logspace()``
 
- ( Default dtype: ``np.float64`` )
+( Default dtype: ``np.float64`` )
 
-From sequences:
- * ``array(), asarray()`` ( Build from any sequence )
+From sequences:  ``array(), asarray()`` ( Build from any sequence )
 
-From binary data:
- * ``fromstring(), frombuffer(), fromfile()``
+From binary data:  ``fromstring(), frombuffer(), fromfile()``
 
-Assorted linear algebra standards:
-
-``eye(), diag()``, etc.
+Assorted linear algebra standards: ``eye(), diag()``, etc.
 
 demo: ``constructors.ipynb``
 
@@ -201,28 +201,10 @@ How do you get parts of the array out?
 
 Indexing and slicing much like regular python sequences, but extended to multi-dimensions.
 
-However: slicing is a view, not a copy!
-
-Slicing -- views:
------------------
-
-a slice is a "view" on the array -- new object, but shares memory:
-
-.. code-block:: ipython
-
-    In [12]: a = np.array((1,2,3,4))
-    In [13]: b = a[:]
-    # for lists -- [:] means copy -- not for arrays!
-    In [15]: a is b
-    Out[15]: False
-    # it's new array, but...
-    In [16]: b[2] = 5
-    In [17]: a
-    Out[17]: array([1, 2, 5, 4])
-    # a and b share data
-
+However: a slice is a "view" on the array -- new object, but shares memory:
 
 demo: ``slice.ipynb``
+
 
 Reshaping:
 -----------
@@ -273,18 +255,23 @@ demo: ``fancy_indexing.ipynb``
 What is an nd array under the hood?
 -----------------------------------
 
-  * N-dimensional (up to 32!)
-  * Homogeneous array:
+ * N-dimensional (up to 32!)
 
-    * Every element is the same type
-          (but that type can be a pyObject)
-    * Int, float, char -- more exotic types
+ * Homogeneous array:
 
-  * "rank" – number of dimensions
-  * Strided data:
+   - Every element is the same type
 
-    * Describes how to index into block of memory
-    * PEP 3118 -- Revising the buffer protocol
+     (but that type can be a pyObject)
+
+   - Int, float, char -- more exotic types
+
+   - "rank" – number of dimensions
+
+ * Strided data:
+
+   - Describes how to index into block of memory
+
+   - PEP 3118 -- Revising the buffer protocol
 
 
 demo: ``memory_struct.ipynb``
@@ -293,17 +280,27 @@ demo: ``memory_struct.ipynb``
 Built-in Data Types
 -------------------
 
-  * Signed and unsigned Integers
-        8, 16, 32, 64 bits
-  * Floating Point
-        32, 64, 96, 128 bits (not all platforms)
-  * Complex
-        64, 128, 192, 256 bits
-  * String and unicode
-        Static length
-  * Bool --  8 bit
-  * Python Object
-        Really a pointer
+* Signed and unsigned Integers
+
+  - 8, 16, 32, 64 bits
+
+* Floating Point
+
+  - 32, 64, 96, 128 bits (not all platforms)
+
+* Complex
+
+  - 64, 128, 192, 256 bits
+
+* String and unicode
+
+  - Static length
+
+* Bool --  8 bit
+
+* Python Object
+
+  - Really a pointer
 
 demo: ``object.ipynb``
 
@@ -324,9 +321,12 @@ Compound dtypes
 ---------------
 
   * Can define any combination of other types
-        Still Homogeneous:  Array of structs.
+
+    - Still Homogeneous:  Array of structs.
   * Can name the fields
+
   * Can be like a database table
+
   * Useful for reading binary data
 
 
@@ -336,22 +336,25 @@ demo: ``dtypes.ipynb``
 Numpy Persistence:
 ------------------
 
-``np.tofile() / np.fromfile()``
+  * ``np.tofile() / np.fromfile()``
 
- -- Just the raw bytes, no metadata
+    - Just the raw bytes, no metadata
 
-pickle
+  *  ``pickle``
 
-``np.savez()``  -- numpy zip format
+  * ``np.savez()``  -- numpy zip format
 
-Compact: binary dump plus metadata
+    - Compact: binary dump plus metadata
 
-netcdf
-  * NetCDF4
+  * netcdf
 
-Hdf
-  * Pyhdf
-  * pytables
+    - NetCDF4 (https://github.com/Unidata/netcdf4-python)
+
+  * Hdf
+
+    - Pyhdf
+
+    - pytables
 
 
 Stride Tricks
@@ -362,11 +365,11 @@ numpy arrays are really wrappers about "strided data"
 This means that there is a single linear block of memory with the
 values in it.
 
-The "strides" describe how that data is aranged to look lke an array of more dimensions: 2D, 3D, 4D etc.
+The "strides" describe how that data is arranged to look like an array of more dimensions: 2D, 3D, 4D etc.
 
 Mostly, numpy handles all this under the hood for you, so you can logically work with the data as though it were multi-dimensional.
 
-But you can aactually manipulate the description of the data, so that it "acts" like it is arranged differently than it is:
+But you can actually manipulate the description of the data, so that it "acts" like it is arranged differently than it is:
 
 ``stride_tricks.ipynb``
 
@@ -374,12 +377,10 @@ But you can aactually manipulate the description of the data, so that it "acts" 
 Working with compiled code
 ---------------------------
 
-Wrapper around a C pointer to a block of data}
-
   * Some code can't be vectorized
   * Interface with existing libraries
 
-Tools:
+numpy arrays are essentially a wrapper around a C pointer to a block of data -- some tools:
 
   * C API: you don't want to do that!
   * Cython: typed arrays
@@ -390,9 +391,7 @@ Tools:
 
 We'll get into this more in a later class...
 
-Example of numpy+cython:
-
-https://github.com/cython/cython/wiki/examples-mandelbrot
+Example of numpy+cython: https://github.com/cython/cython/wiki/examples-mandelbrot
 
 Other stuff:
 ------------
@@ -411,14 +410,16 @@ numpy docs:
 -----------
 
 www.numpy.org
-   -- Numpy reference Downloads, etc
+
+  - Numpy reference Downloads, etc
 
 www.scipy.org
-   -- lots of docs
+
+  - lots of docs
 
 Scipy cookbook:
 
-   http://www.scipy.org/Cookbook
+  - http://www.scipy.org/Cookbook
 
 "The Numpy Book"
 
@@ -429,7 +430,8 @@ http://csc.ucdavis.edu/~chaos/courses/nlp/Software/NumPyBook.pdf
 matplotlib
 ==========
 
-.. rst-class: left
+.. rst-class:: left
+
   Matplotlib is the most common plotting library for python.
 
   * Powerful
@@ -468,7 +470,7 @@ We'll run through a simple tutorial in class:
 
 ``SystemDevelopment2015/Examples/week-05-matplotlib``
 
-there are "learner" and instructor notebooks in there. I suggest you use the learner one...
+There are "learner" and instructor notebooks in there. They are identical, but if you use the learner one you can mess with it and not mess up the main one...
 
 If you really want to use MPL, I suggest you run through a more thorough one to really get an idea how it all works:
 
@@ -489,11 +491,74 @@ sometimes you need to work on a sub-view of the data as an independent object.
 
 For example: A Sudoko game:
 
- * the board is 9X9
- * but sub-devided into 3X3 squares
- * and you need to examine the rows and columns
+ * The board is 9X9
+ * Sub-divided into 3X3 squares
+ * And you need to examine the rows and columns
 
 Example: ``sudoku-chb.py``
+
+
+Pandas
+=======
+
+.. rst-class:: left
+
+  Python Data Analysis Library
+
+  Pandas provides high-performance, easy-to-use data structures and data analysis tools for the Python programming language.
+
+  Modeled after R's dataframe concept, it provides some pretty neat tools for doing simple statistical analysis and plotting of larg-ish data sets.
+
+  It's particularly powerful for time series.
+
+  ``http://pandas.pydata.org/``
+
+Learning Pandas
+----------------
+
+The official documentation is excellent, including tutorials:
+
+http://pandas.pydata.org/pandas-docs/stable/
+
+http://pandas.pydata.org/pandas-docs/stable/10min.html
+
+http://pandas.pydata.org/pandas-docs/stable/tutorials.html
+
+In addition, there are a large number of tutorials on the web:
+
+This one is oriented to folks familiar with SQL:
+
+http://www.gregreda.com/2013/10/26/intro-to-pandas-data-structures/
+
+And this is a good one to get started quick:
+
+http://synesthesiam.com/posts/an-introduction-to-pandas.html
+
+We'll give that one a shot in class now...
+
+Scipy
+=====
+
+.. rst-class:: left
+
+  The scipy package itself is a large collection of cool stuff for scientific computing. ( http://docs.scipy.org/doc/scipy/reference/ )
+
+  You'll see there lots of stuff! If it's at all general purpose for computation, you're likely to find it there.
+
+  Some of the most common sub-packages:
+
+   * Special functions (scipy.special)
+   * Integration (scipy.integrate)
+   * Optimization (scipy.optimize)
+   * Interpolation (scipy.interpolate)
+   * Fourier Transforms (scipy.fftpack)
+   * Signal Processing (scipy.signal)
+   * Linear Algebra (scipy.linalg)
+   * Spatial data structures and algorithms (scipy.spatial)
+   * Statistics (scipy.stats)
+   * Multidimensional image processing (scipy.ndimage)
+
+
 
 
 
