@@ -14,7 +14,7 @@ Multiple Inheritance
 ====================
 
 
-Pulling methoda from more than one class
+Pulling methods from more than one class
 
 
 multiple inheritance
@@ -220,7 +220,7 @@ same as::
            A.__init__()
 
 | You may not want that --
-| demo: ``code /super_test.ipnb``
+| demo: ``Examples/week-06-OO/super_test.ipnb``
 
 
 super() mechanics
@@ -243,6 +243,8 @@ which usually is somethign like:
 So why in the world do you need to specify both `B` (the type), and
 `self` (the instance?)
 
+.. nextslide::
+
 First: Python 3 has cleaned this up, it's just:
 
 .. code-block:: python
@@ -251,7 +253,9 @@ First: Python 3 has cleaned this up, it's just:
       def a_method(self, *args, **kwargs)
           super().a_method(*args, **kwargs)
 
-In py3. But in Python2, super was tacked on, so the additonal info is
+In py3.
+
+In Python2, super was tacked on, so the additonal info is
 needed, and it does have the advantage of being explicit about the two
 inputs to the computation (the mro of self and the current position in
 the mro).
@@ -261,21 +265,6 @@ actually be an *instance* of B -- it could be a subclass.
 
 That's why both need to be specified.
 
-**But I'm specifying the class name twice, still!**
-
-The first argument to ``super()`` must be the class object that you want
-the superclass of -- that is the class you are currently defining. But
-you don't need to write that specifically -- you can use its
-``__class__`` magic method:
-
-.. code-block:: python
-
-  class B(A):
-      def a_method(self, *args, **kwargs)
-          super(self.__class__, self).a_method(*args, **kwargs)
-
-
-That way you only specify the superclass in one place.
 
 More detail about super()
 -------------------------
@@ -331,7 +320,6 @@ and call super like
 .. code-block:: python
 
   super(MyClass, self).method(args_declared, *args, **kwargs)
-
 
 
 
