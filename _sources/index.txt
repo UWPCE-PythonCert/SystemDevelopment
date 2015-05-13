@@ -75,7 +75,8 @@ Session 6
 
   `Metaclasses <html_slides/06-metaclasses.html>`_
 
-.. - datetime, time, pytz
+  `datetime <html_slides/06-datetime.html>`_
+
 .. - functools
 .. - itertools
 .. - Beautiful idiomatic code
