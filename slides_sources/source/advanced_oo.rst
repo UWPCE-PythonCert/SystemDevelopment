@@ -321,19 +321,41 @@ and call super like
 
   super(MyClass, self).method(args_declared, *args, **kwargs)
 
+LAB
+----
+
+In ``Examples/week-06-OO/mixins.py``, you will find a few Vehicle classes
+laid out in a hierarchy
+
+The log() method is defined on Vehicle then called on a couple of
+instances
+
+Modify the class definition for Bike to mix in fancier log() method
+from LoggingMixin
+
+Does the output change accordingly? If it didn't, look at the MRO for
+Bike? Is it what you expected?
 
 
 __new__
---------
+########
 
-What *really* happens when a class instance is created?
+.. rst-class:: large
+
+  Into the depths of object creation:
+
+.. rst-class:: medium
+
+  What *really* happens when a class instance is created?
 
 Class Creation
 ----------------
 
 What happens when a class instance is created?
 
-::
+This is the usual thing...
+
+.. code-block:: python
 
     class Class(object):
         def __init__(self, arg1, arg2):
@@ -345,34 +367,36 @@ What happens when a class instance is created?
 * ``__init__`` is called
 * The code in ``__init__`` is run to initialize the instance
 
+Note that ``self`` is already an instance of the class.
 
-Class Creation
-----------------=
+.. nextslide::
 
 What if you need to do something before creation?
 
 Enter: ``__new__``
 
-::
+.. code-block:: python
 
     class Class(object):
         def __new__(cls, arg1, arg2):
             some_code_here
-            return cls(....)
-            .....
+            return cls(...)
+            ...
 
 * ``__new__`` is called: it returns a new instance
-* The code in ``__new__`` is run to pre-initialize
+
+* The code in ``__new__`` is run to pre-initialize the instance
+
 * ``__init__`` is called
+
 * The code in ``__init__`` is run to initialize the instance
 
 
-Class Creation
-----------------
+.. nextslide::
 
 ``__new__`` is a static method -- but it must be called with a class object as the first argument.
 
-::
+.. code-block:: python
 
     class Class(superclass):
         def __new__(cls, arg1, arg2):
@@ -392,9 +416,11 @@ If nothing else, you can call ``object.__new__``
 When to use ``__new__``
 ------------------------
 
-When would  you need to use it:
+.. rst-class:: medium
 
-* subclassing an immutable type:
+  When would  you need to use it:
+
+* Subclassing an immutable type:
 
   - It's too late to change it once you get to ``__init__``
 
@@ -404,11 +430,12 @@ When would  you need to use it:
 
   - copying
 
-You may need to put some code in ``__new__`` to make sure things go right
+You may need to put some code in ``__new__`` to make sure things
+go right
 
 More detail here:
 
-http://www.python.org/download/releases/2.2/descrintro/#__new__
+http://www.python.org/download/releases/2.7/descrintro/#__new__
 
 
 LAB
@@ -416,18 +443,17 @@ LAB
 
 **Demo:**
 
- ``code/new_example.py``
+ ``Examples/week-06-OO/new_example.py``
 
 **Exercise:**
 
-Write a subclass of int that will always be an even number: round the input to the closest even number:
+Write a subclass of int that will always be an even number:
+round the input to the closest even number:
 
-  ``code/__new__/even_int.py``
-
-
-  ``code/__new__/test_even_int.py``
+  ``Examples/week-06-OO/even_int.py``
 
 
+  ``Examples/week-06-OO/test_even_int.py``
 
 
 

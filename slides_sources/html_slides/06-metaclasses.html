@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Python300 week 03, metaclasses</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/style/swiss.css">
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/transition/horizontal-slide.css">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="deckjs/core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+  <div class="deck-container">
+
+    <!-- Begin slides. Just make elements with a class of slide. -->
+    <section class="slide">
+        <h2>System Development with Python</h2>
+        <h3>Week 6 :: Metaclasses</h3>
+        <p>Joseph Sheedy</p>
+        <p><i>joseph.sheedy@gmail.com</i></p>
+        <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
+    </section>
+
+<section class="slide">
+    <h2>A class is just an object</h2>
+    <p>Objects get created from classes.  So what is the class of a class?</h2>
+    <p>The class of Class is a metaclass
+    <p>The metaclass can be used to dynamically create a class
+    <p>The metaclass, being a class, also has a metaclass
+</section>
+
+<section class="slide">
+    <h2>What is a metaclass?</h2>
+
+    <ul>
+      <li>A class is something that makes instances</li>
+      <li>A metaclass is something that makes classes</li>
+      <li>A metaclass is most commonly used as a class factory
+      <li>metaclasses allow you to do 'extra things' when creating a class, like registering the new class with some registry, adding methods dynamically, or even replace the class with something else entirely
+      <li>Every object in Python has a metaclass
+      <li>The default metaclass is type()
+
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>type()</h2>
+    <p>With one argument, <code>type()</code> returns the type of the argument
+    <p>With 3 arguments, <code>type()</code> returns a new class
+
+<pre>
+type?
+Type:       type
+String Form: &lt;type 'type'&gt;
+Namespace:  Python builtin
+Docstring:
+type(object) -> the object's type
+type(name, bases, dict) -> a new type
+
+name: string name of the class
+bases: tuple of the parent classes
+dict: dict containing attribute names and values</pre>
+</pre>
+
+</section>
+
+<section class="slide">
+<h2>using type() to build a class</h2>
+<p>The <code>class</code> keyword is syntactic sugar, we can get by without it by using type
+<pre><code>
+class MyClass(object):
+    x = 1
+</code></pre>
+<p>OR
+<p>
+<pre><code>
+MyClass = type('MyClass', (), {'x': 1})
+</code></pre>
+
+<p> (<code>object</code> is automatically a superclass)
+
+
+</section>
+
+<section class="slide">
+<h2>Adding methods to a class built with <code>type()</code></h2>
+<p>Just define a function with the correct signature and add it to the attr dictionary
+<pre><code>
+def my_method(self):
+    print "called my_method, x = %s" % self.x
+
+MyClass = type('MyClass',(), {'x': 1, 'my_method': my_method})
+o = MyClass()
+o.my_method()
+</code></pre>
+</section>
+
+<section class="slide">
+<h2>What type is type?</h2>
+<pre>
+type(type)
+Out[1]: type
+</pre>
+</p>
+
+</section>
+
+<section class="slide">
+<h2>__metaclass__</h2>
+<p>
+<pre><code>class Foo(object):
+  __metaclass__ = MyMetaClass</code></pre>
+<p>Python will look for __metaclass__ in the class definition.
+<p>If it finds it, it will use it to create the object class Foo.
+<p>If it doesn't, it will use type to create the class.
+<p>__metaclass__ can be defined at the module level
+<p>Whatever is assigned to __metaclass__ should be a callable with the same signature as type()
+</section>
+
+<section class="slide">
+<h2>Why use metaclasses?</h2>
+<p>Useful when creating an API or framework
+<p>Whenever you need to manage object creation for one or more classes
+<p>For example, see examples/singleton.py
+<p>Or consider the Django ORM:
+<code><pre>class Person(models.Model):
+  name = models.CharField(max_length=30)
+  age = models.IntegerField()
+
+person = Person(name='bob', age=35)
+print person.name</pre></code>
+<p>When the Person class is created, it is dynamically modified to integrate with the database configured backend. Thus,
+different configurations will lead to different class definitions. This is abstracted from the user of the Model class.
+<p>Here is the Django Model metaclass:
+<a target="_blank" href="https://github.com/django/django/blob/master/django/db/models/base.py#L59">https://github.com/django/django/blob/master/django/db/models/base.py#L59</a>
+</section>
+
+<section class="slide">
+    <h2>Metaclass example</h2>
+<p>Consider wanting a metaclass which mangles all attribute names to provide uppercase and lower case attributes</p>
+</section>
+
+<section class="slide">
+<h2>Metaclass example</h2>
+<p>
+<pre><code>class Foo(object):
+    __metaclass__ = NameMangler
+    x = 1
+
+f = Foo()
+print f.X
+print f.x</code></pre>
+</section>
+
+<section class="slide">
+<h2>NameMangler</h2>
+<pre><code>class NameMangler(type):
+    def __new__(cls, clsname, bases, dct):
+        uppercase_attr = {}
+        for name, val in dct.items():
+            if not name.startswith('__'):
+                uppercase_attr[name.upper()] = val
+                uppercase_attr[name] = val
+            else:
+                uppercase_attr[name] = val
+
+        return super(NameMangler, cls).__new__(cls, clsname, bases, uppercase_attr)
+
+class Foo(object):
+    __metaclass__ = NameMangler
+    x = 1
+</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Exercise: Working with NameMangler</h2>
+    <p>In the repository, find and run examples/mangler.py
+    <p>Modify the NameMangler metaclass such that setting an attribute f.x also sets f.xx
+    <p>Now create a new metaclass, MangledSingleton, composed of the NameMangler and Singleton classes in the examples/ directory. Assign it to the __metaclass__ attribute of a new class and verify that it works.
+    <p>Your code should look like this:
+
+<pre><code>class MyClass(object):
+    __metaclass__ = MangledSingleton # define this
+    x = 1
+
+o1 = MyClass()
+o2 = MyClass()
+print o1.X
+assert id(o1) == id(o2)
+</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Reference reading</h2>
+
+
+    <p><a href="http://stackoverflow.com/a/6581949/747729">What is a metaclass in Python?</a>
+
+    <p><a href="http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/">Python metaclasses by example</a>
+
+    <p><a href="http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/">A Primer on Python Metaclasses</a>
+
+</section>
+
+
+    <!-- End slides. -->
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <!--
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+    -->
+    <!-- End extension snippets. -->
+  </div>
+
+<!-- Required JS files. -->
+<script src="deckjs/jquery.min.js"></script>
+<script src="deckjs/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deckjs/extensions/menu/deck.menu.js"></script>
+<script src="deckjs/extensions/goto/deck.goto.js"></script>
+<script src="deckjs/extensions/status/deck.status.js"></script>
+<script src="deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="deckjs/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>

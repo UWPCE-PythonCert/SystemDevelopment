@@ -71,12 +71,14 @@ Session 6
 
 .. rst-class:: left
 
-- :ref:`advanced_oo`
+  :ref:`advanced_oo`
 
-- datetime, time, pytz
-- functools
-- itertools
-- Beautiful idiomatic code
+  `Metaclasses <html_slides/06-metaclasses.html>`_
+
+.. - datetime, time, pytz
+.. - functools
+.. - itertools
+.. - Beautiful idiomatic code
 
 Session 7
 =========
