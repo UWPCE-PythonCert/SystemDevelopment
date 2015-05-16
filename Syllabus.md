@@ -134,21 +134,15 @@ Instructor: Chris
 
 - datetime, time, pytz
 
-- functools
-
-- itertools
-
-- beautiful idiomatic code
-
 
 ### Week 7
 May 19th
 Instructor: Joseph
 #### Topics
 
-- serialization review / XML
 - profiling
 - multi-threading/processing
+- serialization review / XML
 
 
 ### Week 8

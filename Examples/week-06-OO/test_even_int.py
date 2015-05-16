@@ -15,6 +15,10 @@ def test_instance():
     i = EvenInt(3)
     assert isinstance(i, int)
 
+def test_isinstance():
+    i = EvenInt(2)
+    assert isinstance(i, EvenInt)
+
 def test_even():
     assert EvenInt(4) == 4
 
