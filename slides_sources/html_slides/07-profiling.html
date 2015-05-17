@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Python300 week 07, profiling</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/style/swiss.css">
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/transition/horizontal-slide.css">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="deckjs/core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+  <div class="deck-container">
+
+      <section class="slide">
+          <h2>System Development with Python</h2>
+          <h3>Week 7 :: profiling</h3>
+          <p>Joseph Sheedy</p>
+          <p><i>joseph.sheedy@gmail.com</i></p>
+          <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
+      </section>
+
+
+          <!-- Begin slides. Just make elements with a class of slide. -->
+          <section class="slide">
+              <h2>System Development with Python</h2>
+              <h3>Week 8 :: Profiling / Tuning</h3>
+              <p>Joseph Sheedy</p>
+              <p><i>joseph.sheedy@gmail.com</i></p>
+              <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Fall-2014" target="_blank">https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Fall-2014</a></p>
+          </section>
+
+              <section class="slide">
+                  <h2>Performance and Profiling</h2>
+                  <h3>Today's topics</h3>
+                  <ul>
+                      <li>Determining performance objectives
+                      <li>Measuring performance a.k.a. profiling
+                      <li>Performance optimizations
+                  </ul>
+              </section>
+
+              <section class="slide">
+                  <h2>First let's get your virtualenv ready</h2>
+                  <p>We're going to be using the Numpy package later. If you don't have it installed, try installing it in the background now as it may take some time to compile on your system.
+                  <p>It should be as easy as running this from your virtualenv: <pre>$ pip install numpy</pre>
+                  <p>If you're having trouble, I can help at the break
+              </section>
+
+              <section class="slide">
+                  <h2>What is software profiling?</h2>
+                  <p>The act of using instrumentation to objectively measure the performance of your application
+                  <p>"Performance" can be a measure of any of the following:
+                      <ul>
+                          <li>resource use (CPU, memory)
+                          <li>frequency or duration of function calls
+                          <li>wall clock execution time of part or all of your application
+                      </ul>
+                  <p>Collecting this data involves instrumentating the code.  In Python, this happens at runtime.
+                  <p>The instrumentation creates overhead, so it has a performance cost
+                  <p>The output data (a "profile") will be a statistical summary of the execution of functions
+              </section>
+
+              <section class="slide">
+                  <h2>An optimization strategy</h2>
+                  <p>
+                      <ol>
+                          <li>Write the code for maintainability / readability
+                          <li>Test for correctness
+                          <li>Collect profile data
+                          <li>If it is fast enough, quit. your job here is done.
+                          <li>Else optimize the most expensive parts based on profiling data
+                          <li>Repeat from 2)
+                      </ol>
+                  </p>
+              </section>
+
+              <section class="slide">
+                  <blockquote>
+                  <p>
+                  Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.
+                  </p>
+                  <i>-Donald Knuth</i>
+                  </blockquote>
+                  <a target="_blank" href="http://c2.com/cgi/wiki?PrematureOptimization">http://c2.com/cgi/wiki?PrematureOptimization</a>
+                  <a target="_blank" href="http://c2.com/cgi/wiki?ProfileBeforeOptimizing">http://c2.com/cgi/wiki?ProfileBeforeOptimizing</a>
+              </section>
+
+
+              <section class="slide">
+                  <h2>Big O notation</h2>
+                  <p>The efficency of an algorithm is often described in “big O” notation.
+                  <p>The letter O is used because the growth rate of a function is also referred to as Order of the function
+                  <p>It describes how an algorithm behaves in terms of resource use as a function of amount of input data
+                  <p><font size="200%">O(1)</font> - (Constant performance) Execution time stays constant regardless of how much data is supplied
+                  <br />Example: adding to dicts
+                  <p><font size="200%">O(n)</font> - Time goes up linearly with number of items.
+                  <br /> Example: scanning lists
+                  <p><font size="200%">O(n<sup>2</sup>)</font> - Time goes up quadratically with number of items.
+                  <br />Example: bubble sort, worst case
+                  <p><font size="200%">O(log(n))</font> - goes up with the log of number of items
+                  <br />Example: bisection search
+                  <p>Reference: <a target="_blank" href="https://wiki.python.org/moin/TimeComplexity">TimeComplexity</a> of operations on Python containers
+              </section>
+
+              <section class="slide">
+                  <h2>Big O notation</h2>
+                  <img width="90%" src="img/big_o.png" />
+                  <p>chart generated with examples/notebooks/Big_O.ipynb :
+              </section>
+
+              <section class="slide">
+                  <h2>Measuring time with a stopwatch</h2>
+                  <p>One way to measure performance is with a stopwatch.
+                  <p>Start the clock when a unit of code such as a function begins, and stop it when the code returns
+                  <p>This is a the simplest method, and we can instrument our code to start and stop the clock.
+                  <p>Like most timing benchmarks, data obtained is valid only for the particular test environment (machine/OS/Python version..)
+                  <p>Relative timings may be valid across systems, but can also diverge
+                  <p>For instance a run on a machine with fast network and slow disk may produce much different results on a system with slow network and fast disk
+              </section>
+
+              <section class="slide">
+                  <h2>time.clock() / time.time()</h2>
+                  <p>Using the time module as a profiling decorator</p>
+                  <p>time.time() returns the unix system time (wall clock time)
+                  <p>time.clock() returns the CPU time of the current process
+                  <p>Precision is system dependent
+                  <p>See examples/timer/timer_test.py</p>
+                  <pre><code>import time
+
+      def timer(func):
+          def timer(*args, **kwargs):
+              """a decorator which prints execution time of the decorated
+              function"""
+              t1 = time.time()
+              result = func(*args, **kwargs)
+              t2 = time.time()
+              print "-- executed %s in %.4f seconds" % (func.func_name, (t2 - t1))
+              return result
+          return timer
+
+      @timer
+      def expensive_function():
+          time.sleep(1)
+
+      @timer
+      def less_expensive_function():
+          time.sleep(.02)
+
+      expensive_function()
+      less_expensive_function()</code></pre>
+              </section>
+
+              <section class="slide">
+                  <h2>timeit</h2>
+                  <p>Used for testing small bits of code</p>
+                  <p>Use to test hypotheses about efficiency of algorithms and Python idioms</p>
+                  <p>Will run the given statement many times and calculate the average execution time</p>
+                  <p>Can be run from the command line:
+
+              <pre><code>python -m timeit '"-".join(str(n) for n in range(100))'</code></pre>
+              <p>
+              <a target="_blank" href="http://docs.python.org/library/timeit.html">http://docs.python.org/library/timeit.html</a>
+
+              <p>(See the <a target="_blank" href="https://hg.python.org/cpython/file/2.7/Lib/timeit.py">timeit.py source</a>)</p>
+              </section>
+
+              <section class="slide">
+              <h2>timeit command line interface</h2>
+              <p>options</p>
+              <ul>
+                  <li>-nN: execute the given statement N times in a loop. If this value is not given, a fitting value is chosen.
+
+                  <li>-rR: repeat the loop iteration R times and take the best result. Default: 3
+
+                  <li>-t: use time.time to measure the time, which is the default on Unix. This function measures wall time.
+
+                  <li>-c: use time.clock to measure the time, which is the default on Windows and measures wall time.
+                  On Unix, resource.getrusage is used instead and returns the CPU user time.
+
+                  <li>-pP: use a precision of P digits to display the timing result. Default: 3
+              </ul>
+              <pre><code>$ python -m timeit -n 1000 -t "len([x**2 for x in range(1000)])"</code></pre>
+              </section>
+
+              <section class="slide">
+                  <h2>timeit</h2>
+
+              <p>timeit can also be imported as a module
+              <p><a target="_blank" href="http://docs.python.org/2/library/timeit.html#timeit.timeit">http://docs.python.org/2/library/timeit.html#timeit.timeit</a>
+              <p>timeit.timeit(stmt='pass', setup='pass', timer=&lt;default timer&gt;, number=1000000)
+              <p>The setup kwarg contains a string of Python code to execute before the loops start, so that code is not part of the test
+              <pre><code>import timeit
+      statement = "char in text"
+      setup_code = """text = "sample string";char = "g" """
+      timeit.timeit(statement, setup=setup_code)</code></pre>
+              </section>
+              <section class="slide">
+                  <h2>timeit via iPython magic</h2>
+                  <p>Note that the code is passed without quoting it
+                  <p>
+              <pre><code>%timeit pass
+
+      u = None
+
+      %timeit u is None
+
+      %timeit -r 4 u == None
+
+      import time
+
+      %timeit -n1 time.sleep(2)
+
+      %timeit -n 10000 "f" in "food"</code></pre>
+              </p>
+          <!--
+              <p>The results of timeit and %timeit are different:
+          <pre><code>
+          In [12]: timeit.timeit("None is None")
+          Out[17]: 0.05478096008300781
+
+          In [13]: %timeit None is None
+          10000000 loops, best of 3: 51.4 ns per loop
+          </code></pre>
+          -->
+          <!-- add gc.enable() as 2nd arg, as startup option to enable gc which is disabled by default -->
+              </p>
+              <p>
+              <a target="_blank" href="http://ipython.org/ipython-doc/dev/api/generated/IPython.core.magics.execution.html?highlight=timeit#IPython.core.magics.execution.ExecutionMagics.timeit">http://ipython.org/ipython-doc/dev/api/generated/IPython.core.magics.execution.html?highlight=timeit#IPython.core.magics.execution.ExecutionMagics.timeit</a>
+
+              </p>
+              </section>
+
+              <section class="slide">
+                  <h2>Exercise</h2>
+                  <p>We just tried determining if a character exists in a string:
+          <pre><code>statement = "'f' in 'food'"
+      timeit.timeit(statement)</code></pre>
+          <p>Run timeit with an alternative statement:
+          <pre><code>statement2 = "'food'.find('f') &gt;= 0"
+      timeit.timeit(statement2)</code></pre>
+             <p>Which is faster?  Why?
+              </ul>
+              </section>
+
+              <section class="slide">
+                  <h2>Getting more detailed with Profiling</h2>
+                  <p>A profiler takes measurements of runtime performance and summarizes results into a profile report</p>
+                  <p>Reported metrics could include
+                  <ul>
+                      <li>Memory used over time
+                      <li>Memory allocated per function
+                      <li>Frequency of function calls
+                      <li>Duration of function calls
+                      <li>Cumulative time spent in subfunction calls
+                  </ul>
+              </section>
+
+              <section class="slide">
+                  <h2>Python's builtin profiler</h2>
+                  <p>Python comes with a few profiling modules</p>
+                  <ul>
+                      <li>profile - older, pure Python.   If you need to extend the profiler, this might be good.  Otherwise, it's slow.
+                      <li>cProfile - same API as profile, but written in C for less overhead
+                      <li>hotshot - deprecated, still used sometimes.   Emphasis on low overhead.
+                  </ul>
+                  <p>
+                      <a target="_blank" href="http://docs.python.org/2/library/profile.html">http://docs.python.org/2/library/profile.html</a>
+                  <p>
+                      <a target="_blank" href="http://docs.python.org/2/library/hotshot.html">http://docs.python.org/2/library/hotshot.html</a>
+                  </p>
+
+              </section>
+
+              <section class="slide">
+                  <h2>cProfiler</h2>
+                  <p>Can be run as a module on an entire application
+              <pre><code>python -m cProfile [-o output_file] [-s sort_order] integrate_main.py
+
+       11111128 function calls in 8.283 seconds
+
+         Ordered by: standard name
+
+           ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+              1    0.000    0.000    0.000    0.000   integrate.py:1(<module>)
+       11111110    2.879    0.000    2.879    0.000   integrate.py:1(f)
+       [....]</code></pre>
+              <ul>
+                  <li>ncalls: number of calls
+                  <li>tottime: total time spent in function, excluding time in sub-functions
+                  <li>percall: tottime / ncalls
+                  <li>cumtime: total time spent in function, including time in sub-functions
+                  <li>percall: cumtime / ncalls
+                  <li>filename:lineno: location of function
+              </ul>
+              <!--
+              <p>"primitive" calls are those not induced via recursion
+              -->
+          </section>
+
+          <section class="slide">
+              <h2>A more complex profile</h2>
+              <p>The amount of data in the previous example is readable, so now we'll look at the output from a more complex application: examples/pygame/swarm.py
+              <p>This program consists of calculating the gravitational acceleration of bodies around a central mass and displaying them
+              <p>There are two major consumers of resources: one is our own code calculating the physics, the other is pygame drawing the results on the screen
+              <p>Our goal is to figure out whether the major bottleneck is in our own logic or in the pygame operations
+              <p>A simple way to get data for our own code is
+          <pre>
+          python -m cProfile swarm.py  &amp;&gt; /tmp/output.txt
+          grep swarm.py /tmp/output.txt
+          </pre>
+              </p>
+              </section>
+
+              <section class="slide">
+                  <h2>cProfiler</h2>
+                  <p>Can run a single line of code similar to timeit:
+          <pre><code>
+          cProfile.run('None is None')
+          </code></pre>
+                  <p>Or from our old demo app examples/wikidef :
+          <pre><code>
+          cProfile.run("Definitions.article('python')")
+          </code></pre>
+
+              </section>
+
+              <section class="slide">
+              <h2>Analyzing profile data</h2>
+                  <p>
+                      output to a binary dump with -o &lt;filename&gt;
+                  </p>
+                  <p>While doing performance work, save your profiles for comparison later</p>
+                  <p>This helps ensure that any changes do actually increase performance
+                  <p>A profile dump file can be read with pstats
+      <pre><code>python -m pstats</code></pre>
+              </section>
+              <section class="slide">
+              <h2>pstats</h2>
+              <pre><code>python -m cProfile -o prof_dump  ./define.py Robot
+      python -m pstats
+      % read prof_dump
+
+      # show stats:
+      prof_dump% stats
+
+      # only the top 5 results:
+      prof_dump% stats 5
+
+      # sort by cumulative time:
+      prof_dump% sort cumulative
+
+      # shorten long filenames for display:
+      prof_dump% strip
+      # show results again:
+      prof_dump% stats 5</code></pre>
+
+          </section>
+          <section class="slide">
+              <h2>pstats</h2>
+              <p>
+              pstats also has method calls:
+              </p>
+              <pre><code>import pstats
+      p = pstats.Stats('prof_dump')
+      p.sort_stats('calls', 'cumulative')
+      p.print_stats()
+
+      # Output can be restricted via arguments to print_stats().
+      # Each restriction is either an integer (to select a count of lines),
+      # a decimal fraction between 0.0 and 1.0 inclusive (to select a percentage of lines),
+      # or a regular expression (to pattern match the standard name that is printed.
+      # If several restrictions are provided, then they are applied sequentially.
+
+      p.print_stats(5)
+      p.print_stats('./api.py', 4)
+          </code></pre>
+              </p>
+
+              </section>
+          <section class="slide">
+              <h2>Analyzing profile data</h2>
+              <p>Inspect only your local code with regular expression syntax:
+          <pre><code>import pstats
+      prof = pstats.Stats('prof_dump')
+      prof.sort_stats('cumulative')
+      prof.print_stats('^./[a-z]*.py:')
+          </code></pre>
+          </section>
+
+              <section class="slide">
+                  <h2>qcachegrind / kcachegrind</h2>
+                  <p>profiling tool based on <a target="_blank" href="http://kcachegrind.sourceforge.net/html/Valgrind.html">Valgrind</a>
+                  <p>a runtime instrumentation framework for Linux/x86
+                  <p>Can be used with Python profile data with a profile format conversion
+                  <p>Doesn't give all the information that a native valgrind run would provide
+              <pre><code># convert python profile to calltree format
+      pip install pyprof2calltree
+
+      python -m cProfile -o dump.profile integrate_main.py
+      pyprof2calltree -i dump.profile -o dump.callgrind</code>
+              </pre>
+              <p>
+              <a target="_blank" href="http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat">http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat</a>
+              </section>
+
+          <section class="slide">
+              <h2>Profiling C extensions</h2>
+              <p>Google Performance Tools can be used to profile C extensions
+              <p>Just call ProfilerStart and ProfilerStop with ctypes around the code you want to profile
+      <pre><code>import ctypes
+
+      libprof = ctypes.CDLL('/usr/local/lib/libprofiler.0.dylib')
+      libprof.ProfilerStart('/tmp/out.prof')
+      import numpy
+      a=numpy.linspace(0,100)
+      a*=32432432
+      libprof.ProfilerStop('/tmp/out.prof')
+      </code></pre>
+      <pre># convert the profile to qcachegrind's format with google's pprof tool
+      $ pprof --callgrind  ~/virtualenvs/uwpce/lib/python2.7/site-packages/numpy/core/multiarray.so out.prof > output.callgrind
+      $ qcachegrind output.callgrind
+      </pre>
+          </section>
+
+              <section class="slide">
+                  <h2>Run Snake Run</h2>
+                  <p>A graphical profile viewer for Python
+                  <p>Functions are represented by a <a target="_blank" href="https://pypi.python.org/pypi/SquareMap/">SquareMap</a> in which square size is proportional to time spent in the function
+                  <p>
+              <img src="img/runsnake.png" />
+              </section>
+              <section class="slide">
+                  <h2>Run Snake Run installation</h2>
+                  <p>
+      <pre><code># on Mac, it's easier to install wxPython via native installer and install runsnakerun into your system Python
+
+      runsnake dump.profile
+              </code>
+              </pre>
+              </section>
+
+
+              <section class="slide">
+                  <h2>line profiler </h2>
+              <p>Thus far, we've seen how to collect data on the performance of functions as atomic units
+              <p>line_profiler is a module for doing line-by-line profiling of functions
+              <p>line_profiler ships with its own profiler, kernprof.py. Enable line-by-line profiling with -l
+              <p>Decorate the function you want to profile with @profile and run</p>
+              <pre><code>
+      # the -v option will display the profile data immediately, instead
+      # of just writing it to &lt;filename.py&gt;.lprof
+      $ kernprof.py -l -v integrate_main.py
+
+      # load the output with
+      $ python -m line_profiler integrate_main.py.lprof
+      </code></pre>
+      <!--
+      Wrote profile results to swarm.py.lprof
+      Timer unit: 1e-06 s
+
+      File: swarm.py
+      Function: update_v at line 25
+      Total time: 0.142978 s
+
+      Line #      Hits         Time  Per Hit   % Time  Line Contents
+      ==============================================================
+          25                                               @profile
+          26                                               def update_v(self, other ):
+          27                                                   """update v with gravitational force of other"""
+          28     12300        38282      3.1     26.8          d = math.sqrt( (self.x - other.x)**2 + (self.y - other.y)**2)
+          29     12300        19128      1.6     13.4          v = ((other.x - self.x), (other.y - self.y))
+          30     12300        53274      4.3     37.3          f = map(lambda x: 200 * x / (d*d), v)
+          31     12300        32294      2.6     22.6          self.v = [self.v[0] + f[0], self.v[1] + f[1]]
+              </code>
+              </pre>
+      -->
+              <a target="_blank" href="http://pythonhosted.org/line_profiler/">http://pythonhosted.org/line_profiler/</a>
+              </section>
+
+              <section class="slide">
+                  <h2>pycallgraph</h2>
+                  <p>Sometimes a quick view of the call graph will help
+                  <p>Python Call Graph is a Python module that creates call graph visualizations
+                  <p>pycallgraph graphviz ./integrate_main.py</p>
+                  <img width="60%" src="img/pycallgraph.png" />
+              </section>
+
+              <section class="slide">
+              <h2>memory profilers</h2>
+              <p>There aren't any great ones
+              <p>one option is heapy, which comes with Guppy, a Python environment for memory profiling
+              <pre><code>from guppy import hpy; hp=hpy()
+      hp
+      hp.doc.heap
+      hp.heap()
+      %run define.py Robot
+      hp.heap()
+      </code></pre>
+              <p>Others
+              <li><a href="https://pypi.python.org/pypi/memory_profiler" target="_blank">https://pypi.python.org/pypi/memory_profiler </a>
+              <li><a href="http://mg.pov.lt/objgraph/" target="_blank">http://mg.pov.lt/objgraph/ </a>
+              <li><a href="https://launchpad.net/meliae" target="_blank">https://launchpad.net/meliae </a>
+              <li><a href="http://pythonhosted.org/Pympler/muppy.html" target="_blank">http://pythonhosted.org/Pympler/muppy.html </a>
+              <li><a href="http://jmdana.github.io/memprof/" target="_blank">http://jmdana.github.io/memprof/ </a>
+              </ul>
+              </section>
+
+              <!--
+              <section class="slide">
+                  <h2>Meliae: Python memory analysis</h2>
+                  <p><a target="_blank" href="https://launchpad.net/meliae">https://launchpad.net/meliae</a>
+              </section>
+              -->
+
+              <section class="slide">
+                  <h2>boosting Python performance</h2>
+
+                  <p>
+                  <ul>
+                      <li>Overhead in function/method runtime lookup can be significant for small frequent calls.
+                      <li>inlining code or caching function references might help.
+                      See examples/data_aggregation/agg.py
+                      <li>Python string handling idioms: use "".join(list_of_strings) rather than sequential calls to +=
+                       See examples/strings/str_concat.py and str_comprehensions.py
+                      <li>using list comprehensions, generator expressions, or map() instead of for loops can be faster (see data_aggregation/loops.py)
+                      <li>Rewrite expensive code as C modules. Use ctypes, Cython, SWIG, ...
+                      <li>Leverage existing domain specific C extension libraries, for instance Numpy for fast array operations.
+                  </ul>
+                  <p>
+                  <a target="_blank" href="http://wiki.python.org/moin/PythonSpeed/PerformanceTips/">http://wiki.python.org/moin/PythonSpeed/PerformanceTips/</a>
+
+              </section>
+
+              <section class="slide">
+                  <h2>Numpy</h2>
+                  <h3>A fast array library</h3>
+                  <p>Numpy provides mechanisms to create and manipulate large arrays in C with a Pythonic interface
+                  <p>Advantages:
+                  <ul>
+                  <li>Faster
+                  <li>Less memory
+                  <li><a target="_blank" href="http://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html">Data typing</a>
+                  <li>N-d array slicing
+                  <li>Vector operations
+                  </ul>
+                  <p>Many projects involving gridded data use numpy arrays:
+                  <ul>
+                      <li>PyOpenGL
+                      <li>GDAL (Geospatial Data Abstraction Library)
+                      <li>NetCDF4 (file format for large gridded data sets)
+                      <li>Shapely (for GIS work)
+                      <li>PIL (Python Image Library)
+                  </ul>
+
+              </section>
+
+              <section class="slide">
+                  <h2>Numpy</h2>
+                  <p>Numpy arrays can be created by passing a sequence to numpy.array(), or generated from scratch
+                  with methods like zeros(), empty(), arange(), ...
+                  <p>Numpy arrays can share data
+                  <p>Creating a slice of an array generates a reference to that slice, it does not
+                  copy the data, saving memory and improving performance
+                  <pre><code>import numpy
+      # create a 2D array
+      x = numpy.array(((1,2,3), (4,5,6), (7,8,9)))
+      # take a vertical slice
+      y = x[:,1]
+      # changing a value in x..
+      x[0][1] = 99
+      # changes the value in y
+      print y[0]
+                  </code></pre>
+                  <p>Fast serialization with numpy.tofile() / numpy.fromfile() – Just the raw bytes, no metadata
+              </section>
+
+              <section class="slide">
+                  <h2>Numpy</h2>
+                  <p>Operations on a numpy array</p>
+                  <p>Broadcasting: specifies an operation to broadcast across the array.  e.g.
+                  <code>my_array*3</code> will broadcast the (*3) operation on each element, at the C level, not the Python level.
+                  <p>See examples/numpy/matrix.py
+                  <p>Numpy has a <a target="_blank" href="http://docs.scipy.org/doc/numpy/reference/routines.html">large number of methods</a> for operating on the arrays, for slicing, vector calculations, and statistics
+              </section>
+
+              <section class="slide">
+                  <h2>Exercise</h2>
+                  <p>examples/numpy/images.py contains a script to manipulate an image's pixel data with numpy
+                  <p>Before saving a new copy of the image, mirror the image either horizontally or vertically
+              </section>
+
+
+              <section class="slide">
+                  <h2>Managing memory</h2>
+                  <p>Don’t forget memory:
+                  <p>Processors are fast
+                  <p>It can take longer to push the memory around than do the computation
+                  <p>So keep in in mind for big data sets:
+                  <p>Use the right data structures
+                  <p>Use efficient algorithms
+                  <p>Use generators, rather than lists: xrange, ...
+                  <p>Use iterators to pull in the data you need from databases, sockets, files, ...
+              </section>
+
+
+
+
+  <section class="slide">
+      <h1>Questions?</h1>
+  </section>
+
+    <!-- End slides. -->
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <!--
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+    -->
+    <!-- End extension snippets. -->
+  </div>
+
+<!-- Required JS files. -->
+<script src="deckjs/jquery.min.js"></script>
+<script src="deckjs/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deckjs/extensions/menu/deck.menu.js"></script>
+<script src="deckjs/extensions/goto/deck.goto.js"></script>
+<script src="deckjs/extensions/status/deck.status.js"></script>
+<script src="deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="deckjs/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>

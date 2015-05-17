@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Python300 week 07, threading and multiprocessing</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="deckjs/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/style/swiss.css">
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deckjs/themes/transition/horizontal-slide.css">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="deckjs/core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+  <div class="deck-container">
+
+      <section class="slide">
+          <h2>System Development with Python</h2>
+          <h3>Week 7 :: threading and multiprocessing</h3>
+          <p>Joseph Sheedy</p>
+          <p><i>joseph.sheedy@gmail.com</i></p>
+          <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
+      </section>
+
+
+      <section class="slide">
+          <h2>Threading / multiprocessing</h2>
+          <h3>Today's topics</h3>
+          <ul>
+              <li>Threading / multiprocessing motivation and options</li>
+              <li>threading module
+              <li>multiprocessing module
+              <li>other options
+          </ul>
+      </section>
+
+      <section class="slide">
+          <h2>Motivations for parallel execution</h2>
+          <ul>
+              <li>Performance
+              <ul>
+                  <li>Limited by <a target="_blank" href="http://en.wikipedia.org/wiki/Amdahl%27s_law">Amdahl's Law</a>
+                  <li>CPUs aren't getting much faster
+              </ul>
+              <li>Event handling
+                  <p>If a system handles asynchronous events, a seperate thread of execution could handle those events and let other threads do other work</p>
+                  <p>Examples:
+                  <ul>
+                      <li>Network applications
+                      <li>User interfaces
+                  </ul>
+          </ul>
+          <p>Parallel programming can be hard!
+          <p>If your problem can be solved sequentially, consider the costs and benefits before going parallel.
+
+      </section>
+
+      <section class="slide">
+          <h2>Parallelization strategy for performance</h2>
+          <ol>
+              <li>Break problem down into chunks
+              <li>Execute chunks in parallel
+              <li>Reassemble output of chunks into result
+          </ol>
+          <img width="60%" src="images/OPP.0108.gif" />
+      </section>
+
+      <section class="slide">
+          <h2>Parallelization strategy for performance</h2>
+          <p>
+              <ul>
+                  <li>Not every problem is parallelizable
+                  <li>There is an optimal number of threads for each problem in each environment, so make it tunable
+                  <li>Working concurrently opens up synchronization issues
+                  <li>Methods for synchronizing threads:
+                  <ul>
+                      <li>locks
+                      <li>queues
+                      <li>signaling/messaging mechanisms
+                  </ul>
+              </ul>
+          </p>
+      </section>
+
+      <section class="slide">
+          <h2>Threads versus processes in Python</h2>
+
+          <h3>Threads</h3>
+          <p>Threads are lightweight processes, run in the address space of an OS process.
+          <p>This allows multiple threads access to data in the same scope.</p>
+          <p>Python threads are true OS level threads</p>
+          <p>Threads can not gain the performance advantage of multiple processors due to the Global Interpreter Lock (GIL)</p>
+          <p>But the GIL is released during IO, allowing IO bound processes to benefit from threading</p>
+
+          <h3>Processes</h3>
+          <p>A process contains all the instructions and data required to execute independently
+          <p>The Python interpreter isn't lightweight!
+          <p>Communication between processes can be achieved via multiprocessing.Queue, multiprocessing.Pipe, and regular IPC</p>
+          <p>processes require multiple copies of the data, or expensive IPC to access it</p>
+          <p>data moved between processes must be pickleable</p>
+
+      </section>
+
+      <section class="slide">
+          <h2>GIL</h2>
+          <h3>Global Interpreter Lock</h3>
+          <p>This is a lock which must be obtained by each thread before it can execute, ensuring thread safety</p>
+          <img width="100%" src="images/gil.png" />
+          <p>The GIL is released during IO operations, so threads which spend time waiting on network or disk access can
+          enjoy performance gains</p>
+          <p>Some alternative Python implementations such as Jython and IronPython have no GIL
+          <p>cPython and PyPy have one
+          <p>Launch multiple processes to speed up CPU bound operations.  Luckily, this is easy with the multiprocessing module.</p>
+
+          <ul>
+              <li><a target="_blank" href="http://wiki.python.org/moin/GlobalInterpreterLock">http://wiki.python.org/moin/GlobalInterpreterLock</a></li>
+              <li><a target="_blank" href="http://docs.python.org/2/c-api/init.html#threads">http://docs.python.org/2/c-api/init.html#threads</a></li>
+              <li><a target="_blank" href="http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761">http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761</a>
+          </ul>
+      </section>
+
+      <section class="slide">
+          <h2>posted without comment</h2>
+          <img width="500" src="images/killGIL.jpg" />
+      </section>
+
+      <section class="slide">
+          <h2>A CPU bound problem</h2>
+
+          <p>
+              Numerically integrate the function
+              <a target="_blank" href="http://www.wolframalpha.com/input/?i=x%5E2">y = x<sup>2</sup></a>
+              from 0 to 10.
+          </p>
+          <p>
+              <img src="images/x2.png" />
+              <br />
+              <a target="_blank" href="http://www.wolframalpha.com/input/?i=int%28x%5E2%2C0%2C10%29">Solution</a>
+          </p>
+      </section>
+      <section class="slide">
+          <h2>Cheap hack parallel execution example</h2>
+      <p>
+      Consider the following code from week-07/threading_and_multiprocessing/examples/integrate/cheap-hack
+      <pre><code>
+      def f(x):
+          return x**2
+
+      def integrate(f, a, b, N):
+          s = 0
+          dx = (b-a)/N
+          for i in xrange(N):
+              s += f(a+i*dx)
+          return s * dx
+      </code></pre>
+      </p>
+      <p>Break down the problem into parallelizable chunks, then add the results together by hand:</p>
+      <pre><code>
+      ((python integrate_main.py 0 5 1000000) &) ; ((python integrate_main.py 5 10 1000000) & )
+      </code></pre>
+      <p>We can do better than this
+      </section>
+
+      <section class="slide">
+          <h2>the threading module</h2>
+          <p>starting threads doesn't take much:</p>
+      <pre><code>import sys
+      import threading
+      import time
+
+      def func():
+          for i in xrange(5):
+              print "hello from thread %s" % threading.current_thread().name
+              time.sleep(1)
+
+      threads = []
+      for i in xrange(3):
+          thread = threading.Thread(target=func, args=())
+          thread.start()
+          threads.append(thread)</code></pre>
+      <ul>
+          <li>The process will exit when the last non-daemon thread exits.
+          <li>A thread can be specified as a  daemon thread by setting its daemon attribute:
+          <code>thread.daemon = True</code>
+          <li>daemon threads get cut off at program exit, without any opportunity for cleanup. But you don't have to track and manage them. Useful for things like garbage collection, network keepalives, ..
+          <li>You can block and wait for a thread to exit with thread.join()
+      </ul>
+      </section>
+
+      <section class="slide">
+          <h2>Subclassing Thread</h2>
+          <p>You can adding threading capability to your own classes
+          <p>Subclass Thread and implement the run method</p>
+      <pre><code>import threading
+
+      class MyThread(threading.Thread):
+          def run(self):
+              print "hello from %s" % threading.current_thread().name
+
+      thread = MyThread()
+      thread.start()</code></pre>
+      </section>
+
+      <section class="slide">
+          <h2>Race Conditions</h2>
+
+          <p>In the last example we saw threads competing for access to stdout.
+          <p>Worse, if competing threads try to update the same value, we might get an unexpected race condition
+          <p>Race conditions occur when multiple statements need to execute atomically, but
+          get interrupted midway
+          <p>See examples/race_condition.py
+
+          <p>
+          <style>
+              .wikitable {
+                  border: 1px solid grey;
+                  float: left;
+                  font-size: 80%;
+                  margin: 20px;
+                  text-align: center;
+              }
+              .wikitable td {
+                  border: 1px solid grey;
+                  padding: 5px;
+              }
+          </style>
+          <table class="wikitable">
+      <tbody><tr>
+      <th>Thread 1</th>
+      <th>Thread 2</th>
+      <th></th>
+      <th>Integer value</th>
+      </tr>
+      <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td>read value</td>
+      <td></td>
+      <td>←</td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td style="background: wheat;">increase value</td>
+      <td></td>
+      <td></td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td>write back</td>
+      <td></td>
+      <td>→</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td></td>
+      <td>read value</td>
+      <td>←</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td></td>
+      <td style="background: wheat;">increase value</td>
+      <td></td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td></td>
+      <td>write back</td>
+      <td>→</td>
+      <td>2</td>
+      </tr>
+      </tbody></table>
+
+      <table class="wikitable">
+      <tbody><tr>
+      <th>Thread 1</th>
+      <th>Thread 2</th>
+      <th></th>
+      <th>Integer value</th>
+      </tr>
+      <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td>read value</td>
+      <td></td>
+      <td>←</td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td></td>
+      <td>read value</td>
+      <td>←</td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td style="background: wheat;">increase value</td>
+      <td></td>
+      <td></td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td></td>
+      <td style="background: wheat;">increase value</td>
+      <td></td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <td>write back</td>
+      <td></td>
+      <td>→</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <td></td>
+      <td>write back</td>
+      <td>→</td>
+      <td>1</td>
+      </tr>
+      </tbody></table>
+
+      <p>    <a href="http://en.wikipedia.org/wiki/Race_condition">
+              http://en.wikipedia.org/wiki/Race_condition
+          </a>
+      </section>
+
+      <section class="slide">
+          <h2>Deadlocks</h2>
+          <p>Synchronization and Critical Sections are used to control race conditions</p>
+          <p>But they introduce other potential problems...</p>
+          <p>...like <a href="http://en.wikipedia.org/wiki/Deadlock">Deadlocks</a>!</p>
+          <p>"A deadlock is a situation in which two or more competing actions are each waiting for the other to finish, and thus neither ever does."</p>
+          <p><em>When two trains approach each other at a crossing, both shall come to a full stop and neither shall start up again until the other has gone.</em></p>
+          <p>See also <em>Livelock</em>, and <em>Distributed Deadlock</em></p>
+      </section>
+
+      <section class="slide">
+          <h2>Locks</h2>
+          <p>Lock objects allow threads to control access to a resource until they're done with it</p>
+          <p>This is known as mutual exclusion, often called mutex
+          <p>Python 2 has a deprecated module called mutex for this. Use a Lock instead.
+          <p>A Lock has two states: locked and unlocked
+          <p>If multiple threads have access to the same Lock, they can police themselves by calling
+          its .acquire() and .release() methods
+          <p>If a Lock is locked, .acquire will block until it becomes unlocked
+          <p>These threads will wait in line politely for access to the statements in f()
+      <p><pre><code>import threading
+      import time
+
+      lock = threading.Lock()
+
+      def f():
+          lock.acquire()
+          print "%s got lock" % threading.current_thread().name
+          time.sleep(1)
+          lock.release()
+
+      threading.Thread(target=f).start()
+      threading.Thread(target=f).start()
+      threading.Thread(target=f).start()</code></pre></p>
+      </section>
+      <section class="slide">
+          <h2>nonblocking locking</h2>
+          <p>.acquire() will return True if it successfully acquires a lock
+          <p>Its first argument is a boolean which specifies whether a lock should block or not. The default is True
+          <code><pre>import threading
+      lock = threading.Lock()
+      lock.acquire()
+      if not lock.acquire(False):
+          print "couldn't get lock"
+      lock.release()
+      if lock.acquire(False):
+          print "got lock"</pre></code>
+      </section>
+      <section class="slide">
+          <h2>threading.RLock - Reentrant Lock</h2>
+          <p>Useful for recursive algorithms, a thread-specific count of the locks is maintained
+          <p>A reentrant lock can be acquired multiple times by the same thread</p>
+          <p>Lock.release() must be called the same number of times as Lock.acquire() by that thread</p>
+      </section>
+
+      <section class="slide">
+          <h2>threading.Semaphore</h2>
+          <p>Like an RLock, but in reverse
+          <p>A Semaphore is given an initial counter value, defaulting to 1
+          <p>Each call to acquire() decrements the counter, release() increments it
+          <p>If acquire() is called on a Semaphore with a counter of 0, it will block until the Semaphore counter is greater than 0.
+          <p>Useful for controlling the maximum number of threads allowed to access a resource simultaneously
+          <p><img src="images/flags.jpg" />
+      <p>
+      <a target="_blank" href="http://en.wikipedia.org/wiki/Semaphore_(programming)">http://en.wikipedia.org/wiki/Semaphore_(programming)</a>
+      </p>
+      </section>
+      <section class="slide">
+          <h2>Locking Exercise</h2>
+          <p>find examples/lock/stdout_writer.py</p>
+          <p>multiple threads in the script write to stdout, and their output gets jumbled
+          <ol>
+          <li>Add a locking mechanism to give each thread exclusive access to stdout
+          <li>Try adding a Semaphore to allow 2 threads access at once
+          </ol>
+      </section>
+
+      <section class="slide">
+          <h2>Managing thread results</h2>
+          <p>We need a thread safe way of storing results from multiple threads of execution.  That is provided by the Queue module. </p>
+          <p>Queues allow multiple producers and multiple consumers to exchange data safely
+          <p>Size of the queue is managed with the maxsize kwarg
+          <p>It will block consumers if empty and block producers if full
+          <p>If maxsize is less than or equal to zero, the queue size is infinite
+
+      <p><pre><code>from Queue import Queue
+      q = Queue(maxsize=10)
+      q.put(37337)
+      block = True
+      timeout = 2
+      print q.get(block, timeout)</code></pre></p>
+          <p>
+          <ul>
+              <li><a target="_blank" href="http://docs.python.org/2/library/threading.html">http://docs.python.org/2/library/threading.html</a>
+              <li><a target="_blank" href="http://docs.python.org/2/library/queue.html">http://docs.python.org/2/library/queue.html</a>
+          </ul>
+          </p>
+      </section>
+
+      <section class="slide">
+          <h2>Other Queue types</h2>
+          <p>Queue.LifoQueue - Last In, First Out
+          <p>Queue.PriorityQueue - Lowest valued entries are retrieved first
+          <p>One pattern for PriorityQueue is to insert entries of form data by inserting the tuple: (priority_number, data)
+
+      </section>
+
+      <section class="slide">
+          <h3>threading example</h3>
+          <p>See examples/threading/integrate_main.py
+      <p><pre>#!/usr/bin/env python
+
+      import argparse
+      import os
+      import sys
+      import threading
+      import Queue
+
+      sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+      from integrate.integrate import integrate, f
+      from decorators.decorators import timer
+
+      @timer
+      def threading_integrate(f, a, b, N, thread_count=2):
+          """break work into two chunks"""
+          N_chunk = int(float(N) / thread_count)
+          dx = float(b-a) / thread_count
+
+          results = Queue.Queue()
+
+          def worker(*args):
+              results.put(integrate(*args))
+
+          threads = []
+          for i in xrange(thread_count):
+              x0 = dx*i
+              x1 = x0 + dx
+              thread = threading.Thread(target=worker, args=(f, x0, x1, N_chunk))
+              thread.start()
+              print "Thread %s started" % thread.name
+              # thread1.join()
+
+          return sum( (results.get() for i in xrange(thread_count) ))
+
+      if __name__ == "__main__":
+          parser = argparse.ArgumentParser(description='integrator')
+          parser.add_argument('a', nargs='?', type=float, default=0.0)
+          parser.add_argument('b', nargs='?', type=float, default=10.0)
+          parser.add_argument('N', nargs='?', type=int, default=10**7)
+          parser.add_argument('thread_count', nargs='?', type=int, default=2)
+
+          args = parser.parse_args()
+          a = args.a
+          b = args.b
+          N = args.N
+          thread_count = args.thread_count
+
+          print "Numerical solution with N=%(N)d : %(x)f" % \
+                  {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}</pre></p>
+      </section>
+
+      <section class="slide">
+      <h2>Threading on a CPU bound problem</h2>
+      <p>Try running the code in examples/threading/integrate_main.py
+      <p>It accepts 4 arguments:
+      <pre>
+      ./integrate_main.py -h
+      usage: integrate_main.py [-h] [a] [b] [N] [thread_count]
+
+      integrator
+
+      positional arguments:
+        a
+        b
+        N
+        thread_count
+      </pre>
+      <code><pre>./integrate_main.py 0 10 1000000 4</pre></code>
+      <p>What happens when you change the thread count? What thread count gives the maximum speed?
+      </section>
+
+      <section class="slide">
+          <h2>multiprocessing</h2>
+
+          <p>multiprocessing provides an API very similar to threading, so the transition is easy</p>
+          <p>use multiprocessing.Process instead of threading.Thread
+      <p><pre><code>import multiprocessing
+      import os
+      import time
+
+      def func():
+          print "hello from process %s" % os.getpid()
+          time.sleep(1)
+
+      proc = multiprocessing.Process(target=func, args=())
+      proc.start()
+      proc = multiprocessing.Process(target=func, args=())
+      proc.start()</code></pre></p>
+      </section>
+
+      <section class="slide">
+          <h2>Differences with threading</h2>
+          <p>multiprocessing has its' own multiprocessing.Queue which handles interprocess communication
+          <p>Also has its' own versions of Lock, RLock, Semaphore
+      <pre><code>
+      from multiprocessing import Queue, Lock
+      </code></pre>
+          <p>multiprocessing.Pipe for 2-way process communication:
+      <pre><code>
+      from multiprocessing import Pipe
+      parent_conn, child_conn = Pipe()
+      child_conn.send("foo")
+      print parent_conn.recv()
+      </code></pre>
+
+      </section>
+
+      <section class="slide">
+          <h2>Pooling</h2>
+          <p>a processing pool contains worker processes with only a configured number running at one time
+          <p>
+      <pre><code>
+      from multiprocessing import Pool
+      pool = Pool(processes=4)
+      </code></pre>
+      <p>The Pool module has several methods for adding jobs to the pool
+          <ul>
+              <li>apply_async(func[, args[, kwargs[, callback]]])
+              <li>map_async(func, iterable[, chunksize[, callback]])
+          </ul>
+      </p>
+      </section>
+      <section class="slide">
+
+          <h2>Pooling example</h2>
+      <pre><code>
+      from multiprocessing import Pool
+
+      def f(x):
+          return x*x
+
+      if __name__ == '__main__':
+          pool = Pool(processes=4)
+
+          result = pool.apply_async(f, (10,))
+          print result.get(timeout=1)
+
+          print pool.map(f, range(10))
+
+          it = pool.imap(f, range(10))
+          print it.next()
+          print it.next()
+          print it.next(timeout=1)
+
+          import time
+          result = pool.apply_async(time.sleep, (10,))
+          print result.get(timeout=1)
+      </code></pre>
+
+      <p><a target="_blank" href="http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool">http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool</a>
+      </section>
+
+      <section class="slide">
+          <h2>ThreadPool</h2>
+          <p>threading also has a pool
+          <p>confusingly, it lives in the multiprocessing module
+          <p>
+      <pre><code>
+      from multiprocessing.pool import ThreadPool
+      pool = ThreadPool(processes=4)
+      </code></pre>
+      </section>
+
+      <section class="slide">
+          <h2>threading versus multiprocessing, networking edition</h2>
+          <p>We're going to test making concurrent connections to a web service in examples/server/app.py
+          <p>It is a WSGI application which can be run with Green Unicorn or another WSGI server
+      <pre><code>$ gunicorn app:app --bind 0.0.0.0:37337</code></pre>
+          <p>client-threading.py makes 100 threads to contact the web service
+          <p>client-mp.py makes 100 processes to contact the web service
+          <p>client-pooled.py creates a ThreadPool
+          <p>client-pooled.py contains a results Queue, but doesn't use it. Can you collect all the output from the pool into a single data structure using this Queue?
+      </section>
+
+      <section class="slide">
+          <h2>Other options</h2>
+          <p>Traditionally, concurency has been achieved through multiple process communication and in-process threads, as we've seen</p>
+          <p>Another strategy is through micro-threads, implemented via coroutines and a scheduler
+          <p>A coroutine is a generalization of a subroutine which allows multiple entry points for suspending and resuming execution
+          <p>the threading and the multiprocessing modules follow a <a target="_blank" href="http://en.wikipedia.org/wiki/Preemption_(computing)">preemptive multitasking model</a>
+          <p>coroutine based solutions follow a <a target="_blank" href="http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing">cooperative multitasking model</a>
+          <ul>
+              <li><a href="http://dabeaz.com/coroutines/">http://dabeaz.com/coroutines/, A Curious Course on Coroutines and Concurrency</a>
+              <li><a href="http://en.wikipedia.org/wiki/Coroutine">http://en.wikipedia.org/wiki/Coroutine</a>
+          </ul>
+
+      </section>
+
+      <section class="slide">
+          <h2>With send(), a generator becomes a coroutine</h2>
+
+      <p><pre><code>
+      def coroutine(n):
+          try:
+              while True:
+                  x = (yield)
+                  print n+x
+          except GeneratorExit:
+              pass
+
+      targets = [
+       coroutine(10),
+       coroutine(20),
+       coroutine(30),
+      ]
+
+      for target in targets:
+          target.next()
+
+      for i in range(5):
+          for target in targets:
+              target.send(i)
+      </code></pre></p>
+      <p>
+          <a target="_blank" href="http://dabeaz.com/coroutines/Coroutines.pdf">http://dabeaz.com/coroutines/Coroutines.pdf</a>
+      </p>
+      </section>
+
+      <section class="slide">
+          <h2>Packages using coroutines for micro threads</h2>
+          <p>By "jumping" to parallel coroutines, our application can simulate true threads.
+          <p>Creating the scheduler which does the jumping is an exercise for the reader,
+          but look into these packages which handle the dirty work</p>
+          <ul>
+              <li><a href="https://pypi.python.org/pypi/greenlet">https://pypi.python.org/pypi/greenlet</a> - interface for creating coroutine based microthreads
+              <li><a href="http://eventlet.net/">http://eventlet.net/</a> - a concurrent networking library, based on greenlet.   Developed for Second Life
+              <li><a href="http://www.gevent.org">http://www.gevent.org</a> - forked from eventlet. Built on top of greenlet and libevent, a portable event loop with strong OS support
+          </ul>
+
+      </section>
+
+      <section class="slide">
+          <h2>Distributed programming</h2>
+          <p>A distributed system is one in which components located on networked computers communicate and coordinate their actions by passing messages</p>
+          <p>There are lots of ways to do this at different layers. MPI, *-RPC, Pyro, ...
+      </section>
+
+      <section class="slide">
+          <h2>Celery</h2>
+          <p>"Celery is an asynchronous task queue/job queue based on distributed message passing"
+          <p>Provides an API for defining tasks, and retrieving results from those tasks
+          <p>Messages are passed via a "message broker", of which Celery supports several:
+              <ul>
+                  <li>RabbitMQ (default)
+                  <li>Redis
+                  <li>MongoDB
+                  <li>Amazon SQS
+                  <li>...
+              </ul>
+          <p>Celery worker processes are run on compute nodes, while the main process farms jobs out to them.
+          <a target="_blank" href="http://www.celeryproject.org/">http://www.celeryproject.org/</a>
+      </section>
+
+      <section class="slide">
+          <h2>Celery in one minute</h2>
+      <pre><code>
+      # tasks.py
+
+      from celery import Celery
+
+      celery = Celery('tasks', backend="amqp", broker='amqp://guest@localhost//')
+
+      @celery.task
+      def add(x, y):
+          return x + y
+      </code></pre>
+      <pre><code>
+      % celery -A tasks worker --loglevel=INFO -c 4
+      </code></pre>
+      <pre><code>
+      from tasks import add
+      result = add.delay(2,3)
+      print result.get()
+      </code></pre>
+      </section>
+
+
+
+  <section class="slide">
+      <h1>Questions?</h1>
+  </section>
+
+    <!-- End slides. -->
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <!--
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+    -->
+    <!-- End extension snippets. -->
+  </div>
+
+<!-- Required JS files. -->
+<script src="deckjs/jquery.min.js"></script>
+<script src="deckjs/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deckjs/extensions/menu/deck.menu.js"></script>
+<script src="deckjs/extensions/goto/deck.goto.js"></script>
+<script src="deckjs/extensions/status/deck.status.js"></script>
+<script src="deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="deckjs/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>
