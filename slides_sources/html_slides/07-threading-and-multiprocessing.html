@@ -156,25 +156,24 @@
           </p>
       </section>
       <section class="slide">
-          <h2>Cheap hack parallel execution example</h2>
+          <h2>Parallel execution example</h2>
       <p>
-      Consider the following code from week-07/threading_and_multiprocessing/examples/integrate/cheap-hack
-      <pre><code>
-      def f(x):
-          return x**2
+      Consider the following code from week-07/threading_and_multiprocessing/examples/integrate/sequential
+      <pre><code>def f(x):
+    return x**2
 
-      def integrate(f, a, b, N):
-          s = 0
-          dx = (b-a)/N
-          for i in xrange(N):
-              s += f(a+i*dx)
-          return s * dx
+def integrate(f, a, b, N):
+    s = 0
+    dx = (b-a)/N
+    for i in xrange(N):
+        s += f(a+i*dx)
+    return s * dx
+
+print integrate(f, 0, 10, 100)
       </code></pre>
       </p>
-      <p>Break down the problem into parallelizable chunks, then add the results together by hand:</p>
-      <pre><code>
-      ((python integrate_main.py 0 5 1000000) &) ; ((python integrate_main.py 5 10 1000000) & )
-      </code></pre>
+      <p>Break down the problem into parallelizable chunks, then add the results together:</p>
+
       <p>We can do better than this
       </section>
 
@@ -182,19 +181,19 @@
           <h2>the threading module</h2>
           <p>starting threads doesn't take much:</p>
       <pre><code>import sys
-      import threading
-      import time
+import threading
+import time
 
-      def func():
-          for i in xrange(5):
-              print "hello from thread %s" % threading.current_thread().name
-              time.sleep(1)
+def func():
+    for i in xrange(5):
+        print "hello from thread %s" % threading.current_thread().name
+        time.sleep(1)
 
-      threads = []
-      for i in xrange(3):
-          thread = threading.Thread(target=func, args=())
-          thread.start()
-          threads.append(thread)</code></pre>
+threads = []
+for i in xrange(3):
+    thread = threading.Thread(target=func, args=())
+    thread.start()
+    threads.append(thread)</code></pre>
       <ul>
           <li>The process will exit when the last non-daemon thread exits.
           <li>A thread can be specified as a  daemon thread by setting its daemon attribute:
@@ -210,12 +209,12 @@
           <p>Subclass Thread and implement the run method</p>
       <pre><code>import threading
 
-      class MyThread(threading.Thread):
-          def run(self):
-              print "hello from %s" % threading.current_thread().name
+class MyThread(threading.Thread):
+    def run(self):
+        print "hello from %s" % threading.current_thread().name
 
-      thread = MyThread()
-      thread.start()</code></pre>
+thread = MyThread()
+thread.start()</code></pre>
       </section>
 
       <section class="slide">
@@ -355,7 +354,7 @@
           <p>...like <a href="http://en.wikipedia.org/wiki/Deadlock">Deadlocks</a>!</p>
           <p>"A deadlock is a situation in which two or more competing actions are each waiting for the other to finish, and thus neither ever does."</p>
           <p><em>When two trains approach each other at a crossing, both shall come to a full stop and neither shall start up again until the other has gone.</em></p>
-          <p>See also <em>Livelock</em>, and <em>Distributed Deadlock</em></p>
+          <p>See also <em>Livelock</em>: <em>Two people meet in a narrow corridor, and each tries to be polite by moving aside to let the other pass, but they end up swaying from side to side without making any progress because they both repeatedly move the same way at the same time.</em></p>
       </section>
 
       <section class="slide">
@@ -369,32 +368,32 @@
           <p>If a Lock is locked, .acquire will block until it becomes unlocked
           <p>These threads will wait in line politely for access to the statements in f()
       <p><pre><code>import threading
-      import time
+import time
 
-      lock = threading.Lock()
+lock = threading.Lock()
 
-      def f():
-          lock.acquire()
-          print "%s got lock" % threading.current_thread().name
-          time.sleep(1)
-          lock.release()
+def f():
+    lock.acquire()
+    print "%s got lock" % threading.current_thread().name
+    time.sleep(1)
+    lock.release()
 
-      threading.Thread(target=f).start()
-      threading.Thread(target=f).start()
-      threading.Thread(target=f).start()</code></pre></p>
+threading.Thread(target=f).start()
+threading.Thread(target=f).start()
+threading.Thread(target=f).start()</code></pre></p>
       </section>
       <section class="slide">
           <h2>nonblocking locking</h2>
           <p>.acquire() will return True if it successfully acquires a lock
           <p>Its first argument is a boolean which specifies whether a lock should block or not. The default is True
           <code><pre>import threading
-      lock = threading.Lock()
-      lock.acquire()
-      if not lock.acquire(False):
-          print "couldn't get lock"
-      lock.release()
-      if lock.acquire(False):
-          print "got lock"</pre></code>
+lock = threading.Lock()
+lock.acquire()
+if not lock.acquire(False):
+    print "couldn't get lock"
+lock.release()
+if lock.acquire(False):
+    print "got lock"</pre></code>
       </section>
       <section class="slide">
           <h2>threading.RLock - Reentrant Lock</h2>
@@ -434,11 +433,11 @@
           <p>If maxsize is less than or equal to zero, the queue size is infinite
 
       <p><pre><code>from Queue import Queue
-      q = Queue(maxsize=10)
-      q.put(37337)
-      block = True
-      timeout = 2
-      print q.get(block, timeout)</code></pre></p>
+q = Queue(maxsize=10)
+q.put(37337)
+block = True
+timeout = 2
+print q.get(block, timeout)</code></pre></p>
           <p>
           <ul>
               <li><a target="_blank" href="http://docs.python.org/2/library/threading.html">http://docs.python.org/2/library/threading.html</a>
@@ -460,53 +459,53 @@
           <p>See examples/threading/integrate_main.py
       <p><pre>#!/usr/bin/env python
 
-      import argparse
-      import os
-      import sys
-      import threading
-      import Queue
+import argparse
+import os
+import sys
+import threading
+import Queue
 
-      sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-      from integrate.integrate import integrate, f
-      from decorators.decorators import timer
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from integrate.integrate import integrate, f
+from decorators.decorators import timer
 
-      @timer
-      def threading_integrate(f, a, b, N, thread_count=2):
-          """break work into two chunks"""
-          N_chunk = int(float(N) / thread_count)
-          dx = float(b-a) / thread_count
+@timer
+def threading_integrate(f, a, b, N, thread_count=2):
+    """break work into two chunks"""
+    N_chunk = int(float(N) / thread_count)
+    dx = float(b-a) / thread_count
 
-          results = Queue.Queue()
+    results = Queue.Queue()
 
-          def worker(*args):
-              results.put(integrate(*args))
+    def worker(*args):
+        results.put(integrate(*args))
 
-          threads = []
-          for i in xrange(thread_count):
-              x0 = dx*i
-              x1 = x0 + dx
-              thread = threading.Thread(target=worker, args=(f, x0, x1, N_chunk))
-              thread.start()
-              print "Thread %s started" % thread.name
-              # thread1.join()
+    threads = []
+    for i in xrange(thread_count):
+        x0 = dx*i
+        x1 = x0 + dx
+        thread = threading.Thread(target=worker, args=(f, x0, x1, N_chunk))
+        thread.start()
+        print "Thread %s started" % thread.name
+        # thread1.join()
 
-          return sum( (results.get() for i in xrange(thread_count) ))
+    return sum( (results.get() for i in xrange(thread_count) ))
 
-      if __name__ == "__main__":
-          parser = argparse.ArgumentParser(description='integrator')
-          parser.add_argument('a', nargs='?', type=float, default=0.0)
-          parser.add_argument('b', nargs='?', type=float, default=10.0)
-          parser.add_argument('N', nargs='?', type=int, default=10**7)
-          parser.add_argument('thread_count', nargs='?', type=int, default=2)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='integrator')
+    parser.add_argument('a', nargs='?', type=float, default=0.0)
+    parser.add_argument('b', nargs='?', type=float, default=10.0)
+    parser.add_argument('N', nargs='?', type=int, default=10**7)
+    parser.add_argument('thread_count', nargs='?', type=int, default=2)
 
-          args = parser.parse_args()
-          a = args.a
-          b = args.b
-          N = args.N
-          thread_count = args.thread_count
+    args = parser.parse_args()
+    a = args.a
+    b = args.b
+    N = args.N
+    thread_count = args.thread_count
 
-          print "Numerical solution with N=%(N)d : %(x)f" % \
-                  {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}</pre></p>
+    print "Numerical solution with N=%(N)d : %(x)f" % \
+            {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}</pre></p>
       </section>
 
       <section class="slide">
@@ -514,16 +513,16 @@
       <p>Try running the code in examples/threading/integrate_main.py
       <p>It accepts 4 arguments:
       <pre>
-      ./integrate_main.py -h
-      usage: integrate_main.py [-h] [a] [b] [N] [thread_count]
+./integrate_main.py -h
+usage: integrate_main.py [-h] [a] [b] [N] [thread_count]
 
-      integrator
+integrator
 
-      positional arguments:
-        a
-        b
-        N
-        thread_count
+positional arguments:
+  a
+  b
+  N
+  thread_count
       </pre>
       <code><pre>./integrate_main.py 0 10 1000000 4</pre></code>
       <p>What happens when you change the thread count? What thread count gives the maximum speed?
@@ -535,32 +534,31 @@
           <p>multiprocessing provides an API very similar to threading, so the transition is easy</p>
           <p>use multiprocessing.Process instead of threading.Thread
       <p><pre><code>import multiprocessing
-      import os
-      import time
+import os
+import time
 
-      def func():
-          print "hello from process %s" % os.getpid()
-          time.sleep(1)
+def func():
+    print "hello from process %s" % os.getpid()
+    time.sleep(1)
 
-      proc = multiprocessing.Process(target=func, args=())
-      proc.start()
-      proc = multiprocessing.Process(target=func, args=())
-      proc.start()</code></pre></p>
+proc = multiprocessing.Process(target=func, args=())
+proc.start()
+proc = multiprocessing.Process(target=func, args=())
+proc.start()</code></pre></p>
       </section>
 
       <section class="slide">
           <h2>Differences with threading</h2>
-          <p>multiprocessing has its' own multiprocessing.Queue which handles interprocess communication
-          <p>Also has its' own versions of Lock, RLock, Semaphore
+          <p>multiprocessing has its own multiprocessing.Queue which handles interprocess communication
+          <p>Also has its own versions of Lock, RLock, Semaphore
       <pre><code>
       from multiprocessing import Queue, Lock
       </code></pre>
           <p>multiprocessing.Pipe for 2-way process communication:
-      <pre><code>
-      from multiprocessing import Pipe
-      parent_conn, child_conn = Pipe()
-      child_conn.send("foo")
-      print parent_conn.recv()
+      <pre><code>from multiprocessing import Pipe
+parent_conn, child_conn = Pipe()
+child_conn.send("foo")
+print parent_conn.recv()
       </code></pre>
 
       </section>
@@ -569,9 +567,8 @@
           <h2>Pooling</h2>
           <p>a processing pool contains worker processes with only a configured number running at one time
           <p>
-      <pre><code>
-      from multiprocessing import Pool
-      pool = Pool(processes=4)
+      <pre><code>from multiprocessing import Pool
+pool = Pool(processes=4)
       </code></pre>
       <p>The Pool module has several methods for adding jobs to the pool
           <ul>
@@ -583,28 +580,27 @@
       <section class="slide">
 
           <h2>Pooling example</h2>
-      <pre><code>
-      from multiprocessing import Pool
+      <pre><code>from multiprocessing import Pool
 
-      def f(x):
-          return x*x
+def f(x):
+    return x*x
 
-      if __name__ == '__main__':
-          pool = Pool(processes=4)
+if __name__ == '__main__':
+    pool = Pool(processes=4)
 
-          result = pool.apply_async(f, (10,))
-          print result.get(timeout=1)
+    result = pool.apply_async(f, (10,))
+    print result.get(timeout=1)
 
-          print pool.map(f, range(10))
+    print pool.map(f, range(10))
 
-          it = pool.imap(f, range(10))
-          print it.next()
-          print it.next()
-          print it.next(timeout=1)
+    it = pool.imap(f, range(10))
+    print it.next()
+    print it.next()
+    print it.next(timeout=1)
 
-          import time
-          result = pool.apply_async(time.sleep, (10,))
-          print result.get(timeout=1)
+    import time
+    result = pool.apply_async(time.sleep, (10,))
+    print result.get(timeout=1)
       </code></pre>
 
       <p><a target="_blank" href="http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool">http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool</a>
@@ -650,26 +646,26 @@
           <h2>With send(), a generator becomes a coroutine</h2>
 
       <p><pre><code>
-      def coroutine(n):
-          try:
-              while True:
-                  x = (yield)
-                  print n+x
-          except GeneratorExit:
-              pass
+def coroutine(n):
+    try:
+        while True:
+            x = (yield)
+            print n+x
+    except GeneratorExit:
+        pass
 
-      targets = [
-       coroutine(10),
-       coroutine(20),
-       coroutine(30),
-      ]
+targets = [
+ coroutine(10),
+ coroutine(20),
+ coroutine(30),
+]
 
-      for target in targets:
-          target.next()
+for target in targets:
+    target.next()
 
-      for i in range(5):
-          for target in targets:
-              target.send(i)
+for i in range(5):
+    for target in targets:
+        target.send(i)
       </code></pre></p>
       <p>
           <a target="_blank" href="http://dabeaz.com/coroutines/Coroutines.pdf">http://dabeaz.com/coroutines/Coroutines.pdf</a>
@@ -685,6 +681,7 @@
               <li><a href="https://pypi.python.org/pypi/greenlet">https://pypi.python.org/pypi/greenlet</a> - interface for creating coroutine based microthreads
               <li><a href="http://eventlet.net/">http://eventlet.net/</a> - a concurrent networking library, based on greenlet.   Developed for Second Life
               <li><a href="http://www.gevent.org">http://www.gevent.org</a> - forked from eventlet. Built on top of greenlet and libevent, a portable event loop with strong OS support
+              <li>Python 3.4+ : the asyncio module
           </ul>
 
       </section>
@@ -713,24 +710,23 @@
 
       <section class="slide">
           <h2>Celery in one minute</h2>
-      <pre><code>
-      # tasks.py
+      <pre><code># tasks.py
 
-      from celery import Celery
+from celery import Celery
 
-      celery = Celery('tasks', backend="amqp", broker='amqp://guest@localhost//')
+celery = Celery('tasks', backend="amqp", broker='amqp://guest@localhost//')
 
-      @celery.task
-      def add(x, y):
-          return x + y
-      </code></pre>
-      <pre><code>
-      % celery -A tasks worker --loglevel=INFO -c 4
-      </code></pre>
-      <pre><code>
-      from tasks import add
-      result = add.delay(2,3)
-      print result.get()
+@celery.task
+def add(x, y):
+    return x + y
+</code></pre>
+<pre><code>
+% celery -A tasks worker --loglevel=INFO -c 4
+</code></pre>
+<pre><code>
+from tasks import add
+result = add.delay(2,3)
+print result.get()
       </code></pre>
       </section>
 

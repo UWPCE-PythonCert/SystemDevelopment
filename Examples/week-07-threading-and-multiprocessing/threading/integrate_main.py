@@ -15,7 +15,7 @@ def threading_integrate(f, a, b, N, thread_count=2):
     """break work into two chunks"""
     N_chunk = int(float(N) / thread_count)
     dx = float(b-a) / thread_count
-    
+
     results = Queue.Queue()
 
     def worker(*args):
@@ -23,7 +23,7 @@ def threading_integrate(f, a, b, N, thread_count=2):
 
     threads = []
     for i in xrange(thread_count):
-        x0 = dx*i 
+        x0 = dx*i
         x1 = x0 + dx
         thread = threading.Thread(target=worker, args=(f, x0, x1, N_chunk))
         thread.start()

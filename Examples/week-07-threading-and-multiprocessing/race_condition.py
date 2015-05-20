@@ -14,7 +14,7 @@ def func():
 threads = []
 # with enough threads, there's sufficient overhead to cause a race
 # condition
-for i in xrange(10000):
+for i in xrange(20000):
     thread = threading.Thread(target=func)
     threads.append(thread)
     thread.start()

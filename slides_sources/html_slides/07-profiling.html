@@ -39,135 +39,117 @@
           <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
       </section>
 
+      <section class="slide">
+          <h2>Performance and Profiling</h2>
+          <h3>Today's topics</h3>
+          <ul>
+              <li>Determining performance objectives
+              <li>Measuring performance a.k.a. profiling
+              <li>Performance optimizations
+          </ul>
+      </section>
 
-          <!-- Begin slides. Just make elements with a class of slide. -->
+      <section class="slide">
+          <h2>What is software profiling?</h2>
+          <p>The act of using instrumentation to objectively measure the performance of your application
+          <p>"Performance" can be a measure of any of the following:
+              <ul>
+                  <li>resource use (CPU, memory)
+                  <li>frequency or duration of function calls
+                  <li>wall clock execution time of part or all of your application
+              </ul>
+          <p>Collecting this data involves instrumentating the code.  In Python, this happens at runtime.
+          <p>The instrumentation creates overhead, so it has a performance cost
+          <p>The output data (a "profile") will be a statistical summary of the execution of functions
+      </section>
+
           <section class="slide">
-              <h2>System Development with Python</h2>
-              <h3>Week 8 :: Profiling / Tuning</h3>
-              <p>Joseph Sheedy</p>
-              <p><i>joseph.sheedy@gmail.com</i></p>
-              <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Fall-2014" target="_blank">https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Fall-2014</a></p>
+              <h2>An optimization strategy</h2>
+              <p>
+                  <ol>
+                      <li>Write the code for maintainability / readability
+                      <li>Test for correctness
+                      <li>Collect profile data
+                      <li>If it is fast enough, quit. your job here is done.
+                      <li>Else optimize the most expensive parts based on profiling data
+                      <li>Repeat from 2)
+                  </ol>
+              </p>
           </section>
 
-              <section class="slide">
-                  <h2>Performance and Profiling</h2>
-                  <h3>Today's topics</h3>
-                  <ul>
-                      <li>Determining performance objectives
-                      <li>Measuring performance a.k.a. profiling
-                      <li>Performance optimizations
-                  </ul>
-              </section>
-
-              <section class="slide">
-                  <h2>First let's get your virtualenv ready</h2>
-                  <p>We're going to be using the Numpy package later. If you don't have it installed, try installing it in the background now as it may take some time to compile on your system.
-                  <p>It should be as easy as running this from your virtualenv: <pre>$ pip install numpy</pre>
-                  <p>If you're having trouble, I can help at the break
-              </section>
-
-              <section class="slide">
-                  <h2>What is software profiling?</h2>
-                  <p>The act of using instrumentation to objectively measure the performance of your application
-                  <p>"Performance" can be a measure of any of the following:
-                      <ul>
-                          <li>resource use (CPU, memory)
-                          <li>frequency or duration of function calls
-                          <li>wall clock execution time of part or all of your application
-                      </ul>
-                  <p>Collecting this data involves instrumentating the code.  In Python, this happens at runtime.
-                  <p>The instrumentation creates overhead, so it has a performance cost
-                  <p>The output data (a "profile") will be a statistical summary of the execution of functions
-              </section>
-
-              <section class="slide">
-                  <h2>An optimization strategy</h2>
-                  <p>
-                      <ol>
-                          <li>Write the code for maintainability / readability
-                          <li>Test for correctness
-                          <li>Collect profile data
-                          <li>If it is fast enough, quit. your job here is done.
-                          <li>Else optimize the most expensive parts based on profiling data
-                          <li>Repeat from 2)
-                      </ol>
-                  </p>
-              </section>
-
-              <section class="slide">
-                  <blockquote>
-                  <p>
-                  Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.
-                  </p>
-                  <i>-Donald Knuth</i>
-                  </blockquote>
-                  <a target="_blank" href="http://c2.com/cgi/wiki?PrematureOptimization">http://c2.com/cgi/wiki?PrematureOptimization</a>
-                  <a target="_blank" href="http://c2.com/cgi/wiki?ProfileBeforeOptimizing">http://c2.com/cgi/wiki?ProfileBeforeOptimizing</a>
-              </section>
+          <section class="slide">
+              <blockquote>
+              <p>
+              Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.
+              </p>
+              <i>-Donald Knuth</i>
+              </blockquote>
+              <a target="_blank" href="http://c2.com/cgi/wiki?PrematureOptimization">http://c2.com/cgi/wiki?PrematureOptimization</a>
+              <a target="_blank" href="http://c2.com/cgi/wiki?ProfileBeforeOptimizing">http://c2.com/cgi/wiki?ProfileBeforeOptimizing</a>
+          </section>
 
 
-              <section class="slide">
-                  <h2>Big O notation</h2>
-                  <p>The efficency of an algorithm is often described in “big O” notation.
-                  <p>The letter O is used because the growth rate of a function is also referred to as Order of the function
-                  <p>It describes how an algorithm behaves in terms of resource use as a function of amount of input data
-                  <p><font size="200%">O(1)</font> - (Constant performance) Execution time stays constant regardless of how much data is supplied
-                  <br />Example: adding to dicts
-                  <p><font size="200%">O(n)</font> - Time goes up linearly with number of items.
-                  <br /> Example: scanning lists
-                  <p><font size="200%">O(n<sup>2</sup>)</font> - Time goes up quadratically with number of items.
-                  <br />Example: bubble sort, worst case
-                  <p><font size="200%">O(log(n))</font> - goes up with the log of number of items
-                  <br />Example: bisection search
-                  <p>Reference: <a target="_blank" href="https://wiki.python.org/moin/TimeComplexity">TimeComplexity</a> of operations on Python containers
-              </section>
+          <section class="slide">
+              <h2>Big O notation</h2>
+              <p>The efficency of an algorithm is often described in “big O” notation.
+              <p>The letter O is used because the growth rate of a function is also referred to as Order of the function
+              <p>It describes how an algorithm behaves in terms of resource use as a function of amount of input data
+              <p><font size="200%">O(1)</font> - (Constant performance) Execution time stays constant regardless of how much data is supplied
+              <br />Example: adding to dicts
+              <p><font size="200%">O(n)</font> - Time goes up linearly with number of items.
+              <br /> Example: scanning lists
+              <p><font size="200%">O(n<sup>2</sup>)</font> - Time goes up quadratically with number of items.
+              <br />Example: bubble sort, worst case
+              <p><font size="200%">O(log(n))</font> - goes up with the log of number of items
+              <br />Example: bisection search
+              <p>Reference: <a target="_blank" href="https://wiki.python.org/moin/TimeComplexity">TimeComplexity</a> of operations on Python containers
+          </section>
 
-              <section class="slide">
-                  <h2>Big O notation</h2>
-                  <img width="90%" src="img/big_o.png" />
-                  <p>chart generated with examples/notebooks/Big_O.ipynb :
-              </section>
+          <section class="slide">
+              <h2>Big O notation</h2>
+              <img width="90%" src="images/big_o.png" />
+              <p>chart generated with examples/notebooks/Big_O.ipynb :
+          </section>
 
-              <section class="slide">
-                  <h2>Measuring time with a stopwatch</h2>
-                  <p>One way to measure performance is with a stopwatch.
-                  <p>Start the clock when a unit of code such as a function begins, and stop it when the code returns
-                  <p>This is a the simplest method, and we can instrument our code to start and stop the clock.
-                  <p>Like most timing benchmarks, data obtained is valid only for the particular test environment (machine/OS/Python version..)
-                  <p>Relative timings may be valid across systems, but can also diverge
-                  <p>For instance a run on a machine with fast network and slow disk may produce much different results on a system with slow network and fast disk
-              </section>
+          <section class="slide">
+              <h2>Measuring time with a stopwatch</h2>
+              <p>One way to measure performance is with a stopwatch.
+              <p>Start the clock when a unit of code such as a function begins, and stop it when the code returns
+              <p>This is a the simplest method, and we can instrument our code to start and stop the clock.
+              <p>Like most timing benchmarks, data obtained is valid only for the particular test environment (machine/OS/Python version..)
+              <p>Relative timings may be valid across systems, but can also diverge
+              <p>For instance a run on a machine with fast network and slow disk may produce much different results on a system with slow network and fast disk
+          </section>
 
-              <section class="slide">
-                  <h2>time.clock() / time.time()</h2>
-                  <p>Using the time module as a profiling decorator</p>
-                  <p>time.time() returns the unix system time (wall clock time)
-                  <p>time.clock() returns the CPU time of the current process
-                  <p>Precision is system dependent
-                  <p>See examples/timer/timer_test.py</p>
-                  <pre><code>import time
+          <section class="slide">
+              <h2>time.clock() / time.time()</h2>
+              <p>Using the time module as a profiling decorator</p>
+              <p>time.time() returns the unix system time (wall clock time)
+              <p>time.clock() returns the CPU time of the current process
+              <p>Precision is system dependent
+              <p>See examples/timer/timer_test.py</p>
+              <pre><code>import time
 
-      def timer(func):
-          def timer(*args, **kwargs):
-              """a decorator which prints execution time of the decorated
-              function"""
-              t1 = time.time()
-              result = func(*args, **kwargs)
-              t2 = time.time()
-              print "-- executed %s in %.4f seconds" % (func.func_name, (t2 - t1))
-              return result
-          return timer
+def timer(func):
+    def timer(*args, **kwargs):
+        """a decorator which prints execution time of the decorated function"""
+        t1 = time.time()
+        result = func(*args, **kwargs)
+        t2 = time.time()
+        print "-- executed %s in %.4f seconds" % (func.func_name, (t2 - t1))
+        return result
+    return timer
 
-      @timer
-      def expensive_function():
-          time.sleep(1)
+@timer
+def expensive_function():
+    time.sleep(1)
 
-      @timer
-      def less_expensive_function():
-          time.sleep(.02)
+@timer
+def less_expensive_function():
+    time.sleep(.02)
 
-      expensive_function()
-      less_expensive_function()</code></pre>
+expensive_function()
+less_expensive_function()</code></pre>
               </section>
 
               <section class="slide">
@@ -210,9 +192,9 @@
               <p>timeit.timeit(stmt='pass', setup='pass', timer=&lt;default timer&gt;, number=1000000)
               <p>The setup kwarg contains a string of Python code to execute before the loops start, so that code is not part of the test
               <pre><code>import timeit
-      statement = "char in text"
-      setup_code = """text = "sample string";char = "g" """
-      timeit.timeit(statement, setup=setup_code)</code></pre>
+statement = "char in text"
+setup_code = """text = "sample string";char = "g" """
+timeit.timeit(statement, setup=setup_code)</code></pre>
               </section>
               <section class="slide">
                   <h2>timeit via iPython magic</h2>
@@ -220,17 +202,17 @@
                   <p>
               <pre><code>%timeit pass
 
-      u = None
+u = None
 
-      %timeit u is None
+%timeit u is None
 
-      %timeit -r 4 u == None
+%timeit -r 4 u == None
 
-      import time
+import time
 
-      %timeit -n1 time.sleep(2)
+%timeit -n1 time.sleep(2)
 
-      %timeit -n 10000 "f" in "food"</code></pre>
+%timeit -n 10000 "f" in "food"</code></pre>
               </p>
           <!--
               <p>The results of timeit and %timeit are different:
@@ -254,10 +236,10 @@
                   <h2>Exercise</h2>
                   <p>We just tried determining if a character exists in a string:
           <pre><code>statement = "'f' in 'food'"
-      timeit.timeit(statement)</code></pre>
+timeit.timeit(statement)</code></pre>
           <p>Run timeit with an alternative statement:
           <pre><code>statement2 = "'food'.find('f') &gt;= 0"
-      timeit.timeit(statement2)</code></pre>
+timeit.timeit(statement2)</code></pre>
              <p>Which is faster?  Why?
               </ul>
               </section>
@@ -296,14 +278,14 @@
                   <p>Can be run as a module on an entire application
               <pre><code>python -m cProfile [-o output_file] [-s sort_order] integrate_main.py
 
-       11111128 function calls in 8.283 seconds
+11111128 function calls in 8.283 seconds
 
-         Ordered by: standard name
+Ordered by: standard name
 
-           ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-              1    0.000    0.000    0.000    0.000   integrate.py:1(<module>)
-       11111110    2.879    0.000    2.879    0.000   integrate.py:1(f)
-       [....]</code></pre>
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+  1    0.000    0.000    0.000    0.000   integrate.py:1(<module>)
+11111110    2.879    0.000    2.879    0.000   integrate.py:1(f)
+[....]</code></pre>
               <ul>
                   <li>ncalls: number of calls
                   <li>tottime: total time spent in function, excluding time in sub-functions
@@ -324,9 +306,8 @@
               <p>There are two major consumers of resources: one is our own code calculating the physics, the other is pygame drawing the results on the screen
               <p>Our goal is to figure out whether the major bottleneck is in our own logic or in the pygame operations
               <p>A simple way to get data for our own code is
-          <pre>
-          python -m cProfile swarm.py  &amp;&gt; /tmp/output.txt
-          grep swarm.py /tmp/output.txt
+          <pre>python -m cProfile swarm.py  &amp;&gt; /tmp/output.txt
+grep swarm.py /tmp/output.txt
           </pre>
               </p>
               </section>
@@ -357,22 +338,22 @@
               <section class="slide">
               <h2>pstats</h2>
               <pre><code>python -m cProfile -o prof_dump  ./define.py Robot
-      python -m pstats
-      % read prof_dump
+python -m pstats
+% read prof_dump
 
-      # show stats:
-      prof_dump% stats
+# show stats:
+prof_dump% stats
 
-      # only the top 5 results:
-      prof_dump% stats 5
+# only the top 5 results:
+prof_dump% stats 5
 
-      # sort by cumulative time:
-      prof_dump% sort cumulative
+# sort by cumulative time:
+prof_dump% sort cumulative
 
-      # shorten long filenames for display:
-      prof_dump% strip
-      # show results again:
-      prof_dump% stats 5</code></pre>
+# shorten long filenames for display:
+prof_dump% strip
+# show results again:
+prof_dump% stats 5</code></pre>
 
           </section>
           <section class="slide">
@@ -381,18 +362,18 @@
               pstats also has method calls:
               </p>
               <pre><code>import pstats
-      p = pstats.Stats('prof_dump')
-      p.sort_stats('calls', 'cumulative')
-      p.print_stats()
+p = pstats.Stats('prof_dump')
+p.sort_stats('calls', 'cumulative')
+p.print_stats()
 
-      # Output can be restricted via arguments to print_stats().
-      # Each restriction is either an integer (to select a count of lines),
-      # a decimal fraction between 0.0 and 1.0 inclusive (to select a percentage of lines),
-      # or a regular expression (to pattern match the standard name that is printed.
-      # If several restrictions are provided, then they are applied sequentially.
+# Output can be restricted via arguments to print_stats().
+# Each restriction is either an integer (to select a count of lines),
+# a decimal fraction between 0.0 and 1.0 inclusive (to select a percentage of lines),
+# or a regular expression (to pattern match the standard name that is printed.
+# If several restrictions are provided, then they are applied sequentially.
 
-      p.print_stats(5)
-      p.print_stats('./api.py', 4)
+p.print_stats(5)
+p.print_stats('./api.py', 4)
           </code></pre>
               </p>
 
@@ -401,9 +382,9 @@
               <h2>Analyzing profile data</h2>
               <p>Inspect only your local code with regular expression syntax:
           <pre><code>import pstats
-      prof = pstats.Stats('prof_dump')
-      prof.sort_stats('cumulative')
-      prof.print_stats('^./[a-z]*.py:')
+prof = pstats.Stats('prof_dump')
+prof.sort_stats('cumulative')
+prof.print_stats('^./[a-z]*.py:')
           </code></pre>
           </section>
 
@@ -414,10 +395,10 @@
                   <p>Can be used with Python profile data with a profile format conversion
                   <p>Doesn't give all the information that a native valgrind run would provide
               <pre><code># convert python profile to calltree format
-      pip install pyprof2calltree
+pip install pyprof2calltree
 
-      python -m cProfile -o dump.profile integrate_main.py
-      pyprof2calltree -i dump.profile -o dump.callgrind</code>
+python -m cProfile -o dump.profile integrate_main.py
+pyprof2calltree -i dump.profile -o dump.callgrind</code>
               </pre>
               <p>
               <a target="_blank" href="http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat">http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat</a>
@@ -429,16 +410,16 @@
               <p>Just call ProfilerStart and ProfilerStop with ctypes around the code you want to profile
       <pre><code>import ctypes
 
-      libprof = ctypes.CDLL('/usr/local/lib/libprofiler.0.dylib')
-      libprof.ProfilerStart('/tmp/out.prof')
-      import numpy
-      a=numpy.linspace(0,100)
-      a*=32432432
-      libprof.ProfilerStop('/tmp/out.prof')
-      </code></pre>
-      <pre># convert the profile to qcachegrind's format with google's pprof tool
-      $ pprof --callgrind  ~/virtualenvs/uwpce/lib/python2.7/site-packages/numpy/core/multiarray.so out.prof > output.callgrind
-      $ qcachegrind output.callgrind
+libprof = ctypes.CDLL('/usr/local/lib/libprofiler.0.dylib')
+libprof.ProfilerStart('/tmp/out.prof')
+import numpy
+a=numpy.linspace(0,100)
+a*=32432432
+libprof.ProfilerStop('/tmp/out.prof')
+</code></pre>
+<pre># convert the profile to qcachegrind's format with google's pprof tool
+$ pprof --callgrind  ~/virtualenvs/uwpce/lib/python2.7/site-packages/numpy/core/multiarray.so out.prof > output.callgrind
+$ qcachegrind output.callgrind
       </pre>
           </section>
 
@@ -447,14 +428,12 @@
                   <p>A graphical profile viewer for Python
                   <p>Functions are represented by a <a target="_blank" href="https://pypi.python.org/pypi/SquareMap/">SquareMap</a> in which square size is proportional to time spent in the function
                   <p>
-              <img src="img/runsnake.png" />
+              <img src="images/runsnake.png" />
               </section>
               <section class="slide">
                   <h2>Run Snake Run installation</h2>
                   <p>
-      <pre><code># on Mac, it's easier to install wxPython via native installer and install runsnakerun into your system Python
-
-      runsnake dump.profile
+      <pre><code>runsnake dump.profile
               </code>
               </pre>
               </section>
@@ -466,13 +445,12 @@
               <p>line_profiler is a module for doing line-by-line profiling of functions
               <p>line_profiler ships with its own profiler, kernprof.py. Enable line-by-line profiling with -l
               <p>Decorate the function you want to profile with @profile and run</p>
-              <pre><code>
-      # the -v option will display the profile data immediately, instead
-      # of just writing it to &lt;filename.py&gt;.lprof
-      $ kernprof.py -l -v integrate_main.py
+              <pre><code># the -v option will display the profile data immediately, instead
+# of just writing it to &lt;filename.py&gt;.lprof
+$ kernprof.py -l -v integrate_main.py
 
-      # load the output with
-      $ python -m line_profiler integrate_main.py.lprof
+# load the output with
+$ python -m line_profiler integrate_main.py.lprof
       </code></pre>
       <!--
       Wrote profile results to swarm.py.lprof
@@ -502,7 +480,7 @@
                   <p>Sometimes a quick view of the call graph will help
                   <p>Python Call Graph is a Python module that creates call graph visualizations
                   <p>pycallgraph graphviz ./integrate_main.py</p>
-                  <img width="60%" src="img/pycallgraph.png" />
+                  <img width="60%" src="images/pycallgraph.png" />
               </section>
 
               <section class="slide">
@@ -510,11 +488,11 @@
               <p>There aren't any great ones
               <p>one option is heapy, which comes with Guppy, a Python environment for memory profiling
               <pre><code>from guppy import hpy; hp=hpy()
-      hp
-      hp.doc.heap
-      hp.heap()
-      %run define.py Robot
-      hp.heap()
+hp
+hp.doc.heap
+hp.heap()
+%run define.py Robot
+hp.heap()
       </code></pre>
               <p>Others
               <li><a href="https://pypi.python.org/pypi/memory_profiler" target="_blank">https://pypi.python.org/pypi/memory_profiler </a>
@@ -582,14 +560,14 @@
                   <p>Creating a slice of an array generates a reference to that slice, it does not
                   copy the data, saving memory and improving performance
                   <pre><code>import numpy
-      # create a 2D array
-      x = numpy.array(((1,2,3), (4,5,6), (7,8,9)))
-      # take a vertical slice
-      y = x[:,1]
-      # changing a value in x..
-      x[0][1] = 99
-      # changes the value in y
-      print y[0]
+# create a 2D array
+x = numpy.array(((1,2,3), (4,5,6), (7,8,9)))
+# take a vertical slice
+y = x[:,1]
+# changing a value in x..
+x[0][1] = 99
+# changes the value in y
+print y[0]
                   </code></pre>
                   <p>Fast serialization with numpy.tofile() / numpy.fromfile() – Just the raw bytes, no metadata
               </section>
