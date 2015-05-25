@@ -1,0 +1,41 @@
+# Notes about Cython examples:
+
+## Installing Cython:
+
+$ pip install Cython
+
+Cython files are named with the "pyx" extension (Pyrex legacy)
+
+Note: Python syntax highlighting works pretty well in most editors.
+
+
+## For simple functions:
+
+def is callable from Python
+
+cdef is only callable from Cython (or C)
+
+
+## generating C code:
+
+$ cython cy_add.pyx
+
+generating "annotated" C code (HTML):
+
+$ cython -a cy_add.pyx
+
+Look at the html -- the yellow highlights are places where calls into the Python runtime are used.
+
+## To build extension:
+
+python cy_setup.py build_ext --inplace
+
+(or develop or install....)
+
+running nose or py.test should run all the tests. Or you can run each one on it's own.
+
+
+
+
+
+

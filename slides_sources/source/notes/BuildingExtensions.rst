@@ -47,31 +47,20 @@ and that the extension you are trying to compile is using setuptools, rather tha
 OS-X:
 =====
 
-Apple moves fast with its upgrades, so it's a bit of a trick. The latest version of XCode is free, but does not support older systems, and thus won't work (at least not easily) for the python.org python builds.
+Apple provides a free compiler, as part of the "XCode" IDE.
+You can get it for free from the App store, but BE prepared, it is a big download!
 
-python.org python
-------------------
+JSut the commadn line tools:
 
-For python.org Python2.7, you need XCode 4.* (I've got 4.6.3)
+IT looks like you can jstu get the comadn line tools by running this command on teh command line:
 
-for Lion (10.7 and above) -- you'll need to download it. Apple makes it a bit hard to find the older versions, but they can be found at:
+xcode-select --install
 
-[developer.apple.com](https://developer.apple.com/downloads)
+see: http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/
 
-You need to login with an AppleID (or create one), then select "Developer Tools", and search for Xcode -- poke around a bit, and you'll eventually find:
+for more detail.
 
-XCode 4.6.3
-
-Download and install it (do it with a fast connection -- it's huge)
-
-After installing it, you may need to install the "command line tools". Select preferences, the Downloads, and install the "Command Line Tools" if they are not already installed.
-
-Apple's Python
----------------
-
-For Apple's built-in python, you should be able to use the latest XCode for your system (should!). You can get it from the App Store (the App store only has the latest, as far as I know). After installing it, make sure you got the command line tools:
-
-To install these tools, go to the Downloads tab within the Xcode Preferences menu and click "Install" next to the Command Line Tools entry.
+If you opt for teh full package, after you install XCode, you STILL need to install the commadn line tools. To install these tools, go to the Downloads tab within the Xcode Preferences menu and click "Install" next to the Command Line Tools entry.
 
 (https://developer.apple.com/support/xcode/)
 
@@ -83,9 +72,9 @@ If you installed python with Macports or Homebrew, it should be all set up to co
 Testing if it works:
 ======================
 
-In the code dir for the week-08 class, you'll find a number of samples.
+In the ``Examples\week-08 class``, you'll find a number of samples.
 
-Go to the: ``week-08/extensions/code/c-api`` dir.
+Go to the: ``Examples\week-08-extensions/c-api`` dir.
 
 type::
 
@@ -98,6 +87,4 @@ Try::
     py.test
 
 and hopefully 3 tests will pass.
-
-
 
