@@ -67,8 +67,6 @@
 <li><a class="reference internal" href="#linux">Linux</a></li>
 <li><a class="reference internal" href="#windows">Windows:</a></li>
 <li><a class="reference internal" href="#os-x">OS-X:</a><ul>
-<li><a class="reference internal" href="#python-org-python">python.org python</a></li>
-<li><a class="reference internal" href="#apple-s-python">Apple&#8217;s Python</a></li>
 <li><a class="reference internal" href="#macports-homebrew">Macports / Homebrew</a></li>
 </ul>
 </li>
@@ -145,23 +143,15 @@
 </div>
 <div class="section" id="os-x">
 <h2>OS-X:<a class="headerlink" href="#os-x" title="Permalink to this headline">¶</a></h2>
-<p>Apple moves fast with its upgrades, so it&#8217;s a bit of a trick. The latest version of XCode is free, but does not support older systems, and thus won&#8217;t work (at least not easily) for the python.org python builds.</p>
-<div class="section" id="python-org-python">
-<h3>python.org python<a class="headerlink" href="#python-org-python" title="Permalink to this headline">¶</a></h3>
-<p>For python.org Python2.7, you need XCode 4.* (I&#8217;ve got 4.6.3)</p>
-<p>for Lion (10.7 and above) &#8211; you&#8217;ll need to download it. Apple makes it a bit hard to find the older versions, but they can be found at:</p>
-<p>[developer.apple.com](<a class="reference external" href="https://developer.apple.com/downloads">https://developer.apple.com/downloads</a>)</p>
-<p>You need to login with an AppleID (or create one), then select &#8220;Developer Tools&#8221;, and search for Xcode &#8211; poke around a bit, and you&#8217;ll eventually find:</p>
-<p>XCode 4.6.3</p>
-<p>Download and install it (do it with a fast connection &#8211; it&#8217;s huge)</p>
-<p>After installing it, you may need to install the &#8220;command line tools&#8221;. Select preferences, the Downloads, and install the &#8220;Command Line Tools&#8221; if they are not already installed.</p>
-</div>
-<div class="section" id="apple-s-python">
-<h3>Apple&#8217;s Python<a class="headerlink" href="#apple-s-python" title="Permalink to this headline">¶</a></h3>
-<p>For Apple&#8217;s built-in python, you should be able to use the latest XCode for your system (should!). You can get it from the App Store (the App store only has the latest, as far as I know). After installing it, make sure you got the command line tools:</p>
-<p>To install these tools, go to the Downloads tab within the Xcode Preferences menu and click &#8220;Install&#8221; next to the Command Line Tools entry.</p>
+<p>Apple provides a free compiler, as part of the &#8220;XCode&#8221; IDE.
+You can get it for free from the App store, but BE prepared, it is a big download!</p>
+<p>JSut the commadn line tools:</p>
+<p>IT looks like you can jstu get the comadn line tools by running this command on teh command line:</p>
+<p>xcode-select &#8211;install</p>
+<p>see: <a class="reference external" href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a></p>
+<p>for more detail.</p>
+<p>If you opt for teh full package, after you install XCode, you STILL need to install the commadn line tools. To install these tools, go to the Downloads tab within the Xcode Preferences menu and click &#8220;Install&#8221; next to the Command Line Tools entry.</p>
 <p>(<a class="reference external" href="https://developer.apple.com/support/xcode/">https://developer.apple.com/support/xcode/</a>)</p>
-</div>
 <div class="section" id="macports-homebrew">
 <h3>Macports / Homebrew<a class="headerlink" href="#macports-homebrew" title="Permalink to this headline">¶</a></h3>
 <p>If you installed python with Macports or Homebrew, it should be all set up to compile extensions. If not, then you may need to install a python-dev package, or something like that.</p>
@@ -169,8 +159,8 @@
 </div>
 <div class="section" id="testing-if-it-works">
 <h2>Testing if it works:<a class="headerlink" href="#testing-if-it-works" title="Permalink to this headline">¶</a></h2>
-<p>In the code dir for the week-08 class, you&#8217;ll find a number of samples.</p>
-<p>Go to the: <code class="docutils literal"><span class="pre">week-08/extensions/code/c-api</span></code> dir.</p>
+<p>In the <code class="docutils literal"><span class="pre">Examples\week-08</span> <span class="pre">class</span></code>, you&#8217;ll find a number of samples.</p>
+<p>Go to the: <code class="docutils literal"><span class="pre">Examples\week-08-extensions/c-api</span></code> dir.</p>
 <p>type:</p>
 <div class="highlight-python"><div class="highlight"><pre>python setup.py build_ext --inplace
 </pre></div>
