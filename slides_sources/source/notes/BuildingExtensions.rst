@@ -48,19 +48,20 @@ OS-X:
 =====
 
 Apple provides a free compiler, as part of the "XCode" IDE.
-You can get it for free from the App store, but BE prepared, it is a big download!
+You can get it for free from the App store, but be prepared, it is a big download!
 
-JSut the commadn line tools:
+Just the command line tools:
 
-IT looks like you can jstu get the comadn line tools by running this command on teh command line:
 
-xcode-select --install
+It looks like you can just get the command line tools by running this command on the command line::
+
+    xcode-select --install
 
 see: http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/
 
 for more detail.
 
-If you opt for teh full package, after you install XCode, you STILL need to install the commadn line tools. To install these tools, go to the Downloads tab within the Xcode Preferences menu and click "Install" next to the Command Line Tools entry.
+If you opt for the full package, after you install XCode, you STILL need to install the command line tools. To install these tools, go to the Downloads tab within the Xcode Preferences menu and click "Install" next to the Command Line Tools entry.
 
 (https://developer.apple.com/support/xcode/)
 
