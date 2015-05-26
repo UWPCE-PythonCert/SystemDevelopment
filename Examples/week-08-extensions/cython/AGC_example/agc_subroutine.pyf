@@ -1,0 +1,16 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module agc_subroutine ! in 
+    interface  ! in :agc_subroutine
+        subroutine agc(nagc,npts,amp,ampagc) ! in :agc_subroutine:agc_subroutine.f
+            integer :: nagc
+            integer, optional,intent(hide),check(len(amp)>=npts),depend(amp) :: npts=len(amp)
+            real dimension(npts) :: amp
+            real dimension(npts),intent(out),depend(npts) :: ampagc
+        end subroutine agc
+    end interface 
+end python module agc_subroutine
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

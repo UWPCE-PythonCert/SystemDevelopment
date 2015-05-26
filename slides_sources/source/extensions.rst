@@ -67,7 +67,8 @@ we'll work with the following function we want to integrate::
       printf("%d + %d = %d\n\n", w, q, add(w,q));
   }
 
-This is, of course, trivial and built in to Python, but the techniques are the same.
+This is, of course, trivial and built in to Python, but the techniques
+are the same.
 
 (``Examples/week-08-extensions/pure-c/add.c``)
 
@@ -509,7 +510,7 @@ Supports almost all of C:
 LAB
 ----
 
-In ``code/ctypes`` you'll find ``add.c``
+In ``Examples/week-08-extensions/ctypes`` you'll find ``add.c``
 
 You can build a shared lib with it with ``make``
 (``make.bat``) on Windows.
@@ -764,7 +765,7 @@ This is a good candidate for Cython -- an essentially static function called a l
 Cython from pure Python to C
 -----------------------------
 
-Let's go through the steps one by one. In the ``code/integrate`` directory::
+Let's go through the steps one by one. In the ``Examples/week-08-extensions/cython/integrate`` directory::
 
 
   cy_integrate1.pyx
@@ -791,6 +792,8 @@ SIP
 XDress
 
 [also Boost-Python -- not really a wrapper generator]
+
+f2Py -- for Fortran
 
 
 SWIG

@@ -2,9 +2,11 @@
 
 # a cython version with no changes -- pure python!
 
+
 def f(x):
     """simple objective function to integrate"""
-    return x**2-x
+    return x ** 2 - x
+
 
 def integrate_f(a, b, N):
     """
@@ -12,8 +14,8 @@ def integrate_f(a, b, N):
 
     f(x) = x**2 - x
 
-    from a to b, using N steps, using the simple recatngle rule approach.
-    """ 
+    from a to b, using N steps, using the simple rectangle rule approach.
+    """
 
     s = 0
     dx = (b-a)/N
