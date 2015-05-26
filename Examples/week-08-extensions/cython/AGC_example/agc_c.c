@@ -1,6 +1,7 @@
 /* C version of AGC code */
 
 #include <stdio.h>
+#include <math.h>
 
 void AGC(int nAGC, int npts, float *amp, float *ampAGC);
 

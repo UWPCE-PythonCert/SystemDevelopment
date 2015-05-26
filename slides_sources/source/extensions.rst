@@ -780,6 +780,25 @@ At each step, we'll time and look at the output from::
 
   $cython -a cy_integrate1.pyx
 
+AGC Example
+-----------
+
+Another useful example is in:
+
+Examples/week-08-extensions/AGC_example
+
+This one impliments an Automatic Gain Control Signal processing filter.
+
+It turns out that you can use some advanced numpy tricks to get pretty
+good performancew with this filter, but you can't get full-on speed
+without some compiled code.
+
+This example uses:
+ * Pure Cython
+ * C called from Cython
+ * f2py and Fortran
+
+
 Auto-generated wrappers
 =======================
 
@@ -793,7 +812,7 @@ XDress
 
 [also Boost-Python -- not really a wrapper generator]
 
-f2Py -- for Fortran
+f2py -- for Fortran
 
 
 SWIG

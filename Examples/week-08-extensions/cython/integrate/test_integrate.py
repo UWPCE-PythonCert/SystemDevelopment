@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 
+"""
+Simple test script to get gross timings
+
+Not unit tests
+"""
+
 from timer_context import Timer
 
 
 def run_test(msg):
     print msg
     with Timer():
-        result = integrate_f(0.0,10.0,1000000)
+        result = integrate_f(0.0, 10.0, 1000000)
     print "result:", result
     print
 
@@ -33,5 +39,4 @@ run_test("Sixth Cython version:")
 
 from cy_integrate7 import integrate_f
 run_test("Seventh Cython version:")
-
 
