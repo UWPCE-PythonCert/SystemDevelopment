@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 
 setup(
     name='Cdiv',
@@ -8,4 +8,3 @@ setup(
     description='sample method that does exceptions',
     ext_modules=[Extension('divide', sources=['divide.c'])],
 )
-
