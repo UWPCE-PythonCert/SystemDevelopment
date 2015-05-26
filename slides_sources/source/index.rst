@@ -84,16 +84,19 @@ Session 6
 Session 7
 =========
 
-.. rst-class:: left
 
-  - serialization review / XML
-  - profiling
-  - multi-threading/processing
+`multi-threading/processing <html_slides/07-threading-and-multiprocessing.html>`_
+
+..  - serialization review / XML
+..  - profiling
+
 
 Session 8
 =========
 
-C extensions( C API, ctypes, cython)
+
+:ref:`extensions`
+
 
 Session 9
 =========
