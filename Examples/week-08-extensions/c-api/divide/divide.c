@@ -27,4 +27,3 @@ initdivide(void) {
 
     Py_InitModule("divide", DivideMethods);
 }
-
