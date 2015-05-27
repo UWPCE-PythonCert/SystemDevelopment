@@ -783,7 +783,8 @@ At each step, we'll time and look at the output from::
 AGC Example
 -----------
 
-Another useful example is in:
+Another useful example of doing something useful, and using a numpy
+array is in:
 
 Examples/week-08-extensions/AGC_example
 
@@ -793,7 +794,8 @@ It turns out that you can use some advanced numpy tricks to get pretty
 good performancew with this filter, but you can't get full-on speed
 without some compiled code.
 
-This example uses:
+
+This example uses all of:
  * Pure Cython
  * C called from Cython
  * f2py and Fortran
@@ -879,6 +881,8 @@ created by SWIG
 Creating a wrapper:
 -------------------
 
+(``Examples/week-08-extensions/swig``)
+
 Create ``add.i``::
 
   %module add
@@ -900,11 +904,23 @@ Create  ``setup.py``::
 
 .. nextslide::
 
-And built it::
+And build it::
 
   python setup.py build_ext --inplace
 
-then run the code::
+NOTE: distutils (and thus setuptools) "knows" about SWIG, so it does the
+swig step for you when you give it a \*.i file.
+
+Notice what gets created:
+
+ * an ``add_wrap.c`` file -- the wrapper code.
+ * an ``add.py`` file -- python code that calls the C function
+ * an ``_add.so`` (or ``_add.pyd``) file -- the compiled extension
+
+.. nextslide::
+
+
+You can then run the code::
 
   python -c 'import add; print add.add(4,5)'
 
@@ -913,7 +929,7 @@ http://www.swig.org/Doc2.0/SWIGDocumentation.html#Introduction_nn5
 Installing SWIG
 ----------------
 
-On the SWIG download page, there is a source tarball for *nix, and
+On the SWIG download page, there is a source tarball for \*nix, and
 Windows binaries:
 
 http://www.swig.org/download.html
