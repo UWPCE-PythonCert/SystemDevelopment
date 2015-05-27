@@ -101,6 +101,7 @@
 <li><a class="reference internal" href="#a-pure-cython-solution">A pure Cython solution</a></li>
 <li><a class="reference internal" href="#a-real-example-the-cython-process">A real Example: the Cython process</a></li>
 <li><a class="reference internal" href="#cython-from-pure-python-to-c">Cython from pure Python to C</a></li>
+<li><a class="reference internal" href="#agc-example">AGC Example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#auto-generated-wrappers">Auto-generated wrappers</a><ul>
@@ -204,7 +205,8 @@ int main(void) {
 }
 </pre></div>
 </div>
-<p>This is, of course, trivial and built in to Python, but the techniques are the same.</p>
+<p>This is, of course, trivial and built in to Python, but the techniques
+are the same.</p>
 <p>(<code class="docutils literal"><span class="pre">Examples/week-08-extensions/pure-c/add.c</span></code>)</p>
 <p>Build it with the Makefile (Linux and OS-X):</p>
 <div class="highlight-python"><div class="highlight"><pre>all: add; gcc -o add add.c
@@ -590,7 +592,7 @@ ArgumentError: argument 1: &lt;type &#39;exceptions.TypeError&#39;&gt;: wrong ty
 </div>
 <div class="section" id="id1">
 <h3>LAB<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>In <code class="docutils literal"><span class="pre">code/ctypes</span></code> you&#8217;ll find <code class="docutils literal"><span class="pre">add.c</span></code></p>
+<p>In <code class="docutils literal"><span class="pre">Examples/week-08-extensions/ctypes</span></code> you&#8217;ll find <code class="docutils literal"><span class="pre">add.c</span></code></p>
 <p>You can build a shared lib with it with <code class="docutils literal"><span class="pre">make</span></code>
 (<code class="docutils literal"><span class="pre">make.bat</span></code>) on Windows.</p>
 <p><code class="docutils literal"><span class="pre">test_ctypes.py</span></code> will call that dll, and a few system dlls.</p>
@@ -795,7 +797,7 @@ Chris$ python test_cy_add2.py
 </div>
 <div class="section" id="cython-from-pure-python-to-c">
 <h3>Cython from pure Python to C<a class="headerlink" href="#cython-from-pure-python-to-c" title="Permalink to this headline">¶</a></h3>
-<p>Let&#8217;s go through the steps one by one. In the <code class="docutils literal"><span class="pre">code/integrate</span></code> directory:</p>
+<p>Let&#8217;s go through the steps one by one. In the <code class="docutils literal"><span class="pre">Examples/week-08-extensions/cython/integrate</span></code> directory:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">cy_integrate1</span><span class="o">.</span><span class="n">pyx</span>
 <span class="n">cy_integrate2</span><span class="o">.</span><span class="n">pyx</span>
 <span class="n">cy_integrate3</span><span class="o">.</span><span class="n">pyx</span>
@@ -810,6 +812,25 @@ Chris$ python test_cy_add2.py
 </pre></div>
 </div>
 </div>
+<div class="section" id="agc-example">
+<h3>AGC Example<a class="headerlink" href="#agc-example" title="Permalink to this headline">¶</a></h3>
+<p>Another useful example of doing something useful, and using a numpy
+array is in:</p>
+<p>Examples/week-08-extensions/AGC_example</p>
+<p>This one impliments an Automatic Gain Control Signal processing filter.</p>
+<p>It turns out that you can use some advanced numpy tricks to get pretty
+good performancew with this filter, but you can&#8217;t get full-on speed
+without some compiled code.</p>
+<dl class="docutils">
+<dt>This example uses all of:</dt>
+<dd><ul class="first last simple">
+<li>Pure Cython</li>
+<li>C called from Cython</li>
+<li>f2py and Fortran</li>
+</ul>
+</dd>
+</dl>
+</div>
 </div>
 <div class="section" id="auto-generated-wrappers">
 <h2>Auto-generated wrappers<a class="headerlink" href="#auto-generated-wrappers" title="Permalink to this headline">¶</a></h2>
@@ -818,6 +839,7 @@ Chris$ python test_cy_add2.py
 <p>SIP</p>
 <p>XDress</p>
 <p>[also Boost-Python &#8211; not really a wrapper generator]</p>
+<p>f2py &#8211; for Fortran</p>
 <div class="section" id="swig">
 <h3>SWIG<a class="headerlink" href="#swig" title="Permalink to this headline">¶</a></h3>
 <p><strong>Simple Wrapper Interface Generator</strong></p>
@@ -865,6 +887,7 @@ created by SWIG</p>
 </div>
 <div class="section" id="creating-a-wrapper">
 <h3>Creating a wrapper:<a class="headerlink" href="#creating-a-wrapper" title="Permalink to this headline">¶</a></h3>
+<p>(<code class="docutils literal"><span class="pre">Examples/week-08-extensions/swig</span></code>)</p>
 <p>Create <code class="docutils literal"><span class="pre">add.i</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>%module add
 %{
@@ -884,11 +907,21 @@ extern int add(int x, int y);
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>And built it:</p>
+<p>And build it:</p>
 <div class="highlight-python"><div class="highlight"><pre>python setup.py build_ext --inplace
 </pre></div>
 </div>
-<p>then run the code:</p>
+<p>NOTE: distutils (and thus setuptools) &#8220;knows&#8221; about SWIG, so it does the
+swig step for you when you give it a *.i file.</p>
+<p>Notice what gets created:</p>
+<blockquote>
+<div><ul class="simple">
+<li>an <code class="docutils literal"><span class="pre">add_wrap.c</span></code> file &#8211; the wrapper code.</li>
+<li>an <code class="docutils literal"><span class="pre">add.py</span></code> file &#8211; python code that calls the C function</li>
+<li>an <code class="docutils literal"><span class="pre">_add.so</span></code> (or <code class="docutils literal"><span class="pre">_add.pyd</span></code>) file &#8211; the compiled extension</li>
+</ul>
+</div></blockquote>
+<p>You can then run the code:</p>
 <div class="highlight-python"><div class="highlight"><pre>python -c &#39;import add; print add.add(4,5)&#39;
 </pre></div>
 </div>
@@ -896,7 +929,7 @@ extern int add(int x, int y);
 </div>
 <div class="section" id="installing-swig">
 <h3>Installing SWIG<a class="headerlink" href="#installing-swig" title="Permalink to this headline">¶</a></h3>
-<p>On the SWIG download page, there is a source tarball for <a href="#id3"><span class="problematic" id="id4">*</span></a>nix, and
+<p>On the SWIG download page, there is a source tarball for *nix, and
 Windows binaries:</p>
 <p><a class="reference external" href="http://www.swig.org/download.html">http://www.swig.org/download.html</a></p>
 <p>For Linux:</p>
