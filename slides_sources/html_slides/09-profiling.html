@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=1024, user-scalable=no">
 
-  <title>Python300 week 07, profiling</title>
+  <title>Python300 week 09, profiling</title>
 
   <!-- Required stylesheet -->
   <link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
@@ -33,7 +33,7 @@
 
       <section class="slide">
           <h2>System Development with Python</h2>
-          <h3>Week 7 :: profiling</h3>
+          <h3>Week 9 :: profiling</h3>
           <p>Joseph Sheedy</p>
           <p><i>joseph.sheedy@gmail.com</i></p>
           <p>Git repository:  <a href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015" target="_blank">https://github.com/UWPCE-PythonCert/SystemDevelopment2015</a></p>
@@ -108,7 +108,7 @@
           <section class="slide">
               <h2>Big O notation</h2>
               <img width="90%" src="images/big_o.png" />
-              <p>chart generated with examples/notebooks/Big_O.ipynb :
+              <!-- <p>chart generated with examples/notebooks/Big_O.ipynb : -->
           </section>
 
           <section class="slide">
@@ -406,7 +406,7 @@ pyprof2calltree -i dump.profile -o dump.callgrind</code>
 
           <section class="slide">
               <h2>Profiling C extensions</h2>
-              <p>Google Performance Tools can be used to profile C extensions
+              <p><a target="_blank" href="https://code.google.com/p/gperftools/">Google Performance Tools</a> can be used to profile C extensions
               <p>Just call ProfilerStart and ProfilerStop with ctypes around the code you want to profile
       <pre><code>import ctypes
 
@@ -430,13 +430,13 @@ $ qcachegrind output.callgrind
                   <p>
               <img src="images/runsnake.png" />
               </section>
-              <section class="slide">
+<!--               <section class="slide">
                   <h2>Run Snake Run installation</h2>
                   <p>
       <pre><code>runsnake dump.profile
               </code>
               </pre>
-              </section>
+              </section> -->
 
 
               <section class="slide">

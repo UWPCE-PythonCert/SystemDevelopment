@@ -1,5 +1,7 @@
+from timer import timer
 
-@profile
+# @profile
+@timer
 def slow():
     s = ""
     with open('/usr/share/dict/words') as f:
@@ -9,7 +11,8 @@ def slow():
 
         return words
     
-@profile
+# @profile
+@timer
 def fast():
     with open('/usr/share/dict/words') as f:
         words = [w.upper() for w in f ]

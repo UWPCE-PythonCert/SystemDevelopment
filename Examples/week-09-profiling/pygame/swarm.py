@@ -6,7 +6,7 @@ import sys
 # from meliae import scanner
 # scanner.dump_all_objects("meliae.dump") # you can pass a file-handle if you prefer
 
-NUMBER_OF_SPHERES = 150
+NUMBER_OF_SPHERES = 2
 
 size = width, height = 800, 600
 pygame.init()
@@ -18,8 +18,8 @@ class Sphere(object):
         self.ball = pygame.image.load("ball.gif")
         self.x = random.random() * width
         self.y = random.random() * height
-        vx = 150*(random.random() - .5)
-        vy = 150*(random.random() - .5)
+        vx = 250*(random.random() - .5)
+        vy = 250*(random.random() - .5)
         self.v = [vx, vy]
 
     def update_v(self, other ):
