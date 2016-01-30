@@ -1,8 +1,8 @@
 # UW Certificate Program in  Programming in Python
 
 Python 300
-Spring, 2015
-April 7 through June 9th, Tuesday, 6 PM
+Spring, 2016
+March 29 through May 31st, Tuesday, 6 PM
 
 ## Brief Course Description
 
@@ -13,17 +13,17 @@ At the end of the class, students will have completed a project of their own cho
 ### Course Website
 Lecture notes, sample code, etc will be available in the course github project:
 
-http://UWPCE-PythonCert.github.io/SystemDevelopment2015
+http://UWPCE-PythonCert.github.io/SystemDevelopment
 
 
 ## Instructors
-Joseph Sheedy   `joseph.sheedy@gmail.com`
 
 Christopher Barker  `PythonCHB@gmail.com`
 
+Maria McKinley `mariak@mariakathryn.net`
 
 ## Technology Requirements
-Students will need a laptop computer with python 2.7.x , a development environment, and the ability to install additional software.
+Students will need a laptop computer with python 3.5.*, a development environment, and the ability to install additional software.
 
 
 ##Assessment Criteria & Course Expectations
@@ -69,103 +69,96 @@ In addition, as we work with you on your projects, we will highlight for the cla
 # Schedule
 
 ### Week 1
-April 7th
-Instructors: Joseph & Chris
+March 29th (Chris might be gone)
 
 #### Topics
 - Class intro
-- packaging: Chris
-- unit testing and coverage: Joseph
-- unicode: Chris
-
+- packaging: Maria (Chris?)
+- doctests unit testing and coverage: Maria
 
 ### Week 2
-April 14th
-Instructor: Chris
+April 5th
 (proposals due)
-#### Topics
-- Weak references
-- Documentation (docstrings, sphinx)
-- PEP-8 (pylint/pychecker/pyflakes)
 
+#### Topics
+- Documentation (docstrings, sphinx): Chris
+- PEP-8 (pep8/pylint/pychecker/pyflakes): Maria
+- Persistance and Serialization: Chris
 
 ### Week 3
-April 21st
-Instructor: Joseph
+April 12st
 #### Topics
 
-- Logging
-- Debugging
+- Logging: Chris
+- Debugging: Maria
   - print
   - pdb/ipdb
-  - winpdb
+- Code Reviews: Maria
 
 ### Week 4
-April 28th
-Instructor: Joseph
+April 19th
 #### Topics
-- Databases (DB-API w/ sqlite, postgres, mysql)
-- Non-relational DBs (ZODB, MongoDB, couchDB, BSDdb, Redis)
-- code reviews begin
+- SQL Databases (DB-API w/ sqlite, postgres, mysql): Maria
+- Non-relational DBs (ZODB, MongoDB, couchDB, BSDdb): Chris
 
 
 ### Week 5
-May 5th
+April 26th
 Instructor: Chris
 
 #### Topics
 
-- SciPy
+- SciPy: Chris
   - ipython notebook (Jupyter)
   - numpy
   - matplotlib
   - pandas
-
+(look for Jake's stuff)
+NOTE: why it's useful to people that are not scientists
 
 ### Week 6
-May 12th
-Instructor: Chris
+May 3th
 
 #### Topics
 
-- "advanced OO"
-  - \__new__(), super()
-  - type, metaclasses
-
-- datetime, time, pytz
-
+- "advanced OO": Chris
+  - multiple inheritance / mixins:
+  - \__new__(), super():
+  - type(), metaclasses:
 
 ### Week 7
-May 19th
-Instructor: Joseph
+May 10th
 #### Topics
 
-- profiling
-- multi-threading/processing
-- serialization review / XML
-
+- multi-threading/processing:
+(point to Beazley's talk, and others)
 
 ### Week 8
-May 26th
-Instructor: Chris
+May 17th (Chris out of town)
 
 #### Topics
-
-- C extensions( C API, ctypes, cython)
+- unicode and py2: Maria
+- profiling: Maria
+- datetime, time, pytz: Maria
 
 ### Week 9
-June 2nd
-
-Student Presentations
-
--- Joseph and Chris
+May 24
+- C extensions( C API, ctypes, cython): Chris
 
 ### Week 10
-June 9th
+May 31st (previous week?)
 
 Student Presentations
 
 -- Joseph and Chris
+
+## unasigned topics:
+
+
+- Weak references: Chris
+- GUI programming / wxPython: Chris
+- Regular expressions: Chris
+
 
 ## Student Resources
 The following link includes student handbooks, services, and policies, and other important information: http://www.pce.uw.edu/resource.aspx .

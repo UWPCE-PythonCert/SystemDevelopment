@@ -43,7 +43,7 @@ def integrate_f(double a, double b, int N):
     f(x) = x**2 - x
 
     from a to b, using N steps, using the simple recatngle rule approach.
-    """ 
+    """
     cdef double s, dx
     cdef int i
 

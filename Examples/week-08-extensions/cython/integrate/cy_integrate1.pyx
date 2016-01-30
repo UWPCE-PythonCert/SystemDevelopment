@@ -2,13 +2,15 @@
 
 # a cython version with no changes -- pure python!
 
+import cython
 
-def f(x):
+cdef double f(double x):
     """simple objective function to integrate"""
-    return x ** 2 - x
 
+    return x**2.0 - x
 
-def integrate_f(a, b, N):
+@cython.cdivision(True)
+def double integrate_f(double a, double b, int N):
     """
     integrates the function:
 
@@ -17,8 +19,12 @@ def integrate_f(a, b, N):
     from a to b, using N steps, using the simple rectangle rule approach.
     """
 
-    s = 0
+    cdef double s = 0.0
+    cdef double dx = 0.0
+    cdef int i = 0
+
     dx = (b - a) / N
+
     for i in range(N):
         s += f(a + i * dx)
     return s * dx
