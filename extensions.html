@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Extending Python with Complied Code &mdash; System Development With Python 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -33,7 +33,7 @@
     <link rel="top" title="System Development With Python 1.0 documentation" href="index.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -43,11 +43,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="index.html" class="fa fa-home"> System Development With Python</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> System Development With Python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -55,14 +71,16 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Extending Python with Complied Code</a><ul>
 <li><a class="reference internal" href="#topics">Topics</a><ul>
 <li><a class="reference internal" href="#motivation">Motivation</a></li>
@@ -119,10 +137,10 @@
 </li>
 </ul>
 </div>
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -137,20 +155,29 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
     <li>Extending Python with Complied Code</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/extensions.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/extensions.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="extending-python-with-complied-code">
 <span id="extensions"></span><h1>Extending Python with Complied Code<a class="headerlink" href="#extending-python-with-complied-code" title="Permalink to this headline">¶</a></h1>
@@ -436,9 +463,9 @@ divide-by-zero case</li>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">add</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">&quot;add.so&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre>from ctypes import *
+add = cdll.LoadLibrary(&quot;add.so&quot;)
+print add.add(3,4)
 </pre></div>
 </div>
 <p>Further reading:</p>
@@ -460,7 +487,7 @@ divide-by-zero case</li>
 </div>
 <p>(good for system libs)</p>
 <p>Once loaded, a ctypes wrapper around a c function can be called directly:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre>print add.add(3,4)
 </pre></div>
 </div>
 <p>But....</p>
@@ -998,6 +1025,7 @@ make install
 </div>
 
 
+           </div>
           </div>
           <footer>
   
@@ -1007,12 +1035,13 @@ make install
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Christopher Barker, Joseph Sheedy .
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
