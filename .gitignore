@@ -1,5 +1,4 @@
-slides_sources/build
-.idea
+
 .DS_Store
 #ignore compiled files, sublime workspace and project files
 *.pyc
@@ -7,11 +6,6 @@ slides_sources/build
 
 #ignore sublime workspace files
 *.sublime*
-
-.project
-.pydevproject
-# ignore .gitignore, so we can each have our own.
-.gitignore
 
 *.pyc
 build/
