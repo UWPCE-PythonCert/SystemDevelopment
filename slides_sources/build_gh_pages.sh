@@ -5,19 +5,17 @@
 
 GHPAGESDIR=../../SystemDevelopment.gh-pages
 
-# make the docs
-make html
-
 # make sure the Gh pages repo is there and in the right branch
 pushd GHPAGESDIR
 git checkout gh-pages
 popd
 
+# make the docs
+make html
 # copy to other repo (on the gh-pages branch)
 cp -R build/html/GHPAGESDIR
 
 pushd GHPAGESDIR
-git checkout gh-pages
 git add * # in case there are new files added
 git commit -a -m "updating presentation materials"
 git pull -s ours --no-edit
