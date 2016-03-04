@@ -69,12 +69,14 @@ In addition, as we work with you on your projects, we will highlight for the cla
 # Schedule
 
 ### Week 1
-March 29th (Chris might be gone)
+March 29th
 
 #### Topics
 - Class intro
-- packaging: Maria (Chris?)
-- doctests unit testing and coverage: Maria
+- Debugging: Maria
+  - print
+  - pdb/ipdb
+- Logging: Chris
 
 ### Week 2
 April 5th
@@ -88,11 +90,8 @@ April 5th
 ### Week 3
 April 12st
 #### Topics
-
-- Logging: Chris
-- Debugging: Maria
-  - print
-  - pdb/ipdb
+- packaging: Maria
+- doctests unit testing and coverage: Maria
 - Code Reviews: Maria
 
 ### Week 4
@@ -138,7 +137,7 @@ May 17th (Chris out of town)
 
 #### Topics
 - unicode and py2: Maria
-- profiling: Maria
+- Performance anb profiling: Maria
 - datetime, time, pytz: Maria
 
 ### Week 9
@@ -146,19 +145,18 @@ May 24
 - C extensions( C API, ctypes, cython): Chris
 
 ### Week 10
-May 31st (previous week?)
+Thursday, May 26st: NOTE NEW TIME
 
 Student Presentations
 
--- Joseph and Chris
+-- Maria and Chris
 
-## unasigned topics:
-
+## unassigned topics:
 
 - Weak references: Chris
 - GUI programming / wxPython: Chris
 - Regular expressions: Chris
-
+- Asyc / await
 
 ## Student Resources
 The following link includes student handbooks, services, and policies, and other important information: http://www.pce.uw.edu/resource.aspx .
