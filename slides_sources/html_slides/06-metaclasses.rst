@@ -1,25 +1,34 @@
-<div class="deck-container">
+.. raw:: html
 
-<div class="section slide">
+   <div class="deck-container">
 
-System Development with Python
-------------------------------
+.. raw:: html
 
-### Week 6 :: Metaclasses
+   <div class="section slide">
+
+.. rubric:: System Development with Python
+   :name: system-development-with-python
+
+.. rubric:: Week 6 :: Metaclasses
+   :name: week-6-metaclasses
 
 Joseph Sheedy
 
 *joseph.sheedy@gmail.com*
 
 Git repository:
-<https://github.com/UWPCE-PythonCert/SystemDevelopment2015>
+https://github.com/UWPCE-PythonCert/SystemDevelopment2015
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A class is just an object
--------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A class is just an object
+   :name: a-class-is-just-an-object
 
 Objects get created from classes. So what is the class of a class?
 The class of Class is a metaclass
@@ -28,32 +37,42 @@ The metaclass can be used to dynamically create a class
 
 The metaclass, being a class, also has a metaclass
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-What is a metaclass?
---------------------
+.. raw:: html
 
--   A class is something that makes instances
--   A metaclass is something that makes classes
--   A metaclass is most commonly used as a class factory
--   metaclasses allow you to do 'extra things' when creating a class,
-    like registering the new class with some registry, adding methods
-    dynamically, or even replace the class with something else entirely
--   Every object in Python has a metaclass
--   The default metaclass is type()
+   <div class="section slide">
 
-</div>
+.. rubric:: What is a metaclass?
+   :name: what-is-a-metaclass
 
-<div class="section slide">
+-  A class is something that makes instances
+-  A metaclass is something that makes classes
+-  A metaclass is most commonly used as a class factory
+-  metaclasses allow you to do 'extra things' when creating a class,
+   like registering the new class with some registry, adding methods
+   dynamically, or even replace the class with something else entirely
+-  Every object in Python has a metaclass
+-  The default metaclass is type()
 
-type()
-------
+.. raw:: html
 
-With one argument, `type()` returns the type of the argument
+   </div>
 
-With 3 arguments, `type()` returns a new class
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: type()
+   :name: type
+
+With one argument, ``type()`` returns the type of the argument
+
+With 3 arguments, ``type()`` returns a new class
+
+::
 
     type?
     Type:       type
@@ -67,34 +86,48 @@ With 3 arguments, `type()` returns a new class
     bases: tuple of the parent classes
     dict: dict containing attribute names and values
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-using type() to build a class
------------------------------
+.. raw:: html
 
-The `class` keyword is syntactic sugar, we can get by without it by
+   <div class="section slide">
+
+.. rubric:: using type() to build a class
+   :name: using-type-to-build-a-class
+
+The ``class`` keyword is syntactic sugar, we can get by without it by
 using type
+
+::
 
     class MyClass(object):
         x = 1
 
 OR
 
+::
+
     MyClass = type('MyClass', (), {'x': 1})
 
-(`object` is automatically a superclass)
+(``object`` is automatically a superclass)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Adding methods to a class built with `type()`
----------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Adding methods to a class built with ``type()``
+   :name: adding-methods-to-a-class-built-with-type
 
 Just define a function with the correct signature and add it to the attr
 dictionary
+
+::
 
     def my_method(self):
         print "called my_method, x = %s" % self.x
@@ -103,22 +136,34 @@ dictionary
     o = MyClass()
     o.my_method()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-What type is type?
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: What type is type?
+   :name: what-type-is-type
+
+::
 
     type(type)
     Out[1]: type
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-\_\_metaclass\_\_
------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: \_\_metaclass\_\_
+   :name: metaclass__
+
+::
 
     class Foo(object):
       __metaclass__ = MyMetaClass
@@ -134,12 +179,16 @@ If it doesn't, it will use type to create the class.
 Whatever is assigned to \_\_metaclass\_\_ should be a callable with the
 same signature as type()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Why use metaclasses?
---------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Why use metaclasses?
+   :name: why-use-metaclasses
 
 Useful when creating an API or framework
 
@@ -147,7 +196,9 @@ Whenever you need to manage object creation for one or more classes
 
 For example, see examples/singleton.py
 
-Or consider the Django ORM: ``
+Or consider the Django ORM: ````
+
+::
 
     class Person(models.Model):
       name = models.CharField(max_length=30)
@@ -162,24 +213,34 @@ configurations will lead to different class definitions. This is
 abstracted from the user of the Model class.
 
 Here is the Django Model metaclass:
-<https://github.com/django/django/blob/master/django/db/models/base.py#L59>
+https://github.com/django/django/blob/master/django/db/models/base.py#L59
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Metaclass example
------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Metaclass example
+   :name: metaclass-example
 
 Consider wanting a metaclass which mangles all attribute names to
 provide uppercase and lower case attributes
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Metaclass example
------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Metaclass example
+   :name: metaclass-example-1
+
+::
 
     class Foo(object):
         __metaclass__ = NameMangler
@@ -189,12 +250,18 @@ Metaclass example
     print f.X
     print f.x
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-NameMangler
------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: NameMangler
+   :name: namemangler
+
+::
 
     class NameMangler(type):
         def __new__(cls, clsname, bases, dct):
@@ -212,12 +279,16 @@ NameMangler
         __metaclass__ = NameMangler
         x = 1
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Exercise: Working with NameMangler
-----------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Exercise: Working with NameMangler
+   :name: exercise-working-with-namemangler
 
 In the repository, find and run examples/mangler.py
 
@@ -231,6 +302,8 @@ works.
 
 Your code should look like this:
 
+::
+
     class MyClass(object):
         __metaclass__ = MangledSingleton # define this
         x = 1
@@ -240,31 +313,42 @@ Your code should look like this:
     print o1.X
     assert id(o1) == id(o2)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Reference reading
------------------
+.. raw:: html
 
-[What is a metaclass in
-Python?](http://stackoverflow.com/a/6581949/747729)
+   <div class="section slide">
 
-[Python metaclasses by
-example](http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/)
+.. rubric:: Reference reading
+   :name: reference-reading
 
-[A Primer on Python
-Metaclasses](http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/)
+`What is a metaclass in
+Python? <http://stackoverflow.com/a/6581949/747729>`__
 
-</div>
+`Python metaclasses by
+example <http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/>`__
 
-<div aria-role="navigation">
+`A Primer on Python
+Metaclasses <http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/>`__
 
-[←](# "Previous"){.deck-prev-link} [→](# "Next"){.deck-next-link}
+.. raw:: html
 
-</div>
+   </div>
 
-<span class="deck-status-current"></span> / <span
-class="deck-status-total"></span>
+.. raw:: html
 
-</div>
+   <div aria-role="navigation">
+
+`← <#>`__ `→ <#>`__
+
+.. raw:: html
+
+   </div>
+
+ /
+
+.. raw:: html
+
+   </div>

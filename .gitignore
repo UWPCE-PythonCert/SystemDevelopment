@@ -8,6 +8,9 @@ slides_sources/build
 #ignore sublime workspace files
 *.sublime*
 
+# emacs
+*.*~
+
 .project
 .pydevproject
 # ignore .gitignore, so we can each have our own.

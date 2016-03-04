@@ -1,97 +1,127 @@
-<div class="deck-container">
+.. raw:: html
 
-<div class="section slide">
+   <div class="deck-container">
 
-System Development with Python
-------------------------------
+.. raw:: html
 
-### Week 7 :: threading and multiprocessing
+   <div class="section slide">
+
+.. rubric:: System Development with Python
+   :name: system-development-with-python
+
+.. rubric:: Week 7 :: threading and multiprocessing
+   :name: week-7-threading-and-multiprocessing
 
 Joseph Sheedy
 
 *joseph.sheedy@gmail.com*
 
 Git repository:
-<https://github.com/UWPCE-PythonCert/SystemDevelopment2015>
+https://github.com/UWPCE-PythonCert/SystemDevelopment2015
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Threading / multiprocessing
----------------------------
+.. raw:: html
 
-### Today's topics
+   <div class="section slide">
 
--   Threading / multiprocessing motivation and options
--   threading module
--   multiprocessing module
--   other options
+.. rubric:: Threading / multiprocessing
+   :name: threading-multiprocessing
 
-</div>
+.. rubric:: Today's topics
+   :name: todays-topics
 
-<div class="section slide">
+-  Threading / multiprocessing motivation and options
+-  threading module
+-  multiprocessing module
+-  other options
 
-Motivations for parallel execution
-----------------------------------
+.. raw:: html
 
--   Performance
-    -   Limited by [Amdahl's
-        Law](http://en.wikipedia.org/wiki/Amdahl%27s_law)
-    -   CPUs aren't getting much faster
--   Event handling
+   </div>
 
-    If a system handles asynchronous events, a seperate thread of
-    execution could handle those events and let other threads do other
-    work
+.. raw:: html
 
-    Examples:
+   <div class="section slide">
 
-    -   Network applications
-    -   User interfaces
+.. rubric:: Motivations for parallel execution
+   :name: motivations-for-parallel-execution
+
+-  Performance
+
+   -  Limited by `Amdahl's
+      Law <http://en.wikipedia.org/wiki/Amdahl%27s_law>`__
+   -  CPUs aren't getting much faster
+
+-  Event handling
+
+   If a system handles asynchronous events, a seperate thread of
+   execution could handle those events and let other threads do other
+   work
+
+   Examples:
+
+   -  Network applications
+   -  User interfaces
 
 Parallel programming can be hard!
 
 If your problem can be solved sequentially, consider the costs and
 benefits before going parallel.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Parallelization strategy for performance
-----------------------------------------
+.. raw:: html
 
-1.  Break problem down into chunks
-2.  Execute chunks in parallel
-3.  Reassemble output of chunks into result
+   <div class="section slide">
 
-![](images/OPP.0108.gif){width="60%"}
+.. rubric:: Parallelization strategy for performance
+   :name: parallelization-strategy-for-performance
 
-</div>
+#. Break problem down into chunks
+#. Execute chunks in parallel
+#. Reassemble output of chunks into result
 
-<div class="section slide">
+|image0|
 
-Parallelization strategy for performance
-----------------------------------------
+.. raw:: html
 
--   Not every problem is parallelizable
--   There is an optimal number of threads for each problem in each
-    environment, so make it tunable
--   Working concurrently opens up synchronization issues
--   Methods for synchronizing threads:
-    -   locks
-    -   queues
-    -   signaling/messaging mechanisms
+   </div>
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   <div class="section slide">
 
-Threads versus processes in Python
-----------------------------------
+.. rubric:: Parallelization strategy for performance
+   :name: parallelization-strategy-for-performance-1
 
-### Threads
+-  Not every problem is parallelizable
+-  There is an optimal number of threads for each problem in each
+   environment, so make it tunable
+-  Working concurrently opens up synchronization issues
+-  Methods for synchronizing threads:
+
+   -  locks
+   -  queues
+   -  signaling/messaging mechanisms
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Threads versus processes in Python
+   :name: threads-versus-processes-in-python
+
+.. rubric:: Threads
+   :name: threads
 
 Threads are lightweight processes, run in the address space of an OS
 process.
@@ -106,7 +136,8 @@ due to the Global Interpreter Lock (GIL)
 But the GIL is released during IO, allowing IO bound processes to
 benefit from threading
 
-### Processes
+.. rubric:: Processes
+   :name: processes
 
 A process contains all the instructions and data required to execute
 independently
@@ -121,19 +152,24 @@ access it
 
 data moved between processes must be pickleable
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-GIL
----
+.. raw:: html
 
-### Global Interpreter Lock
+   <div class="section slide">
+
+.. rubric:: GIL
+   :name: gil
+
+.. rubric:: Global Interpreter Lock
+   :name: global-interpreter-lock
 
 This is a lock which must be obtained by each thread before it can
 execute, ensuring thread safety
 
-![](images/gil.png){width="100%"}
+|image1|
 The GIL is released during IO operations, so threads which spend time
 waiting on network or disk access can enjoy performance gains
 
@@ -145,41 +181,56 @@ cPython and PyPy have one
 Launch multiple processes to speed up CPU bound operations. Luckily,
 this is easy with the multiprocessing module.
 
--   <http://wiki.python.org/moin/GlobalInterpreterLock>
--   <http://docs.python.org/2/c-api/init.html#threads>
--   <http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761>
+-  http://wiki.python.org/moin/GlobalInterpreterLock
+-  http://docs.python.org/2/c-api/init.html#threads
+-  http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-posted without comment
-----------------------
+.. raw:: html
 
-![](images/killGIL.jpg){width="500"}
+   <div class="section slide">
 
-</div>
+.. rubric:: posted without comment
+   :name: posted-without-comment
 
-<div class="section slide">
+|image2|
 
-A CPU bound problem
--------------------
+.. raw:: html
 
-Numerically integrate the function [y =
-x^2^](http://www.wolframalpha.com/input/?i=x%5E2) from 0 to 10.
+   </div>
 
-![](images/x2.png)\
-[Solution](http://www.wolframalpha.com/input/?i=int%28x%5E2%2C0%2C10%29)
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div class="section slide">
+.. rubric:: A CPU bound problem
+   :name: a-cpu-bound-problem
 
-Parallel execution example
---------------------------
+Numerically integrate the function `y =
+x\ :sup:`2` <http://www.wolframalpha.com/input/?i=x%5E2>`__ from 0 to
+10.
+
+| |image3|
+| `Solution <http://www.wolframalpha.com/input/?i=int%28x%5E2%2C0%2C10%29>`__
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Parallel execution example
+   :name: parallel-execution-example
 
 Consider the following code from
 week-07/threading\_and\_multiprocessing/examples/integrate/sequential
+
+::
 
     def f(x):
         return x**2
@@ -199,14 +250,20 @@ together:
 
 We can do better than this
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-the threading module
---------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: the threading module
+   :name: the-threading-module
 
 starting threads doesn't take much:
+
+::
 
     import sys
     import threading
@@ -223,24 +280,30 @@ starting threads doesn't take much:
         thread.start()
         threads.append(thread)
 
--   The process will exit when the last non-daemon thread exits.
--   A thread can be specified as a daemon thread by setting its daemon
-    attribute: `thread.daemon = True`
--   daemon threads get cut off at program exit, without any opportunity
-    for cleanup. But you don't have to track and manage them. Useful for
-    things like garbage collection, network keepalives, ..
--   You can block and wait for a thread to exit with thread.join()
+-  The process will exit when the last non-daemon thread exits.
+-  A thread can be specified as a daemon thread by setting its daemon
+   attribute: ``thread.daemon = True``
+-  daemon threads get cut off at program exit, without any opportunity
+   for cleanup. But you don't have to track and manage them. Useful for
+   things like garbage collection, network keepalives, ..
+-  You can block and wait for a thread to exit with thread.join()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Subclassing Thread
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Subclassing Thread
+   :name: subclassing-thread
 
 You can adding threading capability to your own classes
 
 Subclass Thread and implement the run method
+
+::
 
     import threading
 
@@ -251,12 +314,16 @@ Subclass Thread and implement the run method
     thread = MyThread()
     thread.start()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Race Conditions
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Race Conditions
+   :name: race-conditions
 
 In the last example we saw threads competing for access to stdout.
 
@@ -268,41 +335,61 @@ atomically, but get interrupted midway
 
 See examples/race\_condition.py
 
-  Thread 1           Thread 2                              Integer value
-  ------------------ ------------------ ------------------ ------------------
-                                                           0
-  read value                            ←                  0
-  increase value                                           0
-  write back                            →                  1
-                     read value         ←                  1
-                     increase value                        1
-                     write back         →                  2
++--------------------+--------------------+--------------------+--------------------+
+| Thread 1           | Thread 2           |                    | Integer value      |
++====================+====================+====================+====================+
+|                    |                    |                    | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+| read value         |                    | ←                  | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+| increase value     |                    |                    | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+| write back         |                    | →                  | 1                  |
++--------------------+--------------------+--------------------+--------------------+
+|                    | read value         | ←                  | 1                  |
++--------------------+--------------------+--------------------+--------------------+
+|                    | increase value     |                    | 1                  |
++--------------------+--------------------+--------------------+--------------------+
+|                    | write back         | →                  | 2                  |
++--------------------+--------------------+--------------------+--------------------+
 
-  Thread 1           Thread 2                              Integer value
-  ------------------ ------------------ ------------------ ------------------
-                                                           0
-  read value                            ←                  0
-                     read value         ←                  0
-  increase value                                           0
-                     increase value                        0
-  write back                            →                  1
-                     write back         →                  1
++--------------------+--------------------+--------------------+--------------------+
+| Thread 1           | Thread 2           |                    | Integer value      |
++====================+====================+====================+====================+
+|                    |                    |                    | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+| read value         |                    | ←                  | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+|                    | read value         | ←                  | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+| increase value     |                    |                    | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+|                    | increase value     |                    | 0                  |
++--------------------+--------------------+--------------------+--------------------+
+| write back         |                    | →                  | 1                  |
++--------------------+--------------------+--------------------+--------------------+
+|                    | write back         | →                  | 1                  |
++--------------------+--------------------+--------------------+--------------------+
 
-<http://en.wikipedia.org/wiki/Race_condition>
+http://en.wikipedia.org/wiki/Race_condition
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Deadlocks
----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Deadlocks
+   :name: deadlocks
 
 Synchronization and Critical Sections are used to control race
 conditions
 
 But they introduce other potential problems...
 
-...like [Deadlocks](http://en.wikipedia.org/wiki/Deadlock)!
+...like `Deadlocks <http://en.wikipedia.org/wiki/Deadlock>`__!
 
 "A deadlock is a situation in which two or more competing actions are
 each waiting for the other to finish, and thus neither ever does."
@@ -315,12 +402,16 @@ tries to be polite by moving aside to let the other pass, but they end
 up swaying from side to side without making any progress because they
 both repeatedly move the same way at the same time.*
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Locks
------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Locks
+   :name: locks
 
 Lock objects allow threads to control access to a resource until they're
 done with it
@@ -340,6 +431,8 @@ If a Lock is locked, .acquire will block until it becomes unlocked
 These threads will wait in line politely for access to the statements in
 f()
 
+::
+
     import threading
     import time
 
@@ -355,17 +448,23 @@ f()
     threading.Thread(target=f).start()
     threading.Thread(target=f).start()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-nonblocking locking
--------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: nonblocking locking
+   :name: nonblocking-locking
 
 .acquire() will return True if it successfully acquires a lock
 
 Its first argument is a boolean which specifies whether a lock should
-block or not. The default is True ``
+block or not. The default is True ````
+
+::
 
     import threading
     lock = threading.Lock()
@@ -376,12 +475,16 @@ block or not. The default is True ``
     if lock.acquire(False):
         print "got lock"
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-threading.RLock - Reentrant Lock
---------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: threading.RLock - Reentrant Lock
+   :name: threading.rlock---reentrant-lock
 
 Useful for recursive algorithms, a thread-specific count of the locks is
 maintained
@@ -391,12 +494,16 @@ A reentrant lock can be acquired multiple times by the same thread
 Lock.release() must be called the same number of times as Lock.acquire()
 by that thread
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-threading.Semaphore
--------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: threading.Semaphore
+   :name: threading.semaphore
 
 Like an RLock, but in reverse
 
@@ -410,32 +517,40 @@ until the Semaphore counter is greater than 0.
 Useful for controlling the maximum number of threads allowed to access a
 resource simultaneously
 
-![](images/flags.jpg)
+|image4|
 
-<http://en.wikipedia.org/wiki/Semaphore_(programming)>
+http://en.wikipedia.org/wiki/Semaphore_(programming)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Locking Exercise
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Locking Exercise
+   :name: locking-exercise
 
 find examples/lock/stdout\_writer.py
 
 multiple threads in the script write to stdout, and their output gets
 jumbled
 
-1.  Add a locking mechanism to give each thread exclusive access to
-    stdout
-2.  Try adding a Semaphore to allow 2 threads access at once
+#. Add a locking mechanism to give each thread exclusive access to
+   stdout
+#. Try adding a Semaphore to allow 2 threads access at once
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Managing thread results
------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Managing thread results
+   :name: managing-thread-results
 
 We need a thread safe way of storing results from multiple threads of
 execution. That is provided by the Queue module.
@@ -449,6 +564,8 @@ It will block consumers if empty and block producers if full
 
 If maxsize is less than or equal to zero, the queue size is infinite
 
+::
+
     from Queue import Queue
     q = Queue(maxsize=10)
     q.put(37337)
@@ -456,15 +573,19 @@ If maxsize is less than or equal to zero, the queue size is infinite
     timeout = 2
     print q.get(block, timeout)
 
--   <http://docs.python.org/2/library/threading.html>
--   <http://docs.python.org/2/library/queue.html>
+-  http://docs.python.org/2/library/threading.html
+-  http://docs.python.org/2/library/queue.html
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Other Queue types
------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Other Queue types
+   :name: other-queue-types
 
 Queue.LifoQueue - Last In, First Out
 
@@ -473,13 +594,20 @@ Queue.PriorityQueue - Lowest valued entries are retrieved first
 One pattern for PriorityQueue is to insert entries of form data by
 inserting the tuple: (priority\_number, data)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-### threading example
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: threading example
+   :name: threading-example
 
 See examples/threading/integrate\_main.py
+
+::
 
     #!/usr/bin/env python
 
@@ -531,16 +659,22 @@ See examples/threading/integrate\_main.py
         print "Numerical solution with N=%(N)d : %(x)f" % \
                 {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Threading on a CPU bound problem
---------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Threading on a CPU bound problem
+   :name: threading-on-a-cpu-bound-problem
 
 Try running the code in examples/threading/integrate\_main.py
 
 It accepts 4 arguments:
+
+::
 
     ./integrate_main.py -h
     usage: integrate_main.py [-h] [a] [b] [N] [thread_count]
@@ -554,23 +688,31 @@ It accepts 4 arguments:
       thread_count
           
 
-``
+````
+::
+
     ./integrate_main.py 0 10 1000000 4
 
 What happens when you change the thread count? What thread count gives
 the maximum speed?
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-multiprocessing
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: multiprocessing
+   :name: multiprocessing
 
 multiprocessing provides an API very similar to threading, so the
 transition is easy
 
 use multiprocessing.Process instead of threading.Thread
+
+::
 
     import multiprocessing
     import os
@@ -585,22 +727,30 @@ use multiprocessing.Process instead of threading.Thread
     proc = multiprocessing.Process(target=func, args=())
     proc.start()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Differences with threading
---------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Differences with threading
+   :name: differences-with-threading
 
 multiprocessing has its own multiprocessing.Queue which handles
 interprocess communication
 
 Also has its own versions of Lock, RLock, Semaphore
 
+::
+
           from multiprocessing import Queue, Lock
           
 
 multiprocessing.Pipe for 2-way process communication:
+
+::
 
     from multiprocessing import Pipe
     parent_conn, child_conn = Pipe()
@@ -608,15 +758,21 @@ multiprocessing.Pipe for 2-way process communication:
     print parent_conn.recv()
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Pooling
--------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Pooling
+   :name: pooling
 
 a processing pool contains worker processes with only a configured
 number running at one time
+
+::
 
     from multiprocessing import Pool
     pool = Pool(processes=4)
@@ -624,15 +780,21 @@ number running at one time
 
 The Pool module has several methods for adding jobs to the pool
 
--   apply\_async(func\[, args\[, kwargs\[, callback\]\]\])
--   map\_async(func, iterable\[, chunksize\[, callback\]\])
+-  apply\_async(func[, args[, kwargs[, callback]]])
+-  map\_async(func, iterable[, chunksize[, callback]])
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Pooling example
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Pooling example
+   :name: pooling-example
+
+::
 
     from multiprocessing import Pool
 
@@ -657,35 +819,47 @@ Pooling example
         print result.get(timeout=1)
           
 
-<http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool>
+http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-ThreadPool
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: ThreadPool
+   :name: threadpool
 
 threading also has a pool
 
 confusingly, it lives in the multiprocessing module
 
+::
+
           from multiprocessing.pool import ThreadPool
           pool = ThreadPool(processes=4)
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-threading versus multiprocessing, networking edition
-----------------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: threading versus multiprocessing, networking edition
+   :name: threading-versus-multiprocessing-networking-edition
 
 We're going to test making concurrent connections to a web service in
 examples/server/app.py
 
 It is a WSGI application which can be run with Green Unicorn or another
 WSGI server
+
+::
 
     $ gunicorn app:app --bind 0.0.0.0:37337
 
@@ -699,12 +873,16 @@ client-pooled.py contains a results Queue, but doesn't use it. Can you
 collect all the output from the pool into a single data structure using
 this Queue?
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Other options
--------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Other options
+   :name: other-options
 
 Traditionally, concurency has been achieved through multiple process
 communication and in-process threads, as we've seen
@@ -715,22 +893,29 @@ and a scheduler
 A coroutine is a generalization of a subroutine which allows multiple
 entry points for suspending and resuming execution
 
-the threading and the multiprocessing modules follow a [preemptive
-multitasking model](http://en.wikipedia.org/wiki/Preemption_(computing))
+the threading and the multiprocessing modules follow a `preemptive
+multitasking
+model <http://en.wikipedia.org/wiki/Preemption_(computing)>`__
 
-coroutine based solutions follow a [cooperative multitasking
-model](http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing)
+coroutine based solutions follow a `cooperative multitasking
+model <http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing>`__
 
--   [http://dabeaz.com/coroutines/, A Curious Course on Coroutines and
-    Concurrency](http://dabeaz.com/coroutines/)
--   <http://en.wikipedia.org/wiki/Coroutine>
+-  `http://dabeaz.com/coroutines/, A Curious Course on Coroutines and
+   Concurrency <http://dabeaz.com/coroutines/>`__
+-  http://en.wikipedia.org/wiki/Coroutine
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-With send(), a generator becomes a coroutine
---------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: With send(), a generator becomes a coroutine
+   :name: with-send-a-generator-becomes-a-coroutine
+
+::
 
     def coroutine(n):
         try:
@@ -754,14 +939,18 @@ With send(), a generator becomes a coroutine
             target.send(i)
           
 
-<http://dabeaz.com/coroutines/Coroutines.pdf>
+http://dabeaz.com/coroutines/Coroutines.pdf
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Packages using coroutines for micro threads
--------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Packages using coroutines for micro threads
+   :name: packages-using-coroutines-for-micro-threads
 
 By "jumping" to parallel coroutines, our application can simulate true
 threads.
@@ -769,20 +958,24 @@ threads.
 Creating the scheduler which does the jumping is an exercise for the
 reader, but look into these packages which handle the dirty work
 
--   <https://pypi.python.org/pypi/greenlet> - interface for creating
-    coroutine based microthreads
--   <http://eventlet.net/> - a concurrent networking library, based
-    on greenlet. Developed for Second Life
--   <http://www.gevent.org> - forked from eventlet. Built on top of
-    greenlet and libevent, a portable event loop with strong OS support
--   Python 3.4+ : the asyncio module
+-  https://pypi.python.org/pypi/greenlet - interface for creating
+   coroutine based microthreads
+-  http://eventlet.net/ - a concurrent networking library, based on
+   greenlet. Developed for Second Life
+-  http://www.gevent.org - forked from eventlet. Built on top of
+   greenlet and libevent, a portable event loop with strong OS support
+-  Python 3.4+ : the asyncio module
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Distributed programming
------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Distributed programming
+   :name: distributed-programming
 
 A distributed system is one in which components located on networked
 computers communicate and coordinate their actions by passing messages
@@ -790,12 +983,16 @@ computers communicate and coordinate their actions by passing messages
 There are lots of ways to do this at different layers. MPI, \*-RPC,
 Pyro, ...
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Celery
-------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Celery
+   :name: celery
 
 "Celery is an asynchronous task queue/job queue based on distributed
 message passing"
@@ -806,21 +1003,27 @@ tasks
 Messages are passed via a "message broker", of which Celery supports
 several:
 
--   RabbitMQ (default)
--   Redis
--   MongoDB
--   Amazon SQS
--   ...
+-  RabbitMQ (default)
+-  Redis
+-  MongoDB
+-  Amazon SQS
+-  ...
 
 Celery worker processes are run on compute nodes, while the main process
-farms jobs out to them. <http://www.celeryproject.org/>
+farms jobs out to them. http://www.celeryproject.org/
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Celery in one minute
---------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Celery in one minute
+   :name: celery-in-one-minute
+
+::
 
     # tasks.py
 
@@ -832,29 +1035,54 @@ Celery in one minute
     def add(x, y):
         return x + y
 
+::
+
     % celery -A tasks worker --loglevel=INFO -c 4
+
+::
 
     from tasks import add
     result = add.delay(2,3)
     print result.get()
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Questions?
-==========
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div aria-role="navigation">
+.. rubric:: Questions?
+   :name: questions
 
-[←](# "Previous"){.deck-prev-link} [→](# "Next"){.deck-next-link}
+.. raw:: html
 
-</div>
+   </div>
 
-<span class="deck-status-current"></span> / <span
-class="deck-status-total"></span>
+.. raw:: html
 
-</div>
+   <div aria-role="navigation">
+
+`← <#>`__ `→ <#>`__
+
+.. raw:: html
+
+   </div>
+
+ /
+
+.. raw:: html
+
+   </div>
+
+.. |image0| image:: images/OPP.0108.gif
+   :width: 60.0%
+.. |image1| image:: images/gil.png
+   :width: 100.0%
+.. |image2| image:: images/killGIL.jpg
+   :width: 500px
+.. |image3| image:: images/x2.png
+.. |image4| image:: images/flags.jpg
+

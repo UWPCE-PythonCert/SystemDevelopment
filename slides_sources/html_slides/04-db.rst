@@ -1,9 +1,12 @@
-<div class="section slide">
+.. raw:: html
 
-System Development with Python
-------------------------------
+   <div class="section slide">
 
-### Week 4, Databases
+.. rubric:: System Development with Python
+   :name: system-development-with-python
+
+.. rubric:: Week 4, Databases
+   :name: week-4-databases
 
 April 28, 2015
 
@@ -12,120 +15,153 @@ Joseph Sheedy
 *joseph.sheedy@gmail.com*
 
 Git repository:
-<https://github.com/UWPCE-PythonCert/SystemDevelopment2015>
+https://github.com/UWPCE-PythonCert/SystemDevelopment2015
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Today's topics
---------------
+.. raw:: html
 
--   Relational databases and basic SQL
--   Python's DB API
--   Working with a database
--   Non-relational databases (NoSQL)
+   <div class="section slide">
 
-</div>
+.. rubric:: Today's topics
+   :name: todays-topics
 
-<div class="section slide">
+-  Relational databases and basic SQL
+-  Python's DB API
+-  Working with a database
+-  Non-relational databases (NoSQL)
 
-Why a DB?
----------
+.. raw:: html
 
--   Need to persist the data your application uses
--   May need to store more data than you can hold in memory
--   May need to have multiple apps (or multiple instances) accessing the
-    same data
--   May need to scale - have the DB running on a separate server(s)
--   May need to access data from systems written in different languages.
+   </div>
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   <div class="section slide">
 
-Relational Databases
---------------------
+.. rubric:: Why a DB?
+   :name: why-a-db
 
-### A quick overview of SQL: History, Concepts, and Syntax
+-  Need to persist the data your application uses
+-  May need to store more data than you can hold in memory
+-  May need to have multiple apps (or multiple instances) accessing the
+   same data
+-  May need to scale - have the DB running on a separate server(s)
+-  May need to access data from systems written in different languages.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL - Structured Query Language
--------------------------------
+.. raw:: html
 
--   First invented in the early 1970s at IBM
--   Based on set theory, Relational Algebra, and Tuple Relational
-    Calculus
--   Used to get at data stored in their System-R database management
-    system
--   Picked up by Relational Software (now Oracle) in the late 1970s
--   Oracle V2, the first commercial Relational Database released in 1979
--   IBM followed with System/38, SQL/DS and DB2 between 1979 and 1983
--   SQL is standardized by ANSI, with varying degrees of compliance
-    among vendors
+   <div class="section slide">
 
-<http://en.wikipedia.org/wiki/SQL>
+.. rubric:: Relational Databases
+   :name: relational-databases
 
-</div>
+.. rubric:: A quick overview of SQL: History, Concepts, and Syntax
+   :name: a-quick-overview-of-sql-history-concepts-and-syntax
 
-<div class="section slide">
+.. raw:: html
 
-What is SQL
------------
+   </div>
 
--   SQL and Relational Database Management Systems (RDBMS) have been the
-    de-facto standard for data persistence for 30+ years
--   Currently, there are more than 100 RDBMS available, both proprietary
-    and open-source.
--   Most, if not all, include some implementation of SQL as their
-    query language.
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div class="section slide">
+.. rubric:: SQL - Structured Query Language
+   :name: sql---structured-query-language
 
-RDMSs You're Likely to Encounter
---------------------------------
+-  First invented in the early 1970s at IBM
+-  Based on set theory, Relational Algebra, and Tuple Relational
+   Calculus
+-  Used to get at data stored in their System-R database management
+   system
+-  Picked up by Relational Software (now Oracle) in the late 1970s
+-  Oracle V2, the first commercial Relational Database released in 1979
+-  IBM followed with System/38, SQL/DS and DB2 between 1979 and 1983
+-  SQL is standardized by ANSI, with varying degrees of compliance among
+   vendors
 
-### Proprietary
+http://en.wikipedia.org/wiki/SQL
 
--   MS SQL Server
--   Oracle
--   MySQL Enterprise (Oracle)
+.. raw:: html
 
-### Open Source
+   </div>
 
--   PostgreSQL
--   [MariaDB (MySQL community)](https://mariadb.org/)
--   SQLite
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: What is SQL
+   :name: what-is-sql
+
+-  SQL and Relational Database Management Systems (RDBMS) have been the
+   de-facto standard for data persistence for 30+ years
+-  Currently, there are more than 100 RDBMS available, both proprietary
+   and open-source.
+-  Most, if not all, include some implementation of SQL as their query
+   language.
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: RDMSs You're Likely to Encounter
+   :name: rdmss-youre-likely-to-encounter
+
+.. rubric:: Proprietary
+   :name: proprietary
+
+-  MS SQL Server
+-  Oracle
+-  MySQL Enterprise (Oracle)
+
+.. rubric:: Open Source
+   :name: open-source
+
+-  PostgreSQL
+-  `MariaDB (MySQL community) <https://mariadb.org/>`__
+-  SQLite
 
 This list is far from exhaustive
 
-<http://en.wikipedia.org/wiki/List_of_relational_database_management_systems>
+http://en.wikipedia.org/wiki/List_of_relational_database_management_systems
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Tables
-----------
+.. raw:: html
 
--   A table consists of **rows** (also called **records**)
--   Each row/record represents a single item
--   Each column represents a data point
--   Most tables will have one column which is considered the **primary
-    key**
--   This value will uniquely identify a single row out of all the rows
-    in the table
--   In the example below, id is a "surrogate key", meaning it is an
-    identifier not derived from the data itself. The primary key could
-    be id, username, or (first\_name,last\_name). However, only the
-    surrogate key is unlikely to require changing in the future.
+   <div class="section slide">
+
+.. rubric:: SQL Tables
+   :name: sql-tables
+
+-  A table consists of **rows** (also called **records**)
+-  Each row/record represents a single item
+-  Each column represents a data point
+-  Most tables will have one column which is considered the **primary
+   key**
+-  This value will uniquely identify a single row out of all the rows in
+   the table
+-  In the example below, id is a "surrogate key", meaning it is an
+   identifier not derived from the data itself. The primary key could be
+   id, username, or (first\_name,last\_name). However, only the
+   surrogate key is unlikely to require changing in the future.
 
 Here is an example table which represents people in a system:
+
+::
 
     +----+------------+------------+-----------+
     | id | username   | first_name | last_name |
@@ -137,76 +173,99 @@ Here is an example table which represents people in a system:
     |  5 | race       | Roger      | Bannon    |
     +----+------------+------------+-----------+
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Relations
--------------
+.. raw:: html
 
--   You can model things using a single table, adding columns for all
-    necessary dimensions
--   But what happens when not all of the items in a table share the same
-    dimensions?
--   Or what if some of the items need to have more than one of a
-    particular data point?
--   Empty columns in a row consume resources, possibly leading to memory
-    bloat or slow queries. Use relations to solve these types
-    of problems.
--   Two tables are related when a column in one table contains keys for
-    rows in another table. This is known as a Foreign Key relationship.
-    These values may exist in a third table, known as a join or junction
-    table
--   The RDBMS can provide "referential integrity constraints" such that
-    the value in a referencing table must exist in the referenced table,
-    or be NULL.
+   <div class="section slide">
 
-</div>
+.. rubric:: SQL Relations
+   :name: sql-relations
 
-<div class="section slide">
+-  You can model things using a single table, adding columns for all
+   necessary dimensions
+-  But what happens when not all of the items in a table share the same
+   dimensions?
+-  Or what if some of the items need to have more than one of a
+   particular data point?
+-  Empty columns in a row consume resources, possibly leading to memory
+   bloat or slow queries. Use relations to solve these types of
+   problems.
+-  Two tables are related when a column in one table contains keys for
+   rows in another table. This is known as a Foreign Key relationship.
+   These values may exist in a third table, known as a join or junction
+   table
+-  The RDBMS can provide "referential integrity constraints" such that
+   the value in a referencing table must exist in the referenced table,
+   or be NULL.
 
-[![](images/database.gif)](images/database.gif)
+.. raw:: html
 
-</div>
+   </div>
 
-<div class="section slide">
+.. raw:: html
 
-Types of Relations
-------------------
+   <div class="section slide">
+
+|image0|
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Types of Relations
+   :name: types-of-relations
 
 There are three basic types of relationships:
 
--   ### One-to-one relationships
+-  .. rubric:: One-to-one relationships
+      :name: one-to-one-relationships
 
-    Sometimes used to represent aspects of an item which are not core
-    to it. Like user (id, password) → user\_profile (preferences,
-    name, address)
+   Sometimes used to represent aspects of an item which are not core to
+   it. Like user (id, password) → user\_profile (preferences, name,
+   address)
 
--   ### Many-to-one relationships
+-  .. rubric:: Many-to-one relationships
+      :name: many-to-one-relationships
 
-    Used to represent relationships of ownership or belonging. Like
-    product → manufacturer, or book → author
+   Used to represent relationships of ownership or belonging. Like
+   product → manufacturer, or book → author
 
--   ### Many-to-many relationships
+-  .. rubric:: Many-to-many relationships
+      :name: many-to-many-relationships
 
-    Used to represent associations or membership. Like users ↔ groups or
-    items ↔ orders
+   Used to represent associations or membership. Like users ↔ groups or
+   items ↔ orders
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Relations ( ∞ → 1)
-----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: SQL Relations ( ∞ → 1)
+   :name: sql-relations-1
 
 The many table has a column which holds the primary key of the row from
 the one table:
 
 Consider the relationship of books to author:
 
-### Books → Author
+.. rubric:: Books → Author
+   :name: books-author
 
-#### Author
+.. rubric:: Author
+   :name: author
+
+::
 
     +----+-----------+------------+-----------+
     | id | username  | first_name | last_name |
@@ -216,7 +275,10 @@ Consider the relationship of books to author:
     |  6 | harrywho  | Harry      | Houdini   |
     +----+-----------+------------+-----------+
 
-#### Books
+.. rubric:: Books
+   :name: books
+
+::
 
     +----+-----------------------------------+--------+
     | id | title                             | author |
@@ -228,12 +290,16 @@ Consider the relationship of books to author:
     |  3 | Pattern Recognition               | 4      |
     +----+-----------------------------------+--------+
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Relations (1 → 1)
----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: SQL Relations (1 → 1)
+   :name: sql-relations-1-1
 
 One-to-one relationships are a special case of Many-to-one
 
@@ -246,9 +312,13 @@ unique per record
 
 Consider the example of birth records:
 
-### Birth Record → Person
+.. rubric:: Birth Record → Person
+   :name: birth-record-person
 
-#### People
+.. rubric:: People
+   :name: people
+
+::
 
     +----+-----------+------------+-----------+
     | id | username  | first_name | last_name |
@@ -260,7 +330,10 @@ Consider the example of birth records:
     |  5 | race      | Roger      | Bannon    |
     +----+-----------+------------+-----------+
 
-#### Birth Records
+.. rubric:: Birth Records
+   :name: birth-records
+
+::
 
     +----+--------+----------------+--------------+
     | id | person | date           | place        |
@@ -272,12 +345,16 @@ Consider the example of birth records:
     |  3 | 5      | April 1, 1954  | Wilmette, IL |
     +----+--------+----------------+--------------+
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Relations (∞ ↔ ∞)
----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: SQL Relations (∞ ↔ ∞)
+   :name: sql-relations-2
 
 You can't have a multi-valued field in traditional SQL, so there's no
 way to define a foreign key-like construct
@@ -289,16 +366,23 @@ the relation
 Beyond these two, other columns can add data points describing the
 qualities of the relation itself
 
-[![](images/image.png)](images/image.png)
+|image1|
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Group Memberships
------------------
+.. raw:: html
 
-### People
+   <div class="section slide">
+
+.. rubric:: Group Memberships
+   :name: group-memberships
+
+.. rubric:: People
+   :name: people-1
+
+::
 
     +----+------------+------------+-----------+
     | id | username   | first_name | last_name |
@@ -308,7 +392,10 @@ Group Memberships
     |  8 | shadowcat  | Kitty      | Pryde     |
     +----+------------+------------+-----------+
 
-### Groups
+.. rubric:: Groups
+   :name: groups
+
+::
 
     +----+---------------+
     | id | name          |
@@ -318,7 +405,10 @@ Group Memberships
     |  2 | X-Men         |
     +----+---------------+
 
-### Membership
+.. rubric:: Membership
+   :name: membership
+
+::
 
     +----+--------+-------+--------+
     | id | person | group | active |
@@ -330,58 +420,77 @@ Group Memberships
     |  3 | 8      | 2     | True   |
     +----+--------+-------+--------+
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Syntax
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: SQL Syntax
+   :name: sql-syntax
 
 The syntax of SQL can be broken into constructs:
 
--   Statements are discrete units that perform some action, like
-    inserting records or querying
--   Clauses are sub-units of statements which indicate some action or
-    condition
--   Expressions are elements that produce values, either unitary or as
-    tables themselves
--   Predicates are conditionals which produce some boolean or
-    three-valued truth value (True, False, and NULL)
+-  Statements are discrete units that perform some action, like
+   inserting records or querying
+-  Clauses are sub-units of statements which indicate some action or
+   condition
+-  Expressions are elements that produce values, either unitary or as
+   tables themselves
+-  Predicates are conditionals which produce some boolean or
+   three-valued truth value (True, False, and NULL)
 
-![](images/sql_anatomy.png){width="90%"}
+|image2|
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-3 value logic truth tables
---------------------------
+.. raw:: html
 
-![](images/3vl.png){width="90%"}
+   <div class="section slide">
 
-</div>
+.. rubric:: 3 value logic truth tables
+   :name: value-logic-truth-tables
 
-<div class="section slide">
+|image3|
 
-SQL Syntax - Subsets
---------------------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: SQL Syntax - Subsets
+   :name: sql-syntax---subsets
 
 SQL statements belong to one of several subsets
 
--   Data Definition
--   Data Manipulation
--   Data Query
+-  Data Definition
+-  Data Manipulation
+-  Data Query
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Syntax - Subsets
---------------------
+.. raw:: html
 
-### Data Definition
+   <div class="section slide">
+
+.. rubric:: SQL Syntax - Subsets
+   :name: sql-syntax---subsets-1
+
+.. rubric:: Data Definition
+   :name: data-definition
 
 Statements in this subset concern the structure of the database itself:
+
+::
 
     CREATE TABLE "groups" (
       "group_id" character varying(32) NOT NULL,
@@ -389,38 +498,56 @@ Statements in this subset concern the structure of the database itself:
       "description" text NOT NULL
     )
 
+::
+
     DROP TABLE groups;
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Syntax - Subsets
---------------------
+.. raw:: html
 
-### Data Manipulation
+   <div class="section slide">
+
+.. rubric:: SQL Syntax - Subsets
+   :name: sql-syntax---subsets-2
+
+.. rubric:: Data Manipulation
+   :name: data-manipulation
 
 Statements in this subset concern the altering of data within the
 database:
+
+::
 
     UPDATE people
         SET first_name='Bill'
         WHERE id=4;
 
+::
+
     DELETE FROM people
         WHERE id=4;
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-SQL Syntax - Subsets
---------------------
+.. raw:: html
 
-### Data Query
+   <div class="section slide">
+
+.. rubric:: SQL Syntax - Subsets
+   :name: sql-syntax---subsets-3
+
+.. rubric:: Data Query
+   :name: data-query
 
 Statements in this subset concern the retrieval of data from within the
 database:
+
+::
 
     SELECT user_id, COUNT(*) c
       FROM (SELECT setting_value AS interests, user_id
@@ -428,21 +555,31 @@ database:
               WHERE setting_name = 'interests') raw_uid
       GROUP BY user_id HAVING c > 1;
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Python's DB API
----------------
+.. raw:: html
 
-### An introduction to the standard interface for Pythonic database interactions
+   <div class="section slide">
 
-</div>
+.. rubric:: Python's DB API
+   :name: pythons-db-api
 
-<div class="section slide">
+.. rubric:: An introduction to the standard interface for Pythonic
+   database interactions
+   :name: an-introduction-to-the-standard-interface-for-pythonic-database-interactions
 
-Why the DB API?
----------------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Why the DB API?
+   :name: why-the-db-api
 
 Despite the SQL's standardization, individual databases have lots of
 differences
@@ -454,91 +591,113 @@ It would be nice to have a single API to hide these details
 
 Any package implementing this API would then be interchangeable
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-DB-API v1.0
------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: DB-API v1.0
+   :name: db-api-v1.0
 
 Finalized in 1996, PEP 248 specified DB-API version 1.0 to fulfill this
 goal:
 
-> This API has been defined to encourage similarity between the Python
-> modules that are used to access databases. By doing this, we hope to
-> achieve a consistency leading to more easily understood modules, code
-> that is generally more portable across databases, and a broader reach
-> of database connectivity from Python.
+    This API has been defined to encourage similarity between the Python
+    modules that are used to access databases. By doing this, we hope to
+    achieve a consistency leading to more easily understood modules,
+    code that is generally more portable across databases, and a broader
+    reach of database connectivity from Python.
 
-<http://www.python.org/dev/peps/pep-0248/>
+http://www.python.org/dev/peps/pep-0248/
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-DB-API v2.0
------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: DB-API v2.0
+   :name: db-api-v2.0
 
 By 2001, PEP 249 brought version 2.0 of the DB-API specification, with
 improvements:
 
--   New column types were added to support all basic data types in
-    "modern" SQL
--   New API constants were added to help detect differences between
-    implementations
--   The semantics for calling stored procedures were clarified.
--   Class-based exceptions were added to improve error handling
-    possibilities
+-  New column types were added to support all basic data types in
+   "modern" SQL
+-  New API constants were added to help detect differences between
+   implementations
+-  The semantics for calling stored procedures were clarified.
+-  Class-based exceptions were added to improve error handling
+   possibilities
 
 Discussions are currently underway to push DB-API v3.0, particularly in
 light of the change to Python 3.0
-<http://www.python.org/dev/peps/pep-0249/>
+http://www.python.org/dev/peps/pep-0249/
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A Note on DB API
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A Note on DB API
+   :name: a-note-on-db-api
 
 It is important to remember that PEP 249 is only a specification
 
 There is no code or package for DB-API 2.0 on it's own.
 
 Since 2.5, the Python Standard Library has provided a reference
-implementation of the api
-<http://docs.python.org/2/library/sqlite3.html> based on SQLite3
+implementation of the api http://docs.python.org/2/library/sqlite3.html
+based on SQLite3
 
 Before version 2.5, this package was available as pysqlite
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Using DB API
-------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Using DB API
+   :name: using-db-api
 
 To use the DB API with any database other than SQLite3, you must have an
 underlying API package available.
 
 Implementations are available for:
 
--   PostgreSQL (psycopg2, txpostgres, ...)
--   MySQL (mysql-python, PyMySQL, ...)
--   MS SQL Server (adodbapi, pymssql, mxODBC, pyodbc, ...)
--   Oracle (cx\_Oracle, mxODBC, pyodbc, ...)
--   and many more...
+-  PostgreSQL (psycopg2, txpostgres, ...)
+-  MySQL (mysql-python, PyMySQL, ...)
+-  MS SQL Server (adodbapi, pymssql, mxODBC, pyodbc, ...)
+-  Oracle (cx\_Oracle, mxODBC, pyodbc, ...)
+-  and many more...
 
-<http://wiki.python.org/moin/DatabaseInterfaces>
+http://wiki.python.org/moin/DatabaseInterfaces
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Installing API Packages
------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Installing API Packages
+   :name: installing-api-packages
 
 Common db api packages can be installed using pip
+
+::
 
     $ pip install psycopg2
     $ pip install mysql-python
@@ -549,12 +708,16 @@ underlying database system be available. Without these, the C symbols
 required for communication with the db are not present and the python
 interface cannot work.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Other drivers
--------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Other drivers
+   :name: other-drivers
 
 Some of the db api wrappers have special installation requirements:
 
@@ -564,47 +727,64 @@ included in versions of pywin32 since v211.
 The cx\_Oracle package has binary installers, or can be installed from
 source using distutils:
 
+::
+
     $ python setup.py build
     $ python setup.py install
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-What Do You Get?
-----------------
+.. raw:: html
 
-### What is in the DB API?
+   <div class="section slide">
 
-</div>
+.. rubric:: What Do You Get?
+   :name: what-do-you-get
 
-<div class="section slide">
+.. rubric:: What is in the DB API?
+   :name: what-is-in-the-db-api
 
-Globals
--------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Globals
+   :name: globals
 
 DB-API2 implementations provide the following global values:
 
--   apilevel - String constant indicating the api version ("1.0"
-    or "2.0")
--   threadsafety - Integer constant between 0 and 3 indicating the scope
-    in which threads may safely be used
--   paramstyle - String constant indicating the style of marker used for
-    parameter substitution in SQL expressions
+-  apilevel - String constant indicating the api version ("1.0" or
+   "2.0")
+-  threadsafety - Integer constant between 0 and 3 indicating the scope
+   in which threads may safely be used
+-  paramstyle - String constant indicating the style of marker used for
+   parameter substitution in SQL expressions
 
 These can be used to tailor your program's expectations
 
-<http://www.python.org/dev/peps/pep-0249/#globals>
+http://www.python.org/dev/peps/pep-0249/#globals
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A Constructor
--------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A Constructor
+   :name: a-constructor
 
 DB API provides a constructor, connect(), which returns a Connection
 object:
+
+::
 
     connect(parameters)
 
@@ -616,86 +796,108 @@ vary from implementation to implementation, since they are specific to
 the underlying database.
 
 In SQLite, just pass
-[connect()](https://docs.python.org/2/library/sqlite3.html#sqlite3.connect)
+`connect() <https://docs.python.org/2/library/sqlite3.html#sqlite3.connect>`__
 a string containing a filename in which to open or create your database.
 Use ":memory:" to create an in-memory database.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A Connection
-------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A Connection
+   :name: a-connection
 
 Some methods may not be supported by all implementations:
 
--   .close() - Closes the connection to the database permanently.
-    Attempts to use the connection after calling this will raise a
-    DB-API Error
--   .commit() - explicitly commit any pending
-    [transactions](http://en.wikipedia.org/wiki/Database_transaction) to
-    the database. The method should be a no-op if the underlying db does
-    not support transactions.
--   .rollback() This optional method causes a transaction to be rolled
-    back to the starting point. It may not be implemented everywhere.
--   .cursor() returns a Cursor object which uses this Connection.
-    Interaction with rows in your database is done through Cursors.
-    <http://en.wikipedia.org/wiki/Cursor_(databases)>
+-  .close() - Closes the connection to the database permanently.
+   Attempts to use the connection after calling this will raise a DB-API
+   Error
+-  .commit() - explicitly commit any pending
+   `transactions <http://en.wikipedia.org/wiki/Database_transaction>`__
+   to the database. The method should be a no-op if the underlying db
+   does not support transactions.
+-  .rollback() This optional method causes a transaction to be rolled
+   back to the starting point. It may not be implemented everywhere.
+-  .cursor() returns a Cursor object which uses this Connection.
+   Interaction with rows in your database is done through Cursors.
+   http://en.wikipedia.org/wiki/Cursor_(databases)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Cursor settings
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Cursor settings
+   :name: cursor-settings
 
 You can use a few values to control the rows returned by the cursor:
 
--   .arraysize - An integer which controls how many rows are returned at
-    a time by .fetchmany (and optionally how many to send at a time
-    with .executemany) Defaults to 1
--   .setinputsizes(sizes) - Used to set aside memory regions for
-    parameters passed to an operation
--   .setoutputsize(size\[, column\]) - Used to control buffer size for
-    large columns returned by an operation (BLOB or LONG types,
-    for example).
+-  .arraysize - An integer which controls how many rows are returned at
+   a time by .fetchmany (and optionally how many to send at a time with
+   .executemany) Defaults to 1
+-  .setinputsizes(sizes) - Used to set aside memory regions for
+   parameters passed to an operation
+-  .setoutputsize(size[, column]) - Used to control buffer size for
+   large columns returned by an operation (BLOB or LONG types, for
+   example).
 
 The final two methods may be implemented as no-ops
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A Cursor - operations
----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A Cursor - operations
+   :name: a-cursor---operations
 
 The cursor is used to run operations on the database:
 
--   .execute(operation\[, parameters\]) - Prepares and then runs a
-    database operation. Parameter style (sequence or dictionary) and
-    markers are implementation specific
+-  .execute(operation[, parameters]) - Prepares and then runs a database
+   operation. Parameter style (sequence or dictionary) and markers are
+   implementation specific
 
-        cursor.execute("SELECT id, value FROM foo WHERE id > ?", 5)
+   ::
 
--   .executemany(operation\[, seq\_of\_params\]) Prepares and the runs
-    an operations once for each set of parameters provided (this
-    replaces the old v1 behavior of passing a seq to .execute).
+       cursor.execute("SELECT id, value FROM foo WHERE id > ?", 5)
 
-        cursor.executemany("INSERT INTO foo(id, value) VALUES (?, ?)", ((1,2.0), (2,5.5)))
+-  .executemany(operation[, seq\_of\_params]) Prepares and the runs an
+   operations once for each set of parameters provided (this replaces
+   the old v1 behavior of passing a seq to .execute).
 
--   .callproc(procname\[, parameters\]) Calls a stored DB procedure with
-    the provided parameters. Returns a modified version of the provided
-    parameters with output and input/output parameters replaced
+   ::
 
-</div>
+       cursor.executemany("INSERT INTO foo(id, value) VALUES (?, ?)", ((1,2.0), (2,5.5)))
 
-<div class="section slide">
+-  .callproc(procname[, parameters]) Calls a stored DB procedure with
+   the provided parameters. Returns a modified version of the provided
+   parameters with output and input/output parameters replaced
 
-placeholders
-------------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: placeholders
+   :name: placeholders
 
 You can do all work on the data without using placeholders by
 constructing the entire query by hand:
+
+::
 
     # don't do this!
     query = "SELECT * from books where author_id = " + user_input_author
@@ -707,48 +909,59 @@ escaping to prevent abuse
 See examples/SQL/placeholders.py and
 examples/SQL/litte\_bobby\_tables.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A Cursor - attributes
----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A Cursor - attributes
+   :name: a-cursor---attributes
 
 These attributes of Cursor can help you learn about the results of
 operations:
 
--   .rowcount - Tells how many rows have been returned or affected by
-    the last operation. The number will be -1 if no operation has
-    been performed.
--   .description Returns a sequence of 7-item sequences describing each
-    of the columns in the result row(s) returned (None if no operation
-    has been performed):
-    -   name
-    -   type\_code (mandatory in the spec, but [is not returned by
-        sqlite3](http://bugs.python.org/issue11691))
-    -   display\_size (optional)
-    -   internal\_size (optional)
-    -   precision (optional)
-    -   scale (optional)
-    -   null\_ok (optional)
+-  .rowcount - Tells how many rows have been returned or affected by the
+   last operation. The number will be -1 if no operation has been
+   performed.
+-  .description Returns a sequence of 7-item sequences describing each
+   of the columns in the result row(s) returned (None if no operation
+   has been performed):
 
-</div>
+   -  name
+   -  type\_code (mandatory in the spec, but `is not returned by
+      sqlite3 <http://bugs.python.org/issue11691>`__)
+   -  display\_size (optional)
+   -  internal\_size (optional)
+   -  precision (optional)
+   -  scale (optional)
+   -  null\_ok (optional)
 
-<div class="section slide">
+.. raw:: html
 
-A Cursor - results
-------------------
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A Cursor - results
+   :name: a-cursor---results
 
 These methods are the way to get results after an operation:
 
--   .fetchone() - Returns the next row from a result set, and None when
-    none remain.
--   .fetchmany(\[size=cursor.arraysize\]) - Returns a sequence of size
-    rows (or fewer) from a result set. An empty sequence is returned
-    when no rows remain. Defaults to arraysize
--   .fetchall() - Returns all (remaining) rows from a result set. This
-    behavior may be affected by arraysize.
--   iterator context - Cursor supports the iterator protocol
+-  .fetchone() - Returns the next row from a result set, and None when
+   none remain.
+-  .fetchmany([size=cursor.arraysize]) - Returns a sequence of size rows
+   (or fewer) from a result set. An empty sequence is returned when no
+   rows remain. Defaults to arraysize
+-  .fetchall() - Returns all (remaining) rows from a result set. This
+   behavior may be affected by arraysize.
+-  iterator context - Cursor supports the iterator protocol
+
+::
 
     >>> cursor.execute('SELECT * FROM stocks ORDER BY price')
     >>> for row in cursor:
@@ -762,55 +975,68 @@ These methods are the way to get results after an operation:
 Note that each of these methods will raise a DB API Error if no
 operation has been performed (or if no result set was produced)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Data Types in DB API
---------------------
+.. raw:: html
 
--   Binary(string) - constructs an object to hold long binary string
-    data
--   STRING - a type to describe columns that hold string values (CHAR)
--   BINARY - a type to describe long binary columns (BLOB, RAW)
--   NUMBER - a type to describe numeric columns
--   DATETIME - a type to describe date/time/datetime columns
--   ROWID - a type to describe the Row ID column in a database
+   <div class="section slide">
+
+.. rubric:: Data Types in DB API
+   :name: data-types-in-db-api
+
+-  Binary(string) - constructs an object to hold long binary string data
+-  STRING - a type to describe columns that hold string values (CHAR)
+-  BINARY - a type to describe long binary columns (BLOB, RAW)
+-  NUMBER - a type to describe numeric columns
+-  DATETIME - a type to describe date/time/datetime columns
+-  ROWID - a type to describe the Row ID column in a database
 
 SQL NULL values are represented by Python's None
 
-However, sqlite3 has a ['more general dynamic type
-system'](http://www.sqlite.org/datatype3.html) and does not implement
-these.\
-[psycopg2](http://initd.org/psycopg/docs/module.html) does.
+However, sqlite3 has a `'more general dynamic type
+system' <http://www.sqlite.org/datatype3.html>`__ and does not implement
+these.
+`psycopg2 <http://initd.org/psycopg/docs/module.html>`__ does.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Date Constructors
------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Date Constructors
+   :name: date-constructors
 
 The DB-API provides types and constructors for data:
 
--   Date(year, month, day) - constructs an object holding a date value
--   Time(hour, min, sec) - constructs an object holding a time value
--   Timestamp(y, m, d, h, min, s) - constructs an object holding a
-    timestamp
+-  Date(year, month, day) - constructs an object holding a date value
+-  Time(hour, min, sec) - constructs an object holding a time value
+-  Timestamp(y, m, d, h, min, s) - constructs an object holding a
+   timestamp
 
 Each of the above has a corresponding \*FromTicks(ticks) method which
 returns the same type given a single integer argument (seconds since the
 epoch)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Exceptions
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Exceptions
+   :name: exceptions
 
 The DB API specification requires implementations to create the
 following hierarchy of custom Exception classes:
+
+::
 
     StandardError
     |__Warning
@@ -827,36 +1053,52 @@ following hierarchy of custom Exception classes:
 There are significant differences in exception handling across
 implementations, see examples/SQL/sqlite3\_psycopg2\_exceptions.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-End whirlwind tour of DB-API
-----------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: End whirlwind tour of DB-API
+   :name: end-whirlwind-tour-of-db-api
 
 Aside from some custom extensions not required by the specification,
 that's it.
 
 So how do you interact with this?
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Using Python's sqlite3 Module
------------------------------
+.. raw:: html
 
-### A walk through the Standard Library's reference implementation of DB API 2
+   <div class="section slide">
 
-</div>
+.. rubric:: Using Python's sqlite3 Module
+   :name: using-pythons-sqlite3-module
 
-<div class="section slide">
+.. rubric:: A walk through the Standard Library's reference
+   implementation of DB API 2
+   :name: a-walk-through-the-standard-librarys-reference-implementation-of-db-api-2
 
-Getting Started
----------------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Getting Started
+   :name: getting-started
 
 Start by moving to the examples folder, opening a Python interpreter and
 importing the sqlite3 module:
+
+::
 
     $ cd examples
     $ python
@@ -865,14 +1107,20 @@ importing the sqlite3 module:
     Type "help", "copyright", "credits" or "license" for more information.
     >>> import sqlite3
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Learning About the Module
--------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Learning About the Module
+   :name: learning-about-the-module
 
 We can poke the module a bit to learn about it:
+
+::
 
     >>> sqlite3.sqlite_version
     '3.6.12'
@@ -892,16 +1140,22 @@ We can poke the module a bit to learn about it:
     3     Safe at Module, Connection and Cursor
     ===== =====================================
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Connecting
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Connecting
+   :name: connecting
 
 SQLite3 is a file-based system, and it will create the file it needs if
 one doesn't exist. We can create a sqlite3 database just by attempting
 to connect to it:
+
+::
 
     >>> import createdb
     >>> createdb.main()
@@ -913,14 +1167,20 @@ to connect to it:
 
 Let's see how this works
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-edit createdb.py
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: edit createdb.py
+   :name: edit-createdb.py
 
 Open createdb.py in your editor:
+
+::
 
     import os
     import sqlite3
@@ -939,14 +1199,20 @@ Open createdb.py in your editor:
     if __name__ == '__main__':
         main()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Set Up The Schema
------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Set Up The Schema
+   :name: set-up-the-schema
 
 Make the following changes to createdb.py:
+
+::
 
     import os
     import sqlite3
@@ -966,34 +1232,48 @@ Make the following changes to createdb.py:
                 print 'Database exists, assume schema does, too.'
         # delete the conn.close() that was here.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Verify Your Work
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Verify Your Work
+   :name: verify-your-work
 
 Quit your python interpreter and delete the file books.db that should be
 in the examples folder
 
 Then run the script from the command line to try it out:
 
+::
+
     $ python createdb.py
     Creating schema
     $ python createdb.py
     Database exists, assume schema does, too.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Introspect the Database
------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Introspect the Database
+   :name: introspect-the-database
 
 Add the following to createdb.py:
 
+::
+
     # in the imports, add this line:
     from utils import show_table_metadata
+
+::
 
     # in the else clause, replace the print statement with this:
     print "Database exists, introspecting:"
@@ -1005,12 +1285,18 @@ Add the following to createdb.py:
 
 Then try running python createdb.py again
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-My Results
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: My Results
+   :name: my-results
+
+::
 
     $ python createdb.py
     Table Metadata for 'author':
@@ -1032,14 +1318,20 @@ My Results
     2   | author     | INTEGER    | 1          | None       | 0  |
     ----+------------+------------+------------+------------+----+-
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Inserting Data
---------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Inserting Data
+   :name: inserting-data
 
 Let's load some data. Enter into the Python shell:
+
+::
 
     import sqlite3
     insert = """INSERT INTO author (name) VALUES("Iain M. Banks");"""
@@ -1051,14 +1343,20 @@ Let's load some data. Enter into the Python shell:
 
 Did that work?
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Querying Data
--------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Querying Data
+   :name: querying-data
 
 Let's query our database to find out:
+
+::
 
     query = """SELECT * from author;"""
     with sqlite3.connect("books.db") as conn:
@@ -1071,17 +1369,23 @@ Let's query our database to find out:
 
 Data made it in, let's make the code more efficient.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Parameterized Statements
-------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Parameterized Statements
+   :name: parameterized-statements
 
 Queries can be parameterized. The parameter style is database dependent,
 and can be determined from module.paramstyle
 
-<http://www.python.org/dev/peps/pep-0249/#paramstyle>
+http://www.python.org/dev/peps/pep-0249/#paramstyle
+
+::
 
     insert = """INSERT INTO author (name) VALUES(?);"""
 
@@ -1093,14 +1397,20 @@ and can be determined from module.paramstyle
         print cur.rowcount
         cur.close()
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Check Your Work
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Check Your Work
+   :name: check-your-work
 
 Again, query the database:
+
+::
 
     query = """SELECT * from author;"""
     with sqlite3.connect("books.db") as conn:
@@ -1110,12 +1420,16 @@ Again, query the database:
         for row in rows:
             print row
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Transactions
-------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Transactions
+   :name: transactions
 
 Transactions let you group a number of operations together, allowing you
 to make sure they worked before you actually push the results into the
@@ -1131,12 +1445,16 @@ end of the with statement)
 
 Let's add some code so we can see the effect of transactions.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Populating the Database
------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Populating the Database
+   :name: populating-the-database
 
 Let's start by seeing what happens when you try to look for newly added
 data before the insert transaction is committed.
@@ -1145,17 +1463,25 @@ Begin by quitting your interpreter and deleting books.db.
 
 Then re-create the database, empty:
 
+::
+
     $ python createdb.py
         Creating schema
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Setting Up the Test
--------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Setting Up the Test
+   :name: setting-up-the-test
 
 In populatedb.py, look at this code at the end of the file:
+
+::
 
     with sqlite3.connect(DB_FILENAME) as conn1:
         print "\nOn conn1, before insert:"
@@ -1175,14 +1501,20 @@ In populatedb.py, look at this code at the end of the file:
             print "\nOn conn2, after commit:"
             show_authors(conn2)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Running the Test
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Running the Test
+   :name: running-the-test
 
 Quit your python interpreter and run the populatedb.py script:
+
+::
 
     $ python populatedb.py
     On conn1, before insert:
@@ -1202,12 +1534,16 @@ Quit your python interpreter and run the populatedb.py script:
     (4, u'J.R.R. Tolkien')
     (5, u"Madeline L'Engle")
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Rollback
---------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Rollback
+   :name: rollback
 
 That's all well and good, but what happens if an error occurs?
 
@@ -1220,15 +1556,21 @@ will automatically rollback for exceptions.
 Let's rewrite our populatedb script so it explicitly commits or rolls
 back a transaction depending on exceptions occurring
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-edit populatedb.py (slide 1)
-----------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: edit populatedb.py (slide 1)
+   :name: edit-populatedb.py-slide-1
 
 First, add the following function above the if \_\_name\_\_ ==
 '\_\_main\_\_' block:
+
+::
 
     def populate_db(conn):
         authors = ([author] for author in AUTHORS_BOOKS.keys())
@@ -1239,14 +1581,20 @@ First, add the following function above the if \_\_name\_\_ ==
             params = ([book, author] for book in AUTHORS_BOOKS[author])
             cur.executemany(book_insert, params)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-edit populatedb.py (slide 2)
-----------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: edit populatedb.py (slide 2)
+   :name: edit-populatedb.py-slide-2
 
 Then, in the runner:
+
+::
 
     with sqlite3.connect(DB_FILENAME) as conn1:
         with sqlite3.connect(DB_FILENAME) as conn2:
@@ -1268,14 +1616,20 @@ Then, in the runner:
                 show_books(conn2)
         
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Try it Out
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Try it Out
+   :name: try-it-out
 
 Remove books.db, recreate the database, then run our script:
+
+::
 
     $ rm books.db
     $ python createdb.py
@@ -1294,35 +1648,49 @@ Remove books.db, recreate the database, then run our script:
     sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
         
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Oooops, Fix It
---------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Oooops, Fix It
+   :name: oooops-fix-it
 
 Okay, we got an error, and the transaction was rolled back correctly.
 
 Open utils.py and find this:
+
+::
 
     'Susan Cooper': ["The Dark is Rising", ["The Greenwitch"]],
         
 
 Fix it like so:
 
+::
+
     'Susan Cooper': ["The Dark is Rising", "The Greenwitch"],
         
 
 It appears that we were attempting to bind a list as a parameter. Ooops.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Try It Again
-------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Try It Again
+   :name: try-it-again
 
 Now that the error in our data is repaired, let's try again:
+
+::
 
     $ python populatedb.py
 
@@ -1348,12 +1716,16 @@ Now that the error in our data is repaired, let's try again:
     (11, u'A Swiftly Tilting Planet', 5)
         
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Isolation
----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Isolation
+   :name: isolation
 
 So far, our transactions have been managed. Either explicitly by us, or
 automatically by the context manager statement with
@@ -1361,24 +1733,30 @@ automatically by the context manager statement with
 This behavior is the result of an aspect of the database connection
 called the isolation level. There are three isolation levels available:
 
--   DEFERRED - Locks the database once changes have begun to be written
-    to the filesystem. Read-only operations are not blocked
--   IMMEDIATE - Locks the database as soon as a transaction is begun.
-    Read-only operations are not blocked
--   EXCLUSIVE - Locks the database as soon as a transaction is begun.
-    This blocks any read-only operations as well
+-  DEFERRED - Locks the database once changes have begun to be written
+   to the filesystem. Read-only operations are not blocked
+-  IMMEDIATE - Locks the database as soon as a transaction is begun.
+   Read-only operations are not blocked
+-  EXCLUSIVE - Locks the database as soon as a transaction is begun.
+   This blocks any read-only operations as well
 
 The default level is DEFERRED
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Autocommit
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Autocommit
+   :name: autocommit
 
 The isolation level of a connection can be set with a keyword argument
 provided to the connect constructor:
+
+::
 
     con = sqlite3.connect('mydb.db', isolation_level="EXCLUSIVE")
 
@@ -1388,14 +1766,20 @@ behavior.
 If autocommit is enabled, then any DML operations that occur on a
 connection will be immediately committed
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Testing Autocommit
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Testing Autocommit
+   :name: testing-autocommit
 
 First, edit populatedb.py:
+
+::
 
     with sqlite3.connect(DB_FILENAME, isolation_level=None) as conn1:
         with sqlite3.connect(DB_FILENAME, isolation_level=None) as conn2:
@@ -1405,17 +1789,25 @@ again
 
 Finally, delete books.db, recreate it and test the populate script::
 
+::
+
     $ rm books.db
     $ python createdb.py
     Creating schema
     $ python populatedb.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-The Result
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: The Result
+   :name: the-result
+
+::
 
     authors and books on conn2 after rollback:
     (1, u'China Mieville')
@@ -1436,12 +1828,16 @@ The Result
         cur.executemany(book_insert, params)
     sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-EXCLUSIVE isolation
--------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: EXCLUSIVE isolation
+   :name: exclusive-isolation
 
 There's not a whole lot of difference between the default "DEFERRED"
 isolation level and "IMMEDIATE"
@@ -1456,29 +1852,41 @@ read it.
 
 Take a few moments to review the control flow here. What should happen?
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Testing It
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Testing It
+   :name: testing-it
 
 First, re-fix the bug in our utils.py file so that we don't get errors
 when running this test.
 
 Then kill the old database, recreate it, and run our new script:
 
+::
+
     $ rm books.db
     $ python createdb.py
     Creating schema
     $ python threaded.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-The Results
------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: The Results
+   :name: the-results
+
+::
 
     2013-04-30 15:37:37,556 (Writer    ) connecting
     2013-04-30 15:37:37,556 (Reader    ) waiting to sync
@@ -1512,32 +1920,44 @@ The Results
     (11, u'A Swiftly Tilting Planet', 5)
     2013-04-30 15:37:42,591 (Reader    ) results fetched
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-NoSQL
-=====
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div class="section slide">
+.. rubric:: NoSQL
+   :name: nosql
 
-Non RDBMS options
------------------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Non RDBMS options
+   :name: non-rdbms-options
 
 In "NoSQL" these key features are mostly shared:
 
--   "schema less" - Document oriented
--   More direct mapping to an object model.
--   Scalable - Easy to distribute / parallelize
+-  "schema less" - Document oriented
+-  More direct mapping to an object model.
+-  Scalable - Easy to distribute / parallelize
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Database Schema
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Database Schema
+   :name: database-schema
 
 A database schema is the organization of data, and description of how a
 database is constructed: Divided into database tables, and
@@ -1552,19 +1972,23 @@ requirements change.
 It can also require effort to map your programming data model to the
 schema.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Schemaless
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Schemaless
+   :name: schemaless
 
 Schemaless databases generally follow a "document model".
 
 Each entry in the database is a "document":
 
--   essentially an arbitrary collection of fields.
--   often looks like a Python dict.
+-  essentially an arbitrary collection of fields.
+-  often looks like a Python dict.
 
 Not every entry has to have exactly the same structure.
 
@@ -1572,108 +1996,139 @@ Maps well to dynamic programming languages.
 
 Adapts well as the system changes.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-NoSQL in Python:
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: NoSQL in Python:
+   :name: nosql-in-python
 
 Three Categories:
 
-1. Simple key-value object store
---------------------------------
+.. rubric:: 1. Simple key-value object store
+   :name: simple-key-value-object-store
 
--   [shelve](https://docs.python.org/2/library/shelve.html), based on
-    [pickle](https://docs.python.org/2/library/pickle.html) and
-    [anydbm](https://docs.python.org/2/library/anydbm.html)
--   Can store any [picklable Python
-    object](https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickled)
--   Only provides storage and retrieval
+-  `shelve <https://docs.python.org/2/library/shelve.html>`__, based on
+   `pickle <https://docs.python.org/2/library/pickle.html>`__ and
+   `anydbm <https://docs.python.org/2/library/anydbm.html>`__
+-  Can store any `picklable Python
+   object <https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickled>`__
+-  Only provides storage and retrieval
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-2. External NoSQL system
-------------------------
+.. raw:: html
 
--   Python bindings to external NoSQL system
--   Doesn't store full Python objects
--   Generally stores arbitrary collections of data (but not classes)
--   Can be simple key-value stores - Redis, etc...
--   Or a more full featured document database: in-database searching,
-    etc. - mongoDB, etc...
--   Or a Map/Reduce engine: - Hadoop
+   <div class="section slide">
 
-</div>
+.. rubric:: 2. External NoSQL system
+   :name: external-nosql-system
 
-<div class="section slide">
+-  Python bindings to external NoSQL system
+-  Doesn't store full Python objects
+-  Generally stores arbitrary collections of data (but not classes)
+-  Can be simple key-value stores - Redis, etc...
+-  Or a more full featured document database: in-database searching,
+   etc. - mongoDB, etc...
+-  Or a Map/Reduce engine: - Hadoop
 
-3. Python object database
--------------------------
+.. raw:: html
 
--   Stores and retrieves arbitrary Python objects.
--   Don't need to adapt your data model at all.
--   ZODB is the most robust and maintained system
+   </div>
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   <div class="section slide">
 
-[ZODB](http://http://www.zodb.org/)
------------------------------------
+.. rubric:: 3. Python object database
+   :name: python-object-database
+
+-  Stores and retrieves arbitrary Python objects.
+-  Don't need to adapt your data model at all.
+-  ZODB is the most robust and maintained system
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: `ZODB <http://http://www.zodb.org/>`__
+   :name: zodb
 
 The Zope Object Data Base: A native object database for Python
--   Transparent persistence for Python objects
--   Full ACID-compatible transaction support (including savepoints)
--   History/undo ability
--   Efficient support for binary large objects (BLOBs)
--   Pluggable storages
--   Scalable architecture
 
-</div>
+-  Transparent persistence for Python objects
+-  Full ACID-compatible transaction support (including savepoints)
+-  History/undo ability
+-  Efficient support for binary large objects (BLOBs)
+-  Pluggable storages
+-  Scalable architecture
 
-<div class="section slide">
+.. raw:: html
 
-[MongoDB](https://www.mongodb.org/)
------------------------------------
+   </div>
 
--   Document-Oriented Storage - JSON-style documents with dynamic
-    schemas offer simplicity and power.
--   Full Index Support - Index on any attribute, just like you're
-    used to.
--   Replication and High Availability - Mirror across LANs and WANs for
-    scale and peace of mind.
--   Auto-Sharding - Scale horizontally without
-    compromising functionality.
--   Querying - Rich, document-based queries.
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div class="section slide">
+.. rubric:: `MongoDB <https://www.mongodb.org/>`__
+   :name: mongodb
 
-Other Options to Consider
--------------------------
+-  Document-Oriented Storage - JSON-style documents with dynamic schemas
+   offer simplicity and power.
+-  Full Index Support - Index on any attribute, just like you're used
+   to.
+-  Replication and High Availability - Mirror across LANs and WANs for
+   scale and peace of mind.
+-  Auto-Sharding - Scale horizontally without compromising
+   functionality.
+-  Querying - Rich, document-based queries.
 
-[Redis](http://redis.io/): Advanced, Scalable key-value store.
+.. raw:: html
 
-[Riak](http://docs.basho.com/riak/latest/dev/taste-of-riak/python/):
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Other Options to Consider
+   :name: other-options-to-consider
+
+`Redis <http://redis.io/>`__: Advanced, Scalable key-value store.
+
+`Riak <http://docs.basho.com/riak/latest/dev/taste-of-riak/python/>`__:
 High availability/scalablity
 
-[HyperDex](http://hyperdex.org/): "Next generation key-value store"
+`HyperDex <http://hyperdex.org/>`__: "Next generation key-value store"
 
-[Apache Cassandra](http://pycassa.github.io/pycassa/): A more
+`Apache Cassandra <http://pycassa.github.io/pycassa/>`__: A more
 schema-based NoSQL solution
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Example Data Model
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Example Data Model
+   :name: example-data-model
 
 An Address Book with a not quite trivial data model.
+
+::
 
     There are people::
 
@@ -1694,14 +2149,20 @@ An Address Book with a not quite trivial data model.
 
 see examples/NoSQL/address\_book\_model.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Using ZODB
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Using ZODB
+   :name: using-zodb
 
 ZODB stores Python objects. To make an object persistent:
+
+::
 
     import persistent
 
@@ -1714,12 +2175,18 @@ When a change is made to the fields, the DB will keep it updated.
 
 See examples/NoSQL/address\_book\_zodb.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Mutable Attributes in ZODB
---------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Mutable Attributes in ZODB
+   :name: mutable-attributes-in-zodb
+
+::
 
     Something.this = that
     # will trigger a DB action
@@ -1737,68 +2204,88 @@ Mutable Attributes in ZODB
 
     # (or write getter and setter properties...)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-MongoDB
--------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: MongoDB
+   :name: mongodb-1
 
 Essentially a key-value store, but the values are JSON-like objects in
-the [BSON (binary JSON)](http://bsonspec.org/) format
+the `BSON (binary JSON) <http://bsonspec.org/>`__ format
 
 So you can store any object that can look like JSON:
 
--   dicts
--   lists
--   numbers
--   strings
--   richer than JSON.
+-  dicts
+-  lists
+-  numbers
+-  strings
+-  richer than JSON.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-MongoDB and Python
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: MongoDB and Python
+   :name: mongodb-and-python
 
 MongoDB is written in C++ -- can be accessed by various language
-[drivers](http://docs.mongodb.org/manual/applications/drivers/)
+`drivers <http://docs.mongodb.org/manual/applications/drivers/>`__
 
 For Python we have
-[PyMongo](http://api.mongodb.org/python/current/tutorial.html%0A)
+`PyMongo <http://api.mongodb.org/python/current/tutorial.html%0A>`__
 
 There are also various tools for integrating mongoDB with Python
 frameworks:
 
--   Django MongoDB Engine
--   mongodb\_beaker
--   MongoLog: Python logging handler
--   Flask-PyMongo
--   others...
+-  Django MongoDB Engine
+-  mongodb\_beaker
+-  MongoLog: Python logging handler
+-  Flask-PyMongo
+-  others...
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Getting started with mongoDB
-----------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Getting started with mongoDB
+   :name: getting-started-with-mongodb
 
 mongoDB is separate program. Installers here:
 http://www.mongodb.org/downloads
 
 Create a dir for the database:
 
+::
+
     $ mkdir mongo_data
     # And start it up:
     $ mongod --dbpath=mongo_data/
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Creating a Mongo DB:
---------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Creating a Mongo DB:
+   :name: creating-a-mongo-db
+
+::
 
     # create the DB
     from pymongo import MongoClient
@@ -1812,15 +2299,23 @@ if they don't exist.
 
 Adding some stuff:
 
+::
+
     people.insert({'first_name': 'Fred',
                   'last_name': 'Jones'})
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Pulling Data Out
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Pulling Data Out
+   :name: pulling-data-out
+
+::
 
     In [16]: people.find_one({'first_name':"Fred"})
     Out[16]:
@@ -1831,20 +2326,34 @@ Pulling Data Out
 Note that it adds an ObjectID for you. See
 examples/NoSQL/address\_book\_mongo.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Questions?
-==========
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-[←](# "Previous"){.deck-prev-link} [→](# "Next"){.deck-next-link}
+.. rubric:: Questions?
+   :name: questions
 
-<span class="deck-status-current"></span> / <span
-class="deck-status-total"></span>
+.. raw:: html
+
+   </div>
+
+`← <#>`__ `→ <#>`__
+
+ /
 
 Go to slide:
 
-[\#](. "Permalink to this slide"){.deck-permalink}
+`# <.>`__
+
+.. |image0| image:: images/database.gif
+   :target: images/database.gif
+.. |image1| image:: images/image.png
+   :target: images/image.png
+.. |image2| image:: images/sql_anatomy.png
+   :width: 90.0%
+.. |image3| image:: images/3vl.png
+   :width: 90.0%

@@ -1,69 +1,96 @@
-<div class="deck-container">
+.. raw:: html
 
-<div class="section slide">
+   <div class="deck-container">
 
-System Development with Python
-------------------------------
+.. raw:: html
 
-### Week 3 :: debugging
+   <div class="section slide">
+
+.. rubric:: System Development with Python
+   :name: system-development-with-python
+
+.. rubric:: Week 3 :: debugging
+   :name: week-3-debugging
 
 Joseph Sheedy
 
 *joseph.sheedy@gmail.com*
 
 Git repository:
-<https://github.com/UWPCE-PythonCert/SystemDevelopment2015>
+https://github.com/UWPCE-PythonCert/SystemDevelopment2015
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Today's topics
---------------
+.. raw:: html
 
--   The call stack
--   Exceptions
--   Iterators
--   Debugging
+   <div class="section slide">
 
-</div>
+.. rubric:: Today's topics
+   :name: todays-topics
 
-<div class="section slide">
+-  The call stack
+-  Exceptions
+-  Iterators
+-  Debugging
 
-The Call Stack
-==============
+.. raw:: html
 
-</div>
+   </div>
 
-<div class="section slide">
+.. raw:: html
 
-What is the call stack?
------------------------
+   <div class="section slide">
 
--   The call stack is a stack data structure that stores information
-    about the current active function call
--   The objects in the stack are known as "stack frames". Each frame
-    contains the arguments passed to the function, space for local
-    variables, and the return address
--   A stack is a Last-In-First-Out (LIFO) data structure
--   When a function is called, a stack frame is created for it and
-    pushed onto the stack
--   When a function returns, it is popped off the stack and control is
-    passed to the next item in the stack. If the stack is empty, the
-    program exits
+.. rubric:: The Call Stack
+   :name: the-call-stack
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-![](images/ProgramCallStack2.png)
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div class="section slide">
+.. rubric:: What is the call stack?
+   :name: what-is-the-call-stack
 
-How deep can that stack be?
----------------------------
+-  The call stack is a stack data structure that stores information
+   about the current active function call
+-  The objects in the stack are known as "stack frames". Each frame
+   contains the arguments passed to the function, space for local
+   variables, and the return address
+-  A stack is a Last-In-First-Out (LIFO) data structure
+-  When a function is called, a stack frame is created for it and pushed
+   onto the stack
+-  When a function returns, it is popped off the stack and control is
+   passed to the next item in the stack. If the stack is empty, the
+   program exits
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+|image0|
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: How deep can that stack be?
+   :name: how-deep-can-that-stack-be
+
+::
 
     i = 0
 
@@ -78,12 +105,18 @@ How deep can that stack be?
 
 That value can be changed with sys.setrecursionlimit(N)
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-inspecting frames in the call stack
------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: inspecting frames in the call stack
+   :name: inspecting-frames-in-the-call-stack
+
+::
 
     import sys, traceback
 
@@ -115,19 +148,26 @@ inspecting frames in the call stack
     one()
       
 
-Also see the [inspect
-module](https://docs.python.org/2/library/inspect.html)
+Also see the `inspect
+module <https://docs.python.org/2/library/inspect.html>`__
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Exceptions
-----------
+.. raw:: html
 
-### It's easier to ask for forgiveness than permission
+   <div class="section slide">
 
-<div class="slide">
+.. rubric:: Exceptions
+   :name: exceptions
+
+.. rubric:: It's easier to ask for forgiveness than permission
+   :name: its-easier-to-ask-for-forgiveness-than-permission
+
+.. raw:: html
+
+   <div class="slide">
 
 When either the interpreter or your own code detects an error condition,
 an exception may be raised
@@ -137,21 +177,29 @@ not, the interpreter will exit.
 
 At each level in the stack, a handler can either:
 
--   let it pass through (the default)
--   swallow the exception
--   catch the exception and raise it again
--   catch the exception and raise a new one
+-  let it pass through (the default)
+-  swallow the exception
+-  catch the exception and raise it again
+-  catch the exception and raise a new one
 
-</div>
+.. raw:: html
 
-</div>
+   </div>
 
-<div class="section slide">
+.. raw:: html
 
-Handling exceptions
--------------------
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Handling exceptions
+   :name: handling-exceptions
 
 The most basic form uses the builtins try and except
+
+::
 
     try:
         print "do some stuff"
@@ -160,12 +208,19 @@ The most basic form uses the builtins try and except
     except:
         print "stuff failed"
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A few more builtins for exception handling: finally, else, and raise
---------------------------------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A few more builtins for exception handling: finally, else,
+   and raise
+   :name: a-few-more-builtins-for-exception-handling-finally-else-and-raise
+
+::
 
     def divide(x, y):
 
@@ -188,17 +243,25 @@ A few more builtins for exception handling: finally, else, and raise
     finally:
         print "this is executed no matter what"
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Built-in exceptions
--------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Built-in exceptions
+   :name: built-in-exceptions
+
+::
 
     [name for name in dir(__builtin__) if "Error" in name]
 
 If one of these meets your needs, by all means use it. Else, define a
 new exception type by subclassing one, perhaps Exception
+
+::
 
     In [32]: import exceptions
     In [33]: exceptions?
@@ -212,12 +275,16 @@ new exception type by subclassing one, perhaps Exception
     inherit from Exception.  See the documentation for the exception
     inheritance hierarchy.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Exercise
---------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Exercise
+   :name: exercise
 
 Modify the example program examples/wikidef
 
@@ -234,37 +301,51 @@ Feel free to edit the code in place. You can throw away your changes at
 the end with "git reset --hard", store them for later with "git stash",
 or commit them!
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Further reading
----------------
+.. raw:: html
 
--   <https://wiki.python.org/moin/HandlingExceptions>
--   <http://docs.python.org/2/library/exceptions.html>
--   <http://docs.python.org/2/tutorial/errors.html>
+   <div class="section slide">
 
-</div>
+.. rubric:: Further reading
+   :name: further-reading
 
-<div class="section slide">
+-  https://wiki.python.org/moin/HandlingExceptions
+-  http://docs.python.org/2/library/exceptions.html
+-  http://docs.python.org/2/tutorial/errors.html
 
-Exceptions aren't just for errors
----------------------------------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Exceptions aren't just for errors
+   :name: exceptions-arent-just-for-errors
 
 Exception handling can be used for control flow as well
 
 i.e. StopIteration for iterators
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Iterators
----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Iterators
+   :name: iterators
 
 Iterators are objects which support a concept of iteration over a
 collection
+
+::
 
     # looping over the lines in a file is done via an iterator:
       with open("file.dat") as f:
@@ -275,22 +356,28 @@ collection
       for x in foo():
           print x
 
-An iterator is an object which follows the Python [iterator
-protocol](https://docs.python.org/2/library/stdtypes.html#container.__iter__)
+An iterator is an object which follows the Python `iterator
+protocol <https://docs.python.org/2/library/stdtypes.html#container.__iter__>`__
 
 An iterator defines two required methods in order to iterate
 
--   \_\_iter\_\_() returns the iterator itself
--   next() returns the next item in the sequence
+-  \_\_iter\_\_() returns the iterator itself
+-  next() returns the next item in the sequence
 
-<http://docs.python.org/2/library/stdtypes.html#iterator-types>
+http://docs.python.org/2/library/stdtypes.html#iterator-types
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Demonstration iterator
-----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Demonstration iterator
+   :name: demonstration-iterator
+
+::
 
     class CountToTen(object):
           """an iterator which returns integers from 0 to 9, inclusive"""
@@ -314,35 +401,47 @@ Demonstration iterator
       list(CountToTen())
       
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Now let's build an iterator
----------------------------
+.. raw:: html
 
-Calculate the first 20 values in the Fibonacci sequence: \[0, 1, 1, 2,
-3, 5, ... \] using an iterator
+   <div class="section slide">
+
+.. rubric:: Now let's build an iterator
+   :name: now-lets-build-an-iterator
+
+Calculate the first 20 values in the Fibonacci sequence: [0, 1, 1, 2, 3,
+5, ... ] using an iterator
 
 The Fibonnaci sequence is defined as such:
 
 The first two integers in the sequence are 0 and 1
 Each member of the sequence is the sum of the previous two elements
+::
+
     for x in FibonacciIterator(20):
       print x
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-generators
-----------
+.. raw:: html
 
-A [generator](https://wiki.python.org/moin/Generators) is a concrete
+   <div class="section slide">
+
+.. rubric:: generators
+   :name: generators
+
+A `generator <https://wiki.python.org/moin/Generators>`__ is a concrete
 type that implements the iterator protocol.
 
 Convert a function to a generator using the yield keyword
+
+::
 
     def count_to_10():
         for i in range(10):
@@ -355,73 +454,97 @@ Convert a function to a generator using the yield keyword
 (4700 upvotes on this stackoverflow question, yield is confusing at
 first)
 
-<http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained>
+http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Using a generator expression to create a generator
---------------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Using a generator expression to create a generator
+   :name: using-a-generator-expression-to-create-a-generator
 
 Python list comprehensions allow you to build lists of values
 
+::
+
     my_list = [x for x in open('file.dat')]
 
-Convert that list comprehension to a generator just by replacing '\[\]'
+Convert that list comprehension to a generator just by replacing '[]'
 with '()'
+
+::
 
     my_generator = (x for x in open('file.dat'))
 
-<https://wiki.python.org/moin/Generators>
+https://wiki.python.org/moin/Generators
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Python Debugging
-----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Python Debugging
+   :name: python-debugging
 
 Debuggers are code which allows the inspection of state of other code
 during runtime.
 
-<div class="slide">
+.. raw:: html
+
+   <div class="slide">
 
 Rudimentary tools
 
--   print()
--   interpreter hints
--   import logging.debug
--   assert()
+-  print()
+-  interpreter hints
+-  import logging.debug
+-  assert()
 
 Console debuggers
 
--   pdb/ipdb
+-  pdb/ipdb
 
 GUI debuggers
 
--   Winpdb
--   IDEs: Eclipse, Wing IDE, PyCharm, Visual Studio
+-  Winpdb
+-  IDEs: Eclipse, Wing IDE, PyCharm, Visual Studio
 
-</div>
+.. raw:: html
 
-</div>
+   </div>
 
-<div class="section slide">
+.. raw:: html
 
-help from the interpreter
--------------------------
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: help from the interpreter
+   :name: help-from-the-interpreter
 
 investigate import issues with -v
 
 inspect environment after running script with -i
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-the logging module
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: the logging module
+   :name: the-logging-module
 
 A flexible logging system that comes with the standard library
 
@@ -430,17 +553,21 @@ as your code
 
 The four main classes of logging
 
--   Loggers - the interface for your code
--   Handlers - handle log routing
--   Filters - define which log messages to let through
--   Formatters - how the log messages get rendered
+-  Loggers - the interface for your code
+-  Handlers - handle log routing
+-  Filters - define which log messages to let through
+-  Formatters - how the log messages get rendered
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-basic logging usage
--------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: basic logging usage
+   :name: basic-logging-usage
 
 Basic handling, filtering, and formatting can be done through the
 logging module's basicConfig method
@@ -449,7 +576,9 @@ More complex and configurable configurations can be created with the
 class interfaces for each of those tasks
 
 Timestamps can be included by passing the kwarg
-`format='%(asctime)s %(message)s')` to basicConfig
+``format='%(asctime)s %(message)s')`` to basicConfig
+
+::
 
       import logging
 
@@ -461,12 +590,18 @@ Timestamps can be included by passing the kwarg
 
 see examples/logging/example1.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-A more complex logging setup
-----------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: A more complex logging setup
+   :name: a-more-complex-logging-setup
+
+::
 
       import logging
 
@@ -495,88 +630,122 @@ A more complex logging setup
       logger.critical('critical message')
       
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-[Pdb - The Python Debugger](http://docs.python.org/2/library/pdb.html)
-----------------------------------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: `Pdb - The Python
+   Debugger <http://docs.python.org/2/library/pdb.html>`__
+   :name: pdb---the-python-debugger
 
 Pros:
 
--   You have it already, ships with the standard library
--   Easy remote debugging
--   Works with any development environment
+-  You have it already, ships with the standard library
+-  Easy remote debugging
+-  Works with any development environment
 
 Cons:
 
--   Steep-ish learning curve
--   Easy to get lost in a deep stack
--   Watching variables isn't hard, but non-trivial
+-  Steep-ish learning curve
+-  Easy to get lost in a deep stack
+-  Watching variables isn't hard, but non-trivial
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-[Pdb - The Python Debugger](http://docs.python.org/2/library/pdb.html)
-----------------------------------------------------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: `Pdb - The Python
+   Debugger <http://docs.python.org/2/library/pdb.html>`__
+   :name: pdb---the-python-debugger-1
 
 The 4-fold ways of invoking pdb
 
--   Postmortem mode
--   Run mode
--   Script mode
--   Trace mode
+-  Postmortem mode
+-  Run mode
+-  Script mode
+-  Trace mode
 
 Note: in most cases where you see the word 'pdb' in the examples, you
 can replace it with 'ipdb'. ipdb is the ipython enhanced version of pdb
 which is mostly compatible, and generally easier to work with. But it
 doesn't ship with Python.
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Postmortem mode
----------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Postmortem mode
+   :name: postmortem-mode
 
 For analyzing crashes due to uncaught exceptions
+
+::
 
           python -i script.py
           import pdb; pdb.pm()
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Run mode
---------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Run mode
+   :name: run-mode
+
+::
 
           pdb.run('some.expression()')
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Script mode
------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Script mode
+   :name: script-mode
+
+::
 
           python -m pdb script.py
           
 
-"-m \[module\]" finds \[module\] in sys.path and executes it as a script
+"-m [module]" finds [module] in sys.path and executes it as a script
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Trace mode
-----------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Trace mode
+   :name: trace-mode
 
 Insert the following line into your code where you want execution to
 halt:
+
+::
 
           import pdb; pdb.set_trace()
           
@@ -584,12 +753,18 @@ halt:
 It's not always OK/possible to modify your code in order to debug it,
 but this is often the quickest way to begin inspecting state
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-pdb in ipython
---------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: pdb in ipython
+   :name: pdb-in-ipython
+
+::
 
           
           In [2]: pdb
@@ -605,15 +780,21 @@ pdb in ipython
 If you forget to turn on pdb, the magic command %debug will activate the
 debugger (in 'post-mortem mode').
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Navigating pdb
---------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Navigating pdb
+   :name: navigating-pdb
 
 The goal of each of the preceding techniques was to get to the pdb
 prompt and get to work inspecting state
+
+::
 
     % python -m pdb define.py robot
       pdb> break api.py:21
@@ -642,12 +823,18 @@ prompt and get to work inspecting state
       pdb> commands
       pdb> continue
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Breakpoints
------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Breakpoints
+   :name: breakpoints
+
+::
 
     pdb> help break
       b(reak) ([file:]lineno | function) [, condition]
@@ -664,25 +851,37 @@ Breakpoints
 
 Clear (delete) breakpoints
 
+::
+
           clear [bpnumber [bpnumber...]]
           
 
 disable breakpoints
+
+::
 
           disable [bpnumber [bpnumber...]]
           
 
 enable breakpoints
 
+::
+
           enable [bpnumber [bpnumber...]]
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Conditional Breakpoints
------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Conditional Breakpoints
+   :name: conditional-breakpoints
+
+::
 
           pdb> help condition
           condition bpnumber str_condition
@@ -694,46 +893,66 @@ Conditional Breakpoints
 
 Set conditions
 
+::
+
           condition 1 x==1
           
 
 Clear conditions
+
+::
 
           condition 1
           
 
 see debugging/examples/long\_loop.py
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Invoking pdb with nose
-----------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Invoking pdb with nose
+   :name: invoking-pdb-with-nose
 
 On error condition, drop to pdb
+
+::
 
     nosetests --pdb
       
 
 On test failure, drop to pdb:
 
+::
+
     nosetests --pdb-failures
       
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Python IDEs
-===========
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div class="section slide">
+.. rubric:: Python IDEs
+   :name: python-ides
 
-PyCharm
--------
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: PyCharm
+   :name: pycharm
 
 From JetBrains, and integrates some of their vast array of development
 tools
@@ -742,16 +961,20 @@ Free Community Edition (CE) is available
 
 Good visual debugging support
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Eclipse
--------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Eclipse
+   :name: eclipse
 
 A multi-language IDE
 
-Python support via <http://pydev.org/>
+Python support via http://pydev.org/
 
 Automatic variable and expression watching
 
@@ -760,46 +983,62 @@ provided you look in the right places!
 
 Further reading
 
-<http://pydev.org/manual_adv_debugger.html>
+http://pydev.org/manual_adv_debugger.html
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-winpdb
-------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: winpdb
+   :name: winpdb
 
 A multi platform Python debugger with threading support
 
 Easier to start up and get debugging
+
+::
 
           
           winpdb your_app.py
           
           
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Remote debugging with winpdb
-----------------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Remote debugging with winpdb
+   :name: remote-debugging-with-winpdb
 
 To debug an application running a different Python, even remotely:
+
+::
 
           
           import rpdb2; rpdb2.start_embedded_debugger("password")
           
           
 
-<http://winpdb.org/tutorial/WinpdbTutorial.html>
+http://winpdb.org/tutorial/WinpdbTutorial.html
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Debugging exercise
-------------------
+.. raw:: html
+
+   <div class="section slide">
+
+.. rubric:: Debugging exercise
+   :name: debugging-exercise
 
 Find the wikidef app in the examples folder
 
@@ -809,6 +1048,8 @@ response.headers.headers in Wikipedia.article
 
 You can enter the debugger by running
 
+::
+
     python -m pdb ./define.py robot
 
 You can get to the code by walking through each line with 's'tep and
@@ -816,22 +1057,36 @@ You can get to the code by walking through each line with 's'tep and
 
 What's the result?
 
-</div>
+.. raw:: html
 
-<div class="section slide">
+   </div>
 
-Questions?
-==========
+.. raw:: html
 
-</div>
+   <div class="section slide">
 
-<div aria-role="navigation">
+.. rubric:: Questions?
+   :name: questions
 
-[←](# "Previous"){.deck-prev-link} [→](# "Next"){.deck-next-link}
+.. raw:: html
 
-</div>
+   </div>
 
-<span class="deck-status-current"></span> / <span
-class="deck-status-total"></span>
+.. raw:: html
 
-</div>
+   <div aria-role="navigation">
+
+`← <#>`__ `→ <#>`__
+
+.. raw:: html
+
+   </div>
+
+ /
+
+.. raw:: html
+
+   </div>
+
+.. |image0| image:: images/ProgramCallStack2.png
+
