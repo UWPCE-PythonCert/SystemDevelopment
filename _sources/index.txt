@@ -8,42 +8,39 @@ In This Course
 
 .. rst-class:: left credit
 
-  These materials copyright Christopher Barker and Joseph Sheedy.
+  These materials copyright Christopher Barker, Joseph Sheedy and Maria McKinley.
 
   Licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
 
   https://creativecommons.org/licenses/by-sa/4.0/legalcode
 
-Assorted Notes:
-===============
-
-Notes that aren't specific to a particular lecture -- or are genreal purpose, in any case.
-
-:ref:`installing_scipy`
-
-:ref:`building_extensions`
-
-Session 1
-===========
+Syllabus:
+=========
 
 .. rst-class:: left
 
-  :ref:`packaging`
+  :ref:`syllabus`
 
-  `Unit Testing and Coverage <html_slides/coverage/index.html>`_
 
-  :ref:`unicode`
+Session 1
+==========
+
+.. rst-class:: left
+
+  - `Debugging (print, pdb/ipdb) <html_slides/03-debugging.html>`_
+
+  - Logging
 
 Session 2
 =========
 
 .. rst-class:: left
 
-  :ref:`documentation`
+  - :ref:`documentation`
 
-  :ref:`weak_references`
+  - `PEP-8 (pylint/pychecker/pyflakes) <html_slides/pep8/index.html>`_
 
-  `PEP-8 (pylint/pychecker/pyflakes) <html_slides/pep8/index.html>`_
+  - Persistance and Serialization
 
 
 Session 3
@@ -51,59 +48,84 @@ Session 3
 
 .. rst-class:: left
 
-  - `Debugging (print, logging, pdb/ipdb, winpdb) <html_slides/03-debugging.html>`_
+  :ref:`packaging`
 
+  - `Unit Testing and Coverage <html_slides/coverage/index.html>`_
+
+  - Code Reviewing
 
 
 Session 4
 =========
 
-`Working with Databases <html_slides/04-db.html>`_
+.. rst-class:: left
+
+  - `Working with Databases <html_slides/04-db.html>`_
+
+  - Non-relational Databases
 
 
 Session 5
 =========
+.. rst-class:: left
 
-:ref:`scipy`
+  - :ref:`scipy`
 
 Session 6
 =========
 
 .. rst-class:: left
 
-  :ref:`advanced_oo`
+  - :ref:`advanced_oo`
 
-  `Metaclasses <html_slides/06-metaclasses.html>`_
+  - `Metaclasses <html_slides/06-metaclasses.html>`_
 
-  `datetime <html_slides/06-datetime.html>`_
-
-.. - functools
-.. - itertools
-.. - Beautiful idiomatic code
 
 Session 7
 =========
 
+.. rst-class:: left
 
-`multi-threading/processing <html_slides/07-threading-and-multiprocessing.html>`_
-
-..  - serialization review / XML
-..  - profiling
-
+  - `multi-threading/processing <html_slides/07-threading-and-multiprocessing.html>`_
 
 Session 8
 =========
 
+.. rst-class:: left
 
-:ref:`extensions`
+  - :ref:`unicode`
 
+  - Performance and profiling
 
 Session 9
 =========
 
-Student Presentations
+.. rst-class:: left
+
+  - :ref:`extensions`
 
 Session 10
 ==========
 
 Student Presentations
+
+
+Assorted Notes:
+===============
+
+Notes on other topics, or that aren't specific to a particular lecture -- or are general purpose, in any case.
+
+:ref:`installing_scipy`
+
+:ref:`building_extensions`
+
+:ref:`weak_references`
+
+`datetime <html_slides/06-datetime.html>`_
+
+..  - serialization review / XML
+
+.. - functools
+.. - itertools
+.. - Beautiful idiomatic code
+
