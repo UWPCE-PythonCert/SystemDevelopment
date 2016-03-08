@@ -8,14 +8,13 @@ Possible topics:
 - PEP-8 (pep8/pylint/pychecker/pyflakes)
 - Persistance and Serialization
 
-- packaging
-- doctests unit testing and coverage
+- Packaging
+- Doctests unit testing and coverage
 
-- Code Reviews
+- Code Reviewing
 
-- SQL Databases (DB-API w/ sqlite, postgres, mysql): Maria
-- Non-relational DBs (ZODB, MongoDB, couchDB, BSDdb): Chris
-
+- SQL Databases (DB-API w/ sqlite, postgres, mysql)
+- Non-relational DBs (ZODB, MongoDB, BSDdb)
 - SciPy
   - ipython notebook (Jupyter)
   - numpy
