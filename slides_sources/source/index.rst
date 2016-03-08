@@ -62,7 +62,7 @@ Session 4
 
   - `Working with Databases <html_slides/04-db.html>`_
 
-  - Non-relational Databases
+  - :ref:`nosql`
 
 
 Session 5
