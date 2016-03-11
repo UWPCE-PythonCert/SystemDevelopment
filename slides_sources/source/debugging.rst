@@ -34,16 +34,17 @@ The Call Stack
    passed to the next item in the stack. If the stack is empty, the
    program exits
 
+http://www.pythontutor.com/visualize.html#mode=edit
 
 .. nextslide::
 
 Visualize the stack!
 --------------------
 
-http://www.pythontutor.com/visualize.html#mode=edit
+.. image:: /_static/program_callstack.png
+   :height: 580 px
 
-
-|image0|
+.. nextslide::
 
 .. rubric:: How deep can that stack be?
    :name: how-deep-can-that-stack-be
@@ -62,96 +63,52 @@ http://www.pythontutor.com/visualize.html#mode=edit
       
 
 That value can be changed with sys.setrecursionlimit(N)
-if we try to put more than sys.getrecursionlimit() frames on the stack, we get a RuntimeError, which is python's version of StackOverflow
 
-.. raw:: html
+If we try to put more than sys.getrecursionlimit() frames on the stack, we get a RuntimeError, which is python's version of StackOverflow
 
-   </div>
+.. nextslide::
 
-.. raw:: html
+.. code-block:: ipython
 
-   <div class="section slide">
+    import inspect
 
-.. rubric:: inspecting frames in the call stack
-   :name: inspecting-frames-in-the-call-stack
+    def recurse(limit):
+        local_variable = '.' * limit
+        print limit, inspect.getargvalues(inspect.currentframe())
+        if limit <= 0:
+            return
+        recurse(limit - 1)
+        return
 
-::
+    if __name__ == '__main__':
+        recurse(3)
 
-    import sys, traceback
 
-    def one():
-        one_local_var = "foo"
-        two()
-
-    def two():
-        two_local_var = "foo"
-        three()
-
-    def three():
-        # print the stack
-        for num in range(3):
-            frame = sys._getframe(num)
-            show_frame(num, frame)
-
-        # or,
-        traceback.print_stack()
-        # or more rudely
-        1/0
-
-    def show_frame(num, frame):
-        print "  frame     = sys._getframe(%s)" % num
-        print "  function  = %s()" % frame.f_code.co_name
-        print "  file/line = %s:%s" % (frame.f_code.co_filename, frame.f_lineno)
-        print "  locals: %s" % frame.f_locals.keys()
-
-    one()
-      
-
-Also see the `inspect
 module <https://docs.python.org/2/library/inspect.html>`__
 
-.. raw:: html
+.. nextslide::
 
-   </div>
+Exceptions
+----------
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exceptions
-   :name: exceptions
-
-.. rubric:: It's easier to ask for forgiveness than permission
-   :name: its-easier-to-ask-for-forgiveness-than-permission
-
-.. raw:: html
-
-   <div class="slide">
+It's easier to ask for forgiveness than permission
 
 When either the interpreter or your own code detects an error condition,
-an exception may be raised
+an exception will be raised
 
 The exception will bubble up the call stack until it is handled. If it's
-not, the interpreter will exit.
+not, the interpreter will exit the program.
+
+.. nextslide::
 
 At each level in the stack, a handler can either:
 
--  let it pass through (the default)
+-  let it bubble through (the default)
 -  swallow the exception
 -  catch the exception and raise it again
 -  catch the exception and raise a new one
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Handling exceptions
    :name: handling-exceptions
@@ -167,13 +124,8 @@ The most basic form uses the builtins try and except
     except:
         print "stuff failed"
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: A few more builtins for exception handling: finally, else,
    and raise
@@ -181,12 +133,8 @@ The most basic form uses the builtins try and except
 
 ::
 
-    def divide(x, y):
-
     try:
-        print "line 1"
         result = x / y
-        print "line 2"
 
     except ZeroDivisionError as e:
         print "caught division error: %s" % str(e)
@@ -202,13 +150,7 @@ The most basic form uses the builtins try and except
     finally:
         print "this is executed no matter what"
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Built-in exceptions
    :name: built-in-exceptions
@@ -217,30 +159,16 @@ The most basic form uses the builtins try and except
 
     [name for name in dir(__builtin__) if "Error" in name]
 
+Use the builtin exceptions when you can, add messages if you need to.
+If none meet your needs, define a new exception type by subclassing one,
+perhaps Exception.
+
+
 If one of these meets your needs, by all means use it. Else, define a
 new exception type by subclassing one, perhaps Exception
 
-::
 
-    In [32]: import exceptions
-    In [33]: exceptions?
-    Type:       module
-    String Form:
-    Docstring:
-    Python's standard exception class hierarchy.
-
-    Exceptions found here are defined both in the exceptions module and the
-    built-in namespace.  It is recommended that user-defined exceptions
-    inherit from Exception.  See the documentation for the exception
-    inheritance hierarchy.
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Exercise
    :name: exercise
@@ -260,13 +188,8 @@ Feel free to edit the code in place. You can throw away your changes at
 the end with "git reset --hard", store them for later with "git stash",
 or commit them!
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Further reading
    :name: further-reading
@@ -275,179 +198,8 @@ or commit them!
 -  http://docs.python.org/2/library/exceptions.html
 -  http://docs.python.org/2/tutorial/errors.html
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exceptions aren't just for errors
-   :name: exceptions-arent-just-for-errors
-
-Exception handling can be used for control flow as well
-
-i.e. StopIteration for iterators
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Iterators
-   :name: iterators
-
-Iterators are objects which support a concept of iteration over a
-collection
-
-::
-
-    # looping over the lines in a file is done via an iterator:
-      with open("file.dat") as f:
-          for line in f:
-              print line
-
-      # and you can create your own
-      for x in foo():
-          print x
-
-An iterator is an object which follows the Python `iterator
-protocol <https://docs.python.org/2/library/stdtypes.html#container.__iter__>`__
-
-An iterator defines two required methods in order to iterate
-
--  \_\_iter\_\_() returns the iterator itself
--  next() returns the next item in the sequence
-
-http://docs.python.org/2/library/stdtypes.html#iterator-types
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Demonstration iterator
-   :name: demonstration-iterator
-
-::
-
-    class CountToTen(object):
-          """an iterator which returns integers from 0 to 9, inclusive"""
-
-          def __init__(self):
-              self.data = range(10)
-
-          def __iter__(self):
-              return self
-
-          def next(self):
-              try:
-                  return self.data.pop(0)
-              except IndexError:
-                  raise StopIteration
-
-      for x in CountToTen():
-          print x
-
-      # or consume the whole thing at once by converting to a list:
-      list(CountToTen())
-      
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Now let's build an iterator
-   :name: now-lets-build-an-iterator
-
-Calculate the first 20 values in the Fibonacci sequence: [0, 1, 1, 2, 3,
-5, ... ] using an iterator
-
-The Fibonnaci sequence is defined as such:
-
-The first two integers in the sequence are 0 and 1
-Each member of the sequence is the sum of the previous two elements
-::
-
-    for x in FibonacciIterator(20):
-      print x
-          
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: generators
-   :name: generators
-
-A `generator <https://wiki.python.org/moin/Generators>`__ is a concrete
-type that implements the iterator protocol.
-
-Convert a function to a generator using the yield keyword
-
-::
-
-    def count_to_10():
-        for i in range(10):
-            yield i
-
-    for x in count_to_10():
-        print x
-          
-
-(4700 upvotes on this stackoverflow question, yield is confusing at
-first)
-
-http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Using a generator expression to create a generator
-   :name: using-a-generator-expression-to-create-a-generator
-
-Python list comprehensions allow you to build lists of values
-
-::
-
-    my_list = [x for x in open('file.dat')]
-
-Convert that list comprehension to a generator just by replacing '[]'
-with '()'
-
-::
-
-    my_generator = (x for x in open('file.dat'))
-
-https://wiki.python.org/moin/Generators
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Python Debugging
    :name: python-debugging
@@ -455,16 +207,14 @@ https://wiki.python.org/moin/Generators
 Debuggers are code which allows the inspection of state of other code
 during runtime.
 
-.. raw:: html
-
-   <div class="slide">
-
 Rudimentary tools
 
 -  print()
 -  interpreter hints
 -  import logging.debug
 -  assert()
+
+.. nextslide::
 
 Console debuggers
 
@@ -475,15 +225,6 @@ GUI debuggers
 -  Winpdb
 -  IDEs: Eclipse, Wing IDE, PyCharm, Visual Studio
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
 
    <div class="section slide">
 
@@ -1046,6 +787,3 @@ What's the result?
 .. raw:: html
 
    </div>
-
-.. |image0| image:: images/ProgramCallStack2.png
-
