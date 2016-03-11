@@ -1,3 +1,5 @@
+.. _course_outline:
+
 ==============
 In This Course
 ==============
@@ -27,7 +29,7 @@ Session 1
 
 .. rst-class:: left
 
-  - `Debugging (print, pdb/ipdb) <html_slides/03-debugging.html>`_
+   :ref:`debugging`
 
   - Logging
 
@@ -62,7 +64,7 @@ Session 4
 
   - `Working with Databases <html_slides/04-db.html>`_
 
-  - Non-relational Databases
+  - :ref:`nosql`
 
 
 Session 5
