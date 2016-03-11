@@ -30,7 +30,7 @@ Why
 Sphinx
 --------
 
-Sphinx is a documentation system build specifically for documenting Python itself:
+Sphinx is a documentation system built specifically for documenting Python itself:
 
 http://spinx-doc.org
 
@@ -38,7 +38,7 @@ But it's also useful for any sort of structured documentation -- and is sometime
 
 It Produces:
  * HTML (multiple styles available)
- * PDF(via LaTeX)
+ * PDF (via LaTeX)
  * ePub
  * man pages
  * plain text
@@ -48,6 +48,7 @@ Extendability
 --------------
 
 Sphinx has an extension architecture for adding special functionality:
+
   * Hieroglyph (It is used for these slides...)
 
   * Matplotlib added some nice stuff:
@@ -80,18 +81,19 @@ Documentation for the Documentation System
 
 Sphinx is, of course, documented with sphinx itself.
 
-
 Its tutorial is pretty good, but can be a little confusing (particularly the autodoc stuff)
-   - http://sphinx-doc.org/tutorial.html
+
+- http://sphinx-doc.org/tutorial.html
 
 So here are a couple other resources (and many more out there):
 
 Basic getting started tutorial:
- - https://pythonhosted.org/an_example_pypi_project/sphinx.html
+
+- https://pythonhosted.org/an_example_pypi_project/sphinx.html
 
 Tutorial focused on getting autodoc set up:
- - http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/
 
+- http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/
 
 
 reStructuredText
@@ -104,9 +106,10 @@ Developed (adapted, really) for Python documentation.
 It's a plain text, easy to read and write markup.
 
 Like many similar markup languages (Markdown, etc.)
- * designed to be easy to read and write
- * makes sense in plain text
- * looks a lot like what you might write in plain text anyway.
+
+* designed to be easy to read and write
+* makes sense in plain text
+* looks a lot like what you might write in plain text anyway.
 
 So it's suitable for use both as plain text and for fancier formatting (i.e. docstrings)
 

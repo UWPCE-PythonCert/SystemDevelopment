@@ -1,0 +1,40 @@
+Possible topics:
+
+- Debugging
+  - strategies
+  - pdb/ipdb
+- Logging
+- Documentation (docstrings, sphinx)
+- PEP-8 (pep8/pylint/pychecker/pyflakes)
+- Persistance and Serialization
+
+- Packaging
+- Doctests unit testing and coverage
+
+- Code Reviewing
+
+- SQL Databases (DB-API w/ sqlite, postgres, mysql)
+- Non-relational DBs (ZODB, MongoDB, BSDdb)
+- SciPy
+  - ipython notebook (Jupyter)
+  - numpy
+  - matplotlib
+  - pandas
+
+- "advanced OO"
+  - multiple inheritance / mixins
+  - \__new__(), super()
+  - type(), metaclasses
+- multi-threading and multip processing:
+- unicode and py2
+- writing py2/py3 compatible code
+- profiling: Maria
+- datetime, time, pytz
+- C extensions( C API, ctypes, cython)
+- Weak references
+- GUI programming / wxPython
+- Regular expressions
+- Asynchronous programming: asyc / await
+
+
+
