@@ -51,8 +51,8 @@ Session 3
 
 .. rst-class:: left
 
-  - `Debugging (print, logging, pdb/ipdb, winpdb) <html_slides/03-debugging.html>`_
 
+   :ref:`debugging`
 
 
 Session 4

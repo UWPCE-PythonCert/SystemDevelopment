@@ -1,91 +1,49 @@
-.. raw:: html
+.. _debugging:
 
-   <div class="deck-container">
+#########
+Debugging
+#########
 
-.. raw:: html
+- Maria McKinley
 
-   <div class="section slide">
 
-.. rubric:: System Development with Python
-   :name: system-development-with-python
+``parody@uw.edu``
 
-.. rubric:: Week 3 :: debugging
-   :name: week-3-debugging
 
-Joseph Sheedy
-
-*joseph.sheedy@gmail.com*
-
-Git repository:
-https://github.com/UWPCE-PythonCert/SystemDevelopment2015
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Today's topics
-   :name: todays-topics
+Topics
+######
 
 -  The call stack
 -  Exceptions
 -  Iterators
 -  Debugging
 
-.. raw:: html
 
-   </div>
+The Call Stack
+--------------
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: The Call Stack
-   :name: the-call-stack
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: What is the call stack?
-   :name: what-is-the-call-stack
-
+-  A stack is a Last-In-First-Out (LIFO) data structure (stack of plates)
 -  The call stack is a stack data structure that stores information
    about the current active function call
 -  The objects in the stack are known as "stack frames". Each frame
    contains the arguments passed to the function, space for local
    variables, and the return address
--  A stack is a Last-In-First-Out (LIFO) data structure
 -  When a function is called, a stack frame is created for it and pushed
    onto the stack
 -  When a function returns, it is popped off the stack and control is
    passed to the next item in the stack. If the stack is empty, the
    program exits
 
-.. raw:: html
 
-   </div>
+.. nextslide::
 
-.. raw:: html
+Visualize the stack!
+--------------------
 
-   <div class="section slide">
+http://www.pythontutor.com/visualize.html#mode=edit
+
 
 |image0|
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
 
 .. rubric:: How deep can that stack be?
    :name: how-deep-can-that-stack-be
@@ -104,6 +62,7 @@ https://github.com/UWPCE-PythonCert/SystemDevelopment2015
       
 
 That value can be changed with sys.setrecursionlimit(N)
+if we try to put more than sys.getrecursionlimit() frames on the stack, we get a RuntimeError, which is python's version of StackOverflow
 
 .. raw:: html
 
