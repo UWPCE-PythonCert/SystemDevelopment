@@ -1,8 +1,10 @@
 .. _syllabus:
 
-************************************************
-UW Certificate Program in  Programming in Python
-************************************************
+***************************
+System Development Syllabus
+***************************
+
+UW Certificate Program in Programming in Python
 
 Python 300
 

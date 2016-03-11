@@ -1,10 +1,9 @@
 .. _course_outline:
 
-==============
-In This Course
-==============
+==============================
+System Development with Python
+==============================
 
-|
 |
 |
 
@@ -42,7 +41,7 @@ Session 2
 
   - `PEP-8 (pylint/pychecker/pyflakes) <html_slides/pep8/index.html>`_
 
-  - Persistance and Serialization
+  - :ref:`serialization`
 
 
 Session 3
