@@ -1,3 +1,5 @@
+.. _course_outline:
+
 ==============
 In This Course
 ==============
