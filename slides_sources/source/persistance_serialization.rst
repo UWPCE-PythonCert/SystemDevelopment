@@ -212,9 +212,9 @@ LAB
 
 Here are two datasets embedded in Python:
 
-:download:`add_book_data.py <../../Examples/PersistanceSerialization/add_book_data.py>`
+:download:`add_book_data.py <../../Examples/persistance/add_book_data.py>`
 and
-:download:`add_book_data_flat.py <../../Examples/PersistanceSerialization/add_book_data_flat.py>`
+:download:`add_book_data_flat.py <../../Examples/persistance/add_book_data_flat.py>`
 
 They can be loaded with:: 
 
