@@ -53,8 +53,6 @@ So we comment out or delete those ``print()``s -- but if we wanted to know what 
 
 The ``logging`` module give you a flexible system that allows you to monitor what's going on in your system, when you need to, without cluttering thinkgs up when you don't need it.
 
-
-
 .. nextslide::
 
 The four main classes of logging

@@ -1,20 +1,22 @@
-                  Debugging Strategies: pdb / ipdb 2.40
-     More testing: Doctests, unittest and coverage 2.40
-              Multi-threading and multi-processing 2.33
-                                The logging module 2.22
-                         Performance and profiling 2.18
-                Documentation (docstrings, Sphinx) 2.09
-                      Sharing your code: packaging 2.09
-                                    Code Reviewing 2.00
-                            Metaclasses and type() 2.00
-             Advanced OO: __new__, super(), mixins 2.00
-                        GUI programming / wxPython 2.00
-                     Persistance and Serialization 1.90
-      Working with time: datetime, pytz, dateutils 1.90
-        Non-relational DBs: (ZODB, MongoDB, BSDdb) 1.89
-        Computational programing: The SciPy Stack. 1.80
+                  Debugging Strategies: pdb / ipdb 2.40 X
+     More testing: Doctests, unittest and coverage 2.40 X
+              Multi-threading and multi-processing 2.33 X
+                                The logging module 2.22 X
+                         Performance and profiling 2.18 X
+                Documentation (docstrings, Sphinx) 2.09 X
+                      Sharing your code: packaging 2.09 X
+                                    Code Reviewing 2.00 X
+                            Metaclasses and type() 2.00 X
+             Advanced OO: __new__, super(), mixins 2.00 X
+                        GUI programming / wxPython 2.00 X
+                     Persistance and Serialization 1.90 X
+      Working with time: datetime, pytz, dateutils 1.90 X
+        Non-relational DBs: (ZODB, MongoDB, BSDdb) 1.89 X
+        Computational programing: The SciPy Stack. 1.80 X
+
 SQL Databases: (DB-API w/ sqlite, postgres, mysql) 1.78
             Asynchronous programming: asyc / await 1.78
+
 Code style: PEP-8 (pep8/pylint/pychecker/pyflakes) 1.73
               C extensions (C API, ctypes, cython) 1.33
                                  Unicode (and py2) 1.22
