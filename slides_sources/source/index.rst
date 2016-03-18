@@ -28,9 +28,9 @@ Session 1
 
 .. rst-class:: left
 
-   :ref:`debugging`
+   - :ref:`debugging`
 
-  - Logging
+   - :ref:`logging`
 
 Session 2
 =========
