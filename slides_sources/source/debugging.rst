@@ -201,8 +201,15 @@ or commit them!
 
 .. nextslide::
 
+Debugging
+---------
+
 .. rubric:: Python Debugging
    :name: python-debugging
+
+You will spend most of your time as a developer debugging. 
+You will spend more time than you expect on google.
+
 
 Debuggers are code which allows the inspection of state of other code
 during runtime.
@@ -225,8 +232,7 @@ GUI debuggers
 -  Winpdb
 -  IDEs: Eclipse, Wing IDE, PyCharm, Visual Studio
 
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: help from the interpreter
    :name: help-from-the-interpreter
@@ -234,14 +240,6 @@ GUI debuggers
 investigate import issues with -v
 
 inspect environment after running script with -i
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
 
 .. rubric:: the logging module
    :name: the-logging-module
@@ -251,6 +249,8 @@ A flexible logging system that comes with the standard library
 Any module using the logging api can have logging output routed the same
 as your code
 
+.. nextslide::
+
 The four main classes of logging
 
 -  Loggers - the interface for your code
@@ -258,13 +258,7 @@ The four main classes of logging
 -  Filters - define which log messages to let through
 -  Formatters - how the log messages get rendered
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: basic logging usage
    :name: basic-logging-usage
@@ -278,6 +272,8 @@ class interfaces for each of those tasks
 Timestamps can be included by passing the kwarg
 ``format='%(asctime)s %(message)s')`` to basicConfig
 
+.. nextslide::
+
 ::
 
       import logging
@@ -290,13 +286,7 @@ Timestamps can be included by passing the kwarg
 
 see examples/logging/example1.py
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: A more complex logging setup
    :name: a-more-complex-logging-setup
@@ -330,11 +320,7 @@ see examples/logging/example1.py
       logger.critical('critical message')
       
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
+.. nextslide::
 
    <div class="section slide">
 
