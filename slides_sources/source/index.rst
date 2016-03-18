@@ -39,8 +39,6 @@ Session 2
 
   - :ref:`documentation`
 
-  - `PEP-8 (pylint/pychecker/pyflakes) <html_slides/pep8/index.html>`_
-
   - :ref:`serialization`
 
 
@@ -52,6 +50,7 @@ Session 3
   :ref:`packaging`
 
   - `Unit Testing and Coverage <html_slides/coverage/index.html>`_
+    (pep8,flake8)
 
   - Code Reviewing
 
@@ -59,11 +58,12 @@ Session 3
 Session 4
 =========
 
+Code Reviews begin
+
 .. rst-class:: left
 
-  - `Working with Databases <html_slides/04-db.html>`_
-
   - :ref:`nosql`
+  - `datetime <html_slides/06-datetime.html>`_
 
 
 Session 5
@@ -71,6 +71,7 @@ Session 5
 .. rst-class:: left
 
   - :ref:`scipy`
+
 
 Session 6
 =========
@@ -94,21 +95,31 @@ Session 8
 
 .. rst-class:: left
 
-  - :ref:`unicode`
-
-  - Performance and profiling
+  - Performance and Profiling
 
 Session 9
 =========
 
 .. rst-class:: left
 
-  - :ref:`extensions`
+  - GUI development: wxPython
+
 
 Session 10
 ==========
 
 Student Presentations
+
+
+Other Topics:
+=============
+
+These are topics that we don't have time for in class, but you might want to look at these notes just the same: 
+
+  - `Working with SQL Databases <html_slides/04-db.html>`_
+  - :ref:`unicode`
+  - :ref:`extensions`
+  - :ref:`weak_references`
 
 
 Assorted Notes:
@@ -120,9 +131,8 @@ Notes on other topics, or that aren't specific to a particular lecture -- or are
 
 :ref:`building_extensions`
 
-:ref:`weak_references`
 
-`datetime <html_slides/06-datetime.html>`_
+
 
 ..  - serialization review / XML
 
