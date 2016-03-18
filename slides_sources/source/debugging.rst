@@ -13,10 +13,139 @@ Debugging
 Topics
 ######
 
--  The call stack
 -  Exceptions
--  Iterators
+-  The call stack
 -  Debugging
+
+Exceptions
+----------
+
+It's easier to ask for forgiveness than permission
+
+When either the interpreter or your own code detects an error condition,
+an exception will be raised
+
+The exception will bubble up the call stack until it is handled. If it's
+not, the interpreter will exit the program.
+
+.. nextslide::
+
+At each level in the stack, a handler can either:
+
+-  let it bubble through (the default)
+-  swallow the exception
+-  catch the exception and raise it again
+-  catch the exception and raise a new one
+
+.. nextslide::
+
+.. rubric:: Handling exceptions
+   :name: handling-exceptions
+
+The most basic form uses the builtins try and except
+
+::
+
+    def temp_f_to_c(var):
+        try:
+	    return(float(var) - 32)/1.8000
+        except ValueError as e:
+            print("The argument does not contain numbers\n", e)
+
+
+.. nextslide::
+
+.. rubric:: A few more builtins for exception handling: finally, else,
+   and raise
+   :name: a-few-more-builtins-for-exception-handling-finally-else-and-raise
+
+::
+
+    try:
+        result = x / y
+    except (ZeroDivisionError, ValueError) as e:
+        print("caught division error or maybe a value error:\n", e)
+    except Exception as e:
+        errno, strerror = e.args	
+        print("I/O error({0}): {1}".format(errno,strerror))
+	# or you can just print e
+        print("unhandled exception:\n", e)
+        raise
+    else:
+        print("everything worked great")
+        return result
+    finally:
+        print("this is executed no matter what")
+
+.. nextslide::
+
+.. rubric:: Built-in exceptions
+   :name: built-in-exceptions
+
+::
+
+    [name for name in dir(__builtin__) if "Error" in name]
+
+
+If one of these meets your needs, by all means use it. You can add messages: 
+
+::
+
+    raise SyntaxError("That was a mispelling")
+
+If no builtin exceptions work, define a new exception type by subclassing Exception.
+
+::
+
+    class MyException(Exception):
+        pass
+
+    raise MyException("An exception doesn't always prove the rule!")
+
+.. nextslide::
+
+It is possible, but discouraged to catch all exceptions. 
+
+::
+
+    try:
+	my_cool_code()
+    except:
+        print('no idea what the exceptions is, but I caught it')
+
+
+An exception to this exception rule is when you are running a service that should not ever crash,
+like a web server. In this case, it is extremely important to have very good logging so that you 
+have reports of exactly what happened and what exception should have been thrown.
+
+.. nextslide::
+
+.. rubric:: Exercise
+   :name: exercise
+
+Modify the example program examples/wikidef
+
+Enforce the argument to api.Wikipedia.title to have length greater than
+0
+
+If a 0 length argument is passed to this function, raise a new exception
+called ZeroLengthTitleError
+
+Handle this exception in the caller (Not necessarily the immediate
+caller, which one makes sense to you?)
+
+Feel free to edit the code in place. You can throw away your changes at
+the end with "git reset --hard", store them for later with "git stash",
+or commit them!
+
+
+.. nextslide::
+
+.. rubric:: Further reading
+   :name: further-reading
+
+-  http://docs.python.org/3/library/exceptions.html
+-  http://docs.python.org/3/tutorial/errors.html
 
 
 The Call Stack
@@ -88,116 +217,6 @@ module <https://docs.python.org/2/library/inspect.html>`__
 
 .. nextslide::
 
-Exceptions
-----------
-
-It's easier to ask for forgiveness than permission
-
-When either the interpreter or your own code detects an error condition,
-an exception will be raised
-
-The exception will bubble up the call stack until it is handled. If it's
-not, the interpreter will exit the program.
-
-.. nextslide::
-
-At each level in the stack, a handler can either:
-
--  let it bubble through (the default)
--  swallow the exception
--  catch the exception and raise it again
--  catch the exception and raise a new one
-
-.. nextslide::
-
-.. rubric:: Handling exceptions
-   :name: handling-exceptions
-
-The most basic form uses the builtins try and except
-
-::
-
-    try:
-        print "do some stuff"
-        1 / 0
-        print "do some more stuff"
-    except:
-        print "stuff failed"
-
-
-.. nextslide::
-
-.. rubric:: A few more builtins for exception handling: finally, else,
-   and raise
-   :name: a-few-more-builtins-for-exception-handling-finally-else-and-raise
-
-::
-
-    try:
-        result = x / y
-
-    except ZeroDivisionError as e:
-        print "caught division error: %s" % str(e)
-
-    except Exception as e:
-        print "unhandled exception %s.  message: %s " % (type(e), e.args)
-        raise
-
-    else:
-        print "everything worked great"
-        return result
-
-    finally:
-        print "this is executed no matter what"
-
-.. nextslide::
-
-.. rubric:: Built-in exceptions
-   :name: built-in-exceptions
-
-::
-
-    [name for name in dir(__builtin__) if "Error" in name]
-
-Use the builtin exceptions when you can, add messages if you need to.
-If none meet your needs, define a new exception type by subclassing one,
-perhaps Exception.
-
-
-If one of these meets your needs, by all means use it. Else, define a
-new exception type by subclassing one, perhaps Exception
-
-
-.. nextslide::
-
-.. rubric:: Exercise
-   :name: exercise
-
-Modify the example program examples/wikidef
-
-Enforce the argument to api.Wikipedia.title to have length greater than
-0
-
-If a 0 length argument is passed to this function, raise a new exception
-called ZeroLengthTitleError
-
-Handle this exception in the caller (Not necessarily the immediate
-caller, which one makes sense to you?)
-
-Feel free to edit the code in place. You can throw away your changes at
-the end with "git reset --hard", store them for later with "git stash",
-or commit them!
-
-
-.. nextslide::
-
-.. rubric:: Further reading
-   :name: further-reading
-
--  https://wiki.python.org/moin/HandlingExceptions
--  http://docs.python.org/2/library/exceptions.html
--  http://docs.python.org/2/tutorial/errors.html
-
 
 .. nextslide::
 
@@ -210,6 +229,31 @@ Debugging
 You will spend most of your time as a developer debugging. 
 You will spend more time than you expect on google.
 
+
+.. nextslide::
+
+The Stack Trace
+
+You already know what it looks like. Simple traceback:
+
+::
+
+    $ python3 test_trie.py
+    Traceback (most recent call last):
+       File "test_trie.py", line 3, in <module>
+         from trie import Trie
+       File "/Users/maria/python/trie/trie.py", line 144
+         print "end of word", node.value
+                      ^
+    SyntaxError: Missing parentheses in call to 'print'
+
+.. nextslide::
+
+But things can quickly get complicated:
+
+
+
+.. nextslide::
 
 Debuggers are code which allows the inspection of state of other code
 during runtime.
@@ -241,6 +285,7 @@ investigate import issues with -v
 
 inspect environment after running script with -i
 
+.. nextslide::
 
 .. rubric:: `Pdb - The Python
    Debugger <http://docs.python.org/2/library/pdb.html>`__
@@ -258,13 +303,7 @@ Cons:
 -  Easy to get lost in a deep stack
 -  Watching variables isn't hard, but non-trivial
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: `Pdb - The Python
    Debugger <http://docs.python.org/2/library/pdb.html>`__
@@ -282,13 +321,7 @@ can replace it with 'ipdb'. ipdb is the ipython enhanced version of pdb
 which is mostly compatible, and generally easier to work with. But it
 doesn't ship with Python.
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Postmortem mode
    :name: postmortem-mode
@@ -300,14 +333,7 @@ For analyzing crashes due to uncaught exceptions
           python -i script.py
           import pdb; pdb.pm()
           
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Run mode
    :name: run-mode
@@ -316,14 +342,7 @@ For analyzing crashes due to uncaught exceptions
 
           pdb.run('some.expression()')
           
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Script mode
    :name: script-mode
@@ -335,13 +354,8 @@ For analyzing crashes due to uncaught exceptions
 
 "-m [module]" finds [module] in sys.path and executes it as a script
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Trace mode
    :name: trace-mode
@@ -357,13 +371,7 @@ halt:
 It's not always OK/possible to modify your code in order to debug it,
 but this is often the quickest way to begin inspecting state
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: pdb in ipython
    :name: pdb-in-ipython
@@ -378,19 +386,10 @@ but this is often the quickest way to begin inspecting state
 
           # now halts execution on uncaught exception
 
-          
-          
-
 If you forget to turn on pdb, the magic command %debug will activate the
 debugger (in 'post-mortem mode').
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Navigating pdb
    :name: navigating-pdb
@@ -411,6 +410,11 @@ prompt and get to work inspecting state
       pdb> list 1,28
       # print stack trace, aliased to (bt, w)
       pdb> where
+
+.. nextslide::
+
+::
+
       # move one level up the stack
       pdb> up
       # move one level down the stack
@@ -427,13 +431,8 @@ prompt and get to work inspecting state
       pdb> commands
       pdb> continue
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Breakpoints
    :name: breakpoints
@@ -452,6 +451,8 @@ prompt and get to work inspecting state
       to specify a breakpoint in another file (probably one that
       hasn't been loaded yet).  The file is searched for on sys.path;
       the .py suffix may be omitted.
+
+.. nextslide::
 
 Clear (delete) breakpoints
 
@@ -474,13 +475,7 @@ enable breakpoints
           enable [bpnumber [bpnumber...]]
           
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Conditional Breakpoints
    :name: conditional-breakpoints
@@ -494,6 +489,8 @@ enable breakpoints
           If str_condition is absent, any existing condition is removed;
           i.e., the breakpoint is made unconditional.
           
+
+.. nextslide::
 
 Set conditions
 
@@ -511,13 +508,7 @@ Clear conditions
 
 see debugging/examples/long\_loop.py
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Invoking pdb with nose
    :name: invoking-pdb-with-nose
@@ -536,24 +527,10 @@ On test failure, drop to pdb:
     nosetests --pdb-failures
       
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Python IDEs
    :name: python-ides
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
 
 .. rubric:: PyCharm
    :name: pycharm
@@ -565,13 +542,7 @@ Free Community Edition (CE) is available
 
 Good visual debugging support
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Eclipse
    :name: eclipse
@@ -589,13 +560,7 @@ Further reading
 
 http://pydev.org/manual_adv_debugger.html
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: winpdb
    :name: winpdb
@@ -610,17 +575,10 @@ Easier to start up and get debugging
           winpdb your_app.py
           
           
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
 .. rubric:: Remote debugging with winpdb
    :name: remote-debugging-with-winpdb
+
+.. nextslide::
 
 To debug an application running a different Python, even remotely:
 
@@ -633,13 +591,7 @@ To debug an application running a different Python, even remotely:
 
 http://winpdb.org/tutorial/WinpdbTutorial.html
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Debugging exercise
    :name: debugging-exercise
@@ -661,33 +613,8 @@ You can get to the code by walking through each line with 's'tep and
 
 What's the result?
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
+.. nextslide::
 
 .. rubric:: Questions?
    :name: questions
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div aria-role="navigation">
-
-`← <#>`__ `→ <#>`__
-
-.. raw:: html
-
-   </div>
-
- /
-
-.. raw:: html
-
-   </div>
