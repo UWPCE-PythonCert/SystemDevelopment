@@ -58,16 +58,20 @@ Session 3
 Session 4
 =========
 
+Code Reviews begin
+
 .. rst-class:: left
 
   - :ref:`nosql`
   - `datetime <html_slides/06-datetime.html>`_
+
 
 Session 5
 =========
 .. rst-class:: left
 
   - :ref:`scipy`
+
 
 Session 6
 =========
@@ -106,12 +110,16 @@ Session 10
 
 Student Presentations
 
+
 Other Topics:
 =============
+
+These are topics that we don't have time for in class, but you might want to look at these notes just the same: 
 
   - `Working with SQL Databases <html_slides/04-db.html>`_
   - :ref:`unicode`
   - :ref:`extensions`
+  - :ref:`weak_references`
 
 
 Assorted Notes:
@@ -123,7 +131,6 @@ Notes on other topics, or that aren't specific to a particular lecture -- or are
 
 :ref:`building_extensions`
 
-:ref:`weak_references`
 
 
 
