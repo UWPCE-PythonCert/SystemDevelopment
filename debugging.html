@@ -67,6 +67,8 @@
 <li><a class="reference internal" href="#topics">Topics</a><ul>
 <li><a class="reference internal" href="#the-call-stack">The Call Stack</a></li>
 <li><a class="reference internal" href="#visualize-the-stack">Visualize the stack!</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#id2">Debugging</a></li>
 </ul>
 </li>
 </ul>
@@ -135,89 +137,69 @@ onto the stack</li>
 passed to the next item in the stack. If the stack is empty, the
 program exits</li>
 </ul>
+<p><a class="reference external" href="http://www.pythontutor.com/visualize.html#mode=edit">http://www.pythontutor.com/visualize.html#mode=edit</a></p>
 </div>
 <div class="section" id="visualize-the-stack">
 <h3>Visualize the stack!<a class="headerlink" href="#visualize-the-stack" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="http://www.pythontutor.com/visualize.html#mode=edit">http://www.pythontutor.com/visualize.html#mode=edit</a></p>
-<p><img alt="image0" src="images/ProgramCallStack2.png" /></p>
+<a class="reference internal image-reference" href="_images/program_callstack.png"><img alt="_images/program_callstack.png" src="_images/program_callstack.png" style="height: 580px;" /></a>
 <p class="rubric" id="how-deep-can-that-stack-be">How deep can that stack be?</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight-python"><div class="highlight"><pre>i = 0
 
-<span class="k">def</span> <span class="nf">recurse</span><span class="p">():</span>
-    <span class="k">global</span> <span class="n">i</span>
-    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">print</span> <span class="n">i</span>
-    <span class="n">recurse</span><span class="p">()</span>
+def recurse():
+    global i
+    i += 1
+    print i
+    recurse()
 
-<span class="n">recurse</span><span class="p">()</span>
+recurse()
 </pre></div>
 </div>
-<p>That value can be changed with sys.setrecursionlimit(N)
-if we try to put more than sys.getrecursionlimit() frames on the stack, we get a RuntimeError, which is python&#8217;s version of StackOverflow</p>
-</div><div class="section slide"><p class="rubric" id="inspecting-frames-in-the-call-stack">inspecting frames in the call stack</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">traceback</span>
+<p>That value can be changed with sys.setrecursionlimit(N)</p>
+<p>If we try to put more than sys.getrecursionlimit() frames on the stack, we get a RuntimeError, which is python&#8217;s version of StackOverflow</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
 
-<span class="k">def</span> <span class="nf">one</span><span class="p">():</span>
-    <span class="n">one_local_var</span> <span class="o">=</span> <span class="s">&quot;foo&quot;</span>
-    <span class="n">two</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+    <span class="n">local_variable</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span> <span class="o">*</span> <span class="n">limit</span>
+    <span class="k">print</span> <span class="n">limit</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargvalues</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="n">limit</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span>
 
-<span class="k">def</span> <span class="nf">two</span><span class="p">():</span>
-    <span class="n">two_local_var</span> <span class="o">=</span> <span class="s">&quot;foo&quot;</span>
-    <span class="n">three</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">three</span><span class="p">():</span>
-    <span class="c"># print the stack</span>
-    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-        <span class="n">frame</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-        <span class="n">show_frame</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
-
-    <span class="c"># or,</span>
-    <span class="n">traceback</span><span class="o">.</span><span class="n">print_stack</span><span class="p">()</span>
-    <span class="c"># or more rudely</span>
-    <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
-
-<span class="k">def</span> <span class="nf">show_frame</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s">&quot;  frame     = sys._getframe(</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">num</span>
-    <span class="k">print</span> <span class="s">&quot;  function  = </span><span class="si">%s</span><span class="s">()&quot;</span> <span class="o">%</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
-    <span class="k">print</span> <span class="s">&quot;  file/line = </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;  locals: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_locals</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-
-<span class="n">one</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Also see the <a class="reference external" href="https://docs.python.org/2/library/inspect.html">inspect
-module</a></p>
-</div><div class="section slide"><p class="rubric" id="exceptions">Exceptions</p>
-<p class="rubric" id="its-easier-to-ask-for-forgiveness-than-permission">It&#8217;s easier to ask for forgiveness than permission</p>
-<div class="slide"><p>When either the interpreter or your own code detects an error condition,
-an exception may be raised</p>
+<p>module &lt;<a class="reference external" href="https://docs.python.org/2/library/inspect.html">https://docs.python.org/2/library/inspect.html</a>&gt;`__</p>
+</div>
+<div class="section" id="exceptions">
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<p>It&#8217;s easier to ask for forgiveness than permission</p>
+<p>When either the interpreter or your own code detects an error condition,
+an exception will be raised</p>
 <p>The exception will bubble up the call stack until it is handled. If it&#8217;s
-not, the interpreter will exit.</p>
+not, the interpreter will exit the program.</p>
 <p>At each level in the stack, a handler can either:</p>
 <ul class="simple">
-<li>let it pass through (the default)</li>
+<li>let it bubble through (the default)</li>
 <li>swallow the exception</li>
 <li>catch the exception and raise it again</li>
 <li>catch the exception and raise a new one</li>
 </ul>
-</div></div><div class="section slide"><p class="rubric" id="handling-exceptions">Handling exceptions</p>
+<p class="rubric" id="handling-exceptions">Handling exceptions</p>
 <p>The most basic form uses the builtins try and except</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;do some stuff&quot;</span>
-    <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
-    <span class="k">print</span> <span class="s">&quot;do some more stuff&quot;</span>
-<span class="k">except</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;stuff failed&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre>try:
+    print &quot;do some stuff&quot;
+    1 / 0
+    print &quot;do some more stuff&quot;
+except:
+    print &quot;stuff failed&quot;
 </pre></div>
 </div>
-</div><div class="section slide"><p class="rubric" id="a-few-more-builtins-for-exception-handling-finally-else-and-raise">A few more builtins for exception handling: finally, else,
+<p class="rubric" id="a-few-more-builtins-for-exception-handling-finally-else-and-raise">A few more builtins for exception handling: finally, else,
 and raise</p>
-<div class="highlight-python"><div class="highlight"><pre>def divide(x, y):
-
-try:
-    print &quot;line 1&quot;
+<div class="highlight-python"><div class="highlight"><pre>try:
     result = x / y
-    print &quot;line 2&quot;
 
 except ZeroDivisionError as e:
     print &quot;caught division error: %s&quot; % str(e)
@@ -234,26 +216,16 @@ finally:
     print &quot;this is executed no matter what&quot;
 </pre></div>
 </div>
-</div><div class="section slide"><p class="rubric" id="built-in-exceptions">Built-in exceptions</p>
+<p class="rubric" id="built-in-exceptions">Built-in exceptions</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">__builtin__</span><span class="p">)</span> <span class="k">if</span> <span class="s">&quot;Error&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">]</span>
 </pre></div>
 </div>
+<p>Use the builtin exceptions when you can, add messages if you need to.
+If none meet your needs, define a new exception type by subclassing one,
+perhaps Exception.</p>
 <p>If one of these meets your needs, by all means use it. Else, define a
 new exception type by subclassing one, perhaps Exception</p>
-<div class="highlight-python"><div class="highlight"><pre>In [32]: import exceptions
-In [33]: exceptions?
-Type:       module
-String Form:
-Docstring:
-Python&#39;s standard exception class hierarchy.
-
-Exceptions found here are defined both in the exceptions module and the
-built-in namespace.  It is recommended that user-defined exceptions
-inherit from Exception.  See the documentation for the exception
-inheritance hierarchy.
-</pre></div>
-</div>
-</div><div class="section slide"><p class="rubric" id="exercise">Exercise</p>
+<p class="rubric" id="exercise">Exercise</p>
 <p>Modify the example program examples/wikidef</p>
 <p>Enforce the argument to api.Wikipedia.title to have length greater than
 0</p>
@@ -264,99 +236,21 @@ caller, which one makes sense to you?)</p>
 <p>Feel free to edit the code in place. You can throw away your changes at
 the end with &#8220;git reset &#8211;hard&#8221;, store them for later with &#8220;git stash&#8221;,
 or commit them!</p>
-</div><div class="section slide"><p class="rubric" id="further-reading">Further reading</p>
+<p class="rubric" id="further-reading">Further reading</p>
 <ul class="simple">
 <li><a class="reference external" href="https://wiki.python.org/moin/HandlingExceptions">https://wiki.python.org/moin/HandlingExceptions</a></li>
 <li><a class="reference external" href="http://docs.python.org/2/library/exceptions.html">http://docs.python.org/2/library/exceptions.html</a></li>
 <li><a class="reference external" href="http://docs.python.org/2/tutorial/errors.html">http://docs.python.org/2/tutorial/errors.html</a></li>
 </ul>
-</div><div class="section slide"><p class="rubric" id="exceptions-arent-just-for-errors">Exceptions aren&#8217;t just for errors</p>
-<p>Exception handling can be used for control flow as well</p>
-<p>i.e. StopIteration for iterators</p>
-</div><div class="section slide"><p class="rubric" id="iterators">Iterators</p>
-<p>Iterators are objects which support a concept of iteration over a
-collection</p>
-<div class="highlight-python"><div class="highlight"><pre># looping over the lines in a file is done via an iterator:
-  with open(&quot;file.dat&quot;) as f:
-      for line in f:
-          print line
-
-  # and you can create your own
-  for x in foo():
-      print x
-</pre></div>
 </div>
-<p>An iterator is an object which follows the Python <a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#container.__iter__">iterator
-protocol</a></p>
-<p>An iterator defines two required methods in order to iterate</p>
-<ul class="simple">
-<li>__iter__() returns the iterator itself</li>
-<li>next() returns the next item in the sequence</li>
-</ul>
-<p><a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#iterator-types">http://docs.python.org/2/library/stdtypes.html#iterator-types</a></p>
-</div><div class="section slide"><p class="rubric" id="demonstration-iterator">Demonstration iterator</p>
-<div class="highlight-python"><div class="highlight"><pre>class CountToTen(object):
-      &quot;&quot;&quot;an iterator which returns integers from 0 to 9, inclusive&quot;&quot;&quot;
-
-      def __init__(self):
-          self.data = range(10)
-
-      def __iter__(self):
-          return self
-
-      def next(self):
-          try:
-              return self.data.pop(0)
-          except IndexError:
-              raise StopIteration
-
-  for x in CountToTen():
-      print x
-
-  # or consume the whole thing at once by converting to a list:
-  list(CountToTen())
-</pre></div>
-</div>
-</div><div class="section slide"><p class="rubric" id="now-lets-build-an-iterator">Now let&#8217;s build an iterator</p>
-<p>Calculate the first 20 values in the Fibonacci sequence: [0, 1, 1, 2, 3,
-5, ... ] using an iterator</p>
-<p>The Fibonnaci sequence is defined as such:</p>
-<p>The first two integers in the sequence are 0 and 1
-Each member of the sequence is the sum of the previous two elements</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">FibonacciIterator</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
-  <span class="k">print</span> <span class="n">x</span>
-</pre></div>
-</div>
-</div><div class="section slide"><p class="rubric" id="generators">generators</p>
-<p>A <a class="reference external" href="https://wiki.python.org/moin/Generators">generator</a> is a concrete
-type that implements the iterator protocol.</p>
-<p>Convert a function to a generator using the yield keyword</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">count_to_10</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="k">yield</span> <span class="n">i</span>
-
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">count_to_10</span><span class="p">():</span>
-    <span class="k">print</span> <span class="n">x</span>
-</pre></div>
-</div>
-<p>(4700 upvotes on this stackoverflow question, yield is confusing at
-first)</p>
-<p><a class="reference external" href="http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained">http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained</a></p>
-</div><div class="section slide"><p class="rubric" id="using-a-generator-expression-to-create-a-generator">Using a generator expression to create a generator</p>
-<p>Python list comprehensions allow you to build lists of values</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;file.dat&#39;</span><span class="p">)]</span>
-</pre></div>
-</div>
-<p>Convert that list comprehension to a generator just by replacing &#8216;[]&#8217;
-with &#8216;()&#8217;</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">my_generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;file.dat&#39;</span><span class="p">))</span>
-</pre></div>
-</div>
-<p><a class="reference external" href="https://wiki.python.org/moin/Generators">https://wiki.python.org/moin/Generators</a></p>
-</div><div class="section slide"><p class="rubric" id="python-debugging">Python Debugging</p>
+<div class="section" id="id2">
+<h3>Debugging<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="python-debugging">Python Debugging</p>
+<p>You will spend most of your time as a developer debugging.
+You will spend more time than you expect on google.</p>
 <p>Debuggers are code which allows the inspection of state of other code
 during runtime.</p>
-<div class="slide"><p>Rudimentary tools</p>
+<p>Rudimentary tools</p>
 <ul class="simple">
 <li>print()</li>
 <li>interpreter hints</li>
@@ -372,64 +266,10 @@ during runtime.</p>
 <li>Winpdb</li>
 <li>IDEs: Eclipse, Wing IDE, PyCharm, Visual Studio</li>
 </ul>
-</div></div><div class="section slide"><p class="rubric" id="help-from-the-interpreter">help from the interpreter</p>
+<p class="rubric" id="help-from-the-interpreter">help from the interpreter</p>
 <p>investigate import issues with -v</p>
 <p>inspect environment after running script with -i</p>
-</div><div class="section slide"><p class="rubric" id="the-logging-module">the logging module</p>
-<p>A flexible logging system that comes with the standard library</p>
-<p>Any module using the logging api can have logging output routed the same
-as your code</p>
-<p>The four main classes of logging</p>
-<ul class="simple">
-<li>Loggers - the interface for your code</li>
-<li>Handlers - handle log routing</li>
-<li>Filters - define which log messages to let through</li>
-<li>Formatters - how the log messages get rendered</li>
-</ul>
-</div><div class="section slide"><p class="rubric" id="basic-logging-usage">basic logging usage</p>
-<p>Basic handling, filtering, and formatting can be done through the
-logging module&#8217;s basicConfig method</p>
-<p>More complex and configurable configurations can be created with the
-class interfaces for each of those tasks</p>
-<p>Timestamps can be included by passing the kwarg
-<code class="docutils literal"><span class="pre">format='%(asctime)s</span> <span class="pre">%(message)s')</span></code> to basicConfig</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
-
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;debug level message&quot;</span><span class="p">)</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;debug level message&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>see examples/logging/example1.py</p>
-</div><div class="section slide"><p class="rubric" id="a-more-complex-logging-setup">A more complex logging setup</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
-
-<span class="c"># create logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;simple_example&#39;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-<span class="c"># create console handler and set level to debug</span>
-<span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
-<span class="n">handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-<span class="c"># create formatter</span>
-<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(asctime)s</span><span class="s"> - </span><span class="si">%(name)s</span><span class="s"> - </span><span class="si">%(levelname)s</span><span class="s"> - </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">)</span>
-
-<span class="c"># add formatter to handler</span>
-<span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
-
-<span class="c"># add handler to logger</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-
-<span class="c"># &#39;application&#39; code</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;debug message&#39;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;info message&#39;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;warn message&#39;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;error message&#39;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s">&#39;critical message&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div><div class="section slide"><p class="rubric" id="pdb-the-python-debugger"><a class="reference external" href="http://docs.python.org/2/library/pdb.html">Pdb - The Python
+<p class="rubric" id="pdb-the-python-debugger"><a class="reference external" href="http://docs.python.org/2/library/pdb.html">Pdb - The Python
 Debugger</a></p>
 <p>Pros:</p>
 <ul class="simple">

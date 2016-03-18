@@ -436,9 +436,9 @@ divide-by-zero case</li>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">add</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">&quot;add.so&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre>from ctypes import *
+add = cdll.LoadLibrary(&quot;add.so&quot;)
+print add.add(3,4)
 </pre></div>
 </div>
 <p>Further reading:</p>
@@ -460,7 +460,7 @@ divide-by-zero case</li>
 </div>
 <p>(good for system libs)</p>
 <p>Once loaded, a ctypes wrapper around a c function can be called directly:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre>print add.add(3,4)
 </pre></div>
 </div>
 <p>But....</p>

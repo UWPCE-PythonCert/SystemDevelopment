@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logging, and the logging module &mdash; System Development With Python 2.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="System Development With Python 2.0 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> System Development With Python</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Logging, and the logging module</a><ul>
+<li><a class="reference internal" href="#what-is-logging">What is Logging?</a><ul>
+<li><a class="reference internal" href="#the-logging-module">The logging module</a></li>
+<li><a class="reference internal" href="#why-not-print">Why not <code class="docutils literal"><span class="pre">print()</span></code>?</a></li>
+<li><a class="reference internal" href="#basic-logging-usage">Basic logging usage</a></li>
+<li><a class="reference internal" href="#a-more-complex-logging-setup">A more complex logging setup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Logging, and the logging module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/logging.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="logging-and-the-logging-module">
+<span id="logging"></span><h1>Logging, and the logging module<a class="headerlink" href="#logging-and-the-logging-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-logging">
+<h2>What is Logging?<a class="headerlink" href="#what-is-logging" title="Permalink to this headline">¶</a></h2>
+<p>..rst-class:: left</p>
+<dl class="docutils">
+<dt>What is logging?</dt>
+<dd>In computing, a logfile is a file that records either events that occur in an operating system or other software runs, or messages between different users of a communication software.[citation needed] Logging is the act of keeping a log. In the simplest case, messages are written to a single logfile.</dd>
+</dl>
+<p>(<a class="reference external" href="https://en.wikipedia.org/wiki/Logfile">https://en.wikipedia.org/wiki/Logfile</a>)</p>
+<p>But in fact, a file is on <em>one</em> place to keep a log. You may want to send a log of what your program is doing to another system, to the console, or????</p>
+<dl class="docutils">
+<dt>What might you want to log?</dt>
+<dd><ul class="first last simple">
+<li>System information</li>
+</ul>
+</dd>
+</dl>
+<p> - Error messages
+ - Fine-grain tracing output</p>
+<div class="section" id="the-logging-module">
+<h3>The logging module<a class="headerlink" href="#the-logging-module" title="Permalink to this headline">¶</a></h3>
+<p>A flexible logging system that comes with the standard library</p>
+<p>Any module using the logging api can have logging output routed the same
+as your code.</p>
+<p>Resources for learning more:</p>
+<p><a class="reference external" href="https://docs.python.org/3.5/howto/logging.html">https://docs.python.org/3.5/howto/logging.html</a></p>
+<p><a class="reference external" href="http://docs.python-guide.org/en/latest/writing/logging/">http://docs.python-guide.org/en/latest/writing/logging/</a></p>
+<p><a class="reference external" href="https://pymotw.com/2/logging/">https://pymotw.com/2/logging/</a></p>
+<p>NOTE: these haven&#8217;t been updated for py3 &#8211; but not much (anything?) has changed.</p>
+</div>
+<div class="section" id="why-not-print">
+<h3>Why not <code class="docutils literal"><span class="pre">print()</span></code>?<a class="headerlink" href="#why-not-print" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ve all been using <code class="docutils literal"><span class="pre">print()</span></code> all over the place to track what&#8217;s going on in a program.</p>
+<p>And I still use it &#8211; a lot.</p>
+<p>But we (usually) don&#8217;t want all sorts of crap sent to stdout when the program is running in production.</p>
+<p>So we comment out or delete those <a href="#id1"><span class="problematic" id="id2">``</span></a>print()``s &#8211; but if we wanted to know what the program was soing when developing &#8211; maybe we want to know when something goes wrong, too?</p>
+<p>The <code class="docutils literal"><span class="pre">logging</span></code> module give you a flexible system that allows you to monitor what&#8217;s going on in your system, when you need to, without cluttering thinkgs up when you don&#8217;t need it.</p>
+<p>The four main classes of logging</p>
+<ul class="simple">
+<li>Loggers - the interface for your code</li>
+<li>Handlers - handle log routing</li>
+<li>Filters - define which log messages to let through</li>
+<li>Formatters - how the log messages get rendered</li>
+</ul>
+</div>
+<div class="section" id="basic-logging-usage">
+<h3>Basic logging usage<a class="headerlink" href="#basic-logging-usage" title="Permalink to this headline">¶</a></h3>
+<p>Basic handling, filtering, and formatting can be done through the
+logging module&#8217;s <code class="docutils literal"><span class="pre">basicConfig</span></code> method</p>
+<p>More complex and configurable configurations can be created with the
+class interfaces for each of those tasks</p>
+<p>Timestamps can be included by passing the <code class="docutils literal"><span class="pre">kwarg</span></code>
+<code class="docutils literal"><span class="pre">format='%(asctime)s</span> <span class="pre">%(message)s')</span></code> to basicConfig</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;debug level message&quot;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;debug level message&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>see <code class="docutils literal"><span class="pre">Examples/logging/example1.py</span></code></p>
+</div>
+<div class="section" id="a-more-complex-logging-setup">
+<h3>A more complex logging setup<a class="headerlink" href="#a-more-complex-logging-setup" title="Permalink to this headline">¶</a></h3>
+<p>..code-block:: python</p>
+<blockquote>
+<div><p>import logging</p>
+<p># create logger
+logger = logging.getLogger(&#8216;simple_example&#8217;)
+logger.setLevel(logging.DEBUG)</p>
+<p># create console handler and set level to debug
+handler = logging.StreamHandler()
+handler.setLevel(logging.DEBUG)</p>
+<p># create formatter
+formatter = logging.Formatter(&#8216;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#8217;)</p>
+<p># add formatter to handler
+handler.setFormatter(formatter)</p>
+<p># add handler to logger
+logger.addHandler(handler)</p>
+<p># &#8216;application&#8217; code
+logger.debug(&#8216;debug message&#8217;)
+logger.info(&#8216;info message&#8217;)
+logger.warn(&#8216;warn message&#8217;)
+logger.error(&#8216;error message&#8217;)
+logger.critical(&#8216;critical message&#8217;)</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy, Maria McKinley.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
