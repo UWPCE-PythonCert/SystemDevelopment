@@ -13,139 +13,10 @@ Debugging
 Topics
 ######
 
--  Exceptions
+
 -  The call stack
+-  Exceptions
 -  Debugging
-
-Exceptions
-----------
-
-It's easier to ask for forgiveness than permission
-
-When either the interpreter or your own code detects an error condition,
-an exception will be raised
-
-The exception will bubble up the call stack until it is handled. If it's
-not, the interpreter will exit the program.
-
-.. nextslide::
-
-At each level in the stack, a handler can either:
-
--  let it bubble through (the default)
--  swallow the exception
--  catch the exception and raise it again
--  catch the exception and raise a new one
-
-.. nextslide::
-
-.. rubric:: Handling exceptions
-   :name: handling-exceptions
-
-The most basic form uses the builtins try and except
-
-::
-
-    def temp_f_to_c(var):
-        try:
-	    return(float(var) - 32)/1.8000
-        except ValueError as e:
-            print("The argument does not contain numbers\n", e)
-
-
-.. nextslide::
-
-.. rubric:: A few more builtins for exception handling: finally, else,
-   and raise
-   :name: a-few-more-builtins-for-exception-handling-finally-else-and-raise
-
-::
-
-    try:
-        result = x / y
-    except (ZeroDivisionError, ValueError) as e:
-        print("caught division error or maybe a value error:\n", e)
-    except Exception as e:
-        errno, strerror = e.args	
-        print("I/O error({0}): {1}".format(errno,strerror))
-	# or you can just print e
-        print("unhandled exception:\n", e)
-        raise
-    else:
-        print("everything worked great")
-        return result
-    finally:
-        print("this is executed no matter what")
-
-.. nextslide::
-
-.. rubric:: Built-in exceptions
-   :name: built-in-exceptions
-
-::
-
-    [name for name in dir(__builtin__) if "Error" in name]
-
-
-If one of these meets your needs, by all means use it. You can add messages: 
-
-::
-
-    raise SyntaxError("That was a mispelling")
-
-If no builtin exceptions work, define a new exception type by subclassing Exception.
-
-::
-
-    class MyException(Exception):
-        pass
-
-    raise MyException("An exception doesn't always prove the rule!")
-
-.. nextslide::
-
-It is possible, but discouraged to catch all exceptions. 
-
-::
-
-    try:
-	my_cool_code()
-    except:
-        print('no idea what the exceptions is, but I caught it')
-
-
-An exception to this exception rule is when you are running a service that should not ever crash,
-like a web server. In this case, it is extremely important to have very good logging so that you 
-have reports of exactly what happened and what exception should have been thrown.
-
-.. nextslide::
-
-.. rubric:: Exercise
-   :name: exercise
-
-Modify the example program examples/wikidef
-
-Enforce the argument to api.Wikipedia.title to have length greater than
-0
-
-If a 0 length argument is passed to this function, raise a new exception
-called ZeroLengthTitleError
-
-Handle this exception in the caller (Not necessarily the immediate
-caller, which one makes sense to you?)
-
-Feel free to edit the code in place. You can throw away your changes at
-the end with "git reset --hard", store them for later with "git stash",
-or commit them!
-
-
-.. nextslide::
-
-.. rubric:: Further reading
-   :name: further-reading
-
--  http://docs.python.org/3/library/exceptions.html
--  http://docs.python.org/3/tutorial/errors.html
 
 
 The Call Stack
@@ -203,7 +74,7 @@ If we try to put more than sys.getrecursionlimit() frames on the stack, we get a
 
     def recurse(limit):
         local_variable = '.' * limit
-        print limit, inspect.getargvalues(inspect.currentframe())
+        print(limit, inspect.getargvalues(inspect.currentframe()))
         if limit <= 0:
             return
         recurse(limit - 1)
@@ -213,10 +84,134 @@ If we try to put more than sys.getrecursionlimit() frames on the stack, we get a
         recurse(3)
 
 
-module <https://docs.python.org/2/library/inspect.html>`__
+module <https://docs.python.org/3/library/inspect.html>`__
 
 .. nextslide::
 
+Exceptions
+----------
+
+It's easier to ask for forgiveness than permission
+
+When either the interpreter or your own code detects an error condition,
+an exception will be raised
+
+The exception will bubble up the call stack until it is handled. If it's
+not handled by the bottom of the stack, the interpreter will exit the program.
+
+.. nextslide::
+
+At each level in the stack, a handler can either:
+
+-  let it bubble through (the default)
+-  swallow the exception
+-  catch the exception and raise it again
+-  catch the exception and raise a new one
+
+.. nextslide::
+
+.. rubric:: Handling exceptions
+   :name: handling-exceptions
+
+The most basic form uses the builtins try and except
+
+::
+
+    def temp_f_to_c(var):
+        try:
+	    return(float(var) - 32)/1.8000
+        except ValueError as e:
+            print("The argument does not contain numbers\n", e)
+
+
+.. nextslide::
+
+.. rubric:: A few more builtins for exception handling: finally, else,
+   and raise
+   :name: a-few-more-builtins-for-exception-handling-finally-else-and-raise
+
+::
+
+    try:
+        result = x / y
+    except (ZeroDivisionError, ValueError) as e:
+        print("caught division error or maybe a value error:\n", e)
+    except Exception as e:
+        errno, strerror = e.args	
+        print("I/O error({0}): {1}".format(errno,strerror))
+	# or you can just print e
+        print("unhandled exception:\n", e)
+        raise
+    else:
+        print("everything worked great")
+        return result
+    finally:
+        print("this is executed no matter what")
+    print('this is only printed if there is no exception')
+
+
+.. nextslide::
+
+It is even possible to use a try block without the exception clause:
+
+::
+
+    try:
+        5/0
+    finally:
+        print('did it work?')
+
+
+.. nextslide::
+
+.. rubric:: Built-in exceptions
+   :name: built-in-exceptions
+
+::
+
+    [name for name in dir(__builtin__) if "Error" in name]
+
+
+If one of these meets your needs, by all means use it. You can add messages: 
+
+::
+
+    raise SyntaxError("That was a mispelling")
+
+If no builtin exceptions work, define a new exception type by subclassing Exception.
+
+::
+
+    class MyException(Exception):
+        pass
+
+    raise MyException("An exception doesn't always prove the rule!")
+
+.. nextslide::
+
+It is possible, but discouraged to catch all exceptions. 
+
+::
+
+    try:
+	my_cool_code()
+    except:
+        print('no idea what the exceptions is, but I caught it')
+
+
+An exception to this exception rule is when you are running a service that should not ever crash,
+like a web server. 
+
+In this case, it is extremely important to have very good logging so that you 
+have reports of exactly what happened and what exception should have been thrown.
+
+.. nextslide::
+
+.. rubric:: Further reading
+   :name: further-reading
+
+-  http://docs.python.org/3/library/exceptions.html
+-  http://docs.python.org/3/tutorial/errors.html
 
 .. nextslide::
 
@@ -249,9 +244,19 @@ You already know what it looks like. Simple traceback:
 
 .. nextslide::
 
-But things can quickly get complicated:
+But things can quickly get complicated (Here is ~1/3 of a recent traceback I had):
 
-
+Traceback (most recent call last):
+  File "snapi3/tests/test_proxy_rest.py", line 21, in test_http_get
+    resp = self.app.get(self.TRIVIAL_URL, status=200)
+  File "python3/lib/python3.5/site-packages/webtest/app.py", line 323, in get
+    expect_errors=expect_errors)
+  File "python3/lib/python3.5/site-packages/webtest/app.py", line 606, in do_request
+    res = req.get_response(app, catch_exc_info=True)
+  File "python3/lib/python3.5/site-packages/webob/request.py", line 1313, in send
+    application, catch_exc_info=True)
+  File "python3/lib/python3.5/site-packages/webob/request.py", line 1284, in call_application
+    output.extend(app_iter)
 
 .. nextslide::
 
@@ -281,9 +286,24 @@ GUI debuggers
 .. rubric:: help from the interpreter
    :name: help-from-the-interpreter
 
-investigate import issues with -v
+1. investigate import issues with -v:
 
-inspect environment after running script with -i
+::
+
+    python -v myscript.py
+
+
+Verbose (trace import statements)
+
+
+2. inspect environment after running script with -i
+
+:: 
+
+    python -i myscript.py
+
+
+Forces interpreter to remain active, and still in scope
 
 .. nextslide::
 
