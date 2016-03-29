@@ -7,7 +7,7 @@ def long_loop():
     result = 1 + 1
     return result
 
-print long_loop()
+print(long_loop())
 
 s = "next statement"        
-print s
+print(s)
