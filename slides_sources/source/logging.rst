@@ -175,3 +175,29 @@ A more complex logging setup
       logger.warn('warn message')
       logger.error('error message')
       logger.critical('critical message')
+
+
+References
+----------
+
+The logging system is very powerful and flexible.
+
+And frankly, not as clean and Pythonic as it could be...
+
+So it's pretty tricky to figure out.
+
+I highly recommend the cookbook to get beyond the basics:
+
+https://docs.python.org/3/howto/logging-cookbook.html
+
+Also these:
+
+http://atlee.ca/blog/posts/diving-into-python-logging.html
+
+http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python
+
+
+
+
+
+
