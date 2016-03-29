@@ -1,7 +1,7 @@
 .. _logging:
 
 ###############################
-Logging, and the logging module
+Logging and the logging module
 ###############################
 
 
@@ -15,7 +15,7 @@ What is logging?
 
 (https://en.wikipedia.org/wiki/Logfile)
 
-But in fact, a file is on *one* place to keep a log. You may want to send a log of what your program is doing to another system, to the console, or????
+But in fact, a file is only *one* place to keep a log. You may want to send a log of what your program is doing to another system, to the console, or????
 
 What might you want to log?
  - System information
@@ -49,17 +49,75 @@ And I still use it -- a lot.
 
 But we (usually) don't want all sorts of crap sent to stdout when the program is running in production.
 
-So we comment out or delete those ``print()``s -- but if we wanted to know what the program was soing when developing -- maybe we want to know when something goes wrong, too?
+So we comment out or delete those ``print()``s -- but if we wanted to know what the program was doing when developing -- maybe we want to know when something goes wrong, too?
 
-The ``logging`` module give you a flexible system that allows you to monitor what's going on in your system, when you need to, without cluttering thinkgs up when you don't need it.
+The ``logging`` module give you a flexible system that allows you to monitor what's going on in your system, when you need to, without cluttering thinks up when you don't need it.
 
-.. nextslide::
+Background
+==========
+
+There are lots of good tutorials, etc, on the web for getting you started with *useing* the logging module.
+
+But not much about how it works -- how it is structured.
+
+I found it hard to get beyond the basics without that knowledge, so the following should help.
+
+The logging module provides a very flexible framework for customizing the logging in a simple or complex application.
+
+The ``logging`` module
+-----------------------
+.. code-block:: python
+
+    import logging
+
+The logging module not only provides the classes and functions required to build a logging system, but also a place to centrally manage the logging for an entire application.
+
+This allows you to set up logging in one place, and everywhere in the app, the system can be used.
+
+So, for instance, when developing and debugging, you may want logging messages to go to the console, but for deployment, to log files.
+
+That configuration can be changed in one place.
+
+(NOTE: this is one good reason to prefer logging over ``print()``)
+
+
+The ``Logger`` class
+--------------------
+
+The ``Logger`` class is the core class that handles logging.
+
+Messages get sent to a ``Logger`` instance, and it is responsibility for routing them appropriately.
+
+``Logger``s can be  nested in a hierarchical fashion, so that a message can be sent to the "root" logger, and passed down a chain to be handles by sub-loggers.
+
+Each ``Logger`` represents a single logging channel.
+
+``Logger`` instances are given text names, with module-style "dots" representing the hierarchy:
+
+.. code-block:: python
+
+    "main"
+    "main.sub_logger1"
+    "main.sub_logger2"
+    ...
+
+The "root" logger has no name, but is the root of all created loggers
+
+The logging module keeps track of all the loggers you create, so you can reference them by name.
+
+``logging.get_logger``
+----------------------
+
+The ``logging.get_logger`` function returns the logger you ask for.
+
+The logging classes
+-------------------
 
 The four main classes of logging
 
--  Loggers - the interface for your code
+-  Loggers  - the interface for your code
 -  Handlers - handle log routing
--  Filters - define which log messages to let through
+-  Filters  - define which log messages to let through
 -  Formatters - how the log messages get rendered
 
 Basic logging usage
@@ -84,7 +142,7 @@ Timestamps can be included by passing the ``kwarg``
       logging.debug("debug level message")
       logging.warning("debug level message")
 
-      
+
 see ``Examples/logging/example1.py``
 
 A more complex logging setup
@@ -117,4 +175,3 @@ A more complex logging setup
       logger.warn('warn message')
       logger.error('error message')
       logger.critical('critical message')
-      
