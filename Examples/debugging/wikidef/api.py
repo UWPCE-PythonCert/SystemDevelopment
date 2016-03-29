@@ -19,7 +19,7 @@ class Wikipedia(object):
         title -- title of article
         """
         query_params = urllib.urlencode({'action': 'parse', 'format': 'json', 'prop':'text', 'page': title})
-        url = cls.api_endpoint + query_params
+        url = cls.api_endpoint + query_params + 'html'
         response = urllib2.urlopen(url)
         json_response = json.load(response)
         try:

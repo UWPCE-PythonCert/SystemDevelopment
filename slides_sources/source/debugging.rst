@@ -28,6 +28,8 @@ The Call Stack
 -  The objects in the stack are known as "stack frames". Each frame
    contains the arguments passed to the function, space for local
    variables, and the return address
+-  It is usually (unintuitively) displayed like an upside-down stack of 
+   plates, with most recent frame on the bottom.
 -  When a function is called, a stack frame is created for it and pushed
    onto the stack
 -  When a function returns, it is popped off the stack and control is
@@ -84,7 +86,7 @@ If we try to put more than sys.getrecursionlimit() frames on the stack, we get a
         recurse(3)
 
 
-module <https://docs.python.org/3/library/inspect.html>`__
+module https://docs.python.org/3/library/inspect.html
 
 .. nextslide::
 
@@ -415,41 +417,40 @@ debugger (in 'post-mortem mode').
    :name: navigating-pdb
 
 The goal of each of the preceding techniques was to get to the pdb
-prompt and get to work inspecting state
+prompt and get to work inspecting state. Most commands can be short-cutted 
+to the first letter. 
 
 ::
 
-    % python -m pdb define.py robot
-      pdb> break api.py:21
-      # list breakpoints
-      pdb> break
-      pdb> clear 1
-      # print lines of code in current context
-      pdb> list
-      # print lines in range
-      pdb> list 1,28
-      # print stack trace, aliased to (bt, w)
-      pdb> where
+    % python -m pdb define.py
+    pdb> args  # print arguments and values to current function
+    pdb> pp a_variable  # pretty-print a_variable
+    pdb> where  # print stack trace, bottom is most recent command
+    pdb> list  # list the code including and surrounding the current running code
+     
 
 .. nextslide::
 
+To repeat the current command, press only the Enter key
+
 ::
 
-      # move one level up the stack
-      pdb> up
-      # move one level down the stack
-      pdb> down
-      # execute until function returns
+      # execute until current function returns
       pdb> return
       # Execute the current line, stop at the first possible occasion
       pdb> step
       # Continue execution until the next line in the current function is reached or it returns.
       pdb> next
-      # Continue execution until the line with a number greater than the current one is reached or until the current frame returns.  Good for exiting loops.
+      # Continue execution until the line with a number greater than the current one is reached 
+        or until the current frame returns.  Good for exiting loops.
       pdb> until
-      # create commands to be executed on a breakpoint
+      # move one level up the stack 
+      pdb> up
+      # move one level down the stack
+      pdb> down
+      pdb> continue  # goes until next breakpoint or end of program
+      # advanced: create commands to be executed on a breakpoint
       pdb> commands
-      pdb> continue
 
 
 .. nextslide::
@@ -471,6 +472,22 @@ prompt and get to work inspecting state
       to specify a breakpoint in another file (probably one that
       hasn't been loaded yet).  The file is searched for on sys.path;
       the .py suffix may be omitted.
+
+
+.. nextslide::
+
+Can use up, down, where and list to evalutate where you are, and use that to 
+set a new breakpoint in code coming up. Useful for getting out of rabbit holes.
+
+::
+
+      pdb> break api.py:21 set a breakpoint file:line #
+      pdb> break  # list breakpoints
+      pdb> clear 1  # get rid of first breakpoint
+      pdb> break 35  # set a breakpoint in current file at line 35
+      # print lines in range
+      pdb> list 1,28
+
 
 .. nextslide::
 
@@ -509,24 +526,6 @@ enable breakpoints
           If str_condition is absent, any existing condition is removed;
           i.e., the breakpoint is made unconditional.
           
-
-.. nextslide::
-
-Set conditions
-
-::
-
-          condition 1 x==1
-          
-
-Clear conditions
-
-::
-
-          condition 1
-          
-
-see debugging/examples/long\_loop.py
 
 .. nextslide::
 
@@ -618,8 +617,12 @@ http://winpdb.org/tutorial/WinpdbTutorial.html
 
 Find the wikidef app in the examples folder
 
-Using (i)pdb in module mode (python -m pdb ) debug the app and find the
-server type that wikipedia is using by looking at
+See if you can find the bug and get the app working. Use whatever debugging 
+technique(s) you prefer.
+
+Once it is working again:
+Using (i)pdb in module mode (python -m pdb ) to find the server type that 
+wikipedia is using by looking at
 response.headers.headers in Wikipedia.article
 
 You can enter the debugger by running
@@ -627,6 +630,8 @@ You can enter the debugger by running
 ::
 
     python -m pdb ./define.py robot
+
+(define.py takes the first sys arg and finds articles on wikipedia on that topic)
 
 You can get to the code by walking through each line with 's'tep and
 'n'ext commands, or by setting a breakpoint and 'c'ontinuing.
