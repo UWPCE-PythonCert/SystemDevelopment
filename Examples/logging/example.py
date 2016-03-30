@@ -29,7 +29,7 @@ format = '%(asctime)s %(levelname)s - %(module)8s - line:%(lineno)d - %(message)
 # basicConfig configures the "root logger" -- usually the one you want.
 # this sets it up to write to a file
 logging.basicConfig(filename='example.log',
-                    filemode='w',  # use 'a' if you want to preserve the old log file
+                    filemode='a',  # use 'a' if you want to preserve the old log file
                     format=format,
                     level=log_level)
 
@@ -40,7 +40,7 @@ if True:  # turn this off with False
     # give this a different formatter:
     formatter = logging.Formatter('%(levelname)9s - %(module)s - %(message)s')
     std_handler.setFormatter(formatter)
-    std_handler.setLevel(logging.INFO)
+    std_handler.setLevel(logging.DEBUG)
     logging.getLogger().addHandler(std_handler)
 
 # Run the "application":

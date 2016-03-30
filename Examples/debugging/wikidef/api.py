@@ -1,9 +1,11 @@
 import json
 import urllib
-import urllib2
+# import urllib2
+
 
 class ParseError(Exception):
     pass
+
 
 class Wikipedia(object):
     """Wikipedia API interface"""
@@ -18,14 +20,18 @@ class Wikipedia(object):
 
         title -- title of article
         """
-        query_params = urllib.urlencode({'action': 'parse', 'format': 'json', 'prop':'text', 'page': title})
-        url = cls.api_endpoint + query_params + 'html'
-        response = urllib2.urlopen(url)
-        json_response = json.load(response)
+        query_params = urllib.parse.urlencode({'action': 'parse',
+                                               'format': 'json',
+                                               'prop': 'text',
+                                               'page': 'title'})
+        url = cls.api_endpoint + query_params # + 'html'
+        response = urllib.request.urlopen(url)
+        response_text = response.read().decode('utf-8')
+        open('page.json', 'w').write(response_text)
+        json_response = json.loads(response_text)
         try:
             contents = json_response['parse']['text']['*']
         except KeyError:
             raise ParseError(json_response)
 
         return contents
-
