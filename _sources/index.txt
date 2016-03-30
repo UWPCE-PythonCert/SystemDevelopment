@@ -43,7 +43,7 @@ Session 2
     (pep8,flake8)
 
 Session 3
-===========
+=========
 
 .. rst-class:: left
 
