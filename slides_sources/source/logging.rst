@@ -8,19 +8,32 @@ Logging and the logging module
 What is Logging?
 ================
 
-..rst-class:: left
+.. rst-class:: left small
 
-What is logging?
-   In computing, a logfile is a file that records either events that occur in an operating system or other software runs, or messages between different users of a communication software.[citation needed] Logging is the act of keeping a log. In the simplest case, messages are written to a single logfile.
+      What is logging?
 
-(https://en.wikipedia.org/wiki/Logfile)
+            In computing, a logfile is a file that records either events that occur in an operating system or other software runs, or messages between different users of a communication software.
 
-But in fact, a file is only *one* place to keep a log. You may want to send a log of what your program is doing to another system, to the console, or????
+            Logging is the act of keeping a log. In the simplest case, messages are written to a single logfile.
 
-What might you want to log?
- - System information
- - Error messages
- - Fine-grain tracing output
+
+      (https://en.wikipedia.org/wiki/Logfile)
+
+      But in fact, a file is only *one* place to keep a log. You may want to send a log of what your program is doing to another system, to the console, or????
+
+what to log?
+------------
+
+.. rst-class:: medium::
+
+    What might you want to log?
+
+System information
+
+Error messages
+
+Fine-grain tracing output
+
 
 The logging module
 -------------------
@@ -49,23 +62,27 @@ And I still use it -- a lot.
 
 But we (usually) don't want all sorts of crap sent to stdout when the program is running in production.
 
-So we comment out or delete those ``print()``s -- but if we wanted to know what the program was doing when developing -- maybe we want to know when something unanticipated goes wrong, too?
+So we comment out or delete those ``print()`` s -- but if we wanted to know what the program was doing when developing -- maybe we want to know when something unanticipated goes wrong, too?
 
 The ``logging`` module give you a flexible system that allows you to monitor what's going on in your system, when you need to, without cluttering things up when you don't need it.
+
 
 Background
 ==========
 
-There are lots of good tutorials, etc, on the web for getting you started with *useing* the logging module.
+.. rst-class:: left
 
-But not much about how it works -- how it is structured.
+      There are lots of good tutorials, etc, on the web for getting you started with *useing* the logging module.
 
-I found it hard to get beyond the basics without that knowledge, so the following should help.
+      But not much about how it works -- how it is structured.
 
-The logging module provides a very flexible framework for customizing the logging in a simple or complex application.
+      I found it hard to get beyond the basics without that knowledge, so the following should help.
+
+      The logging module provides a very flexible framework for customizing the logging in a simple or complex application.
 
 The ``logging`` module
 -----------------------
+
 .. code-block:: python
 
     import logging
@@ -97,9 +114,11 @@ The built-in set is::
 
 so DEBUG provides the most detail, and CRITICAL you'd pretty much always want to see.
 
+.. nextslide::
+
 The logging API provides easy ways to send messages with these levels:
 
-..code-block:: python
+.. code-block:: python
 
     logging.debug('this is a debuggin message')
 
@@ -110,7 +129,7 @@ https://docs.python.org/3/library/logging.html#levels
 The logging classes
 -------------------
 
-The four main classes of logging
+The four main classes (you need to deal with) for logging
 
 -  Loggers  - the interface for your code
 -  Handlers - handle log routing
@@ -124,11 +143,13 @@ The ``Logger`` class is the core class that handles logging.
 
 Messages get sent to a ``Logger`` instance, and it is responsibile for routing them appropriately.
 
-``Logger``s can be  nested in a hierarchical fashion, so that a message can be sent to sub-loggers, and any messages not handled will be passed the chain to eventually be handled by the "root" logger.
+``Logger`` s can be  nested in a hierarchical fashion, so that a message can be sent to sub-loggers, and any messages not handled will be passed the chain to eventually be handled by the "root" logger.
 
 There is always a root logger, and often the only one you need.
 
 Each ``Logger`` represents a single logging channel.
+
+.. nextslide::
 
 ``Logger`` instances are given text names, with module-style "dots" representing the hierarchy:
 
@@ -148,7 +169,7 @@ The logging module keeps track of all the loggers you create, so you can referen
 
 The ``logging.get_logger()`` function returns the logger you ask for:
 
-..code-block:: python
+.. code-block:: python
 
   the_root_logger = logging.get_logger()
   another_logger = logging.get_logger("name")
@@ -160,9 +181,9 @@ This whole system allows you to have multiple loggers without having to pass log
 The ``Handler`` classes
 -----------------------
 
-logging Handlers are what actually do the work of, well, handling, the log message.
+logging ``Handler`` s are what actually do the work of, well, handling, the log message.
 
-formatting it, and actually writting to a file or somehow performing the 'log' duty.
+Formatting it, and actually writing to a file or somehow performing the 'log' duty.
 
 There are handlers for writing to files, streams (stdout, stderr), sockets, and nifty things like automaticaly rotating log files.
 
@@ -170,7 +191,9 @@ And, of course, you can make your own.
 
 Each logger can have multiple Handlers
 
-You will most likley use:
+.. nextslide::
+
+You will most likely use:
 
  - ``FileHandler``
  - ``StreamHandler``
@@ -188,15 +211,11 @@ Each log message is stored in a ``LogRecord`` object, which has a lot of data ab
 
 So you can use a formatter to add the data you want to your log entry.
 
-..code-block:: python
+.. code-block:: python
 
    formatter = logging.Formatter('%(levelname)9s - %(module)s - %(message)s')
 
-``levelname`` is the "level" of the log message: debug, warning, etc.
-
-``module`` is the name of teh module the message came from.
-
-``message`` is the message itself.
+``levelname`` is the "level" of the log message: debug, warning, etc. ``module`` is the name of the module the message came from. ``message`` is the message itself.
 
 There are lots of other options:
 
@@ -225,15 +244,11 @@ As you can see from the above -- the logging system is a complex nest of classes
 
 The system was ported from Java -- can you tell?
 
-However, teh module provides a Pythonic API for common usage: the::
-
-  logging.basicConfig()
-
-function.
+However, the module provides a Pythonic API for common usage: the ``logging.basicConfig()`` function.
 
 Example:
 
-..code-block:: python
+.. code-block:: python
 
     import logging
 
@@ -241,6 +256,8 @@ Example:
                         filemode='w',
                         format='%(asctime)s %(message)s',
                         level=logging.DEBUG)
+
+.. nextslide::
 
 This creates a "root" logger, and sets it up with:
 
@@ -254,13 +271,14 @@ This creates a "root" logger, and sets it up with:
 
 * sets the level to debug -- so all messages will get logged.
 
+
 What does ``basicConfig`` do for you?
 --------------------------------------
 A LOT!
 
 If you were to do this by hand:
 
-..code-block:: python
+.. code-block:: python
 
       filename = 'example.log'
       filemode = 'w'
@@ -286,7 +304,6 @@ In there, a logging system is set up that logs to a file, and also the console.
 It calls a fake "application" that does things in random order, logging as it goes...
 
 Let's go check it out!
-
 
 References
 ----------
