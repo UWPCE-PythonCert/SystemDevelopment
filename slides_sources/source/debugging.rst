@@ -620,6 +620,15 @@ Find the wikidef app in the examples folder
 See if you can find the bug and get the app working. Use whatever debugging 
 technique(s) you prefer.
 
+To run the app:
+::
+
+    python define.py interesting_topic
+
+where interesting_topic is a topic of interest. ;-)
+
+.. nextslide::
+
 Once it is working again:
 Using (i)pdb in module mode (python -m pdb ) to find the server type that 
 wikipedia is using by looking at

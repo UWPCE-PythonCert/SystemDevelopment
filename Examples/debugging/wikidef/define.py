@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""
+Script to contact Wikipedia and get articles on a specified topic.
+python define.py interesting_topic
+"""
+
 import sys
 
 from definitions import Definitions
