@@ -33,8 +33,6 @@ More about learning to use a given module
 
 So less talk, more coding
 
-.. nextslide::
-
 I'm focusing on methods available in the Python standard library
 
 Serialization is the process of putting your potentially complex
@@ -107,7 +105,7 @@ Not so bad if you know where your data is coming from, but ``eval()`` will run a
     import sys
     sys.system('cd /; rm -rf *')
 
-You really don't want that run on your machine!   
+You really don't want that run on your machine!
 
 The alternative:
    ``ast.literal_eval`` is safer than eval:
@@ -216,7 +214,7 @@ Here are two datasets embedded in Python:
 and
 :download:`add_book_data_flat.py <../../Examples/persistance/add_book_data_flat.py>`
 
-They can be loaded with:: 
+They can be loaded with::
 
     from add_book_data import AddressBook
 
