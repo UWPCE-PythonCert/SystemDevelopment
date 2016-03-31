@@ -37,20 +37,19 @@ Session 2
 
 .. rst-class:: left
 
-  - :ref:`documentation`
-
   - :ref:`serialization`
 
+  - `Unit Testing and Coverage <html_slides/coverage/index.html>`_
+    (pep8,flake8)
 
 Session 3
 ===========
 
 .. rst-class:: left
 
-  :ref:`packaging`
+  - :ref:`packaging`
 
-  - `Unit Testing and Coverage <html_slides/coverage/index.html>`_
-    (pep8,flake8)
+  - :ref:`documentation`
 
   - Code Reviewing
 
@@ -63,6 +62,7 @@ Code Reviews begin
 .. rst-class:: left
 
   - :ref:`nosql`
+
   - `datetime <html_slides/06-datetime.html>`_
 
 
@@ -114,7 +114,7 @@ Student Presentations
 Other Topics:
 =============
 
-These are topics that we don't have time for in class, but you might want to look at these notes just the same: 
+These are topics that we don't have time for in class, but you might want to look at these notes just the same:
 
   - `Working with SQL Databases <html_slides/04-db.html>`_
   - :ref:`unicode`

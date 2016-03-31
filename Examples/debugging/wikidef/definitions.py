@@ -1,8 +1,8 @@
-from api import article
+from api import Wikipedia
 
 class Definitions(object):
 
     @classmethod
     def article(cls, title):
-        response = article(title)
+        response = Wikipedia.article(title)
         return response
