@@ -333,7 +333,8 @@ Reading ``CSV``  files:
 .. code-block:: ipython
 
     In [14]: import csv
-    In [17]: spam_reader = csv.reader(open('eggs.csv'))
+    In [17]: spam_reader = csv.reader(open('eggs.csv'),
+                                      skipinitialspace=True)
     In [19]: for row in spam_reader:
        ....:     print(row)
     ['Spam', ' Spam', ' Spam', ' Spam', ' Spam', ' Baked Beans']
@@ -344,7 +345,8 @@ The ``csv``  module takes care of string quoting, etc. for you.
 
 - This is a pretty big deal -- that can be a real pain!
 
-FIXME: not working right for quotes-- why not???
+NOTE: ``skipinitialspace`` is False by default, which can mess up
+interpretting quotes correctly.
 
 https://docs.python.org/3.5/library/csv.html
 
