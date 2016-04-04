@@ -668,6 +668,20 @@ Support for a large number of third-party Database drivers:
 
 http://www.python.org/dev/peps/pep-0249}
 
+LAB Extras:
+===========
+
+A few more things you could do:
+
+* Use pickle to save/reload a custom class of yours
+  (the Circle class from the first quarter?)
+
+* Try writing a json writer for a non-standard data type:
+  A custom class, or amore complex built-in?
+
+
+
+
 =============
 Other Options
 =============

@@ -5,44 +5,41 @@ Example of how to save data as python literals in a py file
 
 """
 
-outfilename = "add_book_data.pyliteral"
+import pprint
+from ast import literal_eval
 
 # get the data from the py file
 from add_book_data import AddressBook
 
-# save it as python literals:
+outfilename = "add_book_data.pyliteral"
 
-outfile = open(outfilename, 'w')
 
-outfile.write(str(AddressBook))
+# save the data as python literals:
+with open(outfilename, 'w') as outfile:
+    outfile.write(repr(AddressBook))
 
-outfile.close()
-
-## see if we can re-load it
-
+# see if we can re-load it
 data = open(outfilename, 'r').read()
 
+# Warning, warning! danger Will Robinson!
+# eval() is very dangerous!
 AddressBook2 = eval(data)
 
 if AddressBook2 == AddressBook:
-    print "they are the same"
+    print("they are the same")
 
-## try again with the pretty print version:
-import pprint
+# try again with the pretty print version:
 
 outfilename = "add_book_data.pyliteral_pretty"
 
-outfile = open(outfilename, 'w')
+with open(outfilename, 'w') as outfile:
+    outfile.write(pprint.pformat(AddressBook))
 
-outfile.write(pprint.pformat(AddressBook))
-
-outfile.close()
-
-## see if we can re-load it
+# see if we can re-load it
 data = open(outfilename, 'r').read()
 
-AddressBook2 = eval(data)
+# let's use literal_eval() this time:
+AddressBook2 = literal_eval(data)
 
 if AddressBook2 == AddressBook:
-    print "pretty printed version is the same as well"
-    
+    print("pretty printed version is the same as well")
