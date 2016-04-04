@@ -56,7 +56,9 @@ http://wiki.python.org/moin/PersistenceTools
 Python Specific Formats
 =======================
 
-These are formats specific to python -- convenient to use, but not useful for interchange with other systems.
+.. rst-class:: medium
+
+  These are formats specific to python -- convenient to use, but not useful for interchange with other systems.
 
 
 Python Literals
@@ -98,7 +100,7 @@ Python Literal Example
 
 You can save the string to a file and even use ``import``.
 
-In fact, using a python file and importing is is a great way to handle configuration for your app -- very powerful and flexible.
+In fact, using a python file and importing it is a great way to handle configuration for your app -- very powerful and flexible.
 
 .. nextslide::
 
