@@ -1,8 +1,8 @@
 .. _testing:
 
-#######
+*******
 Testing
-#######
+*******
 
 System Development with Python
 
@@ -10,12 +10,14 @@ Git repository:
 
 https://github.com/UWPCE-PythonCert/SystemDevelopment
 
+================
 What is testing?
-----------------
+================
 
+.. rst-class:: medium
 
-Code which runs your application in as close to a real environment as
-feasible and validates its behavior
+    Code which runs your application in as close to a real environment as
+    feasible and validates its behavior
 
 
 Terminology of testing
@@ -59,13 +61,20 @@ what to test should take into account the volatility of the project.
 Unit-testing tools
 ------------------
 
--  unittest, the test framework that ships with Python. Started life as PyUnit. 
+-  unittest, the test framework that ships with Python. Started life as PyUnit.
+
    http://docs.python.org/3/library/unittest.html
+
 -  nose2, a test runner which integrates with unittest, making it nicer and easier
+
    http://nose2.readthedocs.org/en/latest/
+
 -  mock, an object mocking library. Ships with Python 3.3+
+
    https://docs.python.org/dev/library/unittest.mock.html
+
 -  pytest, an alternative to unittest, which you should be pretty familiar with now
+
    http://pytest.org/latest/
 
 
@@ -86,46 +95,48 @@ unittest.TestCase anatomy
 ::
 
     import unittest
-
     class TestTest(unittest.TestCase):
 
         def setUp(self):
-	    x = 2
+            x = 2
 
         def test_add(self):
             self.assertEqual(x+2, 4)
 
         def test_len(self):
             self.assertEqual(len('foo'), 3)
-        
+
     if __name__ == '__main__':
-	unittest.main()
+        unittest.main()
 
 
 Assert Methods
 ---------------
 
 TestCase contains a number of methods named assert\* which can be used
-for validation, here are a few common ones:
+for validation, here are a few common ones::
 
--  assertEqual(first, second, msg=None)
--  assertNotEqual(first, second, msg=None)
--  assertTrue(expr, msg=None)
--  assertFalse(expr, msg=None)
--  assertIn(first, second)
--  assertRaises(exc, fun, msg=None, \*args, \*\*kwargs)
+    assertEqual(first, second, msg=None)
+    assertNotEqual(first, second, msg=None)
+    assertTrue(expr, msg=None)
+    assertFalse(expr, msg=None)
+    assertIn(first, second)
+    assertRaises(exc, fun, msg=None, \*args, \*\*kwargs)
 
-See a full list at
+See a full list at:
+
 http://docs.python.org/3/library/unittest.html#assert-methods or
-dir(unittest.TestCase) or to get really fancy 
 
-::
+``dir(unittest.TestCase)`` or to get really fancy
 
-	print([i for i in dir(unittest.TestCase) if i.startswith('assert')])
+.. code-block:: python
+
+    [print(i) for i in dir(unittest.TestCase) if i.startswith('assert')]
 
 
 Fixtures: Setting up your tests for success
 -------------------------------------------
+
 (or failure!)
 
 Test fixtures are a fixed baseline for tests to run from consistently,
@@ -142,40 +153,40 @@ unittest provides fixture support via these methods:
 -  (new in Python 2.7) addCleanup / doCleanups - called after tearDown,
    in case a test throws an exception
 
+=============================
 Testing floating point values
------------------------------
+=============================
 
-Why can't we just test if .5 == .5 ?
+.. rst-class:: left
+    Why can't we just test if .5 == .5 ?
 
-::
+    ::
 
-            
-    In [1]: 3*.15 == .45
-    Out[1]: False
+        In [1]: 3 * .15 == .45
+        Out[1]: False
 
-    In [2]: 3*.15
-    Out[2]: 0.44999999999999996
+        In [2]: 3 * .15
+        Out[2]: 0.44999999999999996
 
-    In [3]: 3*.15 * 10 / 10  == .45
-    Out[3]: True   
+        In [3]: 3 * .15 * 10 / 10  == .45
+        Out[3]: True
 
-There are an infinite number of floating point numbers, so they are
-stored as an approximation in computing hardware.
+    There are an infinite number of floating point numbers, so they are
+    stored as an approximation in computing hardware.
 
-https://docs.python.org/3/tutorial/floatingpoint.html
+    https://docs.python.org/3/tutorial/floatingpoint.html
 
 levels of precision of floating point
 -------------------------------------
 
 Floating point numbers are stored in `IEEE
 754 <http://en.wikipedia.org/wiki/IEEE_floating_point>`__ 64-bit double
-precision format, so 1 bit for the sign, 11 bits for the exponent, and 
+precision format, so 1 bit for the sign, 11 bits for the exponent, and
 the remaining 52 for the fraction
 
-So we can count on 16 digits of precision in decimal:
+So we can count on up to 16 digits of precision in decimal:
 
-::
-
+.. code-block:: ipython
 
     In [39]: len(str(2**52))
     Out[39]: 16
@@ -186,7 +197,8 @@ So we can count on 16 digits of precision in decimal:
     In [41]: len('3000000000000000')
     Out[41]: 16
 
-    # with repeated operations, the errors eventually build up: here's multiplying by '1' 10 million times:
+    # with repeated operations, the errors eventually build up:
+    # here's multiplying by '1' 10 million times:
     In [64]: x=1
     In [69]: for i in range(10000000): x *= (.1 + .2)/.3
     Out [69]: 1.000000002220446
@@ -198,7 +210,7 @@ Verifies that two floating point values are close enough to each other.
 Add a places keyword argument to specify the number of significant
 digits.
 
-::
+.. code-block:: python
 
     import unittest
 
@@ -213,9 +225,124 @@ digits.
         def test_almost_equal(self):
             self.assertAlmostEqual(3*.15, .45, places=7)
 
-  
+
+What is close?
+--------------
+
+.. rst-class:: medium
+
+    **Warning**
+
+``assertAlmostEqual`` lets you specify *decimal places*,
+i.e. the number of digits after the decimal point.
+
+This works great for numbers that are about magnitude 1.0 (as above)
+
+But what if you have numbers that are very large? (or small):
+
+  - ``1.0e22``
+  - ``1.0000000000001e22``
+
+are they almost equal?
+
+.. nextslide::
+
+Remember that python floating point numbers store the exponent and up
+to 16 decimal digits.
+
+So those two are almost as close as you can get. But:
+
+.. code-block:: ipython
+
+    In [30]: x = 1e22
+
+    In [31]: y = 1.0000000000001e22
+
+    In [32]: '%g'%(y - x)
+    Out[32]: '1.00034e+09'
+
+They are different by about a billion!
+
+In general, we don't want to compare floating point numbers to within a
+certain number of decimal places.
+
+Anyone remember "significant figures" from science classes?
+
+``isclose()``
+------------
+
+Python 3.5 introduced the isclose() function in the math module:
+
+https://www.python.org/dev/peps/pep-0485/
+
+.. code-block:: ipython
+
+    In [39]: import math
+
+    In [40]: x
+    Out[40]: 1e+22
+
+    In [41]: y
+    Out[41]: 1.0000000000001e+22
+
+    In [42]: math.isclose(x,y)
+    Out[42]: True
+
+So this works for any magnitude number.
+
+.. nextslide::
+
+::
+
+    is_close(a, b, *, rel_tol=1e-09, abs_tol=0.0) -> bool
+
+    Determine whether two floating point numbers are close in value.
+
+       rel_tol
+           maximum difference for being considered "close", relative to the
+           magnitude of the input values
+        abs_tol
+           maximum difference for being considered "close", regardless of the
+           magnitude of the input values
+
+    Return True if a is close in value to b, and False otherwise.
+
+``rel_tol`` essentialaly specifies how many significant figures you want:
+``1e-09`` is 9 significant figures: about half of what floats can store.
+
+``abs_tol`` is required for comparisons to zero -- nothing is
+"relatively close" to zero
+
+Using ``isclose()`` with ``unittest``
+-------------------------------------
+
+Ideally, ``TestCase`` would have an ``assertIsClose`` method.
+But you can use:
+
+.. code-block:: python
+
+    import unittest
+    from math import isclose
+
+    class TestAlmostEqual(unittest.TestCase):
+
+        def test_floating_point(self):
+            self.assertEqual(3*.15, .45)
+
+        def test_almost_equal(self):
+            self.assertTrue( isclose( 3*.15, .45, rel_tol=7) )
+
+==================
 Running your tests
-------------------
+==================
+
+.. rst-class:: medium
+
+    How do you actually run your tests?
+
+
+running tests in a single module
+--------------------------------
 
 Call unittest.main() right in your module
 
@@ -223,7 +350,7 @@ Call unittest.main() right in your module
 
         if __name__ == "__main__":
             unittest.main()
-        
+
 
 If it gets cumbersome with many TestCases, organize the tests into a
 test suite
@@ -242,11 +369,16 @@ Test suites group test cases into a single testable unit
     suite = unittest.TestLoader().loadTestsFromTestCase(TestCalculatorFunctions)
 
     unittest.TextTestRunner(verbosity=2).run(suite)
-        
 
-Tests can also be organized into suites in the if __name__ == "__main__": block
 
-Nose2
+Tests can also be organized into suites in the
+
+``if __name__ == "__main__":``
+
+block
+
+
+nose2
 -----
 
 Nose2 is the new nose. Nose is barely being maintained, and directs users to nose2.
@@ -263,7 +395,7 @@ Running your tests is as easy as
 ::
 
         $ nose2
-        
+
 
 http://nose2.readthedocs.org/en/latest/getting_started.html#running-tests
 
@@ -275,24 +407,31 @@ Many plugins exist for nose2, such as code coverage:
 Some plugins, such as coverage, must be additionally installed
 ::
 
-	$ pip install cov-core
-        # now it can be used
-        $ nose2 --with-coverage
-        
+    $ pip install cov-core
+    # now it can be used
+    $ nose2 --with-coverage
+
 .. nextslide::
 
 Some of many useful plugins installed by default:
 
-- Test Generators  http://nose2.readthedocs.org/en/latest/plugins/generators.html
-- Parameterized Tests  http://nose2.readthedocs.org/en/latest/plugins/parameters.html
-- Stop after first error or failuer -F
+- Test Generators
+
+  http://nose2.readthedocs.org/en/latest/plugins/generators.html
+
+- Parameterized Tests
+
+  http://nose2.readthedocs.org/en/latest/plugins/parameters.html
+
+- Stop after first error or failure -F
+
 - Drop in to the debugger on failure -D
 
 
 running coverage
 ----------------
 
-Install with Pip. Written by Ned Batchelder
+Install with ``pip``. Written by Ned Batchelder
 
 To run coverage on your test suite:
 
@@ -318,6 +457,7 @@ To find out coverage across the standard library, add -L:
 
       -L, --pylib           Measure coverage even inside the Python installed
                             library, which isn't done by default.
+
 
 branch coverage
 ---------------
@@ -352,27 +492,28 @@ human in a machine testable way
 ::
 
     def square(x):
-        """Squares x.
+        """
+        Squares x.
 
         >>> square(2)
         4
         >>> square(-2)
         4
         """
-
         return x * x
 
 ::
 
         python -m doctest -v example.py
-        
+
+.. nextslide::
 
 Now generate documentation, using epydoc for example:
 
 ::
 
         $ epydoc example.py
-        
+
 
 http://docs.python.org/3/library/doctest.html
 
@@ -399,7 +540,7 @@ single test with nose:
 ::
 
 	nose2 calculator_test.TestCalculatorFunctions.test_add
-            
+
 
 Exercises
 ---------
@@ -412,10 +553,15 @@ Exercises
 -  Add doctests to calculator\_functions.py
 
 
-.. nextslide::
+================
+Context managers
+================
 
-One more Python feature before getting back to testing.. 
-the "with" statement
+.. rst-class:: medium
+
+    One more Python feature before getting back to testing...
+
+    the ``with`` statement
 
 
 Context managers via the "with" statement
@@ -426,9 +572,9 @@ you have been using context managers:
 
 ::
 
-        with open("file.txt", "w") as f:
-            f.write("foo")
-        
+    with open("file.txt", "w") as f:
+        f.write("foo")
+
 
 A context manager is just a class with \_\_enter\_\_ and \_\_exit\_\_
 methods defined to handle setting up and tearing down the context
@@ -449,7 +595,7 @@ traceback) on a class
 If \_\_exit\_\_ returns a true value, a caught exception is not
 re-raised
 
-For example :
+For example:
 
 ::
 
@@ -477,7 +623,7 @@ For example :
                 f.write("foo")
 
             time.sleep(5)
-        
+
 
 http://www.python.org/dev/peps/pep-0343/
 
@@ -495,7 +641,7 @@ which occur in the context and continues execution
 
         print("should still reach this point")
 
-        
+
 
 Why might using a context manager be better than implementing this with
 try..except..finally ?
@@ -513,13 +659,15 @@ command line utility a subject, and it will return a definition.
 ::
 
         ./define.py  Robot | html2text
-        
+
 
 How can we test our application code without abusing (and waiting for)
 Wikipedia?
 
+Using Mock objects
+------------------
+
 Using Mock objects to test an application with service dependencies
--------------------------------------------------------------------
 
 Mock objects replace real objects in your code at runtime during test
 
@@ -552,7 +700,7 @@ code underneath
         mock_object.foo.side_effect = Exception
         mock_object.foo()
 
-        
+
 Easy mocking with mock.patch
 ----------------------------
 
@@ -580,7 +728,7 @@ Using patch
         with patch.object(Wikipedia, 'article') as mock_method:
             article = Definitions.article("Robot")
             mock_method.assert_called_once_with("Robot")
-        
+
 
 http://www.voidspace.org.uk/python/mock/patch.html
 
