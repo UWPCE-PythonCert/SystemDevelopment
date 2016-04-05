@@ -1,159 +1,84 @@
-.. raw:: html
+.. _testing
 
-   <div class="deck-container">
+#######
+Testing
+#######
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: System Development with Python
-   :name: system-development-with-python
-
-.. rubric:: Week 1 :: unit testing review / coverage
-   :name: week-1-unit-testing-review-coverage
-
-Joseph Sheedy
-
-*joseph.sheedy@gmail.com*
+System Development with Python
 
 Git repository:
-https://github.com/UWPCE-PythonCert/SystemDevelopment2015
 
-.. raw:: html
+https://github.com/UWPCE-PythonCert/SystemDevelopment
 
-   </div>
+What is testing?
+----------------
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Unit testing review, with coverage
-   :name: unit-testing-review-with-coverage
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Example application, calculator.py
-   :name: example-application-calculator.py
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: What is testing?
-   :name: what-is-testing
 
 Code which runs your application in as close to a real environment as
 feasible and validates its behavior
 
-In dynamic interpreted languages like Python even show stopping syntax
-errors can hide until discovered in runtime, usually at the wrongtime.
+.. nextslide::
 
-::
-
-    #!/usr/bin/env python
-
-    def func():
-        jfdkls
-
-    while True:
-        print "> ",
-        if raw_input() == 'x':
-            func()
-            
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Levels of testing:
-   :name: levels-of-testing
+Terminology of testing
+----------------------
 
 -  Unit tests
 -  High level system tests
 -  Integration tests
 -  Black box / White box testing
 
-.. raw:: html
+.. nextslide::
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Unit testing
-   :name: unit-testing
+Unit testing
+------------
 
 -  Test smallest discrete units of source code
 -  Tests should be independent of each other
--  Easier to separate from required resources through fixtures and
+-  Can separate tests from required resources through fixtures and
    mocking
 -  Automatable
 -  Integrates with development process
 
+.. nextslide::
+
 What should be tested?
+----------------------
 
 The percentage of code which gets run in a test is known as the
 coverage.
 
 100% coverage is an ideal to strive for. But the decision on when and
 what to test should take into account the volatility of the project.
-Tests require maintenance.
 
-.. raw:: html
 
-   </div>
+.. nextslide::
 
-.. raw:: html
+Unit-testing tools
+------------------
 
-   <div class="section slide">
-
-.. rubric:: Testing with Python
-   :name: testing-with-python
-
-Unit testing tools
-
--  unittest, the test framework that ships with Python. Started life as
-   PyUnit.
--  nose, a test runner which integrates with unittest
+-  unittest, the test framework that ships with Python. Started life as PyUnit. 
+   http://docs.python.org/3/library/unittest.html
+-  nose, a test runner which integrates with unittest, making it nicer and easier
+   http://nose.readthedocs.org/en/latest/
 -  mock, an object mocking library. Ships with Python 3.3+
+   http://www.voidspace.org.uk/python/mock/
+-  pytest, an alternative to unittest, which you should be pretty familiar with now
+   http://pytest.org/latest/
 
-http://docs.python.org/2/library/unittest.html
 
-http://nose.readthedocs.org/en/latest/
+About Unit-testing
+------------------
 
-http://www.voidspace.org.uk/python/mock/
+1. Tests should be independent.
+2. Tests do not run in order, which shouldn't matter, see point 1.
+3. Test fixtures are available to do any setup needed for tests.
 
-.. raw:: html
+unittest.TestCase anatomy
+-------------------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: unittest.TestCase anatomy
-   :name: unittest.testcase-anatomy
-
-create a new subclass of unittest.TestCase
-
-name test methods test\_foo so the test runner finds them
-
-make calls to the self.assert\* family of methods to validate results
+* create a new subclass of unittest.TestCase
+* name test methods test\_foo so the test runner finds them
+* make calls to the self.assert\* family of methods to validate results
 
 ::
 
@@ -169,19 +94,13 @@ make calls to the self.assert\* family of methods to validate results
 
         def test_len(self):
             self.assertEqual(len('foo'), 3)
-
         
+    if __name__ == '__main__':
+	unittest.main()
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: assert methods
-   :name: assert-methods
+Assert Methods
+---------------
 
 TestCase contains a number of methods named assert\* which can be used
 for validation, here are a few common ones:
@@ -197,16 +116,9 @@ See a full list at
 http://docs.python.org/2/library/unittest.html#assert-methods or
 dir(unittest.TestCase)
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Fixtures: Setting up your tests for success (or failure!)
-   :name: fixtures-setting-up-your-tests-for-success-or-failure
+Fixtures: Setting up your tests for success
+-------------------------------------------
+(or failure!)
 
 Test fixtures are a fixed baseline for tests to run from consistently,
 also known as test context
@@ -222,45 +134,30 @@ unittest provides fixture support via these methods:
 -  (new in Python 2.7) addCleanup / doCleanups - called after tearDown,
    in case a test throws an exception
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Testing floating point values
-   :name: testing-floating-point-values
+Testing floating point values
+-----------------------------
 
 Why can't we just test if .5 == .5 ?
 
 ::
 
             
-    3*.15 == .45
-    Out[19]: False
+    In [1]: 3*.15 == .45
+    Out[1]: False
 
-    In [24]: 3*.15 * 10 / 10  == .45
-    Out[24]: True
-            
-            
+    In [2]: 3*.15
+    Out[2]: 0.44999999999999996
+
+    In [3]: 3*.15 * 10 / 10  == .45
+    Out[3]: True   
 
 There are an infinite number of floating point numbers, so they are
 stored as an approximation in computing hardware.
 
-https://docs.python.org/2/tutorial/floatingpoint.html
+https://docs.python.org/3/tutorial/floatingpoint.html
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: levels of precision of floating point
-   :name: levels-of-precision-of-floating-point
+levels of precision of floating point
+-------------------------------------
 
 Floating point numbers are stored in `IEEE
 754 <http://en.wikipedia.org/wiki/IEEE_floating_point>`__ 64-bit double
@@ -283,19 +180,12 @@ So we can count on 16 digits of precision in decimal:
 
     # with repeated operations, the errors eventually build up: here's multiplying by '1' 10 billion times:
     In [64]: x=1
-    In [69]: for i in xrange(10000000000): x *= (.1 + .2)/.3
-            
+    In [69]: for i in range(10000000000): x *= (.1 + .2)/.3        
+    # quite a few minutes later...
+    Out [69]: 
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: assertAlmostEqual
-   :name: assertalmostequal
+assertAlmostEqual
+-----------------
 
 Verifies that two floating point values are close enough to each other.
 Add a places keyword argument to specify the number of significant
@@ -316,18 +206,9 @@ digits.
         def test_almost_equal(self):
             self.assertAlmostEqual(3*.15, .45, places=7)
 
-        
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Running your tests
-   :name: running-your-tests
+  
+Running your tests
+------------------
 
 Call unittest.main() right in your module
 
@@ -340,16 +221,8 @@ Call unittest.main() right in your module
 If it gets cumbersome with many TestCases, organize the tests into a
 test suite
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Test Suites
-   :name: test-suites
+Test Suites
+-----------
 
 Test suites group test cases into a single testable unit
 
@@ -364,16 +237,8 @@ Test suites group test cases into a single testable unit
     unittest.TextTestRunner(verbosity=2).run(suite)
         
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: nose
-   :name: nose
+Nose
+----
 
 A test runner which autodiscovers test cases
 
@@ -395,16 +260,8 @@ https://nose.readthedocs.org/en/latest/finding_tests.html
 \*defined as self.testMatch =
 re.compile(r'(?:^\|[\\\\b\_\\\\.%s-])[Tt]est' % os.sep)
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: nose plugins
-   :name: nose-plugins
+nose plugins
+------------
 
 Many plugins exist for nose, such as code coverage:
 
@@ -429,16 +286,8 @@ independent of each other:
         $ nosetests --processes=5
         
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: running coverage
-   :name: running-coverage
+running coverage
+----------------
 
 To run coverage on your test suite:
 
@@ -465,16 +314,8 @@ To find out coverage across the standard library, add -L:
       -L, --pylib           Measure coverage even inside the Python installed
                             library, which isn't done by default.
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: branch coverage
-   :name: branch-coverage
+branch coverage
+---------------
 
 consider the following code:
 
@@ -482,8 +323,8 @@ consider the following code:
 
     x = False  # 1
     if x:      # 2
-        print "in branch"  # 3
-    print "out of branch"  # 4
+        print("in branch")  # 3
+    print("out of branch")  # 4
 
 We want to make sure the branch is being bypassed correctly in the False
 case
@@ -497,16 +338,8 @@ option to run
 
 http://nedbatchelder.com/code/coverage/branch.html
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Doctests
-   :name: doctests
+Doctests
+--------
 
 Tests placed in docstrings to demonstrate usage of a component to a
 human in a machine testable way
@@ -545,7 +378,7 @@ Now generate documentation, using epydoc for example:
         $ epydoc example.py
         
 
-http://docs.python.org/2/library/doctest.html
+http://docs.python.org/3/library/doctest.html
 
 http://www.python.org/dev/peps/pep-0257/
 
@@ -555,16 +388,9 @@ http://sphinx-doc.org/
 
 http://www.doxygen.org
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Test Driven Development (TDD)
-   :name: test-driven-development-tdd
+Test Driven Development (TDD)
+-----------------------------
 
 In TDD, the tests are written the meet the requirements before the code
 exists.
@@ -576,19 +402,11 @@ single test with nose:
 
 ::
 
-            nosetests calculator_test.py:TestCalculatorFunctions.test_add
+	nosetests calculator_test.py:TestCalculatorFunctions.test_add
             
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exercises
-   :name: exercises
+Exercises
+---------
 
 -  Add unit tests for each method in calculator\_functions.py
 -  Add fixtures via setUp/tearDown methods and setUpClass/tearDownClass
@@ -597,30 +415,15 @@ single test with nose:
 -  Fix any failures in the code
 -  Add doctests to calculator\_functions.py
 
-.. raw:: html
 
-   </div>
+.. nextslide::
 
-.. raw:: html
+One more Python feature before getting back to testing.. 
+the "with" statement
 
-   <div class="section slide">
 
-.. rubric:: One more Python feature before getting back to testing.. the
-   "with" statement
-   :name: one-more-python-feature-before-getting-back-to-testing..-the-with-statement
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Context managers via the "with" statement
-   :name: context-managers-via-the-with-statement
-
-Introduced in Python 2.5
+Context managers via the "with" statement
+-----------------------------------------
 
 If you've been opening files using "with" (and you probably should be),
 you have been using context managers:
@@ -640,16 +443,9 @@ context are executed no matter what happens
 This allows us to do things like setup/teardown and separate out
 exception handling code
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Writing a context manager
-   :name: writing-a-context-manager
+Writing a context manager
+-------------------------
 
 Define \_\_enter\_\_(self) and \_\_exit\_\_(self, type, value,
 traceback) on a class
@@ -689,16 +485,8 @@ For example :
 
 http://www.python.org/dev/peps/pep-0343/
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Context Manager exercise
-   :name: context-manager-exercise
+Context Manager exercise
+------------------------
 
 Create a context manager which prints information on all exceptions
 which occur in the context and continues execution
@@ -706,10 +494,10 @@ which occur in the context and continues execution
 ::
 
         with YourExceptionHandler():
-            print "do some stuff here"
+            print("do some stuff here")
             1/0
 
-        print "should still reach this point"
+        print("should still reach this point")
 
         
 
@@ -717,18 +505,11 @@ Why might using a context manager be better than implementing this with
 try..except..finally ?
 
 Also see the `contextlib
-module <http://docs.python.org/2/library/contextlib.html>`__
+module <http://docs.python.org/3/library/contextlib.html>`__
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Now we've got the tools to really test
-   :name: now-weve-got-the-tools-to-really-test
+Now we've got the tools to really test
+--------------------------------------
 
 Consider the application in the examples/wikidef directory. Give the
 command line utility a subject, and it will return a definition.
@@ -741,17 +522,8 @@ command line utility a subject, and it will return a definition.
 How can we test our application code without abusing (and waiting for)
 Wikipedia?
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Using Mock objects to test an application with service
-   dependencies
-   :name: using-mock-objects-to-test-an-application-with-service-dependencies
+Using Mock objects to test an application with service dependencies
+-------------------------------------------------------------------
 
 Mock objects replace real objects in your code at runtime during test
 
@@ -764,16 +536,8 @@ execution
 
 http://www.voidspace.org.uk/python/mock
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Mocks
-   :name: mocks
+Mocks
+-----
 
 The MagickMock class will keep track of calls to it so we can verify
 that the class is being called correctly, without having to execute the
@@ -785,25 +549,16 @@ code underneath
 
         mock_object = mock.MagicMock()
         mock_object.foo.return_value = "foo return"
-        print mock_object.foo.call_count
-        print mock_object.foo()
-        print mock_object.foo.call_count
+        print(mock_object.foo.call_count)
+        print(mock_object.foo())
+        print(mock_object.foo.call_count)
         # raise an exception by assigning to the side_effect attribute
         mock_object.foo.side_effect = Exception
         mock_object.foo()
 
         
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Easy mocking with mock.patch
-   :name: easy-mocking-with-mock.patch
+Easy mocking with mock.patch
+----------------------------
 
 patch acts as a function decorator, class decorator, or a context
 manager
@@ -812,16 +567,9 @@ Inside the body of the function or with statement, the target is patched
 with a new object. When the function/with statement exits the patch is
 undone
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Using patch
-   :name: using-patch
+Using patch
+-----------
 
 ::
 
@@ -840,40 +588,12 @@ undone
 
 http://www.voidspace.org.uk/python/mock/patch.html
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exercises
-   :name: exercises-1
+Exercises
+---------
 
 When define.py is given the name of a non-existant article, an exception
 is thrown.
 
 Add a new test that confirms this behavior
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div aria-role="navigation">
-
-`← <#>`__ `→ <#>`__
-
-.. raw:: html
-
-   </div>
-
- /
-
-Go to slide:
-
-.. raw:: html
-
-   </div>
