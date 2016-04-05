@@ -16,7 +16,7 @@ class TemporaryDirectory(object):
 
 with TemporaryDirectory("/tmp/foo") as dir:
     # write some temp data into dir
-    with open(os.path.join(dir, "foo.txt"), 'wb') as f:
+    with open(os.path.join(dir, "foo.txt"), 'w') as f:
         f.write("foo")
 
     time.sleep(5)

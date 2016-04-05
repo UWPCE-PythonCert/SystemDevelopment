@@ -5,7 +5,7 @@ class YourExceptionHandler(object):
         pass
 
     def __exit__(self, ex_type, value, traceback):
-        print "there was a %s error" % ex_type
+        print("there was a {} error".format(ex_type))
         if ex_type is ZeroDivisionError:
             return True
         else:
@@ -13,14 +13,14 @@ class YourExceptionHandler(object):
 
 
 with YourExceptionHandler():
-    print "do some stuff here"
+    print("do some stuff here")
     1 / 0
 
-print "should still reach this point"
+print("should still reach this point")
 
 with YourExceptionHandler():
-    print "do more"
+    print("do more")
     fasldkj
 
-print "you should not get here"
+print("you should not get here")
 

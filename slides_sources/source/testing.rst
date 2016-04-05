@@ -351,6 +351,11 @@ Call unittest.main() right in your module
         if __name__ == "__main__":
             unittest.main()
 
+	# or from the command line:
+	python -m unittest test_my_module  # with or without .py on end
+	python -m unittest test_my_module.TestClass  # particular class in a module
+	python -m unittest test_my_module.TestClass.test_method  # particular test
+
 
 If it gets cumbersome with many TestCases, organize the tests into a
 test suite
@@ -597,31 +602,28 @@ re-raised
 
 For example:
 
+.. nextslide::
+
 ::
 
         import os, random, shutil, time
 
         class TemporaryDirectory(object):
-            """A context manager for creating a temporary directory which gets destroyed on context exit"""
-
+            """A context manager for creating a temporary directory
+	       which gets destroyed on context exit"""
             def __init__(self,directory):
                 self.base_directory = directory
 
             def __enter__(self):
-                # set things up
                 self.directory = os.path.join(self.base_directory, str(random.random()))
-                os.makedirs(self.directory)
-                return self.directory
+                return os.makedirs(self.directory)
 
             def __exit__(self, type, value, traceback):
-                # tear it down
                 shutil.rmtree(self.directory)
 
         with TemporaryDirectory("/tmp/foo") as dir:
-            # write some temp data into dir
             with open(os.path.join(dir, "foo.txt"), 'wb') as f:
                 f.write("foo")
-
             time.sleep(5)
 
 
@@ -642,12 +644,39 @@ which occur in the context and continues execution
         print("should still reach this point")
 
 
+Also see the `contextlib
+module <http://docs.python.org/3/library/contextlib.html>`__
 
 Why might using a context manager be better than implementing this with
 try..except..finally ?
 
-Also see the `contextlib
-module <http://docs.python.org/3/library/contextlib.html>`__
+
+.. nextslide::
+
+For entire code block, see https://www.python.org/dev/peps/pep-0343/ (Specification)
+::
+
+   with EXPR as VAR:
+       BLOCK
+   # vs.
+   mgr = (EXPR)
+   exit = type(mgr).__exit__  # Not calling it yet
+   value = type(mgr).__enter__(mgr)
+   exc = True
+   try:
+       try:
+           VAR = value  # Only if "as VAR" is present
+	   BLOCK
+       except:
+           # The exceptional case is handled here
+	   exc = False
+	   if not exit(mgr, *sys.exc_info()):
+	       raise
+	   # The exception is swallowed if exit() returns true
+   finally:
+       # The normal and non-local-goto cases are handled here
+       if exc:
+           exit(mgr, None, None, None)
 
 
 Now we've got the tools to really test
@@ -658,7 +687,7 @@ command line utility a subject, and it will return a definition.
 
 ::
 
-        ./define.py  Robot | html2text
+        ./define.py Robot
 
 
 How can we test our application code without abusing (and waiting for)
@@ -737,7 +766,9 @@ Exercises
 ---------
 
 When define.py is given the name of a non-existant article, an exception
-is thrown.
+is thrown. This exception causes another exception to occur, and the whole thing
+is not very readable. Why does this happen?
 
-Add a new test that confirms this behavior
+Use what you learned last week about exceptions to throw a better exception, and 
+then add a new test that confirms this behavior.
 

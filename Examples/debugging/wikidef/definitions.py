@@ -4,5 +4,4 @@ class Definitions(object):
 
     @classmethod
     def article(cls, title):
-        response = Wikipedia.article(title)
-        return response
+        return Wikipedia.article(title)
