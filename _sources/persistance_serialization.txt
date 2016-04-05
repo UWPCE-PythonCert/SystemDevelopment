@@ -27,18 +27,18 @@ Overview
 Serialization
 -------------
 
-Today is less about concepts
+Today is less about concepts.
 
-More about learning to use a given module
+More about learning to use a given module.
 
-So less talk, more coding
+.. rst-class:: medium
 
-I'm focusing on methods available in the Python standard library
+  So less talk, more coding.
 
-Serialization is the process of putting your potentially complex
-(and nested) python data structures into a linear (serial) form .. i.e. a string of bytes.
+Today is focused on methods available in the Python standard library.
 
-The serial form can be saved to a file, pushed over the wire, etc.
+There are third party packages with more options as well.
+
 
 Persistence
 -----------
@@ -51,9 +51,15 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)
 
 http://wiki.python.org/moin/PersistenceTools
 
+
 =======================
 Python Specific Formats
 =======================
+
+.. rst-class:: medium
+
+  These are formats specific to python -- convenient to use, but not useful for interchange with other systems.
+
 
 Python Literals
 ---------------
@@ -92,7 +98,9 @@ Python Literal Example
     Out[54]: False
 
 
-You can save the string to a file and even use ``import``
+You can save the string to a file and even use ``import``.
+
+In fact, using a python file and importing it is a great way to handle configuration for your app -- very powerful and flexible.
 
 .. nextslide::
 
@@ -132,11 +140,12 @@ pretty print
      {'bar': 4.5, 'foo': 86},
      {'baz': 6.5, 'fun': 43}]
 
+This is a nice option if you want the saved form to be human readable / editable.
 
 Pickle
 ------
 
-Pickle is a binary format for python objects
+Pickle is a custom binary format for python objects.
 
 You can essentially dump any python object to disk (or string, or socket, or...
 
@@ -162,7 +171,7 @@ https://docs.python.org/3.5/library/pickle.html
 
   **Warning**
 
-The pickle module is not secure against erroneous or maliciously constructed data. Never unpickle data received from an untrusted or unauthenticated source.
+The pickle module is **not secure** against erroneous or maliciously constructed data. Never unpickle data received from an untrusted or unauthenticated source.
 
 ``pickle`` is cool because it can serialize virtually ANY object -- including your self-defined classes.
 
@@ -210,15 +219,19 @@ LAB
 
 Here are two datasets embedded in Python:
 
-:download:`add_book_data.py <../../Examples/persistance/add_book_data.py>`
+:download:`add_book_data.py <../../Examples/persistence/add_book_data.py>`
 and
-:download:`add_book_data_flat.py <../../Examples/persistance/add_book_data_flat.py>`
+:download:`add_book_data_flat.py <../../Examples/persistence/add_book_data_flat.py>`
+
+[also available in the class repo: ``Examples/persistence``]
+
+.. nextslide::
 
 They can be loaded with::
 
     from add_book_data import AddressBook
 
-They have address book data -- one with a nested dict, one "flat"
+They have address book data -- one with a nested dict, one "flat". Use the nested version for this exercise.
 
 * Write a module that saves the data as python literals in a file
 
@@ -232,10 +245,17 @@ They have address book data -- one with a nested dict, one "flat"
 
   - and accesses it one by one.
 
+**Write some tests to make sure its working!**
 
 ===================
 Interchange Formats
 ===================
+
+.. rst-class:: medium
+
+  These are formats suitable for interchanging data with other systems -- written in arbitrary other languages.
+
+  In other words: standard formats.
 
 INI
 ---
@@ -254,23 +274,23 @@ INI files
     int = 32
     ...
 
-
-
 Good for configuration data, etc.
 
 ConfigParser
 ------------
 
-Writing ``ini``  files:
+The ``configparser`` module provides tools for working with INI files:
+
+Writing:
 
 .. code-block:: python
 
     import configparser
     config = configparser.ConfigParser()
     config.add_section('Section1')
-    config.set('Section1', 'int', '15')
-    config.set('Section1', 'bool', 'true')
-    config.set('Section1', 'float', '3.1415')
+    config.set('Section1', 'an_integer', '15')
+    config.set('Section1', 'a_boolean', 'true')
+    config.set('Section1', 'a_float', '3.1415')
     # Writing our configuration file to 'example.cfg'
     config.write(open('example.cfg', 'w'))
 
@@ -285,11 +305,11 @@ Reading ``ini``  files:
     >>> config = configparser.ConfigParser()
     >>> config.read('example.cfg')
     >>> config.sections()
-    ['Section1', 'Section2']
-    >>> config.get('Section1', 'float')
+    ['Section1']
+    >>> config.get('Section1', 'a_float')
     '3.1415'
     >>> config.items('Section1')
-    [('int', '15'), ('bool', 'true'), ('float', '3.1415')]
+    [('an_integer', '15'), ('a_boolean', 'true'), ('a_float', '3.1415')]
 
 
 https://docs.python.org/3.5/library/configparser.html
@@ -305,21 +325,30 @@ Can use delimiters other than commas... (I like tabs better)
 
 Most useful for simple tabular data
 
-CSV module
-----------
+The CSV module
+--------------
 
 Reading ``CSV``  files:
 
-.. code-block:: python
+(uses: :download:`eggs.csv <../../Examples/persistence/eggs.csv>`)
 
-    >>> import csv
-    >>> spamReader = csv.reader( open('eggs.csv', 'r') )
-    >>> for row in spamReader:
-    ...     print(', '.join(row))
-    Spam, Spam, Spam, Spam, Spam, Baked Beans
-    Spam, Lovely Spam, Wonderful Spam
+.. code-block:: ipython
 
-``csv``  module takes care of string quoting, etc. for you
+    In [14]: import csv
+    In [17]: spam_reader = csv.reader(open('eggs.csv'),
+                                      skipinitialspace=True)
+    In [19]: for row in spam_reader:
+       ....:     print(row)
+    ['Spam', ' Spam', ' Spam', ' Spam', ' Spam', ' Baked Beans']
+    ['Spam', ' Lovely Spam', ' Wonderful Spam']
+
+
+The ``csv``  module takes care of string quoting, etc. for you.
+
+- This is a pretty big deal -- that can be a real pain!
+
+NOTE: ``skipinitialspace`` is False by default, which can mess up
+interpretting quotes correctly.
 
 https://docs.python.org/3.5/library/csv.html
 
@@ -338,22 +367,27 @@ Writing ``CSV``  files:
     >>>     spam_writer.writerow(['Spam', 'Spam, Wonderful spam..', 'Very-Wonderful Spam'])
 
 
-``csv``  module takes care of string quoting, etc for you
+The ``csv`` module takes care of string quoting, etc. for you.
+
+You can set the ``quoting`` attribute on the dialect object to control that.
 
 https://docs.python.org/3.5/library/csv.html
+
 
 JSON
 ----
 
-JSON (JavaScript Object Notation) is a subset of JavaScript syntax used as a lightweight data interchange format. LOTS of systems can read JSON -- notably browsers...
+JSON (JavaScript Object Notation) is a subset of JavaScript syntax used as a lightweight data interchange format.
 
-Python module has an interface similar to pickle
+**LOTS** of systems can read JSON -- notably browsers...
+
+Python module has an interface similar to ``pickle``
 
 Can handle the standard Python data types
 
 Specializable encoding/decoding for other types -- but I wouldn't do that!
 
-Presents a similar interface as ``pickle``
+Commonly used for configuration files, etc.
 
 http://www.json.org/
 
@@ -368,7 +402,6 @@ Python json module
     In [94]: s = json.dumps(data)
     Out[95]: '[{"this": 5, "that": 4}, {"eggs": 3.4, "spam": 7},
                {"foo": 86, "bar": 4.5}, {"fun": 43, "baz": 6.5}]'
-        # looks a lot like python literals...
     In [96]: data2 = json.loads(s)
     Out[97]:
     [{u'that': 4, u'this': 5},
@@ -379,9 +412,33 @@ Python json module
 
 (also ``json.dump() and json.load()`` for files)
 
-**NOTE:** JSON is less "rich" than python -- no tuples, no distiction between integers and floats, no comments!
+**NOTE:** JSON is less "rich" than python -- no tuples, no distinction between integers and floats, no comments! And keys can only be strings.
 
 https://docs.python.org/3.5/library/json.html
+
+LAB
+---
+
+Use the same addressbook data:
+
+::
+
+    # load with:
+    from add_book_data import AddressBook
+
+* Write a module that saves the data as an INI file
+
+   - and reads it back in
+
+* Write a module that saves the data as a CSV file
+
+   - and reads it back in
+
+( you'll need the "flat" version for this...)
+
+* Write a module that saves the data in JSON
+
+   - and reads it back in
 
 XML
 ---
@@ -406,11 +463,11 @@ https://docs.python.org/3.5/library/xml.etree.elementtree.html
 elementtree
 -----------
 
-elementtree is the simplest tool -- maps pretty directly to XML.
+``elementtree`` is the simplest tool -- maps pretty directly to XML.
 
 The Element type is a flexible container object, designed to store hierarchical data structures in memory.
 
-Essentially an in-memory XML -- can be read from / written-to XML
+Essentially an in-memory XML -- can be read from/written to XML
 
 an ``ElementTree``  is an entire XML doc
 
@@ -418,27 +475,6 @@ an ``Element``  is a node in that tree
 
 https://docs.python.org/3.5/library/xml.etree.elementtree.html
 
-LAB
----
-
-Use the same addressbook data:
-
-::
-
-    # load with:
-    from add_book_data import AddressBook
-
-* Write a module that saves the data as an INI file
-
-   - and reads it back in
-
-* Write a module that saves the data as a CSV file
-
-   - and reads it back in
-
-* Write a module that saves the data in JSON
-
-   - and reads it back in
 
 * Write a module that saves the data in XML
 
@@ -452,8 +488,12 @@ Use the same addressbook data:
 DataBases
 =========
 
-anydbm
-------
+A database is a system for storing and retrieving data -- usually in a filesystem.
+
+We usually think RDBMS and SQL -- but there are simpler systems.
+
+dbm
+---
 
 ``dbm``  is a generic interface to variants of the DBM database
 
@@ -463,11 +503,17 @@ Note: dbm will use the dbm system that works on your system -- this may be diffe
 
 https://docs.python.org/3.5/library/dbm.html
 
-dbm module
--------------
+**NOTE:** dbm is getting pretty old fashioned -- e.g. it doesn't handle Unicode
+
+It's here for completeness, but there are probably better options!
+
+
+the ``dbm`` module
+------------------
+
 Writing data:
 
-code-block:: python
+.. code-block:: python
 
     #creating a dbm file:
     import dbm
@@ -475,19 +521,20 @@ code-block:: python
 
 flag options are:
 
-* 'r' --  Open existing database for reading only (default)
+* 'r' -- Open existing database for reading only (default)
 * 'w' -- Open existing database for reading and writing
-* 'c' --  Open database for reading and writing, creating it if it doesn’t exist
+* 'c' -- Open database for reading and writing, creating it if it doesn’t exist
 * 'n' -- Always create a new, empty database, open for reading and writing
+
+**caution** -- these are different than the file open modes!
 
 https://docs.python.org/3.5/library/dbm.html
 
-anydbm module
--------------
+.. nextslide::
 
-``dbm``  provides dict-like interface:
+``dbm``  provides a dict-like interface:
 
-::
+.. code-block:: python
 
     import dbm
     db = dbm.open("dbm", "c")
@@ -501,13 +548,17 @@ anydbm module
     for key in db.keys():
         print(key, db[key])
 
+(a lot like ``shelve``, though theoretically compatible with other systems)
+
 http://docs.python.org/library/anydbm.html
 
 
 sqlite
 ------
 
-SQLite: C library provides a lightweight disk-based single-file database
+**SQLite:**
+
+a C library providing a lightweight disk-based single-file database
 
 Nonstandard variant of the SQL query language
 
@@ -533,7 +584,7 @@ https://docs.python.org/3.5/library/sqlite3.html
 
 Example:
 
-::
+.. code-block:: python
 
     import sqlite3
     # open a connection to a db file:
@@ -545,12 +596,11 @@ Example:
 
 https://docs.python.org/3.5/library/sqlite3.html
 
-python sqlite module
---------------------
+.. nextslide::
 
 Execute SQL with the cursor:
 
-::
+.. code-block:: python
 
     # Create table
     c.execute("'CREATE TABLE stocks (date text, trans text, symbol text, qty real, price real)'")
@@ -564,12 +614,11 @@ Execute SQL with the cursor:
 
 https://docs.python.org/3.5/library/sqlite3.html
 
-python sqlite module
---------------------
+.. nextslide::
 
 ``SELECT``  creates an cursor that can be iterated:
 
-::
+.. code-block:: python
 
     >>> for row in c.execute('SELECT * FROM stocks ORDER BY price'):
             print row
@@ -580,18 +629,17 @@ python sqlite module
 
 Or you can get the rows one by one or in a list:
 
-::
+.. code-block:: python
 
      c.fetchone()
      c.fetchall()
 
 
-python sqlite module
---------------------
+.. nextslide::
 
 Good idea to use the DB-API’s parameter substitution:
 
-::
+.. code-block:: python
 
     t = (symbol,)
     c.execute('SELECT * FROM stocks WHERE symbol=?', t)
@@ -605,6 +653,7 @@ Good idea to use the DB-API’s parameter substitution:
 
 
 http://xkcd.com/327/
+
 
 DB-API
 ------
@@ -621,9 +670,26 @@ Support for a large number of third-party Database drivers:
 
 http://www.python.org/dev/peps/pep-0249}
 
+LAB Extras:
+===========
+
+A few more things you could do:
+
+* Use pickle to save/reload a custom class of yours
+  (the Circle class from the first quarter?)
+
+* Try writing a json writer for a non-standard data type:
+  A custom class, or amore complex built-in?
+
+
+
+
 =============
 Other Options
 =============
+
+There are a lot of other possibilities outside the standard lib.
+
 
 Object-Relation Mappers
 -----------------------
@@ -633,16 +699,22 @@ Systems for mapping Python objects to tables
 Saves you writing that glue code (and the SQL)
 
 Usually deal with mapping to variety of back-ends:
- -- test with SQLite, deploy with PostreSQL
 
- SQL Alchemy
- -- http://www.sqlalchemy.org/
+- test with SQLite, deploy with PostreSQL
+
+SQL Alchemy
+
+- http://www.sqlalchemy.org/
 
 Django ORM
-https://docs.djangoproject.com/en/dev/topics/db/
+
+- https://docs.djangoproject.com/en/dev/topics/db/
+
 
 Object Databases
 ----------------
+
+(we'll be talking more about this in another class: :ref:`nosql`)
 
 Directly store and retrieve Python Objects.
 
@@ -650,11 +722,12 @@ Kind of like ``shelve``, but more flexible, and give you searching, etc.
 
 ZODB: (http://www.zodb.org/)
 
+
 NoSQL
 -----
 Map-Reduce, etc.
 
-....Big deal for "Big Data": Amazon, Google, etc.
+-- Big deal for "Big Data": Amazon, Google, etc.
 
 Document-Oriented Storage
 
@@ -672,18 +745,23 @@ Document-Oriented Storage
 LAB
 ---
 
-::
-    # load with:
-    from add_book_data import AddressBook
+Load data with:
 
-* Write a module that saves the data in a dbm datbase
+.. code-block:: python
+
+  from add_book_data import AddressBook
+
+* Write a module that saves the data in a dbm database
 
   - and reads it back in
 
-* Write a module that saves the data in an SQLite datbase
+* Write a module that saves the data in an SQLite database
 
   - and reads it back in
 
   - helps to know SQL here...
 
+Optional:
+
+* Do the same with a ORM of your choice.
 
