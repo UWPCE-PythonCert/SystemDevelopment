@@ -295,11 +295,9 @@ slide_theme_options = {
             'company': u'UW Professional and Continuing Education'
         },
         {
-            'name': 'Joseph Sheedy',
-            'email': u'PythonCHB@gmail.com',
-            'www': 'http://www.velotronheavyindustries.com/',
-            'github': 'https://github.com/jsheedy',
-            'company': u'Velotron Heavy Industries'
+            'name': 'Maria Mckinley',
+            'email': u'mariak@mariakathryn.net',
+            'company': u'UW Professional and Continuing Education'
         },
     ]
 }
