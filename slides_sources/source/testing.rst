@@ -1,4 +1,4 @@
-.. _testing
+.. _testing:
 
 #######
 Testing
@@ -17,17 +17,20 @@ What is testing?
 Code which runs your application in as close to a real environment as
 feasible and validates its behavior
 
-.. nextslide::
 
 Terminology of testing
 ----------------------
 
 -  Unit tests
--  High level system tests
 -  Integration tests
+-  High level system tests
+-  Acceptance tests
 -  Black box / White box testing
 
-.. nextslide::
+
+"V" model and tests levels
+--------------------------
+.. image:: /_static/test_v_model.png
 
 Unit testing
 ------------
@@ -58,10 +61,10 @@ Unit-testing tools
 
 -  unittest, the test framework that ships with Python. Started life as PyUnit. 
    http://docs.python.org/3/library/unittest.html
--  nose, a test runner which integrates with unittest, making it nicer and easier
-   http://nose.readthedocs.org/en/latest/
+-  nose2, a test runner which integrates with unittest, making it nicer and easier
+   http://nose2.readthedocs.org/en/latest/
 -  mock, an object mocking library. Ships with Python 3.3+
-   http://www.voidspace.org.uk/python/mock/
+   https://docs.python.org/dev/library/unittest.mock.html
 -  pytest, an alternative to unittest, which you should be pretty familiar with now
    http://pytest.org/latest/
 
@@ -87,10 +90,10 @@ unittest.TestCase anatomy
     class TestTest(unittest.TestCase):
 
         def setUp(self):
-            pass
+	    x = 2
 
         def test_add(self):
-            self.assertEqual(2+2, 4)
+            self.assertEqual(x+2, 4)
 
         def test_len(self):
             self.assertEqual(len('foo'), 3)
@@ -113,8 +116,13 @@ for validation, here are a few common ones:
 -  assertRaises(exc, fun, msg=None, \*args, \*\*kwargs)
 
 See a full list at
-http://docs.python.org/2/library/unittest.html#assert-methods or
-dir(unittest.TestCase)
+http://docs.python.org/3/library/unittest.html#assert-methods or
+dir(unittest.TestCase) or to get really fancy 
+
+::
+
+	print([i for i in dir(unittest.TestCase) if i.startswith('assert')])
+
 
 Fixtures: Setting up your tests for success
 -------------------------------------------
@@ -161,8 +169,8 @@ levels of precision of floating point
 
 Floating point numbers are stored in `IEEE
 754 <http://en.wikipedia.org/wiki/IEEE_floating_point>`__ 64-bit double
-precision format, which allows 1 bit for the sign, 11 bits for the
-exponent, and the remaining 52 for the fraction
+precision format, so 1 bit for the sign, 11 bits for the exponent, and 
+the remaining 52 for the fraction
 
 So we can count on 16 digits of precision in decimal:
 
@@ -178,11 +186,10 @@ So we can count on 16 digits of precision in decimal:
     In [41]: len('3000000000000000')
     Out[41]: 16
 
-    # with repeated operations, the errors eventually build up: here's multiplying by '1' 10 billion times:
+    # with repeated operations, the errors eventually build up: here's multiplying by '1' 10 million times:
     In [64]: x=1
-    In [69]: for i in range(10000000000): x *= (.1 + .2)/.3        
-    # quite a few minutes later...
-    Out [69]: 
+    In [69]: for i in range(10000000): x *= (.1 + .2)/.3
+    Out [69]: 1.000000002220446
 
 assertAlmostEqual
 -----------------
@@ -237,57 +244,55 @@ Test suites group test cases into a single testable unit
     unittest.TextTestRunner(verbosity=2).run(suite)
         
 
-Nose
-----
+Tests can also be organized into suites in the if __name__ == "__main__": block
+
+Nose2
+-----
+
+Nose2 is the new nose. Nose is barely being maintained, and directs users to nose2.
 
 A test runner which autodiscovers test cases
 
-Nose will find tests for you so you can focus on writing tests, not
+Nose2 will find tests for you so you can focus on writing tests, not
 maintaining test suites
 
-Any file matching the testMatch conditions\* will be searched for tests.
-They can't be executable!
+To find tests, nose2 looks for modules (such as python files) whose names start with ‘test’. In those modules, nose2 will load tests from all unittest.TestCase subclasses, as well as functions whose names start with ‘test’.
 
 Running your tests is as easy as
 
 ::
 
-        $ nosetests
+        $ nose2
         
 
-https://nose.readthedocs.org/en/latest/finding_tests.html
+http://nose2.readthedocs.org/en/latest/getting_started.html#running-tests
 
-\*defined as self.testMatch =
-re.compile(r'(?:^\|[\\\\b\_\\\\.%s-])[Tt]est' % os.sep)
 
-nose plugins
-------------
+nose2 plugins
+-------------
 
-Many plugins exist for nose, such as code coverage:
-
+Many plugins exist for nose2, such as code coverage:
+Some plugins, such as coverage, must be additionally installed
 ::
 
-        # requires full path to nosetests:
-        $ ~/virtualenvs/uwpce/bin/nosetests --with-coverage
+	$ pip install cov-core
+        # now it can be used
+        $ nose2 --with-coverage
         
+.. nextslide::
 
-or drop in to the debugger on failure
+Some of many useful plugins installed by default:
 
-::
+- Test Generators  http://nose2.readthedocs.org/en/latest/plugins/generators.html
+- Parameterized Tests  http://nose2.readthedocs.org/en/latest/plugins/parameters.html
+- Stop after first error or failuer -F
+- Drop in to the debugger on failure -D
 
-        $ nosetests --pdb
-        
-
-or parallel process your tests. Remember, unit tests should be
-independent of each other:
-
-::
-
-        $ nosetests --processes=5
-        
 
 running coverage
 ----------------
+
+Install with Pip. Written by Ned Batchelder
 
 To run coverage on your test suite:
 
@@ -357,15 +362,6 @@ human in a machine testable way
 
         return x * x
 
-    if __name__ == '__main__':
-        import doctest
-        doctest.testmod()
-
-
-        
-
-As of Python 2.6, the \_\_main\_\_ check is unnecessary:
-
 ::
 
         python -m doctest -v example.py
@@ -402,7 +398,7 @@ single test with nose:
 
 ::
 
-	nosetests calculator_test.py:TestCalculatorFunctions.test_add
+	nose2 calculator_test.TestCalculatorFunctions.test_add
             
 
 Exercises

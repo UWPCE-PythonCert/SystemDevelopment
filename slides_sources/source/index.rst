@@ -39,8 +39,8 @@ Session 2
 
   - :ref:`serialization`
 
-  - `Unit Testing and Coverage <html_slides/coverage/index.html>`_
-    (pep8,flake8)
+  - :ref:`testing`
+
 
 Session 3
 =========

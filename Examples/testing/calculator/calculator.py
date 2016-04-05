@@ -29,16 +29,16 @@ operator = sys.argv[2]
 y = sys.argv[3]
 
 if operator == "+":
-    print functions.add(x, y)
+    print(functions.add(x, y))
 
 elif operator == "-":
-    print functions.subtract(x, y)
+    print(functions.subtract(x, y))
 
 elif operator == "*":
-    print functions.multiply(x, y)
+    print(functions.multiply(x, y))
 
 elif operator == "/":
-    print functions.divide(x, y)
+    print(functions.divide(x, y))
 
 else:
-    print "invalid input"
+    print("invalid input")
