@@ -1,0 +1,561 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>Python Memory Management and Weak References &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="python-memory-management-and-weak-references">
+    <hgroup>
+      <h1>Python Memory Management and Weak References</h1>
+    </hgroup>
+    <article class="">
+      <p>Chris Barker</p>
+<p><code class="docutils literal"><span class="pre">PythonCHB&#64;gmail.com</span></code></p>
+<p><code class="docutils literal"><span class="pre">https://github.com/PythonCHB</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="memory-management">
+    <hgroup>
+      <h2>Memory Management</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li>You don't want python objects that are no longer in use taking up memory.</li>
+<li>You don't want to keep track of all that yourself.</li>
+<li>Most &quot;scripting languages&quot; or &quot;virtual machines&quot; have some sort of
+automated memory management</li>
+</ul>
+<p class="center medium">Many ways to do &quot;Garbage Collection&quot;</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="reference-counting">
+    <hgroup>
+      <h3>Reference Counting</h3>
+    </hgroup>
+    <article class="">
+      <dl class="docutils">
+<dt>How memory is managed is not part of the Python language spec:</dt>
+<dd><ul class="first last simple">
+<li>Jython uses the JVM</li>
+<li>Iron Python uses the CLR
+- Both are garbage collected</li>
+<li>PyPy uses <a class="reference external" href="https://pypy.readthedocs.org/en/release-2.4.x/garbage_collection.html#minimark-gc">Minimark</a></li>
+</ul>
+</dd>
+<dt>The CPython interpreter uses a reference counting scheme:</dt>
+<dd><ul class="first last simple">
+<li>Every time there is a new reference to a Python object, its reference
+count is increased</li>
+<li>Every time a reference is removed -- the count is decreased</li>
+<li>When the reference count goes to zero: the object is deleted
+(memory freed)</li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-makes-a-reference">
+    <hgroup>
+      <h3>What makes a reference?</h3>
+    </hgroup>
+    <article class="">
+      <ul>
+<li><p class="first">Binding to a name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">an_object</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Putting it in a container:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Passing it to a function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">func</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Most of the time, you don't need to think about this at all.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="how-do-i-see-what-s-going-on">
+    <hgroup>
+      <h3>How do I see what's going on?</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> This will always return one more than you'd expect, as passing the object to the function increases its refcount by one:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [6]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[6]: </span><span class="go">2</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>The Heisenberg Uncertainty Principle:</dt>
+<dd><ul class="first last simple">
+<li>you can't observe it without altering it</li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="playing-with-references">
+    <hgroup>
+      <h3>Playing with References</h3>
+    </hgroup>
+    <article class="">
+      <p>(live demo)</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [8]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[8]: </span><span class="go">2</span>
+
+<span class="gp">In [9]: </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="gp">In [10]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[10]: </span><span class="go">3</span>
+
+<span class="gp">In [11]: </span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">a</span><span class="p">]</span>
+
+<span class="gp">In [12]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[12]: </span><span class="go">4</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id2">
+    <hgroup>
+      <h3>Playing with References</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="k">del</span> <span class="n">b</span>
+
+<span class="gp">In [14]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[14]: </span><span class="go">3</span>
+
+
+<span class="gp">In [15]: </span><span class="k">del</span> <span class="n">l</span>
+
+<span class="gp">In [16]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[16]: </span><span class="go">2</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id3">
+    <hgroup>
+      <h3>Playing with References</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="go"># function local variables</span>
+
+<span class="go">    In [17]: def test(x):</span>
+<span class="go">       ....:     print &quot;x has a refcount of:&quot;, sys.getrefcount(x)</span>
+<span class="go">       ....:</span>
+
+<span class="go">    In [18]: sys.getrefcount(a)</span>
+<span class="go">    Out[18]: 2</span>
+
+<span class="go">    In [19]: test(a)</span>
+<span class="go">    x has a refcount of: 4</span>
+
+<span class="go">    In [20]: sys.getrefcount(a)</span>
+<span class="go">    Out[20]: 2</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id4">
+    <hgroup>
+      <h3>Playing with References</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="gp">In [22]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gh">Out[22]: </span><span class="go">428</span>
+</pre></div>
+</div>
+<p>WHOA!!</p>
+<p>(hint: interning....)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="the-power-of-reference-counting">
+    <hgroup>
+      <h3>The Power of Reference Counting</h3>
+    </hgroup>
+    <article class="">
+      <ul>
+<li><p class="first">You don't need to think about it most of the time.</p>
+</li>
+<li><p class="first">Code that creates objects doesn't need to delete them</p>
+</li>
+<li><p class="first">Objects get deleted right away</p>
+<q>
+. They can &quot;clean up&quot; on deletion (files, for instance) -- and it will happen right away.</q>
+</li>
+<li><p class="first">Performance is predictable</p>
+</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="the-limits-of-reference-counting">
+    <hgroup>
+      <h3>The Limits of Reference Counting</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Performance overhead on all operations. But the big one:</li>
+</ul>
+<p class="medium">Circular references</p>
+<p>If a python object somehow references itself -- i.e. it references another object that references the first
+object:</p>
+<p>You have a circular reference ...</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="circular-references">
+    <hgroup>
+      <h2>Circular References</h2>
+    </hgroup>
+    <article class="">
+      <div class="left highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,]</span> <span class="p">;</span> <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,]</span>
+
+<span class="gp">In [9]: </span><span class="n">l1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2</span><span class="p">);</span> <span class="n">l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+
+<span class="gp">In [10]: </span><span class="n">l1</span>
+<span class="gh">Out[10]: </span><span class="go">[1, [2, [...]]]</span>
+
+<span class="gp">In [11]: </span><span class="n">l2</span>
+<span class="gh">Out[11]: </span><span class="go">[2, [1, [...]]]</span>
+
+<span class="gp">In [12]: </span><span class="n">l1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gh">Out[12]: </span><span class="go">[2, [1, [...]]]</span>
+
+<span class="gp">In [13]: </span><span class="n">l2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="gh">Out[13]: </span><span class="go">[1, [2, [...]]]</span>
+</pre></div>
+</div>
+<p>(demo) -- <a class="reference download internal" href="_downloads/simple_circular.py"><code class="xref download docutils literal"><span class="pre">simple_circular.py</span></code></a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="the-garbage-collector">
+    <hgroup>
+      <h3>The Garbage Collector</h3>
+    </hgroup>
+    <article class="">
+      <p>As of Python 2.0 -- a garbage collector was added.</p>
+<blockquote>
+<div><ul class="simple">
+<li>(<a class="reference external" href="https://docs.python.org/2/library/gc.html">https://docs.python.org/2/library/gc.html</a>)</li>
+</ul>
+</div></blockquote>
+<p>It can find and clean up &quot;unreachable&quot; references.</p>
+<p>It is turned on by default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>In [1]: import gc
+In [2]: gc.isenabled()
+Out[2]: True
+</pre></div>
+</div>
+<p>or you can force it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>In [4]: gc.collect()
+Out[4]: 64
+</pre></div>
+</div>
+<p>But it can be slow, and doesn't always work!</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id5">
+    <hgroup>
+      <h3>The Garbage Collector</h3>
+    </hgroup>
+    <article class="">
+      <p>How does the garbage collector work?</p>
+<blockquote>
+<div><ul class="simple">
+<li>Not a full &quot;mark and sweep&quot; type.</li>
+</ul>
+</div></blockquote>
+<p>It searches for reference cycles -- then cleans those up.</p>
+<blockquote>
+<div><ul class="simple">
+<li>It doesn't have to bother checking non-container types (ints, strings, etc.)</li>
+<li>Faster, and not as dependent on having a clear &quot;root&quot; namespace.</li>
+</ul>
+</div></blockquote>
+<p>Details here:</p>
+<p><a class="reference external" href="http://arctrix.com/nas/python/gc/">http://arctrix.com/nas/python/gc/</a>  (or in the source!)</p>
+<p>Big issue: classes that define a <code class="docutils literal"><span class="pre">__del__</span></code> method are not cleaned up.</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">__del__</span></code> methods often act on references that may no be there if
+they are cleaned up in the wrong order.</li>
+</ul>
+</div></blockquote>
+<p>NOTE: you can work with gc.garbage() -- but tricky and messy</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="tools">
+    <hgroup>
+      <h2>Tools</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">If these objects are no longer &quot;reachable&quot; -- how do you find out what's going on?</p>
+<p class="left">We saw <code class="docutils literal"><span class="pre">sys.getrefcount()</span></code> -- but you need a reference to the object to use it.</p>
+<p class="left">You can see what the refcount is before you delete the last reference, but that isn't always easy.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="process-memory-use">
+    <hgroup>
+      <h3>Process Memory Use</h3>
+    </hgroup>
+    <article class="">
+      <p>A really coarse way to find a memory leak is to see if the process memory
+is growing.</p>
+<p>It can be subtle --python (and the OS) do tricks to re-use memory, etc.</p>
+<p>But if you have a &quot;real&quot; leak -- you'll see it. (Example to follow)</p>
+<p><a class="reference download internal" href="_downloads/memcount.py"><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a></p>
+<p>provides functions that report the memory use of the current running process.</p>
+<p>(*nix and Windows code)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id-checks">
+    <hgroup>
+      <h3>id checks</h3>
+    </hgroup>
+    <article class="">
+      <p>As it happens, the Python <code class="docutils literal"><span class="pre">id()</span></code> function returns a memory address.</p>
+<p>It's really dangerous, but that means we can examine an object if we know
+its <cite>id</cite>, even if we don't hold a reference to it.</p>
+<p>Bill Bumgarner wrote a nifty extension module that returns the python
+object pointed to by an id (memory address) -- &quot;di&quot;:</p>
+<p><a class="reference external" href="http://www.friday.com/bbum/2007/08/24/python-di/">http://www.friday.com/bbum/2007/08/24/python-di/</a></p>
+<p>I added a function that returns the reference count of an object from its id.</p>
+<p><a class="reference external" href="https://github.com/PythonCHB/di_refcount">https://github.com/PythonCHB/di_refcount</a></p>
+<p>NOTE: it would be a really bad idea to use these in production code!</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="examples">
+    <hgroup>
+      <h3>Examples</h3>
+    </hgroup>
+    <article class="">
+      <p><a class="reference download internal" href="_downloads/simple_circular_di.py"><code class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></code></a></p>
+<p>uses the ref_by_id() function to see what's going on with a circular
+reference and garbage collection.</p>
+<p>More real examples in iPython notebook:</p>
+<p><a class="reference download internal" href="_downloads/CircularReferenceExample.ipynb"><code class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></code></a></p>
+<p>Or: <a class="reference download internal" href="_downloads/circular.py"><code class="xref download docutils literal"><span class="pre">circular.py</span></code></a></p>
+<p><a class="reference download internal" href="_downloads/memcount.py"><code class="xref download docutils literal"><span class="pre">memcount.py</span></code></a> is a test
+file that show memory growth if circular references are not cleaned up.</p>
+<p>( <a class="reference download internal" href="_downloads/mem_check.py"><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a> )
+is code that reports process memory use.</p>
+<p>You can find this code in the main repo here:</p>
+<p><a class="reference external" href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/ref_counting">https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/ref_counting</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id1">
+    <hgroup>
+      <h3>Weak References</h3>
+    </hgroup>
+    <article class="">
+      <p>For times when you don't want to keep objects alive, Python provides
+&quot;weak references&quot; -- we saw this in the examples.</p>
+<p>(<a class="reference external" href="https://docs.python.org/2/library/weakref.html">https://docs.python.org/2/library/weakref.html</a>)</p>
+<ol class="arabic simple">
+<li>The built-in containers:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">WeakKeyDictionary</span></code></li>
+<li><code class="docutils literal"><span class="pre">WeakValueDictionary</span></code></li>
+<li><code class="docutils literal"><span class="pre">WeakSet</span></code></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><code class="docutils literal"><span class="pre">Proxy</span></code> objects</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>act much like regular references -- client code doesn't know the difference</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><code class="docutils literal"><span class="pre">WeakRef</span></code> objects</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>When you want to control what happens when the referenced object is gone.</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="exercise">
+    <hgroup>
+      <h2>Exercise</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">Build a &quot;weak cache&quot;:</p>
+<p class="left">For large objects that are expensive to create:</p>
+<ul class="left simple">
+<li>Use a WeakValueDictionay to hold references to (probably large) objects.</li>
+<li>When the client requests an object that doesn't exist -- one is created, returned, and cached (weakly).</li>
+<li>If the object is in the cache, it is returned.</li>
+<li>when no other references exist to the object, it is NOT retained by the cache.</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

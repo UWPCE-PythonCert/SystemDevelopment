@@ -1,0 +1,821 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>DEsktop GUI development: wxPython &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="desktop-gui-development-wxpython">
+    <hgroup>
+      <h1>DEsktop GUI development: wxPython</h1>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="introduction">
+    <hgroup>
+      <h2>Introduction</h2>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="desktop-guis">
+    <hgroup>
+      <h3>Desktop GUIs:</h3>
+    </hgroup>
+    <article class="">
+      <p>Traditional Graphical User Interface Applications}</p>
+<p>Run entirely on local machine -- interactive, interface and logic code in one process}</p>
+<p>Advantages:</p>
+<ul class="simple">
+<li>Easier to write -- all in one program</li>
+<li>Faster -- data/interface direct communication</li>
+<li>Faster display: direct to screen (or even OpenGL, etc.)</li>
+<li>Runs without network</li>
+<li>Save/Manipulate local files</li>
+<li>Familiar install/start/stop/run, etc.</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="python-options">
+    <hgroup>
+      <h3>Python Options</h3>
+    </hgroup>
+    <article class="">
+      <p>Multiple GUI frameworks available:</p>
+<ul class="simple">
+<li>PyGTK</li>
+<li>PyQT / PySide</li>
+<li>TkInter</li>
+<li>wxPython</li>
+<li>PyGame</li>
+<li>Native GUIs: Cocoa (PyObjC), PythonWin</li>
+<li>Kivy for touchscreen (mobile) platforms</li>
+<li>Some more minor ones...</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="id1">
+    <hgroup>
+      <h2>wxPython</h2>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id2">
+    <hgroup>
+      <h3>wxPython</h3>
+    </hgroup>
+    <article class="">
+      <p>Why wxPython?</p>
+<ul class="simple">
+<li>Python wrapper around C++ toolkit (wxWidget)</li>
+<li>wxWidgets is a wrapper around emph{native} toolkit:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Windows: Win32 (64)</li>
+<li>OS-X: Cocoa</li>
+<li>Linux: GTK</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Native look and feel</li>
+<li>License: (modified) LGPL</li>
+</ul>
+<p>Legacy: it was the best option for me when I first needed something...</p>
+<p>See <a class="reference external" href="http://www.wxpython.org">http://www.wxpython.org</a> for more information</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="installing">
+    <hgroup>
+      <h3>Installing</h3>
+    </hgroup>
+    <article class="">
+      <p>wxPython is a big complicated build:</p>
+<q>
+can't do </q>
+<cite>pip</cite></q>
+ or </q>
+<cite>easy_install</cite></q>
+<p>Windows or OS-X:</p>
+<p>use the binaries on <a class="reference external" href="http://wxpython.org/download.php">http://wxpython.org/download.php</a></p>
+<p>Linux: use your system's package</p>
+<p>NOTE: there are some issues with some packages:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">May be old version</p>
+</li>
+<li><p class="first">May use standard wx build -- more crash prone!</p>
+<q>
+(some run-time checking turned off)</q>
+</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="versions">
+    <hgroup>
+      <h3>Versions</h3>
+    </hgroup>
+    <article class="">
+      <p><a href="#id3"><span class="problematic" id="id4">``</span></a>Stable'' version: 2.8.12.1}</p>
+<p>(<a href="#id5"><span class="problematic" id="id6">``</span></a>stable'' means stable API, not less likely to crash)</p>
+<p><a href="#id7"><span class="problematic" id="id8">``</span></a>Development'' version: 2.9.4.0}</p>
+<p>(Under active development, API may change (but not much)</p>
+<p>wx project very slow to do official releases -- You probably want to use the development version: it's getting more attention</p>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a>Phoenix'': next generation version: new bindings, Py3 support, etc.</p>
+<p>-- Still experimental</p>
+<p><a class="reference external" href="http://wiki.wxpython.org/ProjectPhoenix">http://wiki.wxpython.org/ProjectPhoenix</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="documentation">
+    <hgroup>
+      <h3>Documentation</h3>
+    </hgroup>
+    <article class="">
+      <p><a href="#id11"><span class="problematic" id="id12">``</span></a>Docs and Demos'': download these!</p>
+<p><a href="#id13"><span class="problematic" id="id14">``</span></a>wxPython Demo'' -- run this!</p>
+<p>Examples of every Widget available</p>
+<p>Primary wx docs:</p>
+<p>Written for C++, with Python notes...</p>
+<p><a class="reference external" href="http://wxpython.org/onlinedocs.php">http://wxpython.org/onlinedocs.php</a>
+This may help: <a class="reference external" href="http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers">http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers</a></p>
+<p>Semi-experimental Sphinx docs:</p>
+<p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/">http://xoomer.virgilio.it/infinity77/wxPython/</a></p>
+<p>The wxPython wiki: lots of good stuff here</p>
+<p><a class="reference external" href="http://wiki.wxpython.org/">http://wiki.wxpython.org/</a></p>
+<p>%-------------------------------
+Some starting points
+----------------------</p>
+<p>How to learn wxPython}
+{<a class="reference external" href="http://wiki.wxpython.org/How%20to%20Learn%20wxPython">http://wiki.wxpython.org/How%20to%20Learn%20wxPython</a>}</p>
+<p>wxPython Style Guide}
+{<a class="reference external" href="http://wiki.wxpython.org/wxPython%20Style%20Guide">http://wiki.wxpython.org/wxPython%20Style%20Guide</a>}</p>
+<p>The wxpython-users mailing list is a great resource (and great community):}\
+{<a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/wxpython-users">https://groups.google.com/forum/?fromgroups#!forum/wxpython-users</a>}</p>
+<p>My own repository of samples:}
+{<a class="reference external" href="https://github.com/PythonCHB/wxPythonDemos">https://github.com/PythonCHB/wxPythonDemos</a>}</p>
+<p>%-------------------------------
+Pythonic code:}</p>
+<p>Over the years, wxPython has grown a number of things to make it more <a href="#id15"><span class="problematic" id="id16">``</span></a>pythonic'' -- hide some of that C++ legacy}</p>
+<p>Properties:}</p>
+<p>The C++ classes are full of getters and setters:}
+..code-block:: python
+wxTextCtrl::SetValue
+wxTextCtrl::GetValue</p>
+<p>These methods have been translated into properties for Python}</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MyTextCtrl</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="n">some_string</span>
+<span class="n">another_string</span> <span class="o">=</span> <span class="n">wxTextCtrl</span><span class="o">.</span><span class="n">Value</span>
+</pre></div>
+</div>
+<p>(The Get/Set versions are still there, but it's klunkier code)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="pythonic-code">
+    <hgroup>
+      <h3>Pythonic code:</h3>
+    </hgroup>
+    <article class="">
+      <p>Other Python options: some specific wx types can be accessed with standard python types:</p>
+<p><cite>wxPoint</cite> --- <cite>(x,y)</cite> ( tuple )</p>
+<p><cite>wx.List</cite> --- <cite>[1,2,3]</cite> (python list)</p>
+<p><cite>wxSize</cite> --- <cite>(w,h)</cite> (tuple)</p>
+<p>...</p>
+<p>Using these makes your code cleaner and more pythonic</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="basic-structure">
+    <hgroup>
+      <h2>Basic Structure</h2>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="event-driven-programming">
+    <hgroup>
+      <h3>Event-Driven programming</h3>
+    </hgroup>
+    <article class="">
+      <p>On app startup, the .MainLoop() method is called.</p>
+<p>The mainloop takes control -- monitoring for events, then dispatching them</p>
+<p>Events can come from the system, or user interaction: keyboard, mouse, etc.</p>
+<p>All the work of your app is done in response to events</p>
+<p>You only need to response to (Bind) the events you care about</p>
+<p>Not so different than a web app, except events are finer-grained
+(every mouse move, etc.)</p>
+<p>%-------------------------------
+wx.Window
+---------</p>
+<p>Pretty much everything you see on the screen is a <cite>wx.Window</cite>}</p>
+<p>It is the superclass for all the <a href="#id17"><span class="problematic" id="id18">``</span></a>widgets'', <a href="#id19"><span class="problematic" id="id20">``</span></a>controls'', or whatever you want to call them}</p>
+<p>It is essentially a rectangle on the screen that catches events}</p>
+<p>You generally don't use it by iteself, though you may derive from it to make a new widget}</p>
+<p>{large(Historical Note: <a href="#id62"><span class="problematic" id="id63">|wxWidgets|</span></a> was called <a href="#id64"><span class="problematic" id="id65">|wxWindows|</span></a> -- until Microsoft threatened to sue them.)}</p>
+<p>wx.Window}</p>
+<p>Since everything is a <cite>wx.Window</cite>, it's good to know its methods and signature:</p>
+<p>..code-block:: python</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __init__(parent,</dt>
+<dd>id=wx.ID_ANY,
+pos=wx.DefaultPosition,
+size=wx.DefaultSize,
+style=0,
+name=wx.PanelNameStr)</dd>
+</dl>
+<p>parent (wx.Window)
+id (int)
+pos (wx.Point)
+size (wx.Size)
+style (long)
+name (string)</p>
+</div></blockquote>
+<p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html">http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="wx-window">
+    <hgroup>
+      <h3>wx.Window</h3>
+    </hgroup>
+    <article class="">
+      <p>Methods types:</p>
+<ul class="simple">
+<li>Appearance: Colors, Fonts, Labels, Styles</li>
+<li>Geometry: Size, Position, IsShown, Move, etc</li>
+<li>Layout: Sizers, etc.</li>
+<li>Many others!</li>
+</ul>
+<p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html">http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id21">
+    <hgroup>
+      <h3>Event-Driven programming</h3>
+    </hgroup>
+    <article class="">
+      <p>On app startup, the .MainLoop() method is called.</p>
+<p>The mainloop takes control -- monitoring for events, then dispatching them</p>
+<p>Events can come from the system, or user interaction: keyboard, mouse, etc.</p>
+<p>All the work of your app is done in response to events</p>
+<p>You only need to response to (Bind) the events you care about</p>
+<p>Not so different than a web app, except events are finer-grained</p>
+<p>(every mouse move, etc.)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="wx-app">
+    <hgroup>
+      <h3>wx.App</h3>
+    </hgroup>
+    <article class="">
+      <p>Every wx app has a single wx.App instance:</p>
+<dl class="docutils">
+<dt>..code-block:: python</dt>
+<dd>app = wx.App(False)
+frame = DemoFrame(None, title=&quot;Micro App&quot;)
+frame.Show()
+app.MainLoop()</dd>
+</dl>
+<p>(the <cite>False</cite> means: <a href="#id22"><span class="problematic" id="id23">``</span></a>don't re-direct stdout to a Window'')</p>
+<p>And you almost always start the <cite>MainLoop</cite></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="wx-frame">
+    <hgroup>
+      <h3>wx.Frame</h3>
+    </hgroup>
+    <article class="">
+      <p><cite>wx.Frame</cite> is a <a href="#id24"><span class="problematic" id="id25">``</span></a>top level'' Window: One with a title bar, min-max buttons,etc.</p>
+<p>Most apps have a single <cite>wx.Frame</cite> -- central interaction with the app.</p>
+<p>This is where menu bars, etc are placed, and often the core GUI logic of the app.</p>
+<p>..code-block:: python
+class TestFrame(wx.Frame):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __init__(self, <a href="#id26"><span class="problematic" id="id27">*</span></a>args, <a href="#id28"><span class="problematic" id="id29">**</span></a>kwargs):</dt>
+<dd>kwargs.setdefault('title', &quot;Simple test App&quot;)
+wx.Frame.__init__(self, <a href="#id30"><span class="problematic" id="id31">*</span></a>args, <a href="#id32"><span class="problematic" id="id33">**</span></a>kwargs)</dd>
+</dl>
+</div></blockquote>
+<p>demo: <cite>codebasic_app_1.py</cite></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="controls">
+    <hgroup>
+      <h2>controls</h2>
+    </hgroup>
+    <article class="">
+      <p>%-------------------------------
+Menus}</p>
+<p>A <cite>wx.Frame</cite> has a menu bar you can add items to:}</p>
+<dl class="docutils">
+<dt>..code-block:: python</dt>
+<dd><p class="first"># create the menu bar object
+menuBar = wx.MenuBar()</p>
+<p># add a menu to it
+fileMenu = wx.Menu()</p>
+<p># add an item to the menu
+openMenuItem = fileMenu.Append(wx.ID_ANY, &quot;&amp;Open&quot;, &quot;Open a file&quot; )
+#bind a handler to the menu event
+self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)</p>
+<p class="last">self.SetMenuBar(menuBar)</p>
+</dd>
+</dl>
+<p>demo: <cite>codebasic_app_2.py</cite></p>
+<p>%-------------------------------
+Event Handlers}</p>
+<p>Event handlers have a common signature:}</p>
+<dl class="docutils">
+<dt>..code-block:: python</dt>
+<dd><dl class="first last docutils">
+<dt>def onOpen(self, evt=None):</dt>
+<dd>print &quot;open menu selected&quot;
+self.app_logic.file_open()</dd>
+</dl>
+</dd>
+</dl>
+<p>The second parameter is the <cite>wx.Event</cite> object that initiated the call -- it holds information about the event that can be useful}</p>
+<p>I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.}</p>
+<p>demo: <cite>codebasic_app_2.py</cite></p>
+<p>%-------------------------------
+Common Dialogs}</p>
+<p>wxPython provides a number of common Dialogs. These wrap the native ones where possible for a native look and feel.}</p>
+<q>
+item </q>
+<cite>wx.MessageDialog</cite></q>
+
+item </q>
+<cite>wx.ColourDialog</cite></q>
+
+item </q>
+<cite>wx.FileDialog</cite></q>
+
+item </q>
+<cite>wx.PageSetupDialog</cite></q>
+
+item </q>
+<cite>wx.FontDialog</cite></q>
+
+item </q>
+<cite>wx.DirDialog</cite></q>
+
+item </q>
+<cite>wx.SingleChoiceDialog</cite></q>
+
+item </q>
+<cite>wx.TextEntryDialog</cite></q>
+
+item ...</q>
+<p>These do pretty much what you'd expect...}</p>
+<p>%-------------------------------
+wx.FileDialog}</p>
+<p>Example use of a common dialog: <cite>wx.FileDialog</cite>}\</p>
+<p>..code-block:: python
+dlg = wx.FileDialog(self,</p>
+<q>
+message=&quot;Save file as ...&quot;,
+defaultDir=os.getcwd(),
+defaultFile=&quot;&quot;,
+wildcard=wildcard,
+style=wx.SAVE )</q>
+<dl class="docutils">
+<dt>if dlg.ShowModal() == wx.ID_OK:</dt>
+<dd>path = dlg.GetPath()</dd>
+<dt>else:</dt>
+<dd>print &quot;The file dialog was canceled before anything was selected&quot;</dd>
+</dl>
+<p>dlg.Destroy()</p>
+<p>example: <cite>code/basic_app_3.py</cite></p>
+<p>%-------------------------------
+Basic Widgets}</p>
+<p>All the basic widgets (controls) you'd expect are there:}</p>
+<q>
+item Buttons
+item TextCtrl (Text Control)
+item Check Boxes
+item List Box
+item Combo Box
+item Slider
+item Spin Control
+item ....</q>
+<p>Way too many to list here!}</p>
+<p>See the docs and the Demo to find the one you need}</p>
+<p>%-------------------------------
+Using a Control}</p>
+<p>A Button is about as simple as it gets}</p>
+<p>{<cite>__init__(parent, id, label=&quot;&quot;, pos=wx.DefaultPosition, ...)</cite> }</p>
+<p>Mostly the same as wx.Window, and other controls....}</p>
+<p>..code-block:: python
+## add just a single button:
+self.theButton = wx.Button(self, label=&quot;Push Me&quot;)
+self.theButton.Bind(wx.EVT_BUTTON, self.onButton)</p>
+<p>## and give it an event handler
+def onButton(self, evt=None):</p>
+<q>
+print &quot;You pushed the button!&quot;</q>
+<p>code: <cite>codebasic_app_4.py</cite></p>
+<p>%-------------------------------
+wx.Panel}</p>
+<p>A <cite>wx.Panel</cite> is a <cite>wx.Window</cite> that you can put other controls on}</p>
+<p>It supplies nifty things like tab traversal, etc.}</p>
+<p>You emph{can} put controls right on a <cite>wx.Frame</cite> (we just did it), but a wx.Panel provided extra features, the <a href="#id34"><span class="problematic" id="id35">``</span></a>normal'' look, and helps you organize and re-use your code}</p>
+<p>Mostly the same as wx.Window, and other controls....}</p>
+<p>%-------------------------------
+wx.Panel}</p>
+<p>..code-block:: python
+class ButtonPanel(wx.Panel):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __init__(self, <a href="#id36"><span class="problematic" id="id37">*</span></a>args, <a href="#id38"><span class="problematic" id="id39">**</span></a>kwargs):</dt>
+<dd><p class="first">wx.Panel.__init__(self, <a href="#id40"><span class="problematic" id="id41">*</span></a>args, <a href="#id42"><span class="problematic" id="id43">**</span></a>kwargs)</p>
+<p class="last">self.theButton = wx.Button(self, label=&quot;Push Me&quot;)
+self.theButton.Bind(wx.EVT_BUTTON, self.onButton)</p>
+</dd>
+<dt>def onButton(self, evt=None):</dt>
+<dd>print &quot;You pushed the button!&quot;</dd>
+</dl>
+</div></blockquote>
+<p>And use it in the Frame:
+..code-block:: python</p>
+<q>
+self.buttonPanel = ButtonPanel(self)</q>
+<p>code: <cite>codebasic_app_5.py</cite></p>
+<p>%-------------------------------
+Control Layout}</p>
+<p>With more than one control, you need to figure out how to place them
+and how big to make them}</p>
+<p>You may have noticed that <cite>wx.Window</cite> takes <cite>pos</cite> and <cite>size</cite> parameters}</p>
+<p>You may have also noticed that I didn't use them.}</p>
+<p>Why not?}</p>
+<p>%-------------------------------
+Absolute Positioning}</p>
+<p>Absolute positioning:}</p>
+<p>Specifying the size and location of controls with pixel coordinates.}</p>
+<p>This is a serious pain to do!}</p>
+<p>Though it can be made a lot easier with GUI-building tools...}</p>
+<p>So why not?}</p>
+<p>%-------------------------------
+Absolute Positioning}</p>
+<p>When you add or remove a control, the layout changes:}\
+-- recalculate all positions and sizes}</p>
+<p>When you change the text  on a control the layout changes:}\
+-- recalculate all positions and sizes}</p>
+<p>When you try it on another platform the layout changes:}\
+-- recalculate all positions and sizes}</p>
+<p>When the user changes default font size, the layout changes:}\
+-- recalculate all positions and sizes}</p>
+<p>%-------------------------------
+Sizers:}</p>
+<p>The alternative is <a href="#id44"><span class="problematic" id="id45">``</span></a>Sizers''}</p>
+<p><cite>wx.Sizer</cite> is wx's system for automatically determining the size and location of controls}</p>
+<p>Instead of thinking in terms of what size and position a given control should be, you think in terms of how they relate to each other:}</p>
+<p>emph{<a href="#id46"><span class="problematic" id="id47">``</span></a>I want a column of buttons all the same size along the left edge of the Panel''} }</p>
+<p>Sizers capture that logic and compute the sizes for you}</p>
+<p>They will re-size things for you when anything changes -- adding, removing, changing labels, re-sizing the Window, etc...}</p>
+<p>%-------------------------------
+Sizers:}</p>
+<p>Sizers take a while to wrap your brain around...}</p>
+<p>But it's worth the learning curve.}</p>
+<p>Nice discussion here:\
+{<a class="reference external" href="http://wiki.wxpython.org/UsingSizers">http://wiki.wxpython.org/UsingSizers</a>} }</p>
+<p>I have the graphic posted on the wall by my desk...}</p>
+<p>%-------------------------------
+Sizer Example}</p>
+<dl class="docutils">
+<dt>The Basic <cite>BoxSizer</cite>}\</dt>
+<dd>-- Lays out a row or column of controls...}</dd>
+</dl>
+<p>..code-block:: python
+Sizer.Add( window, proportion, flag, border )</p>
+<blockquote>
+<div><p>## do the layout
+S = wx.BoxSizer(wx.VERTICAL)</p>
+<p>S.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
+S.Add(theButton2, 0, wx.GROW | wx.ALL, 4)</p>
+<p>self.SetSizerAndFit(S)</p>
+</div></blockquote>
+<p>code: <cite>codebasic_app_6.py</cite></p>
+<p>%-------------------------------
+Nested Sizers}</p>
+<dl class="docutils">
+<dt>How do I get them centered both ways?}\</dt>
+<dd>-- Nest a vertical sizer inside a horizonal one}\
+-- And add stretchable spacers...}</dd>
+</dl>
+<p>..code-block:: python
+buttonSizer = wx.BoxSizer(wx.VERTICAL)</p>
+<p>buttonSizer.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
+buttonSizer.Add(theButton2, 0, wx.GROW | wx.ALL, 4)</p>
+<p>mainSizer = wx.BoxSizer(wx.HORIZONTAL)
+mainSizer.Add((1,1), 1)    # stretchable space
+mainSizer.Add(buttonSizer, 0, wx.ALIGN_CENTER) # the sizer with the buttons in it
+mainSizer.Add((1,1), 1)    # stretchable space</p>
+<p>%-------------------------------
+Widget Inspection Tool}</p>
+<p>How do I keep all this straight?}\</p>
+<q>
+The Widget Inspection Tool (WIT) is very handy:}</q>
+<dl class="docutils">
+<dt>..code-block:: python</dt>
+<dd>app = TestApp(False)
+## set up the WIT -- to help debug sizers
+import wx.lib.inspection
+wx.lib.inspection.InspectionTool().Show()
+app.MainLoop()</dd>
+</dl>
+<p>(you can also bring it up from a menu event, or...)</p>
+<p>code: <cite>codebasic_app_7.py</cite></p>
+<p>%-------------------------------
+Other Sizers}</p>
+<p>Sizers for laying out stuff in grids...}\</p>
+<p><cite>wx.GridSizer</cite>}</p>
+<p><cite>wx.FlexGridSizer</cite>}</p>
+<p><cite>wx.GridBagSizer</cite>}</p>
+<p>(you can do it all with a GridBagSizer)</p>
+<p>See the docs for info.</p>
+<p>%-------------------------------
+Hierarchies...}</p>
+<p>wxPython has multiple independent hierarchies ...}\</p>
+<p>The nested parent-child relationship:}</p>
+<ul class="simple">
+<li>every <cite>wx.Window</cite> has a parent</li>
+<li>every <cite>wx.Window</cite> has zero or more children</li>
+</ul>
+<p>The class Hierarchy}</p>
+<ul class="simple">
+<li>sub classes of <cite>wx.Window</cite></li>
+<li>classes with instances as attributes</li>
+</ul>
+<p>The Layout Hierarchy}</p>
+<ul class="simple">
+<li>Sizers within Sizers...</li>
+<li>Arbitrarily deep.</li>
+</ul>
+<dl class="docutils">
+<dt>Each of these takes care of different concerns:\</dt>
+<dd>confusing but powerful}</dd>
+</dl>
+<p>%-------------------------------
+Accessing inputs}</p>
+<p>Much of the point of a GUI is to collect data from the user.}</p>
+<p>So you need to be able to access what s/he has input}</p>
+<dl class="docutils">
+<dt>..code-block:: python</dt>
+<dd><p class="first">## add a text control:
+self.textControl = wx.TextCtrl(self)</p>
+<dl class="last docutils">
+<dt>def onGetData(self, evt=None):</dt>
+<dd>print &quot;get data button pressed&quot;
+contents = self.textControl.Value
+print &quot;the contents are:&quot;, contents</dd>
+</dl>
+</dd>
+</dl>
+<p>Most controls have a <cite>.Value</cite> property}</p>
+<p>%-------------------------------
+Setting Values}</p>
+<p>You also want to display data...}</p>
+<p>So you need to be able to set the values, too:}</p>
+<p>..code-block:: python
+## and another text control:
+self.outTextControl = wx.TextCtrl(self,</p>
+<q>
+style=wx.TE_READONLY)</q>
+<dl class="docutils">
+<dt>def onGetData(self, evt=None):</dt>
+<dd>self.outTextControl.Value = self.inTextControl.Value</dd>
+</dl>
+<p>You can set the <cite>.Value</cite> property too...}</p>
+<p>example: <cite>codebasic_app8.py</cite>}</p>
+<p>%---------------------------------
+Code-generated GUIs...}</p>
+<p>You shouldn't write the same repetitive code for a GUI..}</p>
+<p>You may need to build a GUI to match data at run time.}</p>
+<p>Lots of ways to do that with wxPython -- Sizers help a lot.}</p>
+<p>Try to do it whenever you find yourself writing repetitive code...}</p>
+<p>The key is how to do the event Binding}
+..code-block:: python</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def OnButton(self, evt):</dt>
+<dd><p class="first">label = evt.GetEventObject().GetLabel()</p>
+<p class="last">do_somethign_with_label(label)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>example: <cite>code/CalculatorDemo.py</cite></p>
+<p>%---------------------------------
+Code-generated GUIs...}</p>
+<p>The <a href="#id48"><span class="problematic" id="id49">``</span></a>lambda trick''}</p>
+<p>-- a way to pass custom data to an event handler:}</p>
+<p>The key is how to do the event Binding}
+..code-block:: python
+for name in [&quot;first&quot;, &quot;second&quot;, &quot;third&quot;]:</p>
+<blockquote>
+<div><p>btn = wx.Button(self, label=name)
+btn.Bind(wx.EVT_BUTTON,</p>
+<q>
+lambda evt, n=name: self.OnButton(evt, n) )</q>
+</div></blockquote>
+<p>{<a class="reference external" href="http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks">http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks</a>}</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="miscellaneous">
+    <hgroup>
+      <h2>Miscellaneous</h2>
+    </hgroup>
+    <article class="">
+      <p>%-------------------------------
+Long Running Tasks}</p>
+<p>The UI is locked up while an event is being handled}</p>
+<p>So you want all event handlers to run fast.}</p>
+<p>But what if there is significant work to do?}</p>
+<p>Enter: threading and multi-processing}</p>
+<p>But: wxPython is not thread-safe: almost all wx methods must be called from within the same thread.}</p>
+<p>Thread-safe operations: Creating and Posting Events}</p>
+<p>%-------------------------------
+CallAfter}</p>
+<dl class="docutils">
+<dt>Easiest way to communicate with threads:\</dt>
+<dd><cite>wx.CallAfter</cite>}</dd>
+</dl>
+<p>Puts an event on the event stack, calls the designated function or method when the stack is cleared:}</p>
+<p>..code-block:: python
+wx.CallAfter(function_to_call, <a href="#id50"><span class="problematic" id="id51">*</span></a>args, <a href="#id52"><span class="problematic" id="id53">**</span></a>kwargs)</p>
+<p># <a href="#id54"><span class="problematic" id="id55">*</span></a>args, <a href="#id56"><span class="problematic" id="id57">**</span></a>kwargs are passed on to FunctionToCall</p>
+<p>(see also: <cite>wx.CallLater()</cite>) }</p>
+<p>{<a class="reference external" href="http://wiki.wxpython.org/LongRunningTasks">http://wiki.wxpython.org/LongRunningTasks</a>}</p>
+<p>%-------------------------------
+BILS}</p>
+<p>{bf B}rowser {bf I}nterface, {bf L}ocal {bf S}erver}</p>
+<p>Web app: Server runs on local machine}</p>
+<p>Browser is the interface -- but all running local}</p>
+<p>Can wrap the Browser window in a desktop app: Chrome Embedded Framework, wxWebkit, etc.}</p>
+<p>Good way to get both a web app and desktop app with one codebase}</p>
+<p>Example: Cameo Chemicals}</p>
+<p>(PyCon 2009: Browser Interface, Local Server Application)</p>
+<p>%-------------------------------
+LAB}</p>
+<p>Make a very simple address book app:}</p>
+<dl class="docutils">
+<dt>begin{enumerate}</dt>
+<dd><p class="first">item Really basic data model is in <cite>address_book_data.py</cite>
+item Finish the form to edit an entry -- subclass of a <cite>wx.Panel</cite> (<cite>entry_form.py</cite>)
+item The form goes on a <cite>wx.Frame</cite> (<cite>address_book_app.py</cite>) \</p>
+<q>
+add a way to switch between entries (</q>
+<cite>switcher.py</cite></q>
+)</q>
+<p class="last">item Add a <a href="#id58"><span class="problematic" id="id59">``</span></a>new record'' button
+item Add file--save and file--open menus to the frame
+item Add some validation, better layout, etc....</p>
+</dd>
+</dl>
+<p>end{enumerate}</p>
+<p><a href="#id60"><span class="problematic" id="id61">`</span></a>codeaddress_book`</p>
+<p>end{document}</p>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

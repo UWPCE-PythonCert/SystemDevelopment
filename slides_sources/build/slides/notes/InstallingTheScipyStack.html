@@ -1,0 +1,221 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>Installing The SciPy Stack &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="../_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="../_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="../_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="../_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="../_static/js/slides"
+            src="../_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="../index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="installing-the-scipy-stack">
+    <hgroup>
+      <h1>Installing The SciPy Stack</h1>
+    </hgroup>
+    <article class="">
+      <p>There are lot of notes online about this, but this is summary of my recommendations.</p>
+<p>To build extensions to Python, you need a C (and maybe C++) compiler that is compatible with your Python build.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="scipy">
+    <hgroup>
+      <h2>Scipy</h2>
+    </hgroup>
+    <article class="">
+      <p>&quot;SciPy&quot; is really two things:</p>
+<ol class="arabic simple">
+<li>A particular package of modules useful for computational/scientific computing: what you get when you do:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>A community of folks doing scientific computing, and all the packages that are developed and used -- <strong>A LOT</strong></li>
+</ol>
+<p>But there are a few packages that what most people will want, regardless of domain. To help calrify all this the &quot;scipy stack&quot; was officially declared:</p>
+<p><a class="reference external" href="http://www.scipy.org/stackspec.html">http://www.scipy.org/stackspec.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-s-in-the-scipy-stack">
+    <hgroup>
+      <h3>What's in the scipy stack?</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Python (<a class="reference external" href="http://www.python.org">http://www.python.org</a>)</li>
+<li>NumPy (<a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a>)</li>
+<li>SciPy library (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
+<li>Matplotlib (<a class="reference external" href="http://matplotlib.org/">http://matplotlib.org/</a>)</li>
+<li>IPython (<a class="reference external" href="http://ipython.org/">http://ipython.org/</a>)</li>
+<li>pandas (<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>)</li>
+<li>nose (<a class="reference external" href="https://nose.readthedocs.org">https://nose.readthedocs.org</a>) (for testing)</li>
+<li>Sympy (<a class="reference external" href="http://sympy.org/">http://sympy.org/</a>) (symbolic algebra)</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="installing-the-stack">
+    <hgroup>
+      <h3>Installing the Stack</h3>
+    </hgroup>
+    <article class="">
+      <p>Many of these packages are compiled code, some of it in Fortran -- so it can be quite a pain to install from source. There are a number of ways to find pre-complied packages, some of which are outlined here:</p>
+<p><a class="reference external" href="http://www.scipy.org/install.html">http://www.scipy.org/install.html</a></p>
+<p>But here are my thoughts:</p>
+<ul>
+<li><p class="first">If you are doing a lot of scientific computing, and not much else:</p>
+<ul class="simple">
+<li>Install the Anaconda distribution, and use it to install the other packages you'll need:</li>
+</ul>
+<p><a class="reference external" href="https://store.continuum.io/cshop/anaconda/">https://store.continuum.io/cshop/anaconda/</a></p>
+<p>There are free versions for Windows, Linux and OS-X.</p>
+</li>
+</ul>
+<p>If you want to just add numpy, etc. to the python.org install</p>
+<ul class="simple">
+<li>Windows and OS-X:<ul>
+<li>try <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code>: I _think_ that there are binaries up on pypi for Windows and OS-X. So</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span>pip install numpy
+pip install scipy
+pip install ipython[all]
+pip install pandas
+</pre></div>
+</div>
+<ul class="simple">
+<li>Windows:</li>
+</ul>
+<p>Another good option is Chris Gohlke's packages, which you can find here:</p>
+<p><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<p>These are binary wheels, so once downloaded, they can be installed with pip:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>pip install numpy‑1.9.2+mkl‑cp26‑none‑win_amd64.whl
+</pre></div>
+</div>
+<p>Note that he has both 32 bit and 64 bit packages there, install the ones that match your python. Despite the name, the &quot;amd64&quot; packages will work with Intel processors, too.</p>
+<ul class="simple">
+<li>Linux</li>
+</ul>
+<p>These may be available from your system package manager (yum, apt-get) -- try that first. If not, then you'll need the compilers set up right, which may require some additional system packages first.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="checking-if-it-works">
+    <hgroup>
+      <h3>Checking if it works:</h3>
+    </hgroup>
+    <article class="">
+      <p>Once installed, you should be able do the following imports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+</pre></div>
+</div>
+<p>And be able to run the ipython notebook from the command line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ ipython notebook
+</pre></div>
+</div>
+<p>(that should start up your browser, pointed back at the notebook running in the dir you started it up in)</p>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

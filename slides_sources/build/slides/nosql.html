@@ -1,0 +1,397 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>Non RDBMS Database Options &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="non-rdbms-database-options">
+    <hgroup>
+      <h1>Non RDBMS Database Options</h1>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="nosql-databases">
+    <hgroup>
+      <h2>NoSQL databases</h2>
+    </hgroup>
+    <article class="">
+      <p>In &quot;NoSQL&quot; these key features are mostly shared:</p>
+<ul class="simple">
+<li>&quot;schema less&quot; - Document oriented</li>
+<li>More direct mapping to an object model.</li>
+<li>Scalable - Easy to distribute / parallelize</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="database-schema">
+    <hgroup>
+      <h2>Database Schema</h2>
+    </hgroup>
+    <article class="">
+      <p>A database schema is the organization of data, and description of how a
+database is constructed: Divided into database tables, and
+relationships: foreign keys, etc.</p>
+<p>Includes what fields in what tables, what data types each field is,
+normalization of shared data, etc.</p>
+<p>This requires work up-front, and can be hard to adapt as the system
+requirements change.</p>
+<p>It can also require effort to map your programming data model to the
+schema.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="schemaless">
+    <hgroup>
+      <h2>Schemaless</h2>
+    </hgroup>
+    <article class="">
+      <p>Schemaless databases generally follow a &quot;document model&quot;.</p>
+<p>Each entry in the database is a &quot;document&quot;:</p>
+<ul class="simple">
+<li>essentially an arbitrary collection of fields.</li>
+<li>often looks like a Python dict.</li>
+</ul>
+<p>Not every entry has to have exactly the same structure.</p>
+<p>Maps well to dynamic programming languages.</p>
+<p>Adapts well as the system changes.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="nosql-in-python">
+    <hgroup>
+      <h2>NoSQL in Python:</h2>
+    </hgroup>
+    <article class="">
+      <p>Three Categories:</p>
+<ol class="arabic simple">
+<li>Simple key-value object store</li>
+</ol>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.python.org/2/library/shelve.html">shelve</a>, based on
+<a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickle</a> and
+<a class="reference external" href="https://docs.python.org/2/library/anydbm.html">anydbm</a></li>
+<li>Can store any <a class="reference external" href="https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickled">picklable Python
+object</a></li>
+<li>Only provides storage and retrieval</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="external-nosql-systems">
+    <hgroup>
+      <h2>2. External NoSQL systems</h2>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Python bindings to external NoSQL system</li>
+<li>Doesn't store full Python objects</li>
+<li>Generally stores arbitrary collections of data (but not classes)</li>
+<li>Can be simple key-value stores - Redis, etc...</li>
+<li>Or a more full featured document database: in-database searching,
+etc. - mongoDB, etc...</li>
+<li>Or a Map/Reduce engine: - Hadoop</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="python-object-database">
+    <hgroup>
+      <h2>3. Python object database</h2>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Stores and retrieves arbitrary Python objects.</li>
+<li>Don't need to adapt your data model at all.</li>
+<li>ZODB is the most robust and maintained system</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="zodb">
+    <hgroup>
+      <h2><a class="reference external" href="http://http://www.zodb.org/">ZODB</a></h2>
+    </hgroup>
+    <article class="">
+      <p>The Zope Object Data Base: A native object database for Python</p>
+<ul class="simple">
+<li>Transparent persistence for Python objects</li>
+<li>Full ACID-compatible transaction support (including savepoints)</li>
+<li>History/undo ability</li>
+<li>Efficient support for binary large objects (BLOBs)</li>
+<li>Pluggable storages</li>
+<li>Scalable architecture</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="mongodb">
+    <hgroup>
+      <h2><a class="reference external" href="https://www.mongodb.org/">MongoDB</a></h2>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Document-Oriented Storage - JSON-style documents with dynamic schemas
+offer simplicity and power.</li>
+<li>Full Index Support - Index on any attribute, just like you're used
+to.</li>
+<li>Replication and High Availability - Mirror across LANs and WANs for
+scale and peace of mind.</li>
+<li>Auto-Sharding - Scale horizontally without compromising
+functionality.</li>
+<li>Querying - Rich, document-based queries.</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="other-options-to-consider">
+    <hgroup>
+      <h2>Other Options to Consider</h2>
+    </hgroup>
+    <article class="">
+      <p><a class="reference external" href="http://redis.io/">Redis</a>: Advanced, Scalable key-value store.</p>
+<p><a class="reference external" href="http://docs.basho.com/riak/latest/dev/taste-of-riak/python/">Riak</a>:
+High availability/scalablity</p>
+<p><a class="reference external" href="http://hyperdex.org/">HyperDex</a>: &quot;Next generation key-value store&quot;</p>
+<p><a class="reference external" href="http://pycassa.github.io/pycassa/">Apache Cassandra</a>: A more
+schema-based NoSQL solution</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="example-data-model">
+    <hgroup>
+      <h2>Example Data Model</h2>
+    </hgroup>
+    <article class="">
+      <p>An Address Book with a not quite trivial data model.</p>
+<p>There are people:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">last_name</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">middle_name</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cell_phone</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">email</span>
+</pre></div>
+</div>
+<p>There are households:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>    self.name
+    self.people
+    self.address
+    self.phone
+
+(similarly businesses)
+</pre></div>
+</div>
+<p>see examples/NoSQL/address_book_model.py</p>
+</div><div class="section slide"><p class="rubric" id="using-zodb">Using ZODB</p>
+<p>ZODB stores Python objects. To make an object persistent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>import persistent
+
+class Something(persistent.Persistent):
+  def __init__(self):
+      self.a_field = &#39;&#39;
+      self.another_field &#39;&#39;
+</pre></div>
+</div>
+<p>When a change is made to the fields, the DB will keep it updated.</p>
+<p>See examples/NoSQL/address_book_zodb.py</p>
+</div><div class="section slide"><p class="rubric" id="mutable-attributes-in-zodb">Mutable Attributes in ZODB</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Something</span><span class="o">.</span><span class="n">this</span> <span class="o">=</span> <span class="n">that</span>
+<span class="c1"># will trigger a DB action</span>
+
+<span class="c1"># But:</span>
+
+<span class="n">Something</span><span class="o">.</span><span class="n">a_list</span><span class="o">.</span><span class="n">append</span>
+<span class="c1"># will not trigger anything.</span>
+
+<span class="c1"># The DB doesn&#39;t know that that the list has been altered.</span>
+<span class="c1"># Solution:</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">a_list</span> <span class="o">=</span> <span class="n">PersistentList</span><span class="p">()</span>
+<span class="c1"># (also PersistantDict() )</span>
+
+<span class="c1"># (or write getter and setter properties...)</span>
+</pre></div>
+</div>
+</div><div class="section slide"><p class="rubric" id="mongodb-1">MongoDB</p>
+<p>Essentially a key-value store, but the values are JSON-like objects in
+the <a class="reference external" href="http://bsonspec.org/">BSON (binary JSON)</a> format</p>
+<p>So you can store any object that can look like JSON:</p>
+<ul class="simple">
+<li>dicts</li>
+<li>lists</li>
+<li>numbers</li>
+<li>strings</li>
+<li>richer than JSON.</li>
+</ul>
+</div><div class="section slide"><p class="rubric" id="mongodb-and-python">MongoDB and Python</p>
+<p>MongoDB is written in C++ -- can be accessed by various language
+<a class="reference external" href="http://docs.mongodb.org/manual/applications/drivers/">drivers</a></p>
+<p>For Python we have
+<a class="reference external" href="http://api.mongodb.org/python/current/tutorial.html%0A">PyMongo</a></p>
+<p>There are also various tools for integrating mongoDB with Python
+frameworks:</p>
+<ul class="simple">
+<li>Django MongoDB Engine</li>
+<li>mongodb_beaker</li>
+<li>MongoLog: Python logging handler</li>
+<li>Flask-PyMongo</li>
+<li>others...</li>
+</ul>
+</div><div class="section slide"><p class="rubric" id="getting-started-with-mongodb">Getting started with mongoDB</p>
+<p>mongoDB is separate program. Installers here:
+<a class="reference external" href="http://www.mongodb.org/downloads">http://www.mongodb.org/downloads</a></p>
+<p>Create a dir for the database:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ mkdir mongo_data
+# And start it up:
+$ mongod --dbpath=mongo_data/
+</pre></div>
+</div>
+</div><div class="section slide"><p class="rubric" id="creating-a-mongo-db">Creating a Mongo DB:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># create the DB</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">store</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">store_name</span> <span class="c1"># creates a Database</span>
+<span class="n">people</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">people</span> <span class="c1"># creates a collection</span>
+</pre></div>
+</div>
+<p>mongo will link to the given database and collection, or create new ones
+if they don't exist.</p>
+<p>Adding some stuff:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">people</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jones&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div><div class="section slide"><p class="rubric" id="pulling-data-out">Pulling Data Out</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>In [16]: people.find_one({&#39;first_name&#39;:&quot;Fred&quot;})
+Out[16]:
+{u&#39;_id&#39;: ObjectId(&#39;534dcdcb5c84d28b596ad15e&#39;),
+ u&#39;first_name&#39;: u&#39;Fred&#39;,
+ u&#39;last_name&#39;: u&#39;Jones&#39;}
+</pre></div>
+</div>
+<p>Note that it adds an ObjectID for you. See
+examples/NoSQL/address_book_mongo.py</p>
+</div><div class="section slide"><p class="rubric" id="questions">Questions?</p>
+</div><p><a class="reference external" href="#">←</a> <a class="reference external" href="#">→</a></p>
+<q>
+/</q>
+<p>Go to slide:</p>
+<p><a class="reference external" href=".">#</a></p>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
