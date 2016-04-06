@@ -12,6 +12,12 @@ def add(x, y):
     return int(x)+int(y)
 
 def subtract(x, y):
+    """ Subtract two numbers
+    >>> subtract(5, 2)
+    4
+    >>> subtract(2, 5)
+    -3
+    """
     return int(x)-int(y)
 
 def multiply(x, y):

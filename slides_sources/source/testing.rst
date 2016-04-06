@@ -770,5 +770,6 @@ is thrown. This exception causes another exception to occur, and the whole thing
 is not very readable. Why does this happen?
 
 Use what you learned last week about exceptions to throw a better exception, and 
-then add a new test that confirms this behavior.
+then add a new test that confirms this behavior. Use mock for your test, so you
+are not hammering Wikipedia.
 
