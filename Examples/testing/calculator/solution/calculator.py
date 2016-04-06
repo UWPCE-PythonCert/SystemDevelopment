@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """calculator
 
     Usage:
 
     calculator.py 1 + 3
+
 """
 
 import sys
@@ -21,7 +22,7 @@ if len(sys.argv) != 4:
         calculator.py 1 + 3
         """
     sys.stderr.write(error_message + "\n")
-    sys.exit(-1)
+    sys.exit(1)
 
 x = sys.argv[1]
 operator = sys.argv[2]

@@ -307,7 +307,7 @@ So this works for any magnitude number.
 
     Return True if a is close in value to b, and False otherwise.
 
-``rel_tol`` essentialaly specifies how many significant figures you want:
+``rel_tol`` essentially specifies how many significant figures you want:
 ``1e-09`` is 9 significant figures: about half of what floats can store.
 
 ``abs_tol`` is required for comparisons to zero -- nothing is
@@ -769,6 +769,6 @@ When define.py is given the name of a non-existant article, an exception
 is thrown. This exception causes another exception to occur, and the whole thing
 is not very readable. Why does this happen?
 
-Use what you learned last week about exceptions to throw a better exception, and 
+Use what you learned last week about exceptions to throw a better exception, and
 then add a new test that confirms this behavior.
 
