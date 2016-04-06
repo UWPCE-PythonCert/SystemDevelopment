@@ -434,8 +434,13 @@ But you can use:</p>
 <div class="section" id="running-tests-in-a-single-module">
 <h3>running tests in a single module<a class="headerlink" href="#running-tests-in-a-single-module" title="Permalink to this headline">¶</a></h3>
 <p>Call unittest.main() right in your module</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre>if __name__ == &quot;__main__&quot;:
+    unittest.main()
+
+# or from the command line:
+python -m unittest test_my_module  # with or without .py on end
+python -m unittest test_my_module.TestClass  # particular class in a module
+python -m unittest test_my_module.TestClass.test_method  # particular test
 </pre></div>
 </div>
 <p>If it gets cumbersome with many TestCases, organize the tests into a
@@ -613,26 +618,21 @@ re-raised</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
 
 <span class="k">class</span> <span class="nc">TemporaryDirectory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A context manager for creating a temporary directory which gets destroyed on context exit&quot;&quot;&quot;</span>
-
+    <span class="sd">&quot;&quot;&quot;A context manager for creating a temporary directory</span>
+<span class="sd">       which gets destroyed on context exit&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">directory</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">directory</span>
 
     <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># set things up</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_directory</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()))</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
-        <span class="c"># tear it down</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="s">&quot;/tmp/foo&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">dir</span><span class="p">:</span>
-    <span class="c"># write some temp data into dir</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s">&quot;foo.txt&quot;</span><span class="p">),</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
-
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -649,16 +649,40 @@ which occur in the context and continues execution</p>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;should still reach this point&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Why might using a context manager be better than implementing this with
-try..except..finally ?</p>
 <p>Also see the <a class="reference external" href="http://docs.python.org/3/library/contextlib.html">contextlib
 module</a></p>
+<p>Why might using a context manager be better than implementing this with
+try..except..finally ?</p>
+<p>For entire code block, see <a class="reference external" href="https://www.python.org/dev/peps/pep-0343/">https://www.python.org/dev/peps/pep-0343/</a> (Specification)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">EXPR</span> <span class="k">as</span> <span class="n">VAR</span><span class="p">:</span>
+    <span class="n">BLOCK</span>
+<span class="c"># vs.</span>
+<span class="n">mgr</span> <span class="o">=</span> <span class="p">(</span><span class="n">EXPR</span><span class="p">)</span>
+<span class="nb">exit</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__exit__</span>  <span class="c"># Not calling it yet</span>
+<span class="n">value</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__enter__</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span>
+<span class="n">exc</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">VAR</span> <span class="o">=</span> <span class="n">value</span>  <span class="c"># Only if &quot;as VAR&quot; is present</span>
+        <span class="n">BLOCK</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c"># The exceptional case is handled here</span>
+        <span class="n">exc</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()):</span>
+            <span class="k">raise</span>
+        <span class="c"># The exception is swallowed if exit() returns true</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c"># The normal and non-local-goto cases are handled here</span>
+    <span class="k">if</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="now-we-ve-got-the-tools-to-really-test">
 <h3>Now we&#8217;ve got the tools to really test<a class="headerlink" href="#now-we-ve-got-the-tools-to-really-test" title="Permalink to this headline">¶</a></h3>
 <p>Consider the application in the examples/wikidef directory. Give the
 command line utility a subject, and it will return a definition.</p>
-<div class="highlight-python"><div class="highlight"><pre>./define.py  Robot | html2text
+<div class="highlight-python"><div class="highlight"><pre>./define.py Robot
 </pre></div>
 </div>
 <p>How can we test our application code without abusing (and waiting for)
@@ -721,8 +745,10 @@ undone</p>
 <div class="section" id="id2">
 <h3>Exercises<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>When define.py is given the name of a non-existant article, an exception
-is thrown.</p>
-<p>Add a new test that confirms this behavior</p>
+is thrown. This exception causes another exception to occur, and the whole thing
+is not very readable. Why does this happen?</p>
+<p>Use what you learned last week about exceptions to throw a better exception, and
+then add a new test that confirms this behavior.</p>
 </div>
 </div>
 </div>
