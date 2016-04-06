@@ -12,33 +12,47 @@ import sys
 
 import calculator_functions as functions
 
-if len(sys.argv) != 4:
-    error_message = """
 
-        Invalid arguments.
+# put the real code in a function so we can test it
+def main():
 
-        Usage:
+    if len(sys.argv) != 4:
+        error_message = """
 
-        calculator.py 1 + 3
-        """
-    sys.stderr.write(error_message + "\n")
-    sys.exit(1)
+            Invalid arguments.
 
-x = sys.argv[1]
-operator = sys.argv[2]
-y = sys.argv[3]
+            Usage:
 
-if operator == "+":
-    print(functions.add(x, y))
+            calculator.py 1 + 3
 
-elif operator == "-":
-    print(functions.subtract(x, y))
+            or 1 x 3
+            or 1 / 3
+            or 1 - 3
+            """
+        raise ValueError(error_message + "\n")
 
-elif operator == "*":
-    print(functions.multiply(x, y))
+    x = sys.argv[1]
+    operator = sys.argv[2]
+    y = sys.argv[3]
 
-elif operator == "/":
-    print(functions.divide(x, y))
+    if operator == "+":
+        return functions.add(x, y)
 
-else:
-    print("invalid input")
+    elif operator == "-":
+        return functions.subtract(x, y)
+
+    elif operator == "x":
+        return functions.multiply(x, y)
+
+    elif operator == "/":
+        return functions.divide(x, y)
+
+    else:
+        return "invalid input"
+
+if __name__ == "__main__":
+    try:
+        print(main())
+    except ValueError as err:
+        sys.stderr.write(err.args[0])
+        sys.exit(1)
