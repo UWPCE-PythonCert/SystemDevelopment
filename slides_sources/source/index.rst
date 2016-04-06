@@ -24,7 +24,7 @@ Syllabus:
 
 
 Session 1
-==========
+=========
 
 .. rst-class:: left
 

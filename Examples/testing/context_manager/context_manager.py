@@ -1,7 +1,11 @@
-import os, random, shutil, time
+import os
+import random
+import shutil
+import time
+
 
 class TemporaryDirectory(object):
-    def __init__(self,directory):
+    def __init__(self, directory):
         self.base_directory = directory
 
     def __enter__(self):
@@ -14,7 +18,7 @@ class TemporaryDirectory(object):
         # tear it down
         shutil.rmtree(self.directory)
 
-with TemporaryDirectory("/tmp/foo") as dir:
+with TemporaryDirectory("tmp") as dir:
     # write some temp data into dir
     with open(os.path.join(dir, "foo.txt"), 'w') as f:
         f.write("foo")
