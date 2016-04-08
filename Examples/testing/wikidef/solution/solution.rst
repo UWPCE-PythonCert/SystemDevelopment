@@ -55,6 +55,7 @@ This gives us:
 That is definitely an improvement. We could probably make the error even clearer. Notice that what we are being returned a dictionary (actually json, which is similar), and the most useful information is json_response['error']['info']. Let's try using that as our error message.
 
 ::
+
    $ python3 define.py jfiejfin
    Traceback (most recent call last):
      File "define.py", line 14, in <module>
