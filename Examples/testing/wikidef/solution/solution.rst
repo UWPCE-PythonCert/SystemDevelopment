@@ -36,6 +36,7 @@ So, let's try this:
    else:
        raise ParseError(json_response)
 
+
 This gives us:
 
 ::
