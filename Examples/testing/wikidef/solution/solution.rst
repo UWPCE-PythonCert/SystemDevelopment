@@ -50,6 +50,7 @@ This gives us:
         raise ParseError(json_response)
    api.ParseError: {'servedby': 'mw1228', 'error': {'info': "The page you specified doesn't exist", '*': 'See https://en.wikipedia.org/w/api.php for API usage', 'code': 'missingtitle'}}
 
+
 That is definitely an improvement. We could probably make the error even clearer. Notice that what we are being returned a dictionary (actually json, which is similar), and the most useful information is json_response['error']['info']. Let's try using that as our error message.
 
 ::
