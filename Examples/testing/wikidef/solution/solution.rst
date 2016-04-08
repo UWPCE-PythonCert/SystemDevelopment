@@ -39,6 +39,7 @@ So, let's try this:
 This gives us:
 
 ::
+
    $ python3 define.py jfiejfin
    Traceback (most recent call last):
      File "define.py", line 14, in <module>

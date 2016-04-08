@@ -21,11 +21,9 @@ class Wikipedia(object):
         json_response = get_article(title, cls.api_endpoint)
         
         if 'parse' in json_response:
-            contents = json_response['parse']['text']['*']
+            return json_response['parse']['text']['*']
         else:
             raise ParseError(json_response['error']['info'])
-
-        return contents
 
 
 def get_article(title, api_endpoint):
