@@ -101,7 +101,7 @@ Session 9
 
 .. rst-class:: left
 
-  - GUI development: wxPython
+  - :ref:wxpython
 
 
 Session 10

@@ -1,7 +1,7 @@
 .. _wxpython:
 
 #################################
-DEsktop GUI development: wxPython
+Desktop GUI development: wxPython
 #################################
 
 Introduction
@@ -12,10 +12,10 @@ Desktop GUIs:
 -------------
 
 
-Traditional Graphical User Interface Applications}
+Traditional Graphical User Interface Applications
 
 
-Run entirely on local machine -- interactive, interface and logic code in one process}
+Run entirely on local machine -- interactive, interface and logic code in one process
 
 
 
@@ -26,10 +26,7 @@ Advantages:
 * Faster display: direct to screen (or even OpenGL, etc.)
 * Runs without network
 * Save/Manipulate local files
-* Familiar install/start/stop/run, etc. 
-
-
- 
+* Familiar install/start/stop/run, etc.
 
 
 Python Options
@@ -58,12 +55,12 @@ Why wxPython?
 
 
 * Python wrapper around C++ toolkit (wxWidget)
-* wxWidgets is a wrapper around \emph{native} toolkit:
-  
+* wxWidgets is a wrapper around **native** toolkit:
+
  * Windows: Win32 (64)
  * OS-X: Cocoa
  * Linux: GTK
-  
+
 * Native look and feel
 * License: (modified) LGPL
 
@@ -74,15 +71,15 @@ See http://www.wxpython.org for more information
 
 
 Installing
------------
+----------
 
 wxPython is a big complicated build:
 
-  can't do `pip` or `easy_install`
+  - can't do `pip` or `easy_install`
 
 Windows or OS-X:
 
-use the binaries on http://wxpython.org/download.php
+  - use the binaries on http://wxpython.org/download.php
 
 
 Linux: use your system's package
@@ -92,21 +89,18 @@ NOTE: there are some issues with some packages:
  * May be old version
  * May use standard wx build -- more crash prone!
 
-          (some run-time checking turned off)
-
-
-
+    (some run-time checking turned off)
 
 
 Versions
----------
+--------
 
-``Stable'' version: 2.8.12.1}
+"Stable" version: 2.8.12.1
 
-(``stable'' means stable API, not less likely to crash)
+("stable" means stable API, not less likely to crash)
 
 
-``Development'' version: 2.9.4.0}
+``Development'' version: 2.9.4.0
 
 (Under active development, API may change (but not much)
 
@@ -114,7 +108,7 @@ Versions
 wx project very slow to do official releases -- You probably want to use the development version: it's getting more attention
 
 
-``Phoenix'': next generation version: new bindings, Py3 support, etc.
+"Phoenix": next generation version: new bindings, Py3 support, etc.
 
 -- Still experimental
 
@@ -123,87 +117,91 @@ http://wiki.wxpython.org/ProjectPhoenix
 
 
 Documentation
-----------------
+-------------
 
 
-``Docs and Demos'': download these!
+Docs and Demos:
+   download these!
 
 
-``wxPython Demo'' -- run this!
+wxPython Demo
+   run this!
 
-Examples of every Widget available
+(Examples of every Widget available)
 
 
 Primary wx docs:
 
-Written for C++, with Python notes...
+  Written for C++, with Python notes...
 
-http://wxpython.org/onlinedocs.php
-This may help: http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers
+  http://wxpython.org/onlinedocs.php
+
+  This may help: http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers
 
 
 Semi-experimental Sphinx docs:
 
-http://xoomer.virgilio.it/infinity77/wxPython/
+  http://xoomer.virgilio.it/infinity77/wxPython/
 
 
-The wxPython wiki: lots of good stuff here
+The wxPython wiki: lots of good stuff here:
 
-http://wiki.wxpython.org/
+  http://wiki.wxpython.org/
 
 
 
-%-------------------------------
 Some starting points
-----------------------
+--------------------
 
 
+How to learn wxPython
 
-How to learn wxPython}
-{http://wiki.wxpython.org/How%20to%20Learn%20wxPython}
-
-
-wxPython Style Guide}
-{http://wiki.wxpython.org/wxPython%20Style%20Guide}
+http://wiki.wxpython.org/How%20to%20Learn%20wxPython
 
 
-The wxpython-users mailing list is a great resource (and great community):}\\
-{https://groups.google.com/forum/?fromgroups#!forum/wxpython-users}
+wxPython Style Guide
+
+http://wiki.wxpython.org/wxPython%20Style%20Guide
 
 
-My own repository of samples:}
-{https://github.com/PythonCHB/wxPythonDemos}
+The wxpython-users mailing list is a great resource (and great community):
+
+https://groups.google.com/forum/?fromgroups#!forum/wxpython-users
 
 
+My own repository of samples:
 
-%-------------------------------
-Pythonic code:}
-
-
-
-Over the years, wxPython has grown a number of things to make it more ``pythonic'' -- hide some of that C++ legacy}
+https://github.com/PythonCHB/wxPythonDemos
 
 
-Properties:}
+Pythonic code:
+--------------
 
-The C++ classes are full of getters and setters:}
+
+Over the years, wxPython has grown a number of things to make it more "pythonic" -- hide some of that C++ legacy
+
+
+Properties:
+
+The C++ classes are full of getters and setters:
+
 ..code-block:: python
-wxTextCtrl::SetValue
-wxTextCtrl::GetValue
 
+  wxTextCtrl::SetValue
+  wxTextCtrl::GetValue
 
-These methods have been translated into properties for Python}
-::
+These methods have been translated into properties for Python
+
+..code-block:: python
 
   MyTextCtrl.Value = some_string
   another_string = wxTextCtrl.Value
 
 
-(The Get/Set versions are still there, but it's klunkier code)
+(The ``Get/Set`` versions are still there, but it's klunkier code)
 
 
-Pythonic code:
---------------
+.. nextslide
 
 Other Python options: some specific wx types can be accessed with standard python types:
 
@@ -215,21 +213,22 @@ Other Python options: some specific wx types can be accessed with standard pytho
 
 `wxSize` --- `(w,h)` (tuple)
 
-... 
+...
 
 Using these makes your code cleaner and more pythonic
 
 Basic Structure
 ===============
 
+How is a wxPython app structured?
+
 Event-Driven programming
 -------------------------
 
+On app startup, the ``.MainLoop()`` method is called.
 
-On app startup, the .MainLoop() method is called.
 
-
-The mainloop takes control -- monitoring for events, then dispatching them
+The mainloop takes control -- monitoring for events, then dispatching them.
 
 
 Events can come from the system, or user interaction: keyboard, mouse, etc.
@@ -245,31 +244,25 @@ Not so different than a web app, except events are finer-grained
 (every mouse move, etc.)
 
 
-
-
-
-%-------------------------------
 wx.Window
 ---------
 
-Pretty much everything you see on the screen is a `wx.Window`}
+Pretty much everything you see on the screen is a `wx.Window`
 
 
-It is the superclass for all the ``widgets'', ``controls'', or whatever you want to call them}
+It is the superclass for all the ``widgets'', ``controls'', or whatever you want to call them
 
 
-It is essentially a rectangle on the screen that catches events}
+It is essentially a rectangle on the screen that catches events
 
 
-You generally don't use it by iteself, though you may derive from it to make a new widget}
+You generally don't use it by iteself, though you may derive from it to make a new widget
 
 
-{\large(Historical Note: |wxWidgets| was called |wxWindows| -- until Microsoft threatened to sue them.)}
+\large(Historical Note: |wxWidgets| was called |wxWindows| -- until Microsoft threatened to sue them.)
 
 
-
-wx.Window}
-
+.. nextslide
 
 Since everything is a `wx.Window`, it's good to know its methods and signature:
 
@@ -290,14 +283,12 @@ Since everything is a `wx.Window`, it's good to know its methods and signature:
 
 http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html
 
-wx.Window
-------------
-
+.. nextslide
 
 Methods types:
 
 * Appearance: Colors, Fonts, Labels, Styles
-* Geometry: Size, Position, IsShown, Move, etc 
+* Geometry: Size, Position, IsShown, Move, etc.
 * Layout: Sizers, etc.
 * Many others!
 
@@ -305,20 +296,17 @@ http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html
 
 
 Event-Driven programming
---------------------------
+------------------------
 
 On app startup, the .MainLoop() method is called.
 
-The mainloop takes control -- monitoring for events, then dispatching them
+The mainloop takes control -- monitoring for events, then dispatching them.
 
 Events can come from the system, or user interaction: keyboard, mouse, etc.
 
-
 All the work of your app is done in response to events
 
-
 You only need to response to (Bind) the events you care about
-
 
 Not so different than a web app, except events are finer-grained
 
@@ -342,43 +330,39 @@ Every wx app has a single wx.App instance:
 And you almost always start the `MainLoop`
 
 wx.Frame
----------
+--------
 
 `wx.Frame` is a ``top level'' Window: One with a title bar, min-max buttons,etc.
 
-
 Most apps have a single `wx.Frame` -- central interaction with the app.
-
 
 This is where menu bars, etc are placed, and often the core GUI logic of the app.
 
 
 ..code-block:: python
+
 class TestFrame(wx.Frame):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('title', "Simple test App")
         wx.Frame.__init__(self, *args, **kwargs)
 
 
-
-
 demo: `code\basic_app_1.py`
-
 
 
 controls
 ========
 
-%-------------------------------
-Menus}
+Menus
+-----
 
-
-A `wx.Frame` has a menu bar you can add items to:}
+A `wx.Frame` has a menu bar you can add items to:
 
 ..code-block:: python
+
     # create the menu bar object
     menuBar = wx.MenuBar()
-        
+
     # add a menu to it
     fileMenu = wx.Menu()
 
@@ -389,18 +373,14 @@ A `wx.Frame` has a menu bar you can add items to:}
 
     self.SetMenuBar(menuBar)
 
-        
 
 demo: `code\basic_app_2.py`
 
 
+Event Handlers
+--------------
 
-%-------------------------------
-Event Handlers}
-
-
-Event handlers have a common signature:}
-
+Event handlers have a common signature:
 
 ..code-block:: python
     def onOpen(self, evt=None):
@@ -408,24 +388,19 @@ Event handlers have a common signature:}
         self.app_logic.file_open()
 
 
-
 The second parameter is the `wx.Event` object that initiated the call -- it holds information about the event that can be useful}
 
 
-I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.}
-        
+I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.
+
 
 demo: `code\basic_app_2.py`
 
 
+Common Dialogs
+--------------
 
-
-
-%-------------------------------
-Common Dialogs}
-
-
-wxPython provides a number of common Dialogs. These wrap the native ones where possible for a native look and feel.}
+wxPython provides a number of common Dialogs. These wrap the native ones where possible for a native look and feel.
 
 
  \item `wx.MessageDialog`
@@ -440,39 +415,37 @@ wxPython provides a number of common Dialogs. These wrap the native ones where p
 
 
 
-These do pretty much what you'd expect...}
+These do pretty much what you'd expect...
 
 
+wx.FileDialog
+-------------
 
-%-------------------------------
-wx.FileDialog}
-
-
-Example use of a common dialog: `wx.FileDialog`}\\
+Example use of a common dialog: `wx.FileDialog`
 
 ..code-block:: python
-dlg = wx.FileDialog(self,
-                    message="Save file as ...",
-                    defaultDir=os.getcwd(), 
-                    defaultFile="",
-                    wildcard=wildcard,
-                    style=wx.SAVE )
-if dlg.ShowModal() == wx.ID_OK:
-    path = dlg.GetPath()
-else:
-    print "The file dialog was canceled before anything was selected"
-dlg.Destroy()
+
+    dlg = wx.FileDialog(self,
+                        message="Save file as ...",
+                        defaultDir=os.getcwd(),
+                        defaultFile="",
+                        wildcard=wildcard,
+                        style=wx.SAVE )
+    if dlg.ShowModal() == wx.ID_OK:
+        path = dlg.GetPath()
+    else:
+        print "The file dialog was canceled before anything was selected"
+    dlg.Destroy()
 
 
 
 example: `code/basic_app_3.py`
 
 
-%-------------------------------
-Basic Widgets}
+Basic Widgets
+-------------
 
-
-All the basic widgets (controls) you'd expect are there:}
+All the basic widgets (controls) you'd expect are there:
 
 
  \item Buttons
@@ -485,21 +458,20 @@ All the basic widgets (controls) you'd expect are there:}
  \item ....
 
 
-
-Way too many to list here!}
-
-
-See the docs and the Demo to find the one you need}
+Way too many to list here!
 
 
-
-%-------------------------------
-Using a Control}
-
-A Button is about as simple as it gets}
+See the docs and the Demo to find the one you need
 
 
-{`__init__(parent, id, label="", pos=wx.DefaultPosition, ...)` }
+
+Using a Control
+---------------
+
+A Button is about as simple as it gets
+
+
+`__init__(parent, id, label="", pos=wx.DefaultPosition, ...)`
 
 
 Mostly the same as wx.Window, and other controls....}
@@ -508,8 +480,8 @@ Mostly the same as wx.Window, and other controls....}
 ## add just a single button:
 self.theButton = wx.Button(self, label="Push Me")
 self.theButton.Bind(wx.EVT_BUTTON, self.onButton)
- 
-## and give it an event handler                                  
+
+## and give it an event handler
 def onButton(self, evt=None):
     print "You pushed the button!"
 
@@ -559,7 +531,7 @@ code: `code\basic_app_5.py`
 %-------------------------------
 Control Layout}
 
-With more than one control, you need to figure out how to place them 
+With more than one control, you need to figure out how to place them
 and how big to make them}
 
 
@@ -664,10 +636,10 @@ The Basic `BoxSizer`}\\
 Sizer.Add( window, proportion, flag, border )
         ## do the layout
         S = wx.BoxSizer(wx.VERTICAL)
-        
+
         S.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
         S.Add(theButton2, 0, wx.GROW | wx.ALL, 4)
-        
+
         self.SetSizerAndFit(S)
 
 
@@ -684,7 +656,7 @@ How do I get them centered both ways?}\\
 
 ..code-block:: python
 buttonSizer = wx.BoxSizer(wx.VERTICAL)
-        
+
 buttonSizer.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
 buttonSizer.Add(theButton2, 0, wx.GROW | wx.ALL, 4)
 
@@ -807,7 +779,7 @@ So you need to be able to set the values, too:}
 self.outTextControl = wx.TextCtrl(self,
                                   style=wx.TE_READONLY)
 
-def onGetData(self, evt=None):        
+def onGetData(self, evt=None):
     self.outTextControl.Value = self.inTextControl.Value
 
 
@@ -837,7 +809,7 @@ Try to do it whenever you find yourself writing repetitive code...}
 
 The key is how to do the event Binding}
 ..code-block:: python
-    def OnButton(self, evt):        
+    def OnButton(self, evt):
         label = evt.GetEventObject().GetLabel()
 
         do_somethign_with_label(label)
@@ -978,4 +950,4 @@ Make a very simple address book app:}
 
 \end{document}
 
- 
+
