@@ -269,7 +269,7 @@ certain number of decimal places.
 Anyone remember "significant figures" from science classes?
 
 ``isclose()``
-------------
+-------------
 
 Python 3.5 introduced the isclose() function in the math module:
 
