@@ -83,7 +83,9 @@ About Unit-testing
 
 1. Tests should be independent.
 2. Tests do not run in order, which shouldn't matter, see point 1.
-3. Test fixtures are available to do any setup needed for tests.
+3. Test fixtures are available to do any setup/teardown needed for tests.
+4. Test behavior not implementation
+5. Mocking is available to fake stuff you may not want to run in your tests.
 
 unittest.TestCase anatomy
 -------------------------
@@ -98,10 +100,10 @@ unittest.TestCase anatomy
     class TestTest(unittest.TestCase):
 
         def setUp(self):
-            x = 2
+            self.x = 2
 
         def test_add(self):
-            self.assertEqual(x+2, 4)
+            self.assertEqual(self.x+2, 4)
 
         def test_len(self):
             self.assertEqual(len('foo'), 3)
@@ -544,7 +546,7 @@ single test with nose:
 
 ::
 
-	nose2 calculator_test.TestCalculatorFunctions.test_add
+	nose2 test_calculator.TestCalculatorFunctions.test_add
 
 
 Exercises
