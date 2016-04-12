@@ -1,0 +1,1400 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>Extending Python with Complied Code &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="extending-python-with-complied-code">
+    <hgroup>
+      <h1>Extending Python with Complied Code</h1>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Chris Barker</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="topics">
+    <hgroup>
+      <h2>Topics</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li>Motivation</li>
+<li>The C API</li>
+<li>ctypes</li>
+<li>Cython</li>
+<li>Auto-generating wrappers</li>
+<li>Others to consider</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="motivation">
+    <hgroup>
+      <h3>Motivation</h3>
+    </hgroup>
+    <article class="">
+      <p>Motivations for exiting pure Python</p>
+<blockquote>
+<div><ul class="simple">
+<li>Performance</li>
+<li>Integration with existing C libraries</li>
+<li>Working as a glue language</li>
+<li>Implement new builtin types</li>
+</ul>
+</div></blockquote>
+<p>What is an extension module?</p>
+<blockquote>
+<div><ul class="simple">
+<li>written in C (C API)</li>
+<li>compiled code</li>
+<li>lets you work directly with the CPython engine</li>
+</ul>
+</div></blockquote>
+<p>Further reading:</p>
+<p><a class="reference external" href="http://docs.python.org/2/extending/extending.html">http://docs.python.org/2/extending/extending.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="example-case">
+    <hgroup>
+      <h3>Example Case</h3>
+    </hgroup>
+    <article class="">
+      <p>To focus on the integration techniques, rather than complex C code,
+we'll work with the following function we want to integrate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#include &lt;stdio.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">add</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> + </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%d</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">add</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">q</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is, of course, trivial and built in to Python, but the techniques
+are the same.</p>
+<p>(<code class="docutils literal"><span class="pre">Examples/week-08-extensions/pure-c/add.c</span></code>)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id3">
+    <hgroup>
+      <h3>Building</h3>
+    </hgroup>
+    <article class="">
+      <p>Build it with the Makefile (Linux and OS-X):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">all</span><span class="p">:</span> <span class="n">add</span><span class="p">;</span> <span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">add</span> <span class="n">add</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ make
+gcc -o add add.c
+</pre></div>
+</div>
+<p>and run it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ./add
+3 + 2 = 5
+</pre></div>
+</div>
+<p>So are simple function works -- but how to call it from Python?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="the-c-api">
+    <hgroup>
+      <h3>The C API</h3>
+    </hgroup>
+    <article class="">
+      <p>Write your function in pure C using the Python API and import it into Python</p>
+<p>Good for integrating with C library functions and system calls</p>
+<p>The API isn't trivial to learn</p>
+<p>Lots of opportunity for error -- you must do manual reference counting:</p>
+<p>(<a class="reference external" href="http://docs.python.org/2/c-api/refcounting.html">http://docs.python.org/2/c-api/refcounting.html</a>)</p>
+<p>Further reading:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://docs.python.org/2/extending/extending.html">http://docs.python.org/2/extending/extending.html</a></li>
+<li>Python 2.7 source code</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="intro-to-the-c-api">
+    <hgroup>
+      <h3>Intro to the C API</h3>
+    </hgroup>
+    <article class="">
+      <p>You'll need the Python dev package installed on your system</p>
+<p>Pull in the Python API to your C code via:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#include &lt;Python.h&gt;</span>
+<span class="o">/*</span>
+<span class="n">Note</span><span class="p">:</span> <span class="n">Since</span> <span class="n">Python</span> <span class="n">may</span> <span class="n">define</span> <span class="n">some</span> <span class="n">pre</span><span class="o">-</span><span class="n">processor</span> <span class="n">definitions</span> <span class="n">which</span>
+<span class="n">affect</span> <span class="n">the</span> <span class="n">standard</span> <span class="n">headers</span> <span class="n">on</span> <span class="n">some</span> <span class="n">systems</span><span class="p">,</span> <span class="n">you</span> <span class="n">must</span> <span class="n">include</span>
+<span class="n">Python</span><span class="o">.</span><span class="n">h</span> <span class="n">before</span> <span class="nb">any</span> <span class="n">standard</span> <span class="n">headers</span> <span class="n">are</span> <span class="n">included</span><span class="o">.</span>
+
+<span class="n">stdio</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="ow">and</span> <span class="n">stdlib</span><span class="o">.</span><span class="n">h</span> <span class="n">are</span> <span class="n">included</span> <span class="k">for</span> <span class="n">you</span><span class="o">.</span>
+<span class="o">*/</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="passing-data-in-and-out-of-your-function">
+    <hgroup>
+      <h3>Passing Data in and out of your function</h3>
+    </hgroup>
+    <article class="">
+      <p>Function arguments must be parsed on the way in and the way out</p>
+<p>On the way in, we can call <code class="docutils literal"><span class="pre">PyArg_ParseTuple</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>if (!PyArg_ParseTuple(args, &quot;s&quot;, &amp;var1, ...))
+    return NULL;
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.python.org/2/c-api/arg.html#PyArg_ParseTuple">http://docs.python.org/2/c-api/arg.html#PyArg_ParseTuple</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>On the way out, we can call <code class="docutils literal"><span class="pre">Py_BuildValue</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PyObject</span><span class="o">*</span> <span class="n">Py_BuildValue</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="nb">format</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.python.org/2/c-api/arg.html#Py_BuildValue">http://docs.python.org/2/c-api/arg.html#Py_BuildValue</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="registering-your-functions">
+    <hgroup>
+      <h3>Registering your functions</h3>
+    </hgroup>
+    <article class="">
+      <p>First, register the name and address of your function in the method table:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Module</span><span class="s1">&#39;s method table and initialization function</span>
+<span class="n">static</span> <span class="n">PyMethodDef</span> <span class="n">AddMethods</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">add</span><span class="p">,</span> <span class="n">METH_VARARGS</span><span class="p">,</span> <span class="s2">&quot;add two numbers&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">NULL</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">}</span> <span class="o">//</span> <span class="n">sentinel</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.python.org/2/extending/extending.html#the-module-s-method-table-and-initialization-function">https://docs.python.org/2/extending/extending.html#the-module-s-method-table-and-initialization-function</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="initializing-the-module">
+    <hgroup>
+      <h3>Initializing the module</h3>
+    </hgroup>
+    <article class="">
+      <p>Define an initialization function:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PyMODINIT_FUNC</span> <span class="o">//</span> <span class="n">does</span> <span class="n">the</span> <span class="n">right</span> <span class="n">thing</span> <span class="n">on</span> <span class="n">Windows</span><span class="p">,</span> <span class="n">Linux</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
+<span class="n">initadd</span><span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span> <span class="n">Module</span><span class="s1">&#39;s initialization function</span>
+    <span class="o">//</span> <span class="n">Will</span> <span class="n">be</span> <span class="n">called</span> <span class="n">again</span> <span class="k">if</span> <span class="n">you</span> <span class="n">use</span> <span class="n">Python</span><span class="s1">&#39;s reload()</span>
+    <span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="n">Py_InitModule</span><span class="p">(</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">AddMethods</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It <em>must</em> be called <code class="docutils literal"><span class="pre">initthe_module_name</span></code></p>
+<p><a class="reference external" href="https://docs.python.org/2/extending/extending.html#the-module-s-method-table-and-initialization-function">https://docs.python.org/2/extending/extending.html#the-module-s-method-table-and-initialization-function</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="the-whole-thing">
+    <hgroup>
+      <h3>The whole thing:</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-default"><div class="highlight"><pre><span></span>#include &lt;Python.h&gt;
+
+static PyObject *
+add(PyObject *self, PyObject *args)
+{
+    int x, y, sts;
+
+    if (!PyArg_ParseTuple(args, &quot;ii&quot;, &amp;x, &amp;y))
+        return NULL;
+    sts = x+y;
+    return Py_BuildValue(&quot;i&quot;, sts);
+}
+static PyMethodDef AddMethods[] = {
+    {&quot;add&quot;, add, METH_VARARGS, &quot;add two numbers&quot;},
+    {NULL, NULL, 0, NULL} // sentinel
+};
+PyMODINIT_FUNC initadd(void) {
+    (void) Py_InitModule(&quot;add&quot;, AddMethods);
+}
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="building-your-extension">
+    <hgroup>
+      <h3>Building your extension</h3>
+    </hgroup>
+    <article class="">
+      <p><code class="docutils literal"><span class="pre">setuptools</span></code> provides features for automatically building extensions:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cadd&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;simple c extension for an example&#39;</span><span class="p">,</span>
+    <span class="n">ext_modules</span><span class="o">=</span><span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;add.c&#39;</span><span class="p">])],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>(<code class="docutils literal"><span class="pre">distutils</span></code> does too -- but setuptools is getting updated to better
+support new stuff)</p>
+<p>Run the setup.py:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
+</pre></div>
+</div>
+<p>(you can also just do <code class="docutils literal"><span class="pre">install</span></code> or <code class="docutils literal"><span class="pre">develop</span></code> if you want it properly
+installed)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="run-the-tests">
+    <hgroup>
+      <h3>Run the tests</h3>
+    </hgroup>
+    <article class="">
+      <p><code class="docutils literal"><span class="pre">test_add.py</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">import</span> <span class="nn">add</span>
+
+<span class="k">def</span> <span class="nf">test_basic</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+
+<span class="k">def</span> <span class="nf">test_negative</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">7</span>
+
+<span class="k">def</span> <span class="nf">test_float</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+        <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">py.test</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="subtleties-we-avoided">
+    <hgroup>
+      <h2>Subtleties we avoided:</h2>
+    </hgroup>
+    <article class="">
+      <p>There are a LOT of things you need to get right with a hand-written
+C Extension.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="exception-handling">
+    <hgroup>
+      <h3>Exception handling</h3>
+    </hgroup>
+    <article class="">
+      <p>Works somewhat like the Unix errno variable:</p>
+<ul class="simple">
+<li>Global indicator (per thread) of the last error that occurred.</li>
+<li>Most functions don’t clear this on success, but will set it to indicate the cause of the error on failure.</li>
+<li>Most functions also return an error indicator:<ul>
+<li>NULL if they are supposed to return a pointer,</li>
+<li>-1 if they return an integer</li>
+<li>The PyArg_*() functions return 1 for success and 0 for failure (and they set the Exception for you)</li>
+</ul>
+</li>
+</ul>
+<p>The easy way to set this indicator is with PyErr_SetString</p>
+<p><a class="reference external" href="http://docs.python.org/2/c-api/exceptions.html">http://docs.python.org/2/c-api/exceptions.html</a></p>
+<p>(you can completely control the Exception handling if you need to)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="referencecounting">
+    <hgroup>
+      <h3>ReferenceCounting</h3>
+    </hgroup>
+    <article class="">
+      <p>Whenever you create or no longer need a Py_Object, you need to increment or decrement the reference count:</p>
+<p><code class="docutils literal"><span class="pre">Py_INCREF(x)</span></code> and <code class="docutils literal"><span class="pre">Py_DECREF(x)</span></code></p>
+<p><code class="docutils literal"><span class="pre">PyArg_ParseTuple</span></code>  and  <code class="docutils literal"><span class="pre">Py_BuildValue</span></code></p>
+<p>Handle this for you.</p>
+<p>But if you're creating new objects inside your function, you need to keep track.</p>
+<p>And what it the function raises an exception in the middle and can't finish?</p>
+<p>This gets really ugly and error-prone (and hard to debug!)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="lab">
+    <hgroup>
+      <h3>LAB</h3>
+    </hgroup>
+    <article class="">
+      <p>LAB 1:</p>
+<ul class="simple">
+<li>Add another function to the add.c file that multiplies two numbers instead.</li>
+<li>Write some test code and make sure it works.</li>
+</ul>
+<p>LAB 2:</p>
+<ul class="simple">
+<li>Find the divide module in the examples/c-api directory</li>
+<li>What happens when you call divide.divide(1/0)?</li>
+<li>This is a different result than a pure Python 1/0, which throws an exception</li>
+</ul>
+<p>Advanced:</p>
+<ul class="simple">
+<li>Change the divide method to throw an appropriate exception in the
+divide-by-zero case</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="ctypes">
+    <hgroup>
+      <h2>ctypes</h2>
+    </hgroup>
+    <article class="">
+      <p>Isn't there an easier way to just call some C code?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-is-ctypes">
+    <hgroup>
+      <h3>What is ctypes?</h3>
+    </hgroup>
+    <article class="">
+      <p>A foreign function interface in Python</p>
+<p>Binds functions in shared libraries to Python functions</p>
+<dl class="docutils">
+<dt>Benefits:</dt>
+<dd><ul class="first last simple">
+<li>Ships with Python, since 2.5</li>
+<li>No new language to learn, it's all Python</li>
+</ul>
+</dd>
+<dt>Drawbacks:</dt>
+<dd><ul class="first last simple">
+<li>Performance hit for on the fly type translation</li>
+<li>&quot;thicker&quot; interface in python</li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ctypes</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">add</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s2">&quot;add.so&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Further reading:</p>
+<p><a class="reference external" href="http://docs.python.org/2/library/ctypes.html">http://docs.python.org/2/library/ctypes.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="calling-functions-with-ctypes">
+    <hgroup>
+      <h3>Calling functions with ctypes</h3>
+    </hgroup>
+    <article class="">
+      <p>The shared lib must be loaded:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">add</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s2">&quot;add.so&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An already loaded lib can be found with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">libc</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="s2">&quot;/usr/lib/libc.dylib&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ctypes comes with a utility to help find libs:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ctypes</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_library</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(good for system libs)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id4">
+    <hgroup>
+      <h3>Calling functions with ctypes</h3>
+    </hgroup>
+    <article class="">
+      <p>Once loaded, a ctypes wrapper around a c function can be called directly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">add</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But....</p>
+<p>C is statically typed -- once compiled, the function must be called with
+the correct types.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="ctypes-data-types">
+    <hgroup>
+      <h3>ctypes Data Types</h3>
+    </hgroup>
+    <article class="">
+      <p>ctypes will auto-translate these native types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">None</span></code></li>
+<li>int</li>
+<li>byte strings (<code class="docutils literal"><span class="pre">bytes()</span></code>, <code class="docutils literal"><span class="pre">str()</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">unicode</span></code> (careful! unicode is ugly in C!)</li>
+</ul>
+</div></blockquote>
+<p>These can be directly used as parameters when calling C functions.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id5">
+    <hgroup>
+      <h3>ctypes Data Types</h3>
+    </hgroup>
+    <article class="">
+      <p>Most types must be wrapped in a ctypes data type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;An int </span><span class="si">%d</span><span class="s2">, a double </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="n">c_double</span><span class="p">(</span><span class="mf">3.14</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>There are ctypes wrappers for all the &quot;standard&quot; C types</p>
+<p><a class="reference external" href="http://docs.python.org/2/library/ctypes.html#fundamental-data-types">http://docs.python.org/2/library/ctypes.html#fundamental-data-types</a></p>
+<p>You can also do pointers to types:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">a_lib</span><span class="o">.</span><span class="n">a_function</span><span class="p">(</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_float</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.python.org/2/library/ctypes.html#passing-pointers-or-passing-parameters-by-reference">http://docs.python.org/2/library/ctypes.html#passing-pointers-or-passing-parameters-by-reference</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id6">
+    <hgroup>
+      <h3>C structs</h3>
+    </hgroup>
+    <article class="">
+      <p>You can define C structs:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">POINT</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">)]</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point</span> <span class="o">=</span> <span class="n">POINT</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span>
+<span class="go">10 20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point</span> <span class="o">=</span> <span class="n">POINT</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span>
+<span class="go">0 5</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id7">
+    <hgroup>
+      <h3>Custom Python Classes</h3>
+    </hgroup>
+    <article class="">
+      <p>You can define how to pass data from your custom classes to ctypes:</p>
+<p>Define an <code class="docutils literal"><span class="pre">_as_parameter_</span></code> attribute (or property):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_as_parameter_</span> <span class="o">=</span> <span class="n">number</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;object value: </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.python.org/2/library/ctypes.html#calling-functions-with-your-own-custom-data-types">https://docs.python.org/2/library/ctypes.html#calling-functions-with-your-own-custom-data-types</a></p>
+<p>(careful with types here!)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id8">
+    <hgroup>
+      <h3>Return Types</h3>
+    </hgroup>
+    <article class="">
+      <p>To define the return type, define the <code class="docutils literal"><span class="pre">restype</span></code> attribute.</p>
+<p>Pre-defining the entire function signature:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">libm</span><span class="o">.</span><span class="n">pow</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span>
+<span class="n">libm</span><span class="o">.</span><span class="n">pow</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>And you can just call it like a regular python function -- ctypes will type check/convert at run time:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">libm</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="s1">&#39;a string&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="o">---------------------------------------------------------------------------</span>
+<span class="n">ArgumentError</span>                             <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">01</span><span class="n">be690a307b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">libm</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="s1">&#39;a string&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="n">ArgumentError</span><span class="p">:</span> <span class="n">argument</span> <span class="mi">1</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;exceptions.TypeError&#39;</span><span class="o">&gt;</span><span class="p">:</span> <span class="n">wrong</span> <span class="nb">type</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="some-more-features">
+    <hgroup>
+      <h3>Some more features</h3>
+    </hgroup>
+    <article class="">
+      <p>Defining callbacks into Python code from C:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ctypes</span><span class="o">.</span><span class="n">CFUNCTYPE</span><span class="p">(</span><span class="n">restype</span><span class="p">,</span> <span class="o">*</span><span class="n">argtypes</span><span class="p">,</span> <span class="n">use_errno</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_last_error</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.python.org/2/library/ctypes.html#ctypes.CFUNCTYPE">http://docs.python.org/2/library/ctypes.html#ctypes.CFUNCTYPE</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Numpy provides utilities for numpy arrays:</p>
+<p><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.ctypes.html">http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.ctypes.html</a></p>
+<p>(works well for C code that takes &quot;classic&quot; C arrays)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="summary">
+    <hgroup>
+      <h3>Summary:</h3>
+    </hgroup>
+    <article class="">
+      <dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">ctypes</span></code> allows you to call shared libraries:</dt>
+<dd><ul class="first last simple">
+<li>Your own custom libs</li>
+<li>System libs</li>
+<li>Proprietary libs</li>
+</ul>
+</dd>
+<dt>Supports almost all of C:</dt>
+<dd><ul class="first last simple">
+<li>Custom data types<ul>
+<li>structs</li>
+<li>unions</li>
+<li>pointers</li>
+</ul>
+</li>
+<li>callbacks</li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id9">
+    <hgroup>
+      <h3>Summary:</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Upside:<ul>
+<li>You can call system libs with little code</li>
+<li>You don't need to compile anything<ul>
+<li>at least for system and pre-compiled libs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Downsides:<ul>
+<li>You need to specify the interface<ul>
+<li>and it is NOT checked for you!</li>
+</ul>
+</li>
+<li>Translation is done on the fly at run time<ul>
+<li>performance considerations</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id1">
+    <hgroup>
+      <h3>LAB</h3>
+    </hgroup>
+    <article class="">
+      <p>In <code class="docutils literal"><span class="pre">Examples/week-08-extensions/ctypes</span></code> you'll find <code class="docutils literal"><span class="pre">add.c</span></code></p>
+<p>You can build a shared lib with it with <code class="docutils literal"><span class="pre">make</span></code>
+(<code class="docutils literal"><span class="pre">make.bat</span></code>) on Windows.</p>
+<p><code class="docutils literal"><span class="pre">test_ctypes.py</span></code> will call that dll, and a few system dlls.</p>
+<ul class="simple">
+<li>Take a look at what's there, and how it works.</li>
+<li>add another function to add.c, that takes different types (maybe divide?)</li>
+<li>rebuild, and figure out how to call it with ctypes.</li>
+<li>Try calling other system functions with ctypes.</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="cython">
+    <hgroup>
+      <h2>Cython</h2>
+    </hgroup>
+    <article class="">
+      <p>A Python like language with static types which compiles down to C code
+for Python extensions.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id2">
+    <hgroup>
+      <h3>Cython</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Can write pure python<ul>
+<li>Fully understands the python types</li>
+</ul>
+</li>
+<li>With careful typing -- you get pure C (and pure C speed)</li>
+<li>Can also call other C code: libraries or compiled in.</li>
+<li>Used for custom Python extensions and/or call C and C++ code.</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id10">
+    <hgroup>
+      <h3>Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>Further reading:</p>
+<p><strong>Web site:</strong></p>
+<p><a class="reference external" href="http://www.cython.org/">http://www.cython.org/</a></p>
+<p><strong>Documentation:</strong></p>
+<p><a class="reference external" href="http://docs.cython.org/">http://docs.cython.org/</a></p>
+<p><strong>Wiki:</strong></p>
+<p><a class="reference external" href="https://github.com/cython/cython/wiki">https://github.com/cython/cython/wiki</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="developing-with-cython">
+    <hgroup>
+      <h3>Developing with Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>First, install cython with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">cython</span>
+</pre></div>
+</div>
+<p>Cython files end in the .pyx extension. An example add.pyx:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">result</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>(looks a lot like Python, eh?)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id11">
+    <hgroup>
+      <h3>Developing with Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>To build a cython module: write a setup.py that defines the extension:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">Cython.Build</span> <span class="k">import</span> <span class="n">cythonize</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;cython_example&quot;</span><span class="p">,</span>
+      <span class="n">ext_modules</span> <span class="o">=</span> <span class="n">cythonize</span><span class="p">([</span><span class="s1">&#39;cy_add1.pyx&#39;</span><span class="p">,])</span>
+   <span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">cythonize</span></code> is a utility that sets up extension module builds for you in a cython-aware way.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="building-a-module">
+    <hgroup>
+      <h3>Building a module</h3>
+    </hgroup>
+    <article class="">
+      <p>For testing, it's helpful to do:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
+</pre></div>
+</div>
+<p>which builds the extensions, and puts the resulting modules right in with the code.</p>
+<p>If you have your setup.py set up for a proper package, you can do:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">develop</span>
+ <span class="ow">or</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>Just like for pure-python packages.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id12">
+    <hgroup>
+      <h3>Building a module</h3>
+    </hgroup>
+    <article class="">
+      <p>You can also do only the Cython step by hand at the command line:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cython</span> <span class="n">a_file</span><span class="o">.</span><span class="n">pyx</span>
+</pre></div>
+</div>
+<p>Produces: <code class="docutils literal"><span class="pre">a_file.c</span></code> file that you can examine, or compile.</p>
+<p>For easier reading, you can generate an annotated html version:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cython</span> <span class="o">-</span><span class="n">a</span> <span class="n">a_file</span><span class="o">.</span><span class="n">pyx</span>
+</pre></div>
+</div>
+<p>Generates``a_file.html`` html file that is easier to read and gives
+additional information that is helpful for debugging and performance
+tuning.</p>
+<p>More on this later.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="basic-cython">
+    <hgroup>
+      <h3>Basic Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>Cython functions can be declared three ways:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span> <span class="c1"># callable from Python</span>
+
+<span class="n">cdef</span> <span class="n">foo</span> <span class="c1"># only callable from Cython/C</span>
+
+<span class="n">cpdef</span> <span class="n">foo</span> <span class="c1"># callable from both Cython and Python</span>
+</pre></div>
+</div>
+<p>Inside those functions, you can write virtually any python code.</p>
+<p>But the real magic is with the optional type declarations: the <code class="docutils literal"><span class="pre">cdef</span></code> lines. Well see this as we go...</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="calling-a-c-function-from-cython">
+    <hgroup>
+      <h3>Calling a C function from Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>You need to tell Cython about extenal functions you want to call with <code class="docutils literal"><span class="pre">cdef</span> <span class="pre">extern</span></code>.</p>
+<p>The Cython code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># distutils: sources = add.c</span>
+<span class="c1"># This tells cythonize that you need that c file.</span>
+
+<span class="c1"># telling cython what the function we want to call looks like.</span>
+<span class="n">cdef</span> <span class="n">extern</span> <span class="kn">from</span> <span class="s2">&quot;add.h&quot;</span><span class="p">:</span>
+    <span class="c1"># pull in C add function, renaming to c_add for Cython</span>
+    <span class="nb">int</span> <span class="n">c_add</span> <span class="s2">&quot;add&quot;</span> <span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># now that cython knows about it -- we can just call it.</span>
+    <span class="k">return</span> <span class="n">c_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id13">
+    <hgroup>
+      <h3>Calling a C function from Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>and the setup.py:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">Cython.Build</span> <span class="k">import</span> <span class="n">cythonize</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;cython_example&quot;</span><span class="p">,</span>
+      <span class="n">ext_modules</span> <span class="o">=</span> <span class="n">cythonize</span><span class="p">([</span><span class="s1">&#39;cy_add_c.pyx&#39;</span><span class="p">]</span>  <span class="p">)</span>
+      <span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id14">
+    <hgroup>
+      <h3>Calling a C function from Cython</h3>
+    </hgroup>
+    <article class="">
+      <p>To build it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python setup.py build_ext --inplace
+</pre></div>
+</div>
+<p>and test it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Chris$ python test_cy_add_c.py
+
+if you didn&#39;t get an assertion, it worked
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="a-pure-cython-solution">
+    <hgroup>
+      <h3>A pure Cython solution</h3>
+    </hgroup>
+    <article class="">
+      <p>Here it is as python code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Which we can put in a pyx file and compile with the setup.py:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">Cython.Build</span> <span class="k">import</span> <span class="n">cythonize</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;cython_example&quot;</span><span class="p">,</span>
+      <span class="n">ext_modules</span> <span class="o">=</span> <span class="n">cythonize</span><span class="p">([</span><span class="s1">&#39;cy_add1.pyx&#39;</span><span class="p">,</span>
+                               <span class="p">])</span>
+      <span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id15">
+    <hgroup>
+      <h3>A pure Cython solution</h3>
+    </hgroup>
+    <article class="">
+      <p>and build:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
+</pre></div>
+</div>
+<p>and test:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Chris$ python test_cy_add1.py
+
+if you didn&#39;t get an assertion, it worked
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id16">
+    <hgroup>
+      <h3>A pure Cython solution</h3>
+    </hgroup>
+    <article class="">
+      <p>But this is still essentially Python. So let's type define it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">):</span>
+
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">result</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>now Cython knows that <code class="docutils literal"><span class="pre">x,</span> <span class="pre">y</span></code>, and <code class="docutils literal"><span class="pre">result</span></code> are <code class="docutils literal"><span class="pre">ints</span></code>, and can use
+raw C for that.</p>
+<p>Build and test again:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Chris$ python setup.py build_ext --inplace
+
+Chris$ python test_cy_add2.py
+</pre></div>
+</div>
+<p>If you didn't get an assertion, it worked</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="a-real-example-the-cython-process">
+    <hgroup>
+      <h3>A real Example: the Cython process</h3>
+    </hgroup>
+    <article class="">
+      <p>Consider a more expensive function:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">integrate_f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">N</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">*</span> <span class="n">dx</span>
+</pre></div>
+</div>
+<p>This is a good candidate for Cython -- an essentially static function called a lot.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="cython-from-pure-python-to-c">
+    <hgroup>
+      <h3>Cython from pure Python to C</h3>
+    </hgroup>
+    <article class="">
+      <p>Let's go through the steps one by one. In the <code class="docutils literal"><span class="pre">Examples/week-08-extensions/cython/integrate</span></code> directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cy_integrate1</span><span class="o">.</span><span class="n">pyx</span>
+<span class="n">cy_integrate2</span><span class="o">.</span><span class="n">pyx</span>
+<span class="n">cy_integrate3</span><span class="o">.</span><span class="n">pyx</span>
+<span class="n">cy_integrate4</span><span class="o">.</span><span class="n">pyx</span>
+<span class="n">cy_integrate5</span><span class="o">.</span><span class="n">pyx</span>
+<span class="n">cy_integrate6</span><span class="o">.</span><span class="n">pyx</span>
+<span class="n">cy_integrate7</span><span class="o">.</span><span class="n">pyx</span>
+</pre></div>
+</div>
+<p>At each step, we'll time and look at the output from:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$cython -a cy_integrate1.pyx
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="agc-example">
+    <hgroup>
+      <h3>AGC Example</h3>
+    </hgroup>
+    <article class="">
+      <p>Another useful example of doing something useful, and using a numpy
+array is in:</p>
+<p>Examples/week-08-extensions/AGC_example</p>
+<p>This one impliments an Automatic Gain Control Signal processing filter.</p>
+<p>It turns out that you can use some advanced numpy tricks to get pretty
+good performancew with this filter, but you can't get full-on speed
+without some compiled code.</p>
+<dl class="docutils">
+<dt>This example uses all of:</dt>
+<dd><ul class="first last simple">
+<li>Pure Cython</li>
+<li>C called from Cython</li>
+<li>f2py and Fortran</li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="auto-generated-wrappers">
+    <hgroup>
+      <h2>Auto-generated wrappers</h2>
+    </hgroup>
+    <article class="">
+      <p>There are few ways to auto-generate wrapper for C/C++ code:</p>
+<p>SWIG</p>
+<p>SIP</p>
+<p>XDress</p>
+<p>[also Boost-Python -- not really a wrapper generator]</p>
+<p>f2py -- for Fortran</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="swig">
+    <hgroup>
+      <h3>SWIG</h3>
+    </hgroup>
+    <article class="">
+      <p><strong>Simple Wrapper Interface Generator</strong></p>
+<p>A language agnostic tool for integrating C/C++ code with high level languages</p>
+<p><strong>Advantages:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Code generation for other environments than Python.</li>
+<li>Doesn't require modification to your C source.</li>
+</ul>
+</div></blockquote>
+<p><strong>Disadvantages:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>For anything non-trivial, requires substantial effort to develop the interface.</li>
+<li>Awkward when you want to mix python and C in the interface.</li>
+<li>Inefficient passing of &quot;Swigified Pointers&quot;</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id17">
+    <hgroup>
+      <h3>SWIG</h3>
+    </hgroup>
+    <article class="">
+      <p>Language interfaces:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Python</li>
+<li>Tcl</li>
+<li>Perl</li>
+<li>Guile (Scheme/Lisp)</li>
+<li>Java</li>
+<li>Ruby</li>
+</ul>
+</div></blockquote>
+<p>And a bunch of others:</p>
+<p><a class="reference external" href="http://www.swig.org/compat.html#SupportedLanguages">http://www.swig.org/compat.html#SupportedLanguages</a></p>
+<p>Further reading:</p>
+<p><a class="reference external" href="http://www.swig.org/Doc1.3/Python.html">http://www.swig.org/Doc1.3/Python.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="swigifying-add">
+    <hgroup>
+      <h3>SWIGifying add()</h3>
+    </hgroup>
+    <article class="">
+      <p>SWIG doesn't require modification to your C source code</p>
+<p>The language interface is defined by an &quot;interface file&quot;, usually with
+a suffix of <code class="docutils literal"><span class="pre">.i</span></code></p>
+<p>From there, SWIG can generate interfaces for the languages it supports</p>
+<p>The interface file contains ANSI C prototypes and variable declarations</p>
+<p>The <code class="docutils literal"><span class="pre">%module</span></code> directive defines the name of the module that will be
+created by SWIG</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="creating-a-wrapper">
+    <hgroup>
+      <h3>Creating a wrapper:</h3>
+    </hgroup>
+    <article class="">
+      <p>(<code class="docutils literal"><span class="pre">Examples/week-08-extensions/swig</span></code>)</p>
+<p>Create <code class="docutils literal"><span class="pre">add.i</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">module</span> <span class="n">add</span>
+<span class="o">%</span><span class="p">{</span>
+<span class="o">%</span><span class="p">}</span>
+<span class="n">extern</span> <span class="nb">int</span> <span class="n">add</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Create  <code class="docutils literal"><span class="pre">setup.py</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span>
+    <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;add&#39;</span><span class="p">],</span>
+    <span class="n">ext_modules</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">Extension</span><span class="p">(</span><span class="s1">&#39;_add&#39;</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;add.c&#39;</span><span class="p">,</span> <span class="s1">&#39;add.i&#39;</span><span class="p">])</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id18">
+    <hgroup>
+      <h3>Creating a wrapper:</h3>
+    </hgroup>
+    <article class="">
+      <p>And build it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
+</pre></div>
+</div>
+<p>NOTE: distutils (and thus setuptools) &quot;knows&quot; about SWIG, so it does the
+swig step for you when you give it a *.i file.</p>
+<p>Notice what gets created:</p>
+<blockquote>
+<div><ul class="simple">
+<li>an <code class="docutils literal"><span class="pre">add_wrap.c</span></code> file -- the wrapper code.</li>
+<li>an <code class="docutils literal"><span class="pre">add.py</span></code> file -- python code that calls the C function</li>
+<li>an <code class="docutils literal"><span class="pre">_add.so</span></code> (or <code class="docutils literal"><span class="pre">_add.pyd</span></code>) file -- the compiled extension</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id19">
+    <hgroup>
+      <h3>Creating a wrapper:</h3>
+    </hgroup>
+    <article class="">
+      <p>You can then run the code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import add; print add.add(4,5)&#39;</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://www.swig.org/Doc2.0/SWIGDocumentation.html#Introduction_nn5">http://www.swig.org/Doc2.0/SWIGDocumentation.html#Introduction_nn5</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="installing-swig">
+    <hgroup>
+      <h3>Installing SWIG</h3>
+    </hgroup>
+    <article class="">
+      <p>On the SWIG download page, there is a source tarball for *nix, and
+Windows binaries:</p>
+<p><a class="reference external" href="http://www.swig.org/download.html">http://www.swig.org/download.html</a></p>
+<p>For Linux:</p>
+<p>You may have it in your package repository:</p>
+<p>apt-get install swig</p>
+<p>If not, download the tarball, unpack it, and:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span>
+<span class="n">make</span>
+<span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>should do it.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id20">
+    <hgroup>
+      <h3>OS-X Install</h3>
+    </hgroup>
+    <article class="">
+      <p>For OS-X: the same thing, except you also need the &quot;pcre&quot; package.
+Which you can get from:</p>
+<p><a class="reference external" href="http://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.gz/download">http://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.gz/download</a></p>
+<p>Put it in the dir created when the SWIG source was unpacked.</p>
+<p>Unpack it, then run this to set it up for use with SWIG:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Tools</span><span class="o">/</span><span class="n">pcre</span><span class="o">-</span><span class="n">build</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Then you can do the standard:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span>
+<span class="n">make</span>
+<span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="decisions-decisions">
+    <hgroup>
+      <h2>Decisions, Decisions...</h2>
+    </hgroup>
+    <article class="">
+      <p class="large">So what to use???</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="my-decision-tree">
+    <hgroup>
+      <h3>My decision tree</h3>
+    </hgroup>
+    <article class="">
+      <p>Are you calling a few system library calls?</p>
+<blockquote>
+<div><ul class="simple">
+<li>Use ctypes</li>
+</ul>
+</div></blockquote>
+<p>Do you have a really big library to wrap? -- use a wrapper generator:</p>
+<blockquote>
+<div><ul class="simple">
+<li>SWIG (other languages?)</li>
+<li>SIP</li>
+<li>XDress</li>
+</ul>
+</div></blockquote>
+<p>Are you writing extensions from scratch?</p>
+<blockquote>
+<div><ul class="simple">
+<li>Cython</li>
+<li>Do you love C++ ?<ul>
+<li>Boost Python</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>Do you want a &quot;thick&quot; wrapper around a C/C++ lib:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Cython</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

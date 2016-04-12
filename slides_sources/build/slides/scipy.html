@@ -1,0 +1,784 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>Intro to Numpy / Scipy &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="intro-to-numpy-scipy">
+    <hgroup>
+      <h1>Intro to Numpy / Scipy</h1>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Chris Barker</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="id1">
+    <hgroup>
+      <h2>Scipy</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">The scipy &quot;Stack&quot; is a collection of core packages used for scientific / numerical computing.</p>
+<p class="left"><a class="reference external" href="http://www.scipy.org/stackspec.html">http://www.scipy.org/stackspec.html</a></p>
+<p class="left">Many other domain-specific packages area available:</p>
+<q class="left">
+Core &quot;stack&quot; is what most people will want, regardless of domain.</q>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-s-in-the-scipy-stack">
+    <hgroup>
+      <h3>What's in the scipy stack?</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Python (<a class="reference external" href="http://www.python.org">http://www.python.org</a>)</li>
+<li>NumPy (<a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a>)</li>
+<li>SciPy library (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
+<li>Matplotlib (<a class="reference external" href="http://matplotlib.org/">http://matplotlib.org/</a>)</li>
+<li>IPython (<a class="reference external" href="http://ipython.org/">http://ipython.org/</a>)</li>
+<li>nose (<a class="reference external" href="https://nose.readthedocs.org">https://nose.readthedocs.org</a>)</li>
+<li>pandas (<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>)</li>
+<li>Sympy (<a class="reference external" href="http://sympy.org/">http://sympy.org/</a>)</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="learning-resources">
+    <hgroup>
+      <h3>Learning Resources</h3>
+    </hgroup>
+    <article class="">
+      <p>There are a lot of tutorials, documentation, etc. out there. In this class, we only have a couple hours, so won't get that far. Here are some nice options:</p>
+<p><a class="reference external" href="http://scipy-lectures.github.io/">http://scipy-lectures.github.io/</a></p>
+<p><a class="reference external" href="https://github.com/SciTools/courses/blob/master/README.md">https://github.com/SciTools/courses/blob/master/README.md</a></p>
+<p><a class="reference external" href="https://github.com/jrjohansson/scientific-python-lectures">https://github.com/jrjohansson/scientific-python-lectures</a></p>
+<p>(note: this one does <code class="docutils literal"><span class="pre">import</span> <span class="pre">*</span></code> -- don't do that!)</p>
+<p><a class="reference external" href="https://github.com/WeatherGod/AnatomyOfMatplotlib">https://github.com/WeatherGod/AnatomyOfMatplotlib</a></p>
+<p><a class="reference external" href="http://wiki.scipy.org/Tentative_NumPy_Tutorial">http://wiki.scipy.org/Tentative_NumPy_Tutorial</a></p>
+<p>For those familiar with MATLAB:</p>
+<p><a class="reference external" href="http://wiki.scipy.org/NumPy_for_Matlab_Users">http://wiki.scipy.org/NumPy_for_Matlab_Users</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="the-ipython-notebook">
+    <hgroup>
+      <h3>The ipython &quot;notebook&quot;</h3>
+    </hgroup>
+    <article class="">
+      <p>We've been using iPython a lot in this class (at least I have)</p>
+<p>It provides a great interactive environment fo testing and running
+Python code.</p>
+<p>It turns out it has antoher interface: the &quot;notebook&quot;</p>
+<p>The notebook provides a way to interspese littel chunks of code, adn text, adn images, etc...</p>
+<p>It runs in a browser, you start it up with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ipython notebook
+</pre></div>
+</div>
+<p>It should start your browser, and show you the notebooks in the dir you started it up in.</p>
+<p>I'll be using it for lots of demos in this class.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="numpy">
+    <hgroup>
+      <h2>numpy</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">numpy is the core package that the rest of the scipy stack is built on.
+numpy is really the core of everything.</p>
+<p class="left">All the rest requires an understanding good understanding of what a numpy array is -- so that's mostly what I'll talk about here.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="so-what-is-numpy">
+    <hgroup>
+      <h3>So what is numpy?</h3>
+    </hgroup>
+    <article class="">
+      <p>Not just for lots of numbers!
+(but it's great for that!)</p>
+<p><a class="reference external" href="http://www.numpy.org/">http://www.numpy.org/</a></p>
+<ol class="arabic simple">
+<li>An N-Dimensional array object</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Really this <code class="docutils literal"><span class="pre">ndarray</span></code> is the core of it all</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>A whole pile of tools for operations on/with that object.</li>
+</ol>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="why-numpy">
+    <hgroup>
+      <h3>Why numpy?</h3>
+    </hgroup>
+    <article class="">
+      <p>Classic answer: Lots of numbers</p>
+<blockquote>
+<div><ul class="simple">
+<li>Faster</li>
+<li>Less memory</li>
+<li>More data types</li>
+</ul>
+</div></blockquote>
+<p>Even if you don't have lot of numbers:</p>
+<blockquote>
+<div><ul class="simple">
+<li>N-d array slicing</li>
+<li>Vector operations</li>
+<li>Flexible data types</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id2">
+    <hgroup>
+      <h3>Why numpy?</h3>
+    </hgroup>
+    <article class="">
+      <p>Wrapper for a block of memory:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Interfacing with C libs</li>
+<li>PyOpenGL</li>
+<li>GDAL</li>
+<li>NetCDF4</li>
+<li>Shapely</li>
+</ul>
+</div></blockquote>
+<p>Image processing:</p>
+<blockquote>
+<div><ul class="simple">
+<li>PIL</li>
+<li>WxImage</li>
+<li>ndimage</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="this-talk">
+    <hgroup>
+      <h3>This Talk</h3>
+    </hgroup>
+    <article class="">
+      <p>There are a lot of tutorials and documentation out there.</p>
+<p>So I'm going to spend about an hour or so on the regular old &quot;how do you use it&quot; stuff.</p>
+<p>Then, I'm going to cover a bit about the guts and some advanced issues.</p>
+<p>This is harder to find explanations for -- and will help you understand what's really going on under the hood.</p>
+<p>NOTE: I've been using numpy and its predecessors for long time -- so have kind of forgotten what is obvious and what is not -- so:</p>
+<blockquote>
+<div><p><strong>ask questions</strong></p>
+<p>as we go!</p>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="getting-started">
+    <hgroup>
+      <h2>Getting started</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">Example code is in the class repo:</p>
+<p class="left"><code class="docutils literal"><span class="pre">SystemDevelopment2015/Examples/week-05-numpy</span></code></p>
+<p class="left">Those are a bunch of ipython notebooks.</p>
+<p class="left">Get your command line into that dir, then start up the iPyhton notebook:</p>
+<p class="left"><code class="docutils literal"><span class="pre">$</span> <span class="pre">ipython</span> <span class="pre">notebook</span></code></p>
+<p class="left">This should fie up your browser, and give you a list of notebooks to choose from.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="array-constructors">
+    <hgroup>
+      <h3>Array Constructors:</h3>
+    </hgroup>
+    <article class="">
+      <p>How do you make an array?</p>
+<p>From scratch: <code class="docutils literal"><span class="pre">ones(),</span> <span class="pre">zeros(),</span> <span class="pre">empty(),</span> <span class="pre">arange(),</span> <span class="pre">linspace(),</span> <span class="pre">logspace()</span></code></p>
+<p>( Default dtype: <code class="docutils literal"><span class="pre">np.float64</span></code> )</p>
+<p>From sequences:  <code class="docutils literal"><span class="pre">array(),</span> <span class="pre">asarray()</span></code> ( Build from any sequence )</p>
+<p>From binary data:  <code class="docutils literal"><span class="pre">fromstring(),</span> <span class="pre">frombuffer(),</span> <span class="pre">fromfile()</span></code></p>
+<p>Assorted linear algebra standards: <code class="docutils literal"><span class="pre">eye(),</span> <span class="pre">diag()</span></code>, etc.</p>
+<p>demo: <code class="docutils literal"><span class="pre">constructors.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="indexing-and-slicing">
+    <hgroup>
+      <h3>Indexing and slicing</h3>
+    </hgroup>
+    <article class="">
+      <p>How do you get parts of the array out?</p>
+<p>Indexing and slicing much like regular python sequences, but extended to multi-dimensions.</p>
+<p>However: a slice is a &quot;view&quot; on the array -- new object, but shares memory:</p>
+<p>demo: <code class="docutils literal"><span class="pre">slice.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="reshaping">
+    <hgroup>
+      <h3>Reshaping:</h3>
+    </hgroup>
+    <article class="">
+      <p>numpy arrays have a particular shape.</p>
+<p>But they are really wrappers around a block of data</p>
+<p>So they can be re-shaped -- same data, arranged differently</p>
+<p>demo: <code class="docutils literal"><span class="pre">reshaping.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="broadcasting">
+    <hgroup>
+      <h3>Broadcasting:</h3>
+    </hgroup>
+    <article class="">
+      <p>Element-wise operations among two different rank arrays:</p>
+<p>This is the key power of numpy!</p>
+<p>Simple case: scalar and array:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">a</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">a</span><span class="o">*</span><span class="mi">3</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Great for functions of more than one variable on a grid</p>
+<p>demo: <code class="docutils literal"><span class="pre">broadcasting.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="fancy-indexing">
+    <hgroup>
+      <h3>Fancy Indexing</h3>
+    </hgroup>
+    <article class="">
+      <p>As we've seen, you can slice and dice nd arrays much like regular python sequences.</p>
+<p>This model is extended to multiple dimensions.</p>
+<p>But it still only lets you extract rectangular blocks of elements.</p>
+<p>For more complex sub-selection: we use &quot;fancy indexing&quot;:</p>
+<p>demo: <code class="docutils literal"><span class="pre">fancy_indexing.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-is-an-nd-array-under-the-hood">
+    <hgroup>
+      <h3>What is an nd array under the hood?</h3>
+    </hgroup>
+    <article class="">
+      <blockquote>
+<div><ul>
+<li><p class="first">N-dimensional (up to 32!)</p>
+</li>
+<li><p class="first">Homogeneous array:</p>
+<ul>
+<li><p class="first">Every element is the same type</p>
+<p>(but that type can be a pyObject)</p>
+</li>
+<li><p class="first">Int, float, char -- more exotic types</p>
+</li>
+<li><p class="first">&quot;rank&quot; – number of dimensions</p>
+</li>
+</ul>
+</li>
+<li><p class="first">Strided data:</p>
+<ul class="simple">
+<li>Describes how to index into block of memory</li>
+<li>PEP 3118 -- Revising the buffer protocol</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>demo: <code class="docutils literal"><span class="pre">memory_struct.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="built-in-data-types">
+    <hgroup>
+      <h3>Built-in Data Types</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Signed and unsigned Integers<ul>
+<li>8, 16, 32, 64 bits</li>
+</ul>
+</li>
+<li>Floating Point<ul>
+<li>32, 64, 96, 128 bits (not all platforms)</li>
+</ul>
+</li>
+<li>Complex<ul>
+<li>64, 128, 192, 256 bits</li>
+</ul>
+</li>
+<li>String and unicode<ul>
+<li>Static length</li>
+</ul>
+</li>
+<li>Bool --  8 bit</li>
+<li>Python Object<ul>
+<li>Really a pointer</li>
+</ul>
+</li>
+</ul>
+<p>demo: <code class="docutils literal"><span class="pre">object.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="text-file-i-o">
+    <hgroup>
+      <h3>Text File I/O</h3>
+    </hgroup>
+    <article class="">
+      <p>Loading from text (CSV, etc):</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">np.loadtxt</span></code></li>
+<li><code class="docutils literal"><span class="pre">np.genfromtxt</span></code> ( a few more features )</li>
+</ul>
+</div></blockquote>
+<p>Saving as text (CSV):</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">np.savetxt()</span></code></li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="compound-dtypes">
+    <hgroup>
+      <h3>Compound dtypes</h3>
+    </hgroup>
+    <article class="">
+      <blockquote>
+<div><ul class="simple">
+<li>Can define any combination of other types<ul>
+<li>Still Homogeneous:  Array of structs.</li>
+</ul>
+</li>
+<li>Can name the fields</li>
+<li>Can be like a database table</li>
+<li>Useful for reading binary data</li>
+</ul>
+</div></blockquote>
+<p>demo: <code class="docutils literal"><span class="pre">dtypes.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="numpy-persistence">
+    <hgroup>
+      <h3>Numpy Persistence:</h3>
+    </hgroup>
+    <article class="">
+      <blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">np.tofile()</span> <span class="pre">/</span> <span class="pre">np.fromfile()</span></code><ul>
+<li>Just the raw bytes, no metadata</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pickle</span></code></li>
+<li><code class="docutils literal"><span class="pre">np.savez()</span></code>  -- numpy zip format<ul>
+<li>Compact: binary dump plus metadata</li>
+</ul>
+</li>
+<li>netcdf<ul>
+<li>NetCDF4 (<a class="reference external" href="https://github.com/Unidata/netcdf4-python">https://github.com/Unidata/netcdf4-python</a>)</li>
+</ul>
+</li>
+<li>Hdf<ul>
+<li>Pyhdf</li>
+<li>pytables</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="stride-tricks">
+    <hgroup>
+      <h3>Stride Tricks</h3>
+    </hgroup>
+    <article class="">
+      <p>numpy arrays are really wrappers about &quot;strided data&quot;</p>
+<p>This means that there is a single linear block of memory with the
+values in it.</p>
+<p>The &quot;strides&quot; describe how that data is arranged to look like an array of more dimensions: 2D, 3D, 4D etc.</p>
+<p>Mostly, numpy handles all this under the hood for you, so you can logically work with the data as though it were multi-dimensional.</p>
+<p>But you can actually manipulate the description of the data, so that it &quot;acts&quot; like it is arranged differently than it is:</p>
+<p><code class="docutils literal"><span class="pre">stride_tricks.ipynb</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="working-with-compiled-code">
+    <hgroup>
+      <h3>Working with compiled code</h3>
+    </hgroup>
+    <article class="">
+      <blockquote>
+<div><ul class="simple">
+<li>Some code can't be vectorized</li>
+<li>Interface with existing libraries</li>
+</ul>
+</div></blockquote>
+<p>numpy arrays are essentially a wrapper around a C pointer to a block of data -- some tools:</p>
+<blockquote>
+<div><ul class="simple">
+<li>C API: you don't want to do that!</li>
+<li>Cython: typed arrays</li>
+<li>Ctypes</li>
+<li>SWIG: numpy.i</li>
+<li>Boost: boost array</li>
+<li>f2py</li>
+</ul>
+</div></blockquote>
+<p>We'll get into this more in a later class...</p>
+<p>Example of numpy+cython: <a class="reference external" href="https://github.com/cython/cython/wiki/examples-mandelbrot">https://github.com/cython/cython/wiki/examples-mandelbrot</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="other-stuff">
+    <hgroup>
+      <h3>Other stuff:</h3>
+    </hgroup>
+    <article class="">
+      <blockquote>
+<div><ul class="simple">
+<li>Masked arrays</li>
+<li>Memory-mapped files</li>
+<li>Set operations: unique, etc</li>
+<li>Random numbers</li>
+<li>Polynomials</li>
+<li>FFT</li>
+<li>Sorting and searching</li>
+<li>Linear Algebra</li>
+<li>Statistics</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="numpy-docs">
+    <hgroup>
+      <h3>numpy docs:</h3>
+    </hgroup>
+    <article class="">
+      <p>www.numpy.org</p>
+<blockquote>
+<div><ul class="simple">
+<li>Numpy reference Downloads, etc</li>
+</ul>
+</div></blockquote>
+<p>www.scipy.org</p>
+<blockquote>
+<div><ul class="simple">
+<li>lots of docs</li>
+</ul>
+</div></blockquote>
+<p>Scipy cookbook:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.scipy.org/Cookbook">http://www.scipy.org/Cookbook</a></li>
+</ul>
+</div></blockquote>
+<p>&quot;The Numpy Book&quot;</p>
+<p><a class="reference external" href="http://csc.ucdavis.edu/~chaos/courses/nlp/Software/NumPyBook.pdf">http://csc.ucdavis.edu/~chaos/courses/nlp/Software/NumPyBook.pdf</a></p>
+<p>(old, but written by the primary author -- key stuff in there)</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="matplotlib">
+    <hgroup>
+      <h2>matplotlib</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">Matplotlib is the most common plotting library for python.</p>
+<ul class="left simple">
+<li>Powerful</li>
+<li>Flexible</li>
+<li>Publication quality</li>
+<li>Primarily 2d graphics (some 3d)</li>
+</ul>
+<p class="left">See the Gallery here:</p>
+<p class="left"><a class="reference external" href="http://matplotlib.org/gallery.html">http://matplotlib.org/gallery.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="matplotlib-apis">
+    <hgroup>
+      <h3>matplotlib APIs</h3>
+    </hgroup>
+    <article class="">
+      <p>Matplotlib has essentially 2 different (but related) APIs:</p>
+<p>The &quot;pylab&quot; API:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Derived from the MATLAB API, and most suitable for interactive use</li>
+</ul>
+</div></blockquote>
+<p>The Object Oriented API:</p>
+<blockquote>
+<div><ul class="simple">
+<li>reflects the underlying OO structure of matplolib</li>
+<li>more &quot;pythonic&quot;</li>
+<li>much better suited to embedding plotting in applications</li>
+<li>better suited to re-using code</li>
+</ul>
+</div></blockquote>
+<p>I'll introduce the OO API, but you will see a LOT of example code using the interactive &quot;pylab&quot; interface.</p>
+<p>Fortunately, the concepts and most of the commands are the same.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="tutorial">
+    <hgroup>
+      <h3>Tutorial</h3>
+    </hgroup>
+    <article class="">
+      <p>We'll run through a simple tutorial in class:</p>
+<p><code class="docutils literal"><span class="pre">SystemDevelopment2015/Examples/week-05-matplotlib</span></code></p>
+<p>There are &quot;learner&quot; and instructor notebooks in there. They are identical, but if you use the learner one you can mess with it and not mess up the main one...</p>
+<p>If you really want to use MPL, I suggest you run through a more thorough one to really get an idea how it all works:</p>
+<p><a class="reference external" href="https://github.com/WeatherGod/AnatomyOfMatplotlib">https://github.com/WeatherGod/AnatomyOfMatplotlib</a></p>
+<p>This one is pretty nice -- but would take the entire class...</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="using-numpy-arrays-when-computation-isn-t-critical">
+    <hgroup>
+      <h3>Using numpy arrays when computation isn't critical</h3>
+    </hgroup>
+    <article class="">
+      <p>numpy arrays are mostly about performance and memory use.</p>
+<p>But you still may want to use them for toher reasons.</p>
+<p>some data naturally is in 2-d or 3-d arrays.</p>
+<p>sometimes you need to work on a sub-view of the data as an independent object.</p>
+<p>For example: A Sudoko game:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The board is 9X9</li>
+<li>Sub-divided into 3X3 squares</li>
+<li>And you need to examine the rows and columns</li>
+</ul>
+</div></blockquote>
+<p>Example: <code class="docutils literal"><span class="pre">sudoku-chb.py</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="pandas">
+    <hgroup>
+      <h2>Pandas</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">Python Data Analysis Library</p>
+<p class="left">Pandas provides high-performance, easy-to-use data structures and data analysis tools for the Python programming language.</p>
+<p class="left">Modeled after R's dataframe concept, it provides some pretty neat tools for doing simple statistical analysis and plotting of larg-ish data sets.</p>
+<p class="left">It's particularly powerful for time series.</p>
+<p class="left"><code class="docutils literal"><span class="pre">http://pandas.pydata.org/</span></code></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="learning-pandas">
+    <hgroup>
+      <h3>Learning Pandas</h3>
+    </hgroup>
+    <article class="">
+      <p>The official documentation is excellent, including tutorials:</p>
+<p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/">http://pandas.pydata.org/pandas-docs/stable/</a></p>
+<p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/10min.html">http://pandas.pydata.org/pandas-docs/stable/10min.html</a></p>
+<p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/tutorials.html">http://pandas.pydata.org/pandas-docs/stable/tutorials.html</a></p>
+<p>In addition, there are a large number of tutorials on the web:</p>
+<p>This one is oriented to folks familiar with SQL:</p>
+<p><a class="reference external" href="http://www.gregreda.com/2013/10/26/intro-to-pandas-data-structures/">http://www.gregreda.com/2013/10/26/intro-to-pandas-data-structures/</a></p>
+<p>And this is a good one to get started quick:</p>
+<p><a class="reference external" href="http://synesthesiam.com/posts/an-introduction-to-pandas.html">http://synesthesiam.com/posts/an-introduction-to-pandas.html</a></p>
+<p>We'll give that one a shot in class now...</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="id3">
+    <hgroup>
+      <h2>Scipy</h2>
+    </hgroup>
+    <article class="">
+      <p class="left">The scipy package itself is a large collection of cool stuff for scientific computing. ( <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/">http://docs.scipy.org/doc/scipy/reference/</a> )</p>
+<p class="left">You'll see there lots of stuff! If it's at all general purpose for computation, you're likely to find it there.</p>
+<p class="left">Some of the most common sub-packages:</p>
+<blockquote class="left">
+<div><ul class="simple">
+<li>Special functions (scipy.special)</li>
+<li>Integration (scipy.integrate)</li>
+<li>Optimization (scipy.optimize)</li>
+<li>Interpolation (scipy.interpolate)</li>
+<li>Fourier Transforms (scipy.fftpack)</li>
+<li>Signal Processing (scipy.signal)</li>
+<li>Linear Algebra (scipy.linalg)</li>
+<li>Spatial data structures and algorithms (scipy.spatial)</li>
+<li>Statistics (scipy.stats)</li>
+<li>Multidimensional image processing (scipy.ndimage)</li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

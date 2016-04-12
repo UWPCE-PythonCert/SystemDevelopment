@@ -1,0 +1,291 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>System Development with Python &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="#" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="system-development-with-python">
+    <hgroup>
+      <h1>System Development with Python</h1>
+    </hgroup>
+    <article class="">
+      <div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p class="left credit">These materials copyright Christopher Barker, Joseph Sheedy and Maria McKinley.</p>
+<p class="left credit">Licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.</p>
+<p class="left credit"><a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="syllabus">
+    <hgroup>
+      <h2>Syllabus:</h2>
+    </hgroup>
+    <article class="">
+      <p class="left"><a class="reference internal" href="syllabus.html#syllabus"><span class="std std-ref">System Development Syllabus</span></a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-1">
+    <hgroup>
+      <h2>Session 1</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li><a class="reference internal" href="debugging.html#debugging"><span class="std std-ref">Debugging</span></a></li>
+<li><a class="reference internal" href="logging.html#logging"><span class="std std-ref">Logging and the logging module</span></a></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-2">
+    <hgroup>
+      <h2>Session 2</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li><a class="reference internal" href="persistance_serialization.html#serialization"><span class="std std-ref">Persistence and Serialization</span></a></li>
+<li><a class="reference internal" href="testing.html#testing"><span class="std std-ref">Testing</span></a></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-3">
+    <hgroup>
+      <h2>Session 3</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li><a class="reference internal" href="packaging.html#packaging"><span class="std std-ref">Building Your Own Package</span></a></li>
+<li><a class="reference internal" href="documentation.html#documentation"><span class="std std-ref">Documentation</span></a></li>
+<li>Code Reviewing</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-4">
+    <hgroup>
+      <h2>Session 4</h2>
+    </hgroup>
+    <article class="">
+      <p>Code Reviews begin</p>
+<ul class="left simple">
+<li><a class="reference internal" href="nosql.html#nosql"><span class="std std-ref">Non RDBMS Database Options</span></a></li>
+<li><a class="reference external" href="html_slides/06-datetime.html">datetime</a></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-5">
+    <hgroup>
+      <h2>Session 5</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li><a class="reference internal" href="scipy.html#scipy"><span class="std std-ref">Intro to Numpy / Scipy</span></a></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-6">
+    <hgroup>
+      <h2>Session 6</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li><a class="reference internal" href="advanced_oo.html#advanced-oo"><span class="std std-ref">Advanced Object Oriented Features of Python</span></a></li>
+<li><a class="reference external" href="html_slides/06-metaclasses.html">Metaclasses</a></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-7">
+    <hgroup>
+      <h2>Session 7</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li><a class="reference external" href="html_slides/07-threading-and-multiprocessing.html">multi-threading/processing</a></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-8">
+    <hgroup>
+      <h2>Session 8</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li>Performance and Profiling</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-9">
+    <hgroup>
+      <h2>Session 9</h2>
+    </hgroup>
+    <article class="">
+      <ul class="left simple">
+<li>GUI development: wxPython</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="session-10">
+    <hgroup>
+      <h2>Session 10</h2>
+    </hgroup>
+    <article class="">
+      <p>Student Presentations</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="other-topics">
+    <hgroup>
+      <h2>Other Topics:</h2>
+    </hgroup>
+    <article class="">
+      <p>These are topics that we don't have time for in class, but you might want to look at these notes just the same:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="html_slides/04-db.html">Working with SQL Databases</a></li>
+<li><a class="reference internal" href="unicode.html#unicode"><span class="std std-ref">Unicode in Python 2</span></a></li>
+<li><a class="reference internal" href="extensions.html#extensions"><span class="std std-ref">Extending Python with Complied Code</span></a></li>
+<li><a class="reference internal" href="weak_references.html#weak-references"><span class="std std-ref">Python Memory Management and Weak References</span></a></li>
+</ul>
+</div></blockquote>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="assorted-notes">
+    <hgroup>
+      <h2>Assorted Notes:</h2>
+    </hgroup>
+    <article class="">
+      <p>Notes on other topics, or that aren't specific to a particular lecture -- or are general purpose, in any case.</p>
+<p><a class="reference internal" href="notes/InstallingTheScipyStack.html#installing-scipy"><span class="std std-ref">Installing The SciPy Stack</span></a></p>
+<p><a class="reference internal" href="notes/BuildingExtensions.html#building-extensions"><span class="std std-ref">Building Extensions to Python</span></a></p>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

@@ -1,0 +1,996 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>Testing &mdash; System Development with Python</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+    <link rel="stylesheet" href="_static/custom.css"
+          type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="System Development with Python" href="index.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+<!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+<hgroup class="auto-fadein">
+  <h1 data-config-title><!-- populated from slide_config.json --></h1>
+  <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+  <p data-config-presenter><!-- populated from slide_config.json --></p>
+</hgroup>
+</slide>
+
+  
+    <slide class="title-slide segue nobackground level-1" id="testing">
+    <hgroup>
+      <h1>Testing</h1>
+    </hgroup>
+    <article class="">
+      <p>System Development with Python</p>
+<p>Git repository:</p>
+<p><a class="reference external" href="https://github.com/UWPCE-PythonCert/SystemDevelopment">https://github.com/UWPCE-PythonCert/SystemDevelopment</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="what-is-testing">
+    <hgroup>
+      <h2>What is testing?</h2>
+    </hgroup>
+    <article class="">
+      <p class="medium">Code which runs your application in as close to a real environment as
+feasible and validates its behavior</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="terminology-of-testing">
+    <hgroup>
+      <h3>Terminology of testing</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Unit tests</li>
+<li>Integration tests</li>
+<li>High level system tests</li>
+<li>Acceptance tests</li>
+<li>Black box / White box testing</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="v-model-and-tests-levels">
+    <hgroup>
+      <h3>&quot;V&quot; model and tests levels</h3>
+    </hgroup>
+    <article class="">
+      <img alt="_images/test_v_model.png" src="_images/test_v_model.png" />
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="unit-testing">
+    <hgroup>
+      <h3>Unit testing</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Test smallest discrete units of source code</li>
+<li>Tests should be independent of each other</li>
+<li>Can separate tests from required resources through fixtures and
+mocking</li>
+<li>Automatable</li>
+<li>Integrates with development process</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-should-be-tested">
+    <hgroup>
+      <h3>What should be tested?</h3>
+    </hgroup>
+    <article class="">
+      <p>The percentage of code which gets run in a test is known as the
+coverage.</p>
+<p>100% coverage is an ideal to strive for. But the decision on when and
+what to test should take into account the volatility of the project.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="unit-testing-tools">
+    <hgroup>
+      <h3>Unit-testing tools</h3>
+    </hgroup>
+    <article class="">
+      <ul>
+<li><p class="first">unittest, the test framework that ships with Python. Started life as PyUnit.</p>
+<p><a class="reference external" href="http://docs.python.org/3/library/unittest.html">http://docs.python.org/3/library/unittest.html</a></p>
+</li>
+<li><p class="first">nose2, a test runner which integrates with unittest, making it nicer and easier</p>
+<p><a class="reference external" href="http://nose2.readthedocs.org/en/latest/">http://nose2.readthedocs.org/en/latest/</a></p>
+</li>
+<li><p class="first">mock, an object mocking library. Ships with Python 3.3+</p>
+<p><a class="reference external" href="https://docs.python.org/dev/library/unittest.mock.html">https://docs.python.org/dev/library/unittest.mock.html</a></p>
+</li>
+<li><p class="first">pytest, an alternative to unittest, which you should be pretty familiar with now</p>
+<p><a class="reference external" href="http://pytest.org/latest/">http://pytest.org/latest/</a></p>
+</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="about-unit-testing">
+    <hgroup>
+      <h3>About Unit-testing</h3>
+    </hgroup>
+    <article class="">
+      <ol class="arabic simple">
+<li>Tests should be independent.</li>
+<li>Tests do not run in order, which shouldn't matter, see point 1.</li>
+<li>Test fixtures are available to do any setup needed for tests.</li>
+</ol>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="unittest-testcase-anatomy">
+    <hgroup>
+      <h3>unittest.TestCase anatomy</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>create a new subclass of unittest.TestCase</li>
+<li>name test methods test_foo so the test runner finds them</li>
+<li>make calls to the self.assert* family of methods to validate results</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="k">class</span> <span class="nc">TestTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="assert-methods">
+    <hgroup>
+      <h3>Assert Methods</h3>
+    </hgroup>
+    <article class="">
+      <p>TestCase contains a number of methods named assert* which can be used
+for validation, here are a few common ones:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">assertEqual</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertNotEqual</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertTrue</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertFalse</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertIn</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+<span class="n">assertRaises</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> \<span class="o">*</span><span class="n">args</span><span class="p">,</span> \<span class="o">*</span>\<span class="o">*</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See a full list at:</p>
+<p><a class="reference external" href="http://docs.python.org/3/library/unittest.html#assert-methods">http://docs.python.org/3/library/unittest.html#assert-methods</a> or</p>
+<p><code class="docutils literal"><span class="pre">dir(unittest.TestCase)</span></code> or to get really fancy</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="fixtures-setting-up-your-tests-for-success">
+    <hgroup>
+      <h3>Fixtures: Setting up your tests for success</h3>
+    </hgroup>
+    <article class="">
+      <p>(or failure!)</p>
+<p>Test fixtures are a fixed baseline for tests to run from consistently,
+also known as test context</p>
+<p>Fixtures can be set up fresh before each test, once before each test
+case, or before an entire test suite</p>
+<p>unittest provides fixture support via these methods:</p>
+<ul class="simple">
+<li>setUp / tearDown - these are run before and after each test method</li>
+<li>setUpClass / tearDownClass - these are run before/after each TestCase</li>
+<li>setUpModule / tearDownModule - run before/after each TestSuite</li>
+<li>(new in Python 2.7) addCleanup / doCleanups - called after tearDown,
+in case a test throws an exception</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="testing-floating-point-values">
+    <hgroup>
+      <h2>Testing floating point values</h2>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="levels-of-precision-of-floating-point">
+    <hgroup>
+      <h3>levels of precision of floating point</h3>
+    </hgroup>
+    <article class="">
+      <p>Floating point numbers are stored in <a class="reference external" href="http://en.wikipedia.org/wiki/IEEE_floating_point">IEEE
+754</a> 64-bit double
+precision format, so 1 bit for the sign, 11 bits for the exponent, and
+the remaining 52 for the fraction</p>
+<p>So we can count on up to 16 digits of precision in decimal:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">52</span><span class="p">))</span>
+<span class="gh">Out[39]: </span><span class="go">16</span>
+
+<span class="gp">In [40]: </span><span class="o">.</span><span class="mi">1</span><span class="o">+.</span><span class="mi">2</span>
+<span class="gh">Out[40]: </span><span class="go">0.30000000000000004</span>
+
+<span class="gp">In [41]: </span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;3000000000000000&#39;</span><span class="p">)</span>
+<span class="gh">Out[41]: </span><span class="go">16</span>
+
+<span class="go"># with repeated operations, the errors eventually build up:</span>
+<span class="go"># here&#39;s multiplying by &#39;1&#39; 10 million times:</span>
+<span class="gp">In [64]: </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span>
+<span class="gp">In [69]: </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000000</span><span class="p">):</span> <span class="n">x</span> <span class="o">*=</span> <span class="p">(</span><span class="o">.</span><span class="mi">1</span> <span class="o">+</span> <span class="o">.</span><span class="mi">2</span><span class="p">)</span><span class="o">/.</span><span class="mi">3</span>
+<span class="go">Out [69]: 1.000000002220446</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="assertalmostequal">
+    <hgroup>
+      <h3>assertAlmostEqual</h3>
+    </hgroup>
+    <article class="">
+      <p>Verifies that two floating point values are close enough to each other.
+Add a places keyword argument to specify the number of significant
+digits.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">TestAlmostEqual</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">test_floating_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">3</span><span class="o">*.</span><span class="mi">15</span><span class="p">,</span> <span class="o">.</span><span class="mi">45</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_almost_equal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="mi">3</span><span class="o">*.</span><span class="mi">15</span><span class="p">,</span> <span class="o">.</span><span class="mi">45</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="what-is-close">
+    <hgroup>
+      <h3>What is close?</h3>
+    </hgroup>
+    <article class="">
+      <p class="medium"><strong>Warning</strong></p>
+<p><code class="docutils literal"><span class="pre">assertAlmostEqual</span></code> lets you specify <em>decimal places</em>,
+i.e. the number of digits after the decimal point.</p>
+<p>This works great for numbers that are about magnitude 1.0 (as above)</p>
+<p>But what if you have numbers that are very large? (or small):</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">1.0e22</span></code></li>
+<li><code class="docutils literal"><span class="pre">1.0000000000001e22</span></code></li>
+</ul>
+</div></blockquote>
+<p>are they almost equal?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id3">
+    <hgroup>
+      <h3>What is close?</h3>
+    </hgroup>
+    <article class="">
+      <p>Remember that python floating point numbers store the exponent and up
+to 16 decimal digits.</p>
+<p>So those two are almost as close as you can get. But:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [30]: </span><span class="n">x</span> <span class="o">=</span> <span class="mf">1e22</span>
+
+<span class="gp">In [31]: </span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0000000000001e22</span>
+
+<span class="gp">In [32]: </span><span class="s1">&#39;</span><span class="si">%g</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+<span class="gh">Out[32]: </span><span class="go">&#39;1.00034e+09&#39;</span>
+</pre></div>
+</div>
+<p>They are different by about a billion!</p>
+<p>In general, we don't want to compare floating point numbers to within a
+certain number of decimal places.</p>
+<p>Anyone remember &quot;significant figures&quot; from science classes?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="isclose">
+    <hgroup>
+      <h3><code class="docutils literal"><span class="pre">isclose()</span></code></h3>
+    </hgroup>
+    <article class="">
+      <p>Python 3.5 introduced the isclose() function in the math module:</p>
+<p><a class="reference external" href="https://www.python.org/dev/peps/pep-0485/">https://www.python.org/dev/peps/pep-0485/</a></p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="gp">In [40]: </span><span class="n">x</span>
+<span class="gh">Out[40]: </span><span class="go">1e+22</span>
+
+<span class="gp">In [41]: </span><span class="n">y</span>
+<span class="gh">Out[41]: </span><span class="go">1.0000000000001e+22</span>
+
+<span class="gp">In [42]: </span><span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="gh">Out[42]: </span><span class="go">True</span>
+</pre></div>
+</div>
+<p>So this works for any magnitude number.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id4">
+    <hgroup>
+      <h3><code class="docutils literal"><span class="pre">isclose()</span></code></h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">is_close</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">09</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+
+<span class="n">Determine</span> <span class="n">whether</span> <span class="n">two</span> <span class="n">floating</span> <span class="n">point</span> <span class="n">numbers</span> <span class="n">are</span> <span class="n">close</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span>
+
+   <span class="n">rel_tol</span>
+       <span class="n">maximum</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">being</span> <span class="n">considered</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">the</span>
+       <span class="n">magnitude</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">values</span>
+    <span class="n">abs_tol</span>
+       <span class="n">maximum</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">being</span> <span class="n">considered</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="n">regardless</span> <span class="n">of</span> <span class="n">the</span>
+       <span class="n">magnitude</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">values</span>
+
+<span class="n">Return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">close</span> <span class="ow">in</span> <span class="n">value</span> <span class="n">to</span> <span class="n">b</span><span class="p">,</span> <span class="ow">and</span> <span class="kc">False</span> <span class="n">otherwise</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">rel_tol</span></code> essentially specifies how many significant figures you want:
+<code class="docutils literal"><span class="pre">1e-09</span></code> is 9 significant figures: about half of what floats can store.</p>
+<p><code class="docutils literal"><span class="pre">abs_tol</span></code> is required for comparisons to zero -- nothing is
+&quot;relatively close&quot; to zero</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="using-isclose-with-unittest">
+    <hgroup>
+      <h3>Using <code class="docutils literal"><span class="pre">isclose()</span></code> with <code class="docutils literal"><span class="pre">unittest</span></code></h3>
+    </hgroup>
+    <article class="">
+      <p>Ideally, <code class="docutils literal"><span class="pre">TestCase</span></code> would have an <code class="docutils literal"><span class="pre">assertIsClose</span></code> method.
+But you can use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isclose</span>
+
+<span class="k">class</span> <span class="nc">TestAlmostEqual</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_floating_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">3</span><span class="o">*.</span><span class="mi">15</span><span class="p">,</span> <span class="o">.</span><span class="mi">45</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_almost_equal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span> <span class="n">isclose</span><span class="p">(</span> <span class="mi">3</span><span class="o">*.</span><span class="mi">15</span><span class="p">,</span> <span class="o">.</span><span class="mi">45</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="running-your-tests">
+    <hgroup>
+      <h2>Running your tests</h2>
+    </hgroup>
+    <article class="">
+      <p class="medium">How do you actually run your tests?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="running-tests-in-a-single-module">
+    <hgroup>
+      <h3>running tests in a single module</h3>
+    </hgroup>
+    <article class="">
+      <p>Call unittest.main() right in your module</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+
+<span class="c1"># or from the command line:</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">test_my_module</span>  <span class="c1"># with or without .py on end</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">test_my_module</span><span class="o">.</span><span class="n">TestClass</span>  <span class="c1"># particular class in a module</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">test_my_module</span><span class="o">.</span><span class="n">TestClass</span><span class="o">.</span><span class="n">test_method</span>  <span class="c1"># particular test</span>
+</pre></div>
+</div>
+<p>If it gets cumbersome with many TestCases, organize the tests into a
+test suite</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="test-suites">
+    <hgroup>
+      <h3>Test Suites</h3>
+    </hgroup>
+    <article class="">
+      <p>Test suites group test cases into a single testable unit</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">calculator_test</span> <span class="k">import</span> <span class="n">TestCalculatorFunctions</span>
+
+<span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestCalculatorFunctions</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tests can also be organized into suites in the</p>
+<p><code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code></p>
+<p>block</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="nose2">
+    <hgroup>
+      <h3>nose2</h3>
+    </hgroup>
+    <article class="">
+      <p>Nose2 is the new nose. Nose is barely being maintained, and directs users to nose2.</p>
+<p>A test runner which autodiscovers test cases</p>
+<p>Nose2 will find tests for you so you can focus on writing tests, not
+maintaining test suites</p>
+<p>To find tests, nose2 looks for modules (such as python files) whose names start with ‘test’. In those modules, nose2 will load tests from all unittest.TestCase subclasses, as well as functions whose names start with ‘test’.</p>
+<p>Running your tests is as easy as</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nose2
+</pre></div>
+</div>
+<p><a class="reference external" href="http://nose2.readthedocs.org/en/latest/getting_started.html#running-tests">http://nose2.readthedocs.org/en/latest/getting_started.html#running-tests</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="nose2-plugins">
+    <hgroup>
+      <h3>nose2 plugins</h3>
+    </hgroup>
+    <article class="">
+      <p>Many plugins exist for nose2, such as code coverage:
+Some plugins, such as coverage, must be additionally installed</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip install cov-core
+# now it can be used
+$ nose2 --with-coverage
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id5">
+    <hgroup>
+      <h3>nose2 plugins</h3>
+    </hgroup>
+    <article class="">
+      <p>Some of many useful plugins installed by default:</p>
+<ul>
+<li><p class="first">Test Generators</p>
+<p><a class="reference external" href="http://nose2.readthedocs.org/en/latest/plugins/generators.html">http://nose2.readthedocs.org/en/latest/plugins/generators.html</a></p>
+</li>
+<li><p class="first">Parameterized Tests</p>
+<p><a class="reference external" href="http://nose2.readthedocs.org/en/latest/plugins/parameters.html">http://nose2.readthedocs.org/en/latest/plugins/parameters.html</a></p>
+</li>
+<li><p class="first">Stop after first error or failure -F</p>
+</li>
+<li><p class="first">Drop in to the debugger on failure -D</p>
+</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="running-coverage">
+    <hgroup>
+      <h3>running coverage</h3>
+    </hgroup>
+    <article class="">
+      <p>Install with <code class="docutils literal"><span class="pre">pip</span></code>. Written by Ned Batchelder</p>
+<p>To run coverage on your test suite:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">run</span> <span class="n">my_program</span><span class="o">.</span><span class="n">py</span> <span class="n">arg1</span> <span class="n">arg2</span>
+</pre></div>
+</div>
+<p>This generates a .coverage file. To analyze it on the console:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">report</span>
+</pre></div>
+</div>
+<p>Else generate an HTML report in the current directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>To find out coverage across the standard library, add -L:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">L</span><span class="p">,</span> <span class="o">--</span><span class="n">pylib</span>           <span class="n">Measure</span> <span class="n">coverage</span> <span class="n">even</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">installed</span>
+                      <span class="n">library</span><span class="p">,</span> <span class="n">which</span> <span class="n">isn</span><span class="s1">&#39;t done by default.</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="branch-coverage">
+    <hgroup>
+      <h3>branch coverage</h3>
+    </hgroup>
+    <article class="">
+      <p>consider the following code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 1</span>
+<span class="k">if</span> <span class="n">x</span><span class="p">:</span>      <span class="c1"># 2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in branch&quot;</span><span class="p">)</span>  <span class="c1"># 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;out of branch&quot;</span><span class="p">)</span>  <span class="c1"># 4</span>
+</pre></div>
+</div>
+<p>We want to make sure the branch is being bypassed correctly in the False
+case</p>
+<p>Track which branch destinations were not visited with the --branch
+option to run</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">branch</span> <span class="n">myprog</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://nedbatchelder.com/code/coverage/branch.html">http://nedbatchelder.com/code/coverage/branch.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="doctests">
+    <hgroup>
+      <h3>Doctests</h3>
+    </hgroup>
+    <article class="">
+      <p>Tests placed in docstrings to demonstrate usage of a component to a
+human in a machine testable way</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Squares x.</span>
+
+<span class="sd">    &gt;&gt;&gt; square(2)</span>
+<span class="sd">    4</span>
+<span class="sd">    &gt;&gt;&gt; square(-2)</span>
+<span class="sd">    4</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">doctest</span> <span class="o">-</span><span class="n">v</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id6">
+    <hgroup>
+      <h3>Doctests</h3>
+    </hgroup>
+    <article class="">
+      <p>Now generate documentation, using epydoc for example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ epydoc example.py
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.python.org/3/library/doctest.html">http://docs.python.org/3/library/doctest.html</a></p>
+<p><a class="reference external" href="http://www.python.org/dev/peps/pep-0257/">http://www.python.org/dev/peps/pep-0257/</a></p>
+<p><a class="reference external" href="http://epydoc.sourceforge.net/">http://epydoc.sourceforge.net/</a></p>
+<p><a class="reference external" href="http://sphinx-doc.org/">http://sphinx-doc.org/</a></p>
+<p><a class="reference external" href="http://www.doxygen.org">http://www.doxygen.org</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="test-driven-development-tdd">
+    <hgroup>
+      <h3>Test Driven Development (TDD)</h3>
+    </hgroup>
+    <article class="">
+      <p>In TDD, the tests are written the meet the requirements before the code
+exists.</p>
+<p>Once the collection of tests passes, the requirement is considered met.</p>
+<p>We don't always want to run the entire test suite. In order to run a
+single test with nose:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nose2</span> <span class="n">calculator_test</span><span class="o">.</span><span class="n">TestCalculatorFunctions</span><span class="o">.</span><span class="n">test_add</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="exercises">
+    <hgroup>
+      <h3>Exercises</h3>
+    </hgroup>
+    <article class="">
+      <ul class="simple">
+<li>Add unit tests for each method in calculator_functions.py</li>
+<li>Add fixtures via setUp/tearDown methods and setUpClass/tearDownClass
+class methods. Are they behaving how you expect?</li>
+<li>Add additional unit tests for floating point calculations</li>
+<li>Fix any failures in the code</li>
+<li>Add doctests to calculator_functions.py</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="context-managers">
+    <hgroup>
+      <h2>Context managers</h2>
+    </hgroup>
+    <article class="">
+      <p class="medium">One more Python feature before getting back to testing...</p>
+<p class="medium">the <code class="docutils literal"><span class="pre">with</span></code> statement</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="context-managers-via-the-with-statement">
+    <hgroup>
+      <h3>Context managers via the &quot;with&quot; statement</h3>
+    </hgroup>
+    <article class="">
+      <p>If you've been opening files using &quot;with&quot; (and you probably should be),
+you have been using context managers:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;file.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A context manager is just a class with __enter__ and __exit__
+methods defined to handle setting up and tearing down the context</p>
+<p>Provides generalizable execution contexts in which setup and teardown of
+context are executed no matter what happens</p>
+<p>This allows us to do things like setup/teardown and separate out
+exception handling code</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="writing-a-context-manager">
+    <hgroup>
+      <h3>Writing a context manager</h3>
+    </hgroup>
+    <article class="">
+      <p>Define __enter__(self) and __exit__(self, type, value,
+traceback) on a class</p>
+<p>If __exit__ returns a true value, a caught exception is not
+re-raised</p>
+<p>For example:</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id7">
+    <hgroup>
+      <h3>Writing a context manager</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">TemporaryDirectory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A context manager for creating a temporary directory</span>
+<span class="sd">       which gets destroyed on context exit&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">directory</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">directory</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_directory</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="s2">&quot;/tmp/foo&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">dir</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s2">&quot;foo.txt&quot;</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://www.python.org/dev/peps/pep-0343/">http://www.python.org/dev/peps/pep-0343/</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="context-manager-exercise">
+    <hgroup>
+      <h3>Context Manager exercise</h3>
+    </hgroup>
+    <article class="">
+      <p>Create a context manager which prints information on all exceptions
+which occur in the context and continues execution</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">YourExceptionHandler</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;do some stuff here&quot;</span><span class="p">)</span>
+    <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;should still reach this point&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Also see the <a class="reference external" href="http://docs.python.org/3/library/contextlib.html">contextlib
+module</a></p>
+<p>Why might using a context manager be better than implementing this with
+try..except..finally ?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id8">
+    <hgroup>
+      <h3>Context Manager exercise</h3>
+    </hgroup>
+    <article class="">
+      <p>For entire code block, see <a class="reference external" href="https://www.python.org/dev/peps/pep-0343/">https://www.python.org/dev/peps/pep-0343/</a> (Specification)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">EXPR</span> <span class="k">as</span> <span class="n">VAR</span><span class="p">:</span>
+    <span class="n">BLOCK</span>
+<span class="c1"># vs.</span>
+<span class="n">mgr</span> <span class="o">=</span> <span class="p">(</span><span class="n">EXPR</span><span class="p">)</span>
+<span class="n">exit</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__exit__</span>  <span class="c1"># Not calling it yet</span>
+<span class="n">value</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__enter__</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span>
+<span class="n">exc</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">VAR</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># Only if &quot;as VAR&quot; is present</span>
+        <span class="n">BLOCK</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c1"># The exceptional case is handled here</span>
+        <span class="n">exc</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()):</span>
+            <span class="k">raise</span>
+        <span class="c1"># The exception is swallowed if exit() returns true</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c1"># The normal and non-local-goto cases are handled here</span>
+    <span class="k">if</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="now-we-ve-got-the-tools-to-really-test">
+    <hgroup>
+      <h3>Now we've got the tools to really test</h3>
+    </hgroup>
+    <article class="">
+      <p>Consider the application in the examples/wikidef directory. Give the
+command line utility a subject, and it will return a definition.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">define</span><span class="o">.</span><span class="n">py</span> <span class="n">Robot</span>
+</pre></div>
+</div>
+<p>How can we test our application code without abusing (and waiting for)
+Wikipedia?</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="using-mock-objects">
+    <hgroup>
+      <h3>Using Mock objects</h3>
+    </hgroup>
+    <article class="">
+      <p>Using Mock objects to test an application with service dependencies</p>
+<p>Mock objects replace real objects in your code at runtime during test</p>
+<p>This allows you to test code which calls these objects without having
+their actual code run</p>
+<p>Useful for testing objects which depend on unimplemented code, resources
+which are expensive, or resources which are unavailable during test
+execution</p>
+<p><a class="reference external" href="http://www.voidspace.org.uk/python/mock">http://www.voidspace.org.uk/python/mock</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="mocks">
+    <hgroup>
+      <h3>Mocks</h3>
+    </hgroup>
+    <article class="">
+      <p>The MagickMock class will keep track of calls to it so we can verify
+that the class is being called correctly, without having to execute the
+code underneath</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mock</span>
+
+<span class="n">mock_object</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+<span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s2">&quot;foo return&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>
+<span class="c1"># raise an exception by assigning to the side_effect attribute</span>
+<span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="ne">Exception</span>
+<span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="easy-mocking-with-mock-patch">
+    <hgroup>
+      <h3>Easy mocking with mock.patch</h3>
+    </hgroup>
+    <article class="">
+      <p>patch acts as a function decorator, class decorator, or a context
+manager</p>
+<p>Inside the body of the function or with statement, the target is patched
+with a new object. When the function/with statement exits the patch is
+undone</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="using-patch">
+    <hgroup>
+      <h3>Using patch</h3>
+    </hgroup>
+    <article class="">
+      <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># patch with a decorator</span>
+<span class="nd">@patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="s1">&#39;article&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_article_success_decorator_mocked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_method</span><span class="p">):</span>
+    <span class="n">article</span> <span class="o">=</span> <span class="n">Definitions</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
+    <span class="n">mock_method</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
+
+<span class="c1"># patch with a context manager</span>
+<span class="k">def</span> <span class="nf">test_article_success_context_manager_mocked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="s1">&#39;article&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_method</span><span class="p">:</span>
+        <span class="n">article</span> <span class="o">=</span> <span class="n">Definitions</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
+        <span class="n">mock_method</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://www.voidspace.org.uk/python/mock/patch.html">http://www.voidspace.org.uk/python/mock/patch.html</a></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="id2">
+    <hgroup>
+      <h3>Exercises</h3>
+    </hgroup>
+    <article class="">
+      <p>When define.py is given the name of a non-existant article, an exception
+is thrown. This exception causes another exception to occur, and the whole thing
+is not very readable. Why does this happen?</p>
+<p>Use what you learned last week about exceptions to throw a better exception, and
+then add a new test that confirms this behavior. Use mock for your test, so you
+are not hammering Wikipedia.</p>
+
+
+
+
+    </article>
+  </slide>
+
+
+  <slide class="thank-you-slide segue nobackground">
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You!</h2>
+  </article>
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+</slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
