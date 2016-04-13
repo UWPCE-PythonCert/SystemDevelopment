@@ -235,7 +235,9 @@ what to test should take into account the volatility of the project.</p>
 <ol class="arabic simple">
 <li>Tests should be independent.</li>
 <li>Tests do not run in order, which shouldn&#8217;t matter, see point 1.</li>
-<li>Test fixtures are available to do any setup needed for tests.</li>
+<li>Test fixtures are available to do any setup/teardown needed for tests.</li>
+<li>Test behavior not implementation</li>
+<li>Mocking is available to fake stuff you may not want to run in your tests.</li>
 </ol>
 </div>
 <div class="section" id="unittest-testcase-anatomy">
@@ -249,10 +251,10 @@ what to test should take into account the volatility of the project.</p>
 <span class="k">class</span> <span class="nc">TestTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">test_len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
@@ -405,7 +407,7 @@ Determine whether two floating point numbers are close in value.
 Return True if a is close in value to b, and False otherwise.
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">rel_tol</span></code> essentialaly specifies how many significant figures you want:
+<p><code class="docutils literal"><span class="pre">rel_tol</span></code> essentially specifies how many significant figures you want:
 <code class="docutils literal"><span class="pre">1e-09</span></code> is 9 significant figures: about half of what floats can store.</p>
 <p><code class="docutils literal"><span class="pre">abs_tol</span></code> is required for comparisons to zero &#8211; nothing is
 &#8220;relatively close&#8221; to zero</p>
@@ -573,7 +575,7 @@ exists.</p>
 <p>Once the collection of tests passes, the requirement is considered met.</p>
 <p>We don&#8217;t always want to run the entire test suite. In order to run a
 single test with nose:</p>
-<div class="highlight-python"><div class="highlight"><pre>nose2 calculator_test.TestCalculatorFunctions.test_add
+<div class="highlight-python"><div class="highlight"><pre>nose2 test_calculator.TestCalculatorFunctions.test_add
 </pre></div>
 </div>
 </div>
@@ -748,7 +750,8 @@ undone</p>
 is thrown. This exception causes another exception to occur, and the whole thing
 is not very readable. Why does this happen?</p>
 <p>Use what you learned last week about exceptions to throw a better exception, and
-then add a new test that confirms this behavior.</p>
+then add a new test that confirms this behavior. Use mock for your test, so you
+are not hammering Wikipedia.</p>
 </div>
 </div>
 </div>

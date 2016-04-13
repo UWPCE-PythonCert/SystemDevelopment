@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DEsktop GUI development: wxPython &mdash; System Development With Python 2.0 documentation</title>
+  <title>Desktop GUI development: wxPython &mdash; System Development With Python 2.0 documentation</title>
   
 
   
@@ -81,7 +81,7 @@
             
                 <!-- Local TOC -->
                 <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">DEsktop GUI development: wxPython</a><ul>
+<li><a class="reference internal" href="#">Desktop GUI development: wxPython</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li><a class="reference internal" href="#desktop-guis">Desktop GUIs:</a></li>
 <li><a class="reference internal" href="#python-options">Python Options</a></li>
@@ -92,19 +92,38 @@
 <li><a class="reference internal" href="#installing">Installing</a></li>
 <li><a class="reference internal" href="#versions">Versions</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#some-starting-points">Some starting points</a></li>
 <li><a class="reference internal" href="#pythonic-code">Pythonic code:</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#basic-structure">Basic Structure</a><ul>
 <li><a class="reference internal" href="#event-driven-programming">Event-Driven programming</a></li>
 <li><a class="reference internal" href="#wx-window">wx.Window</a></li>
-<li><a class="reference internal" href="#id21">Event-Driven programming</a></li>
+<li><a class="reference internal" href="#id9">Event-Driven programming</a></li>
 <li><a class="reference internal" href="#wx-app">wx.App</a></li>
 <li><a class="reference internal" href="#wx-frame">wx.Frame</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#controls">controls</a></li>
-<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+<li><a class="reference internal" href="#controls">controls</a><ul>
+<li><a class="reference internal" href="#menus">Menus</a></li>
+<li><a class="reference internal" href="#event-handlers">Event Handlers</a></li>
+<li><a class="reference internal" href="#common-dialogs">Common Dialogs</a></li>
+<li><a class="reference internal" href="#wx-filedialog">wx.FileDialog</a></li>
+<li><a class="reference internal" href="#basic-widgets">Basic Widgets</a></li>
+<li><a class="reference internal" href="#using-a-control">Using a Control</a></li>
+<li><a class="reference internal" href="#hierarchies">Hierarchies...</a></li>
+<li><a class="reference internal" href="#accessing-inputs">Accessing inputs</a></li>
+<li><a class="reference internal" href="#setting-values">Setting Values</a></li>
+<li><a class="reference internal" href="#code-generated-guis">Code-generated GUIs...</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li><a class="reference internal" href="#long-running-tasks">Long Running Tasks</a></li>
+<li><a class="reference internal" href="#callafter">CallAfter</a></li>
+<li><a class="reference internal" href="#bils">BILS</a></li>
+<li><a class="reference internal" href="#lab">LAB</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -137,7 +156,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>DEsktop GUI development: wxPython</li>
+    <li>Desktop GUI development: wxPython</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -152,13 +171,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="desktop-gui-development-wxpython">
-<span id="wxpython"></span><h1>DEsktop GUI development: wxPython<a class="headerlink" href="#desktop-gui-development-wxpython" title="Permalink to this headline">¶</a></h1>
+<span id="wxpython"></span><h1>Desktop GUI development: wxPython<a class="headerlink" href="#desktop-gui-development-wxpython" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="desktop-guis">
 <h3>Desktop GUIs:<a class="headerlink" href="#desktop-guis" title="Permalink to this headline">¶</a></h3>
-<p>Traditional Graphical User Interface Applications}</p>
-<p>Run entirely on local machine &#8211; interactive, interface and logic code in one process}</p>
+<p>Traditional Graphical User Interface Applications</p>
+<p>Run entirely on local machine &#8211; interactive, interface and logic code in one process</p>
 <p>Advantages:</p>
 <ul class="simple">
 <li>Easier to write &#8211; all in one program</li>
@@ -191,7 +210,7 @@
 <p>Why wxPython?</p>
 <ul class="simple">
 <li>Python wrapper around C++ toolkit (wxWidget)</li>
-<li>wxWidgets is a wrapper around emph{native} toolkit:</li>
+<li>wxWidgets is a wrapper around <strong>native</strong> toolkit:</li>
 </ul>
 <blockquote>
 <div><ul class="simple">
@@ -211,9 +230,16 @@
 <h3>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h3>
 <p>wxPython is a big complicated build:</p>
 <blockquote>
-<div>can&#8217;t do <cite>pip</cite> or <cite>easy_install</cite></div></blockquote>
+<div><ul class="simple">
+<li>can&#8217;t do <cite>pip</cite> or <cite>easy_install</cite></li>
+</ul>
+</div></blockquote>
 <p>Windows or OS-X:</p>
-<p>use the binaries on <a class="reference external" href="http://wxpython.org/download.php">http://wxpython.org/download.php</a></p>
+<blockquote>
+<div><ul class="simple">
+<li>use the binaries on <a class="reference external" href="http://wxpython.org/download.php">http://wxpython.org/download.php</a></li>
+</ul>
+</div></blockquote>
 <p>Linux: use your system&#8217;s package</p>
 <p>NOTE: there are some issues with some packages:</p>
 <blockquote>
@@ -230,56 +256,63 @@
 </div>
 <div class="section" id="versions">
 <h3>Versions<a class="headerlink" href="#versions" title="Permalink to this headline">¶</a></h3>
-<p><a href="#id3"><span class="problematic" id="id4">``</span></a>Stable&#8217;&#8217; version: 2.8.12.1}</p>
-<p>(<a href="#id5"><span class="problematic" id="id6">``</span></a>stable&#8217;&#8217; means stable API, not less likely to crash)</p>
-<p><a href="#id7"><span class="problematic" id="id8">``</span></a>Development&#8217;&#8217; version: 2.9.4.0}</p>
+<p>&#8220;Stable&#8221; version: 2.8.12.1</p>
+<p>(&#8220;stable&#8221; means stable API, not less likely to crash)</p>
+<p><a href="#id3"><span class="problematic" id="id4">``</span></a>Development&#8217;&#8217; version: 2.9.4.0</p>
 <p>(Under active development, API may change (but not much)</p>
 <p>wx project very slow to do official releases &#8211; You probably want to use the development version: it&#8217;s getting more attention</p>
-<p><a href="#id9"><span class="problematic" id="id10">``</span></a>Phoenix&#8217;&#8216;: next generation version: new bindings, Py3 support, etc.</p>
+<p>&#8220;Phoenix&#8221;: next generation version: new bindings, Py3 support, etc.</p>
 <p>&#8211; Still experimental</p>
 <p><a class="reference external" href="http://wiki.wxpython.org/ProjectPhoenix">http://wiki.wxpython.org/ProjectPhoenix</a></p>
 </div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
-<p><a href="#id11"><span class="problematic" id="id12">``</span></a>Docs and Demos&#8217;&#8216;: download these!</p>
-<p><a href="#id13"><span class="problematic" id="id14">``</span></a>wxPython Demo&#8217;&#8217; &#8211; run this!</p>
-<p>Examples of every Widget available</p>
+<dl class="docutils">
+<dt>Docs and Demos:</dt>
+<dd>download these!</dd>
+<dt>wxPython Demo</dt>
+<dd>run this!</dd>
+</dl>
+<p>(Examples of every Widget available)</p>
 <p>Primary wx docs:</p>
-<p>Written for C++, with Python notes...</p>
-<p><a class="reference external" href="http://wxpython.org/onlinedocs.php">http://wxpython.org/onlinedocs.php</a>
-This may help: <a class="reference external" href="http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers">http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers</a></p>
+<blockquote>
+<div><p>Written for C++, with Python notes...</p>
+<p><a class="reference external" href="http://wxpython.org/onlinedocs.php">http://wxpython.org/onlinedocs.php</a></p>
+<p>This may help: <a class="reference external" href="http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers">http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers</a></p>
+</div></blockquote>
 <p>Semi-experimental Sphinx docs:</p>
-<p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/">http://xoomer.virgilio.it/infinity77/wxPython/</a></p>
-<p>The wxPython wiki: lots of good stuff here</p>
-<p><a class="reference external" href="http://wiki.wxpython.org/">http://wiki.wxpython.org/</a></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Some starting points
-&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
-<p>How to learn wxPython}
-{<a class="reference external" href="http://wiki.wxpython.org/How%20to%20Learn%20wxPython">http://wiki.wxpython.org/How%20to%20Learn%20wxPython</a>}</p>
-<p>wxPython Style Guide}
-{<a class="reference external" href="http://wiki.wxpython.org/wxPython%20Style%20Guide">http://wiki.wxpython.org/wxPython%20Style%20Guide</a>}</p>
-<p>The wxpython-users mailing list is a great resource (and great community):}\
-{<a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/wxpython-users">https://groups.google.com/forum/?fromgroups#!forum/wxpython-users</a>}</p>
-<p>My own repository of samples:}
-{<a class="reference external" href="https://github.com/PythonCHB/wxPythonDemos">https://github.com/PythonCHB/wxPythonDemos</a>}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Pythonic code:}</p>
-<p>Over the years, wxPython has grown a number of things to make it more <a href="#id15"><span class="problematic" id="id16">``</span></a>pythonic&#8217;&#8217; &#8211; hide some of that C++ legacy}</p>
-<p>Properties:}</p>
-<p>The C++ classes are full of getters and setters:}
-..code-block:: python
-wxTextCtrl::SetValue
-wxTextCtrl::GetValue</p>
-<p>These methods have been translated into properties for Python}</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">MyTextCtrl</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="n">some_string</span>
-<span class="n">another_string</span> <span class="o">=</span> <span class="n">wxTextCtrl</span><span class="o">.</span><span class="n">Value</span>
-</pre></div>
+<blockquote>
+<div><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/">http://xoomer.virgilio.it/infinity77/wxPython/</a></div></blockquote>
+<p>The wxPython wiki: lots of good stuff here:</p>
+<blockquote>
+<div><a class="reference external" href="http://wiki.wxpython.org/">http://wiki.wxpython.org/</a></div></blockquote>
 </div>
-<p>(The Get/Set versions are still there, but it&#8217;s klunkier code)</p>
+<div class="section" id="some-starting-points">
+<h3>Some starting points<a class="headerlink" href="#some-starting-points" title="Permalink to this headline">¶</a></h3>
+<p>How to learn wxPython</p>
+<p><a class="reference external" href="http://wiki.wxpython.org/How%20to%20Learn%20wxPython">http://wiki.wxpython.org/How%20to%20Learn%20wxPython</a></p>
+<p>wxPython Style Guide</p>
+<p><a class="reference external" href="http://wiki.wxpython.org/wxPython%20Style%20Guide">http://wiki.wxpython.org/wxPython%20Style%20Guide</a></p>
+<p>The wxpython-users mailing list is a great resource (and great community):</p>
+<p><a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/wxpython-users">https://groups.google.com/forum/?fromgroups#!forum/wxpython-users</a></p>
+<p>My own repository of samples:</p>
+<p><a class="reference external" href="https://github.com/PythonCHB/wxPythonDemos">https://github.com/PythonCHB/wxPythonDemos</a></p>
 </div>
 <div class="section" id="pythonic-code">
 <h3>Pythonic code:<a class="headerlink" href="#pythonic-code" title="Permalink to this headline">¶</a></h3>
+<p>Over the years, wxPython has grown a number of things to make it more &#8220;pythonic&#8221; &#8211; hide some of that C++ legacy</p>
+<p>Properties:</p>
+<p>The C++ classes are full of getters and setters:</p>
+<p>..code-block:: python</p>
+<blockquote>
+<div>wxTextCtrl::SetValue
+wxTextCtrl::GetValue</div></blockquote>
+<p>These methods have been translated into properties for Python</p>
+<p>..code-block:: python</p>
+<blockquote>
+<div>MyTextCtrl.Value = some_string
+another_string = wxTextCtrl.Value</div></blockquote>
+<p>(The <code class="docutils literal"><span class="pre">Get/Set</span></code> versions are still there, but it&#8217;s klunkier code)</p>
 <p>Other Python options: some specific wx types can be accessed with standard python types:</p>
 <p><cite>wxPoint</cite> &#8212; <cite>(x,y)</cite> ( tuple )</p>
 <p><cite>wx.List</cite> &#8212; <cite>[1,2,3]</cite> (python list)</p>
@@ -290,24 +323,24 @@ wxTextCtrl::GetValue</p>
 </div>
 <div class="section" id="basic-structure">
 <h2>Basic Structure<a class="headerlink" href="#basic-structure" title="Permalink to this headline">¶</a></h2>
+<p>How is a wxPython app structured?</p>
 <div class="section" id="event-driven-programming">
 <h3>Event-Driven programming<a class="headerlink" href="#event-driven-programming" title="Permalink to this headline">¶</a></h3>
-<p>On app startup, the .MainLoop() method is called.</p>
-<p>The mainloop takes control &#8211; monitoring for events, then dispatching them</p>
+<p>On app startup, the <code class="docutils literal"><span class="pre">.MainLoop()</span></code> method is called.</p>
+<p>The mainloop takes control &#8211; monitoring for events, then dispatching them.</p>
 <p>Events can come from the system, or user interaction: keyboard, mouse, etc.</p>
 <p>All the work of your app is done in response to events</p>
 <p>You only need to response to (Bind) the events you care about</p>
 <p>Not so different than a web app, except events are finer-grained
 (every mouse move, etc.)</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-wx.Window
-&#8212;&#8212;&#8212;</p>
-<p>Pretty much everything you see on the screen is a <cite>wx.Window</cite>}</p>
-<p>It is the superclass for all the <a href="#id17"><span class="problematic" id="id18">``</span></a>widgets&#8217;&#8216;, <a href="#id19"><span class="problematic" id="id20">``</span></a>controls&#8217;&#8216;, or whatever you want to call them}</p>
-<p>It is essentially a rectangle on the screen that catches events}</p>
-<p>You generally don&#8217;t use it by iteself, though you may derive from it to make a new widget}</p>
-<p>{large(Historical Note: <a href="#id62"><span class="problematic" id="id63">|wxWidgets|</span></a> was called <a href="#id64"><span class="problematic" id="id65">|wxWindows|</span></a> &#8211; until Microsoft threatened to sue them.)}</p>
-<p>wx.Window}</p>
+</div>
+<div class="section" id="wx-window">
+<h3>wx.Window<a class="headerlink" href="#wx-window" title="Permalink to this headline">¶</a></h3>
+<p>Pretty much everything you see on the screen is a <cite>wx.Window</cite></p>
+<p>It is the superclass for all the <a href="#id5"><span class="problematic" id="id6">``</span></a>widgets&#8217;&#8216;, <a href="#id7"><span class="problematic" id="id8">``</span></a>controls&#8217;&#8216;, or whatever you want to call them</p>
+<p>It is essentially a rectangle on the screen that catches events</p>
+<p>You generally don&#8217;t use it by iteself, though you may derive from it to make a new widget</p>
+<p>large(Historical Note: <a href="#id50"><span class="problematic" id="id51">|wxWidgets|</span></a> was called <a href="#id52"><span class="problematic" id="id53">|wxWindows|</span></a> &#8211; until Microsoft threatened to sue them.)</p>
 <p>Since everything is a <cite>wx.Window</cite>, it&#8217;s good to know its methods and signature:</p>
 <p>..code-block:: python</p>
 <blockquote>
@@ -327,22 +360,19 @@ style (long)
 name (string)</p>
 </div></blockquote>
 <p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html">http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html</a></p>
-</div>
-<div class="section" id="wx-window">
-<h3>wx.Window<a class="headerlink" href="#wx-window" title="Permalink to this headline">¶</a></h3>
 <p>Methods types:</p>
 <ul class="simple">
 <li>Appearance: Colors, Fonts, Labels, Styles</li>
-<li>Geometry: Size, Position, IsShown, Move, etc</li>
+<li>Geometry: Size, Position, IsShown, Move, etc.</li>
 <li>Layout: Sizers, etc.</li>
 <li>Many others!</li>
 </ul>
 <p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html">http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html</a></p>
 </div>
-<div class="section" id="id21">
-<h3>Event-Driven programming<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>Event-Driven programming<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>On app startup, the .MainLoop() method is called.</p>
-<p>The mainloop takes control &#8211; monitoring for events, then dispatching them</p>
+<p>The mainloop takes control &#8211; monitoring for events, then dispatching them.</p>
 <p>Events can come from the system, or user interaction: keyboard, mouse, etc.</p>
 <p>All the work of your app is done in response to events</p>
 <p>You only need to response to (Bind) the events you care about</p>
@@ -359,34 +389,35 @@ frame = DemoFrame(None, title=&#8221;Micro App&#8221;)
 frame.Show()
 app.MainLoop()</dd>
 </dl>
-<p>(the <cite>False</cite> means: <a href="#id22"><span class="problematic" id="id23">``</span></a>don&#8217;t re-direct stdout to a Window&#8217;&#8216;)</p>
+<p>(the <cite>False</cite> means: <a href="#id10"><span class="problematic" id="id11">``</span></a>don&#8217;t re-direct stdout to a Window&#8217;&#8216;)</p>
 <p>And you almost always start the <cite>MainLoop</cite></p>
 </div>
 <div class="section" id="wx-frame">
 <h3>wx.Frame<a class="headerlink" href="#wx-frame" title="Permalink to this headline">¶</a></h3>
-<p><cite>wx.Frame</cite> is a <a href="#id24"><span class="problematic" id="id25">``</span></a>top level&#8217;&#8217; Window: One with a title bar, min-max buttons,etc.</p>
+<p><cite>wx.Frame</cite> is a <a href="#id12"><span class="problematic" id="id13">``</span></a>top level&#8217;&#8217; Window: One with a title bar, min-max buttons,etc.</p>
 <p>Most apps have a single <cite>wx.Frame</cite> &#8211; central interaction with the app.</p>
 <p>This is where menu bars, etc are placed, and often the core GUI logic of the app.</p>
-<p>..code-block:: python
-class TestFrame(wx.Frame):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>def __init__(self, <a href="#id26"><span class="problematic" id="id27">*</span></a>args, <a href="#id28"><span class="problematic" id="id29">**</span></a>kwargs):</dt>
+<p>..code-block:: python</p>
+<dl class="docutils">
+<dt>class TestFrame(wx.Frame):</dt>
+<dd><dl class="first last docutils">
+<dt>def __init__(self, <a href="#id14"><span class="problematic" id="id15">*</span></a>args, <a href="#id16"><span class="problematic" id="id17">**</span></a>kwargs):</dt>
 <dd>kwargs.setdefault(&#8216;title&#8217;, &#8220;Simple test App&#8221;)
-wx.Frame.__init__(self, <a href="#id30"><span class="problematic" id="id31">*</span></a>args, <a href="#id32"><span class="problematic" id="id33">**</span></a>kwargs)</dd>
+wx.Frame.__init__(self, <a href="#id18"><span class="problematic" id="id19">*</span></a>args, <a href="#id20"><span class="problematic" id="id21">**</span></a>kwargs)</dd>
 </dl>
-</div></blockquote>
+</dd>
+</dl>
 <p>demo: <cite>codebasic_app_1.py</cite></p>
 </div>
 </div>
 <div class="section" id="controls">
 <h2>controls<a class="headerlink" href="#controls" title="Permalink to this headline">¶</a></h2>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Menus}</p>
-<p>A <cite>wx.Frame</cite> has a menu bar you can add items to:}</p>
-<dl class="docutils">
-<dt>..code-block:: python</dt>
-<dd><p class="first"># create the menu bar object
+<div class="section" id="menus">
+<h3>Menus<a class="headerlink" href="#menus" title="Permalink to this headline">¶</a></h3>
+<p>A <cite>wx.Frame</cite> has a menu bar you can add items to:</p>
+<p>..code-block:: python</p>
+<blockquote>
+<div><p># create the menu bar object
 menuBar = wx.MenuBar()</p>
 <p># add a menu to it
 fileMenu = wx.Menu()</p>
@@ -394,13 +425,13 @@ fileMenu = wx.Menu()</p>
 openMenuItem = fileMenu.Append(wx.ID_ANY, &#8220;&amp;Open&#8221;, &#8220;Open a file&#8221; )
 #bind a handler to the menu event
 self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)</p>
-<p class="last">self.SetMenuBar(menuBar)</p>
-</dd>
-</dl>
+<p>self.SetMenuBar(menuBar)</p>
+</div></blockquote>
 <p>demo: <cite>codebasic_app_2.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Event Handlers}</p>
-<p>Event handlers have a common signature:}</p>
+</div>
+<div class="section" id="event-handlers">
+<h3>Event Handlers<a class="headerlink" href="#event-handlers" title="Permalink to this headline">¶</a></h3>
+<p>Event handlers have a common signature:</p>
 <dl class="docutils">
 <dt>..code-block:: python</dt>
 <dd><dl class="first last docutils">
@@ -411,11 +442,12 @@ self.app_logic.file_open()</dd>
 </dd>
 </dl>
 <p>The second parameter is the <cite>wx.Event</cite> object that initiated the call &#8211; it holds information about the event that can be useful}</p>
-<p>I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.}</p>
+<p>I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.</p>
 <p>demo: <cite>codebasic_app_2.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Common Dialogs}</p>
-<p>wxPython provides a number of common Dialogs. These wrap the native ones where possible for a native look and feel.}</p>
+</div>
+<div class="section" id="common-dialogs">
+<h3>Common Dialogs<a class="headerlink" href="#common-dialogs" title="Permalink to this headline">¶</a></h3>
+<p>wxPython provides a number of common Dialogs. These wrap the native ones where possible for a native look and feel.</p>
 <blockquote>
 <div>item <cite>wx.MessageDialog</cite>
 item <cite>wx.ColourDialog</cite>
@@ -426,29 +458,32 @@ item <cite>wx.DirDialog</cite>
 item <cite>wx.SingleChoiceDialog</cite>
 item <cite>wx.TextEntryDialog</cite>
 item ...</div></blockquote>
-<p>These do pretty much what you&#8217;d expect...}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-wx.FileDialog}</p>
-<p>Example use of a common dialog: <cite>wx.FileDialog</cite>}\</p>
-<p>..code-block:: python
-dlg = wx.FileDialog(self,</p>
+<p>These do pretty much what you&#8217;d expect...</p>
+</div>
+<div class="section" id="wx-filedialog">
+<h3>wx.FileDialog<a class="headerlink" href="#wx-filedialog" title="Permalink to this headline">¶</a></h3>
+<p>Example use of a common dialog: <cite>wx.FileDialog</cite></p>
+<p>..code-block:: python</p>
 <blockquote>
-<div>message=&#8221;Save file as ...&#8221;,
+<div><dl class="docutils">
+<dt>dlg = wx.FileDialog(self,</dt>
+<dd>message=&#8221;Save file as ...&#8221;,
 defaultDir=os.getcwd(),
 defaultFile=&#8221;&#8221;,
 wildcard=wildcard,
-style=wx.SAVE )</div></blockquote>
-<dl class="docutils">
+style=wx.SAVE )</dd>
 <dt>if dlg.ShowModal() == wx.ID_OK:</dt>
 <dd>path = dlg.GetPath()</dd>
 <dt>else:</dt>
 <dd>print &#8220;The file dialog was canceled before anything was selected&#8221;</dd>
 </dl>
 <p>dlg.Destroy()</p>
+</div></blockquote>
 <p>example: <cite>code/basic_app_3.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Basic Widgets}</p>
-<p>All the basic widgets (controls) you&#8217;d expect are there:}</p>
+</div>
+<div class="section" id="basic-widgets">
+<h3>Basic Widgets<a class="headerlink" href="#basic-widgets" title="Permalink to this headline">¶</a></h3>
+<p>All the basic widgets (controls) you&#8217;d expect are there:</p>
 <blockquote>
 <div>item Buttons
 item TextCtrl (Text Control)
@@ -458,12 +493,13 @@ item Combo Box
 item Slider
 item Spin Control
 item ....</div></blockquote>
-<p>Way too many to list here!}</p>
-<p>See the docs and the Demo to find the one you need}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Using a Control}</p>
-<p>A Button is about as simple as it gets}</p>
-<p>{<cite>__init__(parent, id, label=&#8221;&#8221;, pos=wx.DefaultPosition, ...)</cite> }</p>
+<p>Way too many to list here!</p>
+<p>See the docs and the Demo to find the one you need</p>
+</div>
+<div class="section" id="using-a-control">
+<h3>Using a Control<a class="headerlink" href="#using-a-control" title="Permalink to this headline">¶</a></h3>
+<p>A Button is about as simple as it gets</p>
+<p><cite>__init__(parent, id, label=&#8221;&#8221;, pos=wx.DefaultPosition, ...)</cite></p>
 <p>Mostly the same as wx.Window, and other controls....}</p>
 <p>..code-block:: python
 ## add just a single button:
@@ -478,7 +514,7 @@ def onButton(self, evt=None):</p>
 wx.Panel}</p>
 <p>A <cite>wx.Panel</cite> is a <cite>wx.Window</cite> that you can put other controls on}</p>
 <p>It supplies nifty things like tab traversal, etc.}</p>
-<p>You emph{can} put controls right on a <cite>wx.Frame</cite> (we just did it), but a wx.Panel provided extra features, the <a href="#id34"><span class="problematic" id="id35">``</span></a>normal&#8217;&#8217; look, and helps you organize and re-use your code}</p>
+<p>You emph{can} put controls right on a <cite>wx.Frame</cite> (we just did it), but a wx.Panel provided extra features, the <a href="#id22"><span class="problematic" id="id23">``</span></a>normal&#8217;&#8217; look, and helps you organize and re-use your code}</p>
 <p>Mostly the same as wx.Window, and other controls....}</p>
 <p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
 wx.Panel}</p>
@@ -486,8 +522,8 @@ wx.Panel}</p>
 class ButtonPanel(wx.Panel):</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>def __init__(self, <a href="#id36"><span class="problematic" id="id37">*</span></a>args, <a href="#id38"><span class="problematic" id="id39">**</span></a>kwargs):</dt>
-<dd><p class="first">wx.Panel.__init__(self, <a href="#id40"><span class="problematic" id="id41">*</span></a>args, <a href="#id42"><span class="problematic" id="id43">**</span></a>kwargs)</p>
+<dt>def __init__(self, <a href="#id24"><span class="problematic" id="id25">*</span></a>args, <a href="#id26"><span class="problematic" id="id27">**</span></a>kwargs):</dt>
+<dd><p class="first">wx.Panel.__init__(self, <a href="#id28"><span class="problematic" id="id29">*</span></a>args, <a href="#id30"><span class="problematic" id="id31">**</span></a>kwargs)</p>
 <p class="last">self.theButton = wx.Button(self, label=&#8221;Push Me&#8221;)
 self.theButton.Bind(wx.EVT_BUTTON, self.onButton)</p>
 </dd>
@@ -526,10 +562,10 @@ Absolute Positioning}</p>
 &#8211; recalculate all positions and sizes}</p>
 <p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
 Sizers:}</p>
-<p>The alternative is <a href="#id44"><span class="problematic" id="id45">``</span></a>Sizers&#8217;&#8216;}</p>
+<p>The alternative is <a href="#id32"><span class="problematic" id="id33">``</span></a>Sizers&#8217;&#8216;}</p>
 <p><cite>wx.Sizer</cite> is wx&#8217;s system for automatically determining the size and location of controls}</p>
 <p>Instead of thinking in terms of what size and position a given control should be, you think in terms of how they relate to each other:}</p>
-<p>emph{<a href="#id46"><span class="problematic" id="id47">``</span></a>I want a column of buttons all the same size along the left edge of the Panel&#8217;&#8216;} }</p>
+<p>emph{<a href="#id34"><span class="problematic" id="id35">``</span></a>I want a column of buttons all the same size along the left edge of the Panel&#8217;&#8216;} }</p>
 <p>Sizers capture that logic and compute the sizes for you}</p>
 <p>They will re-size things for you when anything changes &#8211; adding, removing, changing labels, re-sizing the Window, etc...}</p>
 <p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
@@ -588,37 +624,39 @@ app.MainLoop()</dd>
 <p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
 Other Sizers}</p>
 <p>Sizers for laying out stuff in grids...}\</p>
-<p><cite>wx.GridSizer</cite>}</p>
-<p><cite>wx.FlexGridSizer</cite>}</p>
-<p><cite>wx.GridBagSizer</cite>}</p>
+<p><cite>wx.GridSizer</cite></p>
+<p><cite>wx.FlexGridSizer</cite></p>
+<p><cite>wx.GridBagSizer</cite></p>
 <p>(you can do it all with a GridBagSizer)</p>
 <p>See the docs for info.</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Hierarchies...}</p>
-<p>wxPython has multiple independent hierarchies ...}\</p>
-<p>The nested parent-child relationship:}</p>
+</div>
+<div class="section" id="hierarchies">
+<h3>Hierarchies...<a class="headerlink" href="#hierarchies" title="Permalink to this headline">¶</a></h3>
+<p>wxPython has multiple independent hierarchies ...</p>
+<p>The nested parent-child relationship:</p>
 <ul class="simple">
 <li>every <cite>wx.Window</cite> has a parent</li>
 <li>every <cite>wx.Window</cite> has zero or more children</li>
 </ul>
-<p>The class Hierarchy}</p>
+<p>The class Hierarchy</p>
 <ul class="simple">
 <li>sub classes of <cite>wx.Window</cite></li>
 <li>classes with instances as attributes</li>
 </ul>
-<p>The Layout Hierarchy}</p>
+<p>The Layout Hierarchy</p>
 <ul class="simple">
 <li>Sizers within Sizers...</li>
 <li>Arbitrarily deep.</li>
 </ul>
 <dl class="docutils">
-<dt>Each of these takes care of different concerns:\</dt>
-<dd>confusing but powerful}</dd>
+<dt>Each of these takes care of different concerns:</dt>
+<dd>confusing but powerful</dd>
 </dl>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Accessing inputs}</p>
-<p>Much of the point of a GUI is to collect data from the user.}</p>
-<p>So you need to be able to access what s/he has input}</p>
+</div>
+<div class="section" id="accessing-inputs">
+<h3>Accessing inputs<a class="headerlink" href="#accessing-inputs" title="Permalink to this headline">¶</a></h3>
+<p>Much of the point of a GUI is to collect data from the user.</p>
+<p>So you need to be able to access what s/he has input</p>
 <dl class="docutils">
 <dt>..code-block:: python</dt>
 <dd><p class="first">## add a text control:
@@ -631,30 +669,35 @@ print &#8220;the contents are:&#8221;, contents</dd>
 </dl>
 </dd>
 </dl>
-<p>Most controls have a <cite>.Value</cite> property}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Setting Values}</p>
-<p>You also want to display data...}</p>
-<p>So you need to be able to set the values, too:}</p>
-<p>..code-block:: python
-## and another text control:
+<p>Most controls have a <cite>.Value</cite> property</p>
+</div>
+<div class="section" id="setting-values">
+<h3>Setting Values<a class="headerlink" href="#setting-values" title="Permalink to this headline">¶</a></h3>
+<p>You also want to display data...</p>
+<p>So you need to be able to set the values, too:</p>
+<dl class="docutils">
+<dt>..code-block:: python</dt>
+<dd><p class="first"># and another text control:
 self.outTextControl = wx.TextCtrl(self,</p>
 <blockquote>
 <div>style=wx.TE_READONLY)</div></blockquote>
-<dl class="docutils">
+<dl class="last docutils">
 <dt>def onGetData(self, evt=None):</dt>
 <dd>self.outTextControl.Value = self.inTextControl.Value</dd>
 </dl>
-<p>You can set the <cite>.Value</cite> property too...}</p>
-<p>example: <cite>codebasic_app8.py</cite>}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
-Code-generated GUIs...}</p>
-<p>You shouldn&#8217;t write the same repetitive code for a GUI..}</p>
-<p>You may need to build a GUI to match data at run time.}</p>
-<p>Lots of ways to do that with wxPython &#8211; Sizers help a lot.}</p>
-<p>Try to do it whenever you find yourself writing repetitive code...}</p>
-<p>The key is how to do the event Binding}
-..code-block:: python</p>
+</dd>
+</dl>
+<p>You can set the <cite>.Value</cite> property too...</p>
+<p>example: <cite>codebasic_app8.py</cite></p>
+</div>
+<div class="section" id="code-generated-guis">
+<h3>Code-generated GUIs...<a class="headerlink" href="#code-generated-guis" title="Permalink to this headline">¶</a></h3>
+<p>You shouldn&#8217;t write the same repetitive code for a GUI...</p>
+<p>You may need to build a GUI to match data at run time.</p>
+<p>Lots of ways to do that with wxPython &#8211; Sizers help a lot.</p>
+<p>Try to do it whenever you find yourself writing repetitive code...</p>
+<p>The key is how to do the event Binding:</p>
+<p>..code-block:: python</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>def OnButton(self, evt):</dt>
@@ -664,70 +707,88 @@ Code-generated GUIs...}</p>
 </dl>
 </div></blockquote>
 <p>example: <cite>code/CalculatorDemo.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
-Code-generated GUIs...}</p>
-<p>The <a href="#id48"><span class="problematic" id="id49">``</span></a>lambda trick&#8217;&#8216;}</p>
-<p>&#8211; a way to pass custom data to an event handler:}</p>
-<p>The key is how to do the event Binding}
-..code-block:: python
-for name in [&#8220;first&#8221;, &#8220;second&#8221;, &#8220;third&#8221;]:</p>
+<p>Code-generated GUIs...
+.. nextslide:</p>
+<p>The <a href="#id36"><span class="problematic" id="id37">``</span></a>lambda trick&#8217;&#8216;</p>
+<p>&#8211; a way to pass custom data to an event handler:</p>
+<p>..code-block:: python</p>
 <blockquote>
-<div><p>btn = wx.Button(self, label=name)
+<div><dl class="docutils">
+<dt>for name in [&#8220;first&#8221;, &#8220;second&#8221;, &#8220;third&#8221;]:</dt>
+<dd><p class="first">btn = wx.Button(self, label=name)
 btn.Bind(wx.EVT_BUTTON,</p>
-<blockquote>
+<blockquote class="last">
 <div>lambda evt, n=name: self.OnButton(evt, n) )</div></blockquote>
+</dd>
+</dl>
 </div></blockquote>
-<p>{<a class="reference external" href="http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks">http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks</a>}</p>
+<hr class="docutils" />
+<blockquote>
+<div><dl class="docutils">
+<dt>def OnButton(self, Event, name):</dt>
+<dd>print &#8220;In OnButton:&#8221;, name</dd>
+</dl>
+</div></blockquote>
+<p><a class="reference external" href="http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks">http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks</a></p>
+</div>
 </div>
 <div class="section" id="miscellaneous">
 <h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Long Running Tasks}</p>
-<p>The UI is locked up while an event is being handled}</p>
-<p>So you want all event handlers to run fast.}</p>
-<p>But what if there is significant work to do?}</p>
-<p>Enter: threading and multi-processing}</p>
-<p>But: wxPython is not thread-safe: almost all wx methods must be called from within the same thread.}</p>
-<p>Thread-safe operations: Creating and Posting Events}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-CallAfter}</p>
-<dl class="docutils">
-<dt>Easiest way to communicate with threads:\</dt>
-<dd><cite>wx.CallAfter</cite>}</dd>
-</dl>
-<p>Puts an event on the event stack, calls the designated function or method when the stack is cleared:}</p>
-<p>..code-block:: python
-wx.CallAfter(function_to_call, <a href="#id50"><span class="problematic" id="id51">*</span></a>args, <a href="#id52"><span class="problematic" id="id53">**</span></a>kwargs)</p>
-<p># <a href="#id54"><span class="problematic" id="id55">*</span></a>args, <a href="#id56"><span class="problematic" id="id57">**</span></a>kwargs are passed on to FunctionToCall</p>
-<p>(see also: <cite>wx.CallLater()</cite>) }</p>
-<p>{<a class="reference external" href="http://wiki.wxpython.org/LongRunningTasks">http://wiki.wxpython.org/LongRunningTasks</a>}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-BILS}</p>
-<p>{bf B}rowser {bf I}nterface, {bf L}ocal {bf S}erver}</p>
-<p>Web app: Server runs on local machine}</p>
-<p>Browser is the interface &#8211; but all running local}</p>
-<p>Can wrap the Browser window in a desktop app: Chrome Embedded Framework, wxWebkit, etc.}</p>
-<p>Good way to get both a web app and desktop app with one codebase}</p>
-<p>Example: Cameo Chemicals}</p>
-<p>(PyCon 2009: Browser Interface, Local Server Application)</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-LAB}</p>
-<p>Make a very simple address book app:}</p>
-<dl class="docutils">
-<dt>begin{enumerate}</dt>
-<dd><p class="first">item Really basic data model is in <cite>address_book_data.py</cite>
-item Finish the form to edit an entry &#8211; subclass of a <cite>wx.Panel</cite> (<cite>entry_form.py</cite>)
-item The form goes on a <cite>wx.Frame</cite> (<cite>address_book_app.py</cite>) \</p>
+<div class="section" id="long-running-tasks">
+<h3>Long Running Tasks<a class="headerlink" href="#long-running-tasks" title="Permalink to this headline">¶</a></h3>
+<p>The UI is locked up while an event is being handled</p>
+<p>So you want all event handlers to run fast.</p>
+<p>But what if there is significant work to do?</p>
+<p>Enter: threading and multi-processing</p>
+<p>But: wxPython is not thread-safe: almost all wx methods must be called from within the same thread.</p>
+<p>Thread-safe operations: Creating and Posting Events</p>
+</div>
+<div class="section" id="callafter">
+<h3>CallAfter<a class="headerlink" href="#callafter" title="Permalink to this headline">¶</a></h3>
+<p>Easiest way to communicate with threads:</p>
+<p><cite>wx.CallAfter</cite></p>
+<p>Puts an event on the event stack, calls the designated function or method when the stack is cleared:</p>
+<p>..code-block:: python</p>
 <blockquote>
-<div>add a way to switch between entries (<cite>switcher.py</cite>)</div></blockquote>
-<p class="last">item Add a <a href="#id58"><span class="problematic" id="id59">``</span></a>new record&#8217;&#8217; button
-item Add file&#8211;save and file&#8211;open menus to the frame
-item Add some validation, better layout, etc....</p>
+<div><p>wx.CallAfter(function_to_call, <a href="#id38"><span class="problematic" id="id39">*</span></a>args, <a href="#id40"><span class="problematic" id="id41">**</span></a>kwargs)</p>
+<p># <a href="#id42"><span class="problematic" id="id43">*</span></a>args, <a href="#id44"><span class="problematic" id="id45">**</span></a>kwargs are passed on to FunctionToCall</p>
+</div></blockquote>
+<p>(see also: <cite>wx.CallLater()</cite>)</p>
+<p><a class="reference external" href="http://wiki.wxpython.org/LongRunningTasks">http://wiki.wxpython.org/LongRunningTasks</a></p>
+</div>
+<div class="section" id="bils">
+<h3>BILS<a class="headerlink" href="#bils" title="Permalink to this headline">¶</a></h3>
+<p>Browser Interface, Local Server</p>
+<p>Web app: Server runs on local machine</p>
+<p>Browser is the interface &#8211; but all running local</p>
+<p>Can wrap the Browser window in a desktop app: Chrome Embedded Framework, wxWebkit, etc.</p>
+<p>Good way to get both a web app and desktop app with one codebase</p>
+<p>Example: Cameo Chemicals</p>
+<p>(PyCon 2009: Browser Interface, Local Server Application)</p>
+</div>
+<div class="section" id="lab">
+<h3>LAB<a class="headerlink" href="#lab" title="Permalink to this headline">¶</a></h3>
+<p>Make a very simple address book app:</p>
+<ol class="arabic">
+<li><p class="first">Really basic data model is in <cite>address_book_data.py</cite></p>
+</li>
+<li><p class="first">Finish the form to edit an entry &#8211; subclass of a <cite>wx.Panel</cite> (<cite>entry_form.py</cite>)</p>
+</li>
+<li><dl class="first docutils">
+<dt>The form goes on a <cite>wx.Frame</cite> (<cite>address_book_app.py</cite>)</dt>
+<dd><p class="first last">add a way to switch between entries (<cite>switcher.py</cite>)</p>
 </dd>
 </dl>
-<p>end{enumerate}</p>
-<p><a href="#id60"><span class="problematic" id="id61">`</span></a>codeaddress_book`</p>
-<p>end{document}</p>
+</li>
+<li><p class="first">Add a <a href="#id46"><span class="problematic" id="id47">``</span></a>new record&#8217;&#8217; button</p>
+</li>
+<li><p class="first">Add file&#8211;save and file&#8211;open menus to the frame</p>
+</li>
+<li><p class="first">Add some validation, better layout, etc....</p>
+</li>
+</ol>
+<p><a href="#id48"><span class="problematic" id="id49">`</span></a>codeaddress_book`</p>
+</div>
 </div>
 </div>
 
