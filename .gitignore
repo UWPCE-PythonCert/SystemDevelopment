@@ -16,7 +16,7 @@ slides_sources/build
 # ignore .gitignore, so we can each have our own.
 .gitignore
 
-*.pyc
 build/
 
 .ipynb_checkpoints
+.coverage

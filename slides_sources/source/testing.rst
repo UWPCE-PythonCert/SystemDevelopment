@@ -160,9 +160,10 @@ Testing floating point values
 =============================
 
 .. rst-class:: left
+
     Why can't we just test if .5 == .5 ?
 
-    ::
+    .. code-block:: ipython
 
         In [1]: 3 * .15 == .45
         Out[1]: False
@@ -771,6 +772,6 @@ When define.py is given the name of a non-existant article, an exception
 is thrown. This exception causes another exception to occur, and the whole thing
 is not very readable. Why does this happen?
 
-Use what you learned last week about exceptions to throw a better exception, and 
+Use what you learned last week about exceptions to throw a better exception, and
 then add a new test that confirms this behavior. Use mock for your test, so you
 are not hammering Wikipedia.
