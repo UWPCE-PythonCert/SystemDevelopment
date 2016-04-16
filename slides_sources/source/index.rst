@@ -61,7 +61,7 @@ Code Reviews begin
 
   - :ref:`documentation`
 
-  - `datetime <html_slides/06-datetime.html>`_
+..  - `datetime <html_slides/06-datetime.html>`_
 
 
 Session 5
