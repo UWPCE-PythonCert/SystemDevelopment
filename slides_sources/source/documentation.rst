@@ -32,9 +32,10 @@ Sphinx
 
 Sphinx is a documentation system built specifically for documenting Python itself:
 
-http://spinx-doc.org
+http://sphinx-doc.org
 
-But it's also useful for any sort of structured documentation -- and is sometimes used for non-code projects.
+But it's also useful for any sort of structured documentation
+ -- and is sometimes used for non-code projects.
 
 It Produces:
  * HTML (multiple styles available)
@@ -44,8 +45,9 @@ It Produces:
  * plain text
  * and others!
 
+
 Extendability
---------------
+-------------
 
 Sphinx has an extension architecture for adding special functionality:
 
@@ -63,6 +65,7 @@ Sphinx has an extension architecture for adding special functionality:
 
   * Unlimited possibilities
 
+
 Automatic Documentation
 ------------------------
 
@@ -75,6 +78,7 @@ Includes cross referencing of modules and classes, etc.
 This keeps your code and docs in sync, and encourages you to have nice docstrings.
 
 It's a bit tricky to get it all set up though :-(
+
 
 Documentation for the Documentation System
 -------------------------------------------
@@ -111,7 +115,8 @@ Like many similar markup languages (Markdown, etc.)
 * makes sense in plain text
 * looks a lot like what you might write in plain text anyway.
 
-So it's suitable for use both as plain text and for fancier formatting (i.e. docstrings)
+So it's suitable for use both as plain text and for fancier formatting
+(i.e. docstrings and autodoc)
 
 But more extensible than most others -- so good for sphinx
 
@@ -121,14 +126,14 @@ reStructuredText
 
 ::
 
-	============================
+	****************************
 	This is the top level header
-	============================
+	****************************
 
 	And now some normal text
 
 	And a level-2 header
-	=====================
+	====================
 
 	more text: **this** is bold.
 
@@ -140,18 +145,65 @@ reStructuredText
 	  for i in range(10):
 	      do_something_interesting(i)
 
+.. nextslide::
 
-reStructuredText documentation sources
----------------------------------------
+You can actually use anthing to underline for a header.
 
-RST directives::
+rst will assume they are in order:
+
+  - The first form is sees is Header 1
+  - The second encountered is Header 2
+  - The third is header 3
+  - ....
+
+reStructuredText directives
+---------------------------
+
+Directives are an extension mechanism for RST.
+
+A directive starts iwth 2 dots, then a smapce, then the directive, then two colons.
+
+Directives are indicated by an explicit markup start (".. ") followed by the directive type, two colons, and whitespace.
+
+Directive types are case-insensitive single words.
+
+There are three logical parts to the directive block:
+
+- Directive arguments.
+- Directive options.
+- Directive content.
+
+For example ::
 
   .. toctree::
      :maxdepth: 2
 
-``toctree`` is a reStructuredText directive:
+``toctree`` is the directive type
 
-Directives can have arguments, options and content
+there are no arguments
+
+``:maxdepth: 2`` is an option
+
+The content follown, indentedone level
+
+Another example::
+
+  code-block:: python
+
+      for i in range(10):
+          print i
+
+``code-block`` is the directive type
+
+``python`` is an argument (in this case, telling sphinx to format the coce black in python style)
+
+The code itself is the content.
+
+ONe hint for rst:
+
+.. rst-class:: medium
+
+  when in doubt, put in an extra empty line!
 
 Some docs to get started:
 
@@ -162,6 +214,8 @@ Some docs to get started:
 
 Sphinx Directives for docstrings
 ---------------------------------
+
+IF you put sphinx formatting in a docsting, then Sphinx Autodoc and format it nicely for you.
 
 ::
 
@@ -182,6 +236,37 @@ Sphinx Directives for docstrings
      """
      return compute_something(a,b,c)
 
+An Alternative
+--------------
+
+THe previous works OK, but it's really pretty klunky, hard to write and kinda hard to read.
+
+To much markup not really the "just like plain next" we're going for.
+
+Recent version os Sphinx include "napolean" to remedy this:
+
+https://sphinxcontrib-napoleon.readthedocs.org
+
+It allows the use of "google style" or "numpy style" docstrings.
+
+So the previous example woulds look like:
+
+.. code-block:: python
+
+  def a_function(a, b, c='fred'):
+      """
+      Computes something which I would describe here.
+
+      Args:
+          a (int): the first input value
+          b (float) the second input value
+          c=fred (str): a string flag
+
+      Returns:
+          a useless string
+     """
+
+
 LAB:
 ----
 
@@ -199,6 +284,7 @@ Clean up the docstrings so that autodoc works well.
 
 (Or do it for your code!)
 
+
 Tutorial Script:
 -----------------
 
@@ -211,8 +297,7 @@ First, you need the tool::
   $ pip install sphinx
 
 
-(Thanks to: http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/
-)
+(Thanks to: http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/)
 
 Setting Up sphinx:
 -------------------
@@ -234,7 +319,7 @@ You are already in a doc dir, so you can use ``.`` (the default) for the root pa
 QuickStart (cont):
 -------------------
 
-I like to keep the source can built docs separate::
+I like to keep the source and the built docs separate::
 
   > Separate source and build directories (y/N) [n]: y
 
@@ -253,7 +338,6 @@ QuickStart (cont):
 You absolutely want autodoc!::
 
   > autodoc: automatically insert docstrings from modules (y/N) [n]: y
-
 
 This is kind of nice, to help you keep in line::
 
@@ -442,6 +526,8 @@ For a substantial package, hand writing all those files and autodoc directives c
 
 So you can use APIdoc::
 
+  pip install apidoc
+
   sphinx-apidoc [options] -o <outputdir> <sourcedir> [pathnames ...]
 
   $ sphinx-apidoc -o test ../capitalize
@@ -462,7 +548,6 @@ http://sphinx-doc.org/theming.html
 In ``conf.py``::
 
  html_theme = "default"
-
 
 Of course, this is the primary source of how to use Sphinx itself:
 
