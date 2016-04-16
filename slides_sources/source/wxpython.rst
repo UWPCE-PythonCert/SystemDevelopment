@@ -373,6 +373,7 @@ Event Handlers
 Event handlers have a common signature:
 
 .. code-block:: python
+
     def onOpen(self, evt=None):
         print "open menu selected"
         self.app_logic.file_open()
@@ -413,7 +414,7 @@ wx.FileDialog
 
 Example use of a common dialog: ``wx.FileDialog``
 
-..code-block:: python
+.. code-block:: python
 
     dlg = wx.FileDialog(self,
                         message="Save file as ...",
@@ -445,7 +446,7 @@ All the basic widgets (controls) you'd expect are there:
 * Combo Box
 * Slider
 * Spin Control
-* ....
+* . . . . .
 
 
 Way too many to list here!
@@ -466,51 +467,52 @@ A Button is about as simple as it gets
 
 Mostly the same as wx.Window, and other controls....}
 
-..code-block:: python
-## add just a single button:
-self.theButton = wx.Button(self, label="Push Me")
-self.theButton.Bind(wx.EVT_BUTTON, self.onButton)
+.. code-block:: python
 
-## and give it an event handler
-def onButton(self, evt=None):
-    print "You pushed the button!"
+  ## add just a single button:
+  self.theButton = wx.Button(self, label="Push Me")
+  self.theButton.Bind(wx.EVT_BUTTON, self.onButton)
+
+  ## and give it an event handler
+  def onButton(self, evt=None):
+      print "You pushed the button!"
 
 
 
 code: ``code\basic_app_4.py``
 
 
-%-------------------------------
-wx.Panel}
+wx.Panel
+--------
 
-A ``wx.Panel`` is a ``wx.Window`` that you can put other controls on}
+A ``wx.Panel`` is a ``wx.Window`` that you can put other controls on
 
-
-It supplies nifty things like tab traversal, etc.}
-
-
-You \emph{can} put controls right on a ``wx.Frame`` (we just did it), but a wx.Panel provided extra features, the "normal" look, and helps you organize and re-use your code}
+It supplies nifty things like tab traversal, etc.
 
 
-Mostly the same as wx.Window, and other controls....}
+You \emph{can} put controls right on a ``wx.Frame`` (we just did it), but a wx.Panel provided extra features, the "normal" look, and helps you organize and re-use your code
 
 
+Mostly the same as wx.Window, and other controls...
 
-%-------------------------------
-wx.Panel}
 
-..code-block:: python
-class ButtonPanel(wx.Panel):
-    def __init__(self, *args, **kwargs):
-        wx.Panel.__init__(self, *args, **kwargs)
+.. nextslide::
 
-        self.theButton = wx.Button(self, label="Push Me")
-        self.theButton.Bind(wx.EVT_BUTTON, self.onButton)
-    def onButton(self, evt=None):
-        print "You pushed the button!"
+.. code-block:: python
+
+  class ButtonPanel(wx.Panel):
+      def __init__(self, *args, **kwargs):
+          wx.Panel.__init__(self, *args, **kwargs)
+
+          self.theButton = wx.Button(self, label="Push Me")
+          self.theButton.Bind(wx.EVT_BUTTON, self.onButton)
+      def onButton(self, evt=None):
+          print "You pushed the button!"
 
 And use it in the Frame:
-..code-block:: python
+
+.. code-block:: python
+
         self.buttonPanel = ButtonPanel(self)
 
 
@@ -518,30 +520,24 @@ And use it in the Frame:
 code: ``code\basic_app_5.py``
 
 
-%-------------------------------
-Control Layout}
+Control Layout
+--------------
 
 With more than one control, you need to figure out how to place them
-and how big to make them}
+and how big to make them
 
+You may have noticed that ``wx.Window`` takes ``pos`` and ``size`` parameters
 
-You may have noticed that ``wx.Window`` takes ``pos`` and ``size`` parameters}
+You may have also noticed that I didn't use them.
 
-
-You may have also noticed that I didn't use them.}
-
-
-Why not?}
+Why not?
 
 
 
-%-------------------------------
-Absolute Positioning}
+Absolute Positioning
+--------------------
 
-Absolute positioning:}
-
-
-Specifying the size and location of controls with pixel coordinates.}
+Specifying the size and location of controls with pixel coordinates.
 
 
 This is a serious pain to do!
@@ -553,8 +549,7 @@ Though it can be made a lot easier with GUI-building tools...
 So why not?
 
 
-Absolute Positioning
----------------------
+.. nextslide::
 
 When you add or remove a control, the layout changes:
 
@@ -598,7 +593,7 @@ Sizers capture that logic and compute the sizes for you
 They will re-size things for you when anything changes -- adding, removing, changing labels, re-sizing the Window, etc...
 
 
-.. nextslide
+.. nextslide::
 
 
 Sizers take a while to wrap your brain around...
@@ -620,7 +615,8 @@ Sizer Example
 -------------
 
 The Basic ``BoxSizer``:
- -- Lays out a row or column of controls...
+
+- Lays out a row or column of controls...
 
 
 ..code-block:: python
@@ -648,7 +644,7 @@ How do I get them centered both ways?
  - And add stretchable spacers...
 
 
-..code-block:: python
+.. code-block:: python
 
   buttonSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -660,6 +656,7 @@ How do I get them centered both ways?
   mainSizer.Add(buttonSizer, 0, wx.ALIGN_CENTER) # the sizer with the buttons in it
   mainSizer.Add((1,1), 1)    # stretchable space
 
+
 Widget Inspection Tool
 ----------------------
 
@@ -667,7 +664,7 @@ How do I keep all this straight?
 
 The Widget Inspection Tool (WIT) is very handy:
 
-..code-block:: python
+.. code-block:: python
 
     app = TestApp(False)
     ## set up the WIT -- to help debug sizers
@@ -756,7 +753,7 @@ You also want to display data...
 
 So you need to be able to set the values, too:
 
-..code-block:: python
+.. code-block:: python
 
   # and another text control:
   self.outTextControl = wx.TextCtrl(self,
@@ -807,7 +804,7 @@ The "lambda trick"
 
 -- a way to pass custom data to an event handler:
 
-..code-block:: python
+.. code-block:: python
 
   for name in ["first", "second", "third"]:
       btn = wx.Button(self, label=name)
@@ -846,7 +843,7 @@ But: wxPython is not thread-safe: almost all wx methods must be called from with
 Thread-safe operations: Creating and Posting Events
 
 ``wx.CallAfter``
---------------
+----------------
 
 Easiest way to communicate with threads:
 
@@ -855,7 +852,7 @@ Easiest way to communicate with threads:
 
 Puts an event on the event stack, calls the designated function or method when the stack is cleared:
 
-..code-block:: python
+.. code-block:: python
 
   wx.CallAfter(function_to_call, *args, **kwargs)
 

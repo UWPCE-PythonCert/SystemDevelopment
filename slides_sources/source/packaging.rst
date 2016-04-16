@@ -325,16 +325,16 @@ Do do this, you need to add a ``test_suite`` stanza in setup.py.
 
 **nose**
 
-::
+.. code-block:: python
 
-setup (
-    # ...
-    test_suite = 'nose.collector'
-)
+  setup (
+      # ...
+      test_suite = 'nose.collector'
+  )
 
 **pytest**
 
-::
+.. code-block:: python
 
   setup(
     #...,
@@ -343,7 +343,7 @@ setup (
     #...,
   )
 
-And create an alias into setup.cfg file:
+And create an alias into setup.cfg file::
 
   [aliases]
   test=pytest
@@ -352,7 +352,7 @@ https://pytest.org/latest/goodpractices.html#integrating-with-setuptools-python-
 
 **unittest**
 
-::
+.. code-block:: python
 
   test_suite = 'unittest2.collector'
 
@@ -376,7 +376,7 @@ For anything but a single-file script (and maybe even then):
 
 
 LAB
------
+---
 
 * Create a small package
 

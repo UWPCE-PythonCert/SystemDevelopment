@@ -35,15 +35,17 @@ Sphinx is a documentation system built specifically for documenting Python itsel
 http://sphinx-doc.org
 
 But it's also useful for any sort of structured documentation
- -- and is sometimes used for non-code projects.
+
+- and is sometimes used for non-code projects.
 
 It Produces:
- * HTML (multiple styles available)
- * PDF (via LaTeX)
- * ePub
- * man pages
- * plain text
- * and others!
+
+* HTML (multiple styles available)
+* PDF (via LaTeX)
+* ePub
+* man pages
+* plain text
+* and others!
 
 
 Extendability
@@ -154,7 +156,7 @@ rst will assume they are in order:
   - The first form is sees is Header 1
   - The second encountered is Header 2
   - The third is header 3
-  - ....
+  - . . . .
 
 reStructuredText directives
 ---------------------------
