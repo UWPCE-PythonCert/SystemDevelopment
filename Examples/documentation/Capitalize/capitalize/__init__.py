@@ -8,5 +8,6 @@ documentation, so not that much here.
 
 And this is a new line!!
 
+Hopefully that shows up in the docs!
 """
-__version__ = '0.0.1'
+__version__ = '0.0.2'

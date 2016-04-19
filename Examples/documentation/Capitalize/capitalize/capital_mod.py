@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
 """
-A really simple module, just to demonstrate packaging
+A really simple module, just to demonstrate packaging and documentation
 """
+
 
 def capitalize_line(instr):
     """
     capitalizes the input string
 
-    :param instr: the string to capitalize it should be a single line.
+    :param instr: the string to capitalize: it should be a single line.
     :type instr: string
 
     :returns: a capitalized version of instr
     """
 
-    return " ".join( word.capitalize() for word in instr.split() )
+    return " ".join(word.capitalize() for word in instr.split())
 
 
 def capitalize(infilename, outfilename):
@@ -24,7 +25,7 @@ def capitalize(infilename, outfilename):
 
     note: very primitive -- it will mess some files up!
 
-    this is called by the capitalize script
+    This is called by the capitalize script
 
     :param infilename: The file name you want to process
     :type infilename: string
@@ -49,6 +50,8 @@ def capitalize(infilename, outfilename):
 class Something(object):
     """
     this is the class docstring
+
+    this is only here to demostrate how classes get documented.
     """
     def __init__(self, input):
         """
