@@ -92,6 +92,7 @@
 <li><a class="reference internal" href="#mongodb">MongoDB</a></li>
 <li><a class="reference internal" href="#other-options-to-consider">Other Options to Consider</a></li>
 <li><a class="reference internal" href="#example-data-model">Example Data Model</a></li>
+<li><a class="reference internal" href="#pulling-data-out">Pulling Data Out</a></li>
 </ul>
 </li>
 </ul>
@@ -116,7 +117,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -247,7 +248,7 @@ schema-based NoSQL solution</p>
 <h2>Example Data Model<a class="headerlink" href="#example-data-model" title="Permalink to this headline">¶</a></h2>
 <p>An Address Book with a not quite trivial data model.</p>
 <p>There are people:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">middle_name</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">cell_phone</span>
@@ -255,43 +256,43 @@ schema-based NoSQL solution</p>
 </pre></div>
 </div>
 <p>There are households:</p>
-<div class="highlight-python"><div class="highlight"><pre>    self.name
-    self.people
-    self.address
-    self.phone
+<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">people</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">address</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">phone</span>
 
-(similarly businesses)
+<span class="p">(</span><span class="n">similarly</span> <span class="n">businesses</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>see examples/NoSQL/address_book_model.py</p>
 </div><div class="section slide"><p class="rubric" id="using-zodb">Using ZODB</p>
 <p>ZODB stores Python objects. To make an object persistent:</p>
-<div class="highlight-python"><div class="highlight"><pre>import persistent
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">persistent</span>
 
-class Something(persistent.Persistent):
-  def __init__(self):
-      self.a_field = &#39;&#39;
-      self.another_field &#39;&#39;
+<span class="k">class</span> <span class="nc">Something</span><span class="p">(</span><span class="n">persistent</span><span class="o">.</span><span class="n">Persistent</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">a_field</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">another_field</span> <span class="s1">&#39;&#39;</span>
 </pre></div>
 </div>
 <p>When a change is made to the fields, the DB will keep it updated.</p>
 <p>See examples/NoSQL/address_book_zodb.py</p>
 </div><div class="section slide"><p class="rubric" id="mutable-attributes-in-zodb">Mutable Attributes in ZODB</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Something</span><span class="o">.</span><span class="n">this</span> <span class="o">=</span> <span class="n">that</span>
-<span class="c"># will trigger a DB action</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Something</span><span class="o">.</span><span class="n">this</span> <span class="o">=</span> <span class="n">that</span>
+<span class="c1"># will trigger a DB action</span>
 
-<span class="c"># But:</span>
+<span class="c1"># But:</span>
 
 <span class="n">Something</span><span class="o">.</span><span class="n">a_list</span><span class="o">.</span><span class="n">append</span>
-<span class="c"># will not trigger anything.</span>
+<span class="c1"># will not trigger anything.</span>
 
-<span class="c"># The DB doesn&#39;t know that that the list has been altered.</span>
-<span class="c"># Solution:</span>
+<span class="c1"># The DB doesn&#39;t know that that the list has been altered.</span>
+<span class="c1"># Solution:</span>
 
 <span class="bp">self</span><span class="o">.</span><span class="n">a_list</span> <span class="o">=</span> <span class="n">PersistentList</span><span class="p">()</span>
-<span class="c"># (also PersistantDict() )</span>
+<span class="c1"># (also PersistantDict() )</span>
 
-<span class="c"># (or write getter and setter properties...)</span>
+<span class="c1"># (or write getter and setter properties...)</span>
 </pre></div>
 </div>
 </div><div class="section slide"><p class="rubric" id="mongodb-1">MongoDB</p>
@@ -323,43 +324,40 @@ frameworks:</p>
 <p>mongoDB is separate program. Installers here:
 <a class="reference external" href="http://www.mongodb.org/downloads">http://www.mongodb.org/downloads</a></p>
 <p>Create a dir for the database:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mkdir mongo_data
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir mongo_data
 # And start it up:
 $ mongod --dbpath=mongo_data/
 </pre></div>
 </div>
 </div><div class="section slide"><p class="rubric" id="creating-a-mongo-db">Creating a Mongo DB:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># create the DB</span>
-<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># create the DB</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
-<span class="n">store</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">store_name</span> <span class="c"># creates a Database</span>
-<span class="n">people</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">people</span> <span class="c"># creates a collection</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">store</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">store_name</span> <span class="c1"># creates a Database</span>
+<span class="n">people</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">people</span> <span class="c1"># creates a collection</span>
 </pre></div>
 </div>
 <p>mongo will link to the given database and collection, or create new ones
 if they don&#8217;t exist.</p>
 <p>Adding some stuff:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">people</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s">&#39;first_name&#39;</span><span class="p">:</span> <span class="s">&#39;Fred&#39;</span><span class="p">,</span>
-              <span class="s">&#39;last_name&#39;</span><span class="p">:</span> <span class="s">&#39;Jones&#39;</span><span class="p">})</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">people</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jones&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
-</div><div class="section slide"><p class="rubric" id="pulling-data-out">Pulling Data Out</p>
-<div class="highlight-python"><div class="highlight"><pre>In [16]: people.find_one({&#39;first_name&#39;:&quot;Fred&quot;})
-Out[16]:
-{u&#39;_id&#39;: ObjectId(&#39;534dcdcb5c84d28b596ad15e&#39;),
- u&#39;first_name&#39;: u&#39;Fred&#39;,
- u&#39;last_name&#39;: u&#39;Jones&#39;}
+</div><div class="section slide"></div>
+<div class="section" id="pulling-data-out">
+<h2>Pulling Data Out<a class="headerlink" href="#pulling-data-out" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="n">people</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="s2">&quot;Fred&quot;</span><span class="p">})</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">16</span><span class="p">]:</span>
+<span class="p">{</span><span class="s1">u&#39;_id&#39;</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s1">&#39;534dcdcb5c84d28b596ad15e&#39;</span><span class="p">),</span>
+ <span class="s1">u&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Fred&#39;</span><span class="p">,</span>
+ <span class="s1">u&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Jones&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>Note that it adds an ObjectID for you. See
 examples/NoSQL/address_book_mongo.py</p>
-</div><div class="section slide"><p class="rubric" id="questions">Questions?</p>
-</div><p><a class="reference external" href="#">←</a> <a class="reference external" href="#">→</a></p>
-<blockquote>
-<div>/</div></blockquote>
-<p>Go to slide:</p>
-<p><a class="reference external" href=".">#</a></p>
+<p>Questions?</p>
 </div>
 </div>
 

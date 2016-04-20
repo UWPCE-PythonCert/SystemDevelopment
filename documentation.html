@@ -89,8 +89,9 @@
 <li><a class="reference internal" href="#documentation-for-the-documentation-system">Documentation for the Documentation System</a></li>
 <li><a class="reference internal" href="#restructuredtext">reStructuredText</a></li>
 <li><a class="reference internal" href="#id2">reStructuredText</a></li>
-<li><a class="reference internal" href="#restructuredtext-documentation-sources">reStructuredText documentation sources</a></li>
+<li><a class="reference internal" href="#restructuredtext-directives">reStructuredText directives</a></li>
 <li><a class="reference internal" href="#sphinx-directives-for-docstrings">Sphinx Directives for docstrings</a></li>
+<li><a class="reference internal" href="#an-alternative">An Alternative</a></li>
 <li><a class="reference internal" href="#lab">LAB:</a></li>
 <li><a class="reference internal" href="#tutorial-script">Tutorial Script:</a></li>
 <li><a class="reference internal" href="#setting-up-sphinx">Setting Up sphinx:</a></li>
@@ -103,6 +104,7 @@
 <li><a class="reference internal" href="#id4">A tiny bit of RST</a></li>
 <li><a class="reference internal" href="#autodoc">AutoDoc</a></li>
 <li><a class="reference internal" href="#adding-autodoc-to-your-docs">Adding Autodoc to your docs.</a></li>
+<li><a class="reference internal" href="#setting-up-autodoc">Setting up Autodoc</a></li>
 <li><a class="reference internal" href="#finding-the-members">Finding the members.</a></li>
 <li><a class="reference internal" href="#documenting-the-members">Documenting the members.</a></li>
 <li><a class="reference internal" href="#multiple-files">Multiple Files</a></li>
@@ -134,7 +136,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -177,11 +179,13 @@
 <div class="section" id="sphinx">
 <h3>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h3>
 <p>Sphinx is a documentation system built specifically for documenting Python itself:</p>
-<p><a class="reference external" href="http://spinx-doc.org">http://spinx-doc.org</a></p>
-<p>But it&#8217;s also useful for any sort of structured documentation &#8211; and is sometimes used for non-code projects.</p>
-<dl class="docutils">
-<dt>It Produces:</dt>
-<dd><ul class="first last simple">
+<p><a class="reference external" href="http://sphinx-doc.org">http://sphinx-doc.org</a></p>
+<p>But it&#8217;s also useful for any sort of structured documentation</p>
+<ul class="simple">
+<li>and is sometimes used for non-code projects.</li>
+</ul>
+<p>It Produces:</p>
+<ul class="simple">
 <li>HTML (multiple styles available)</li>
 <li>PDF (via LaTeX)</li>
 <li>ePub</li>
@@ -189,8 +193,6 @@
 <li>plain text</li>
 <li>and others!</li>
 </ul>
-</dd>
-</dl>
 </div>
 <div class="section" id="extendability">
 <h3>Extendability<a class="headerlink" href="#extendability" title="Permalink to this headline">¶</a></h3>
@@ -249,19 +251,20 @@
 <li>makes sense in plain text</li>
 <li>looks a lot like what you might write in plain text anyway.</li>
 </ul>
-<p>So it&#8217;s suitable for use both as plain text and for fancier formatting (i.e. docstrings)</p>
+<p>So it&#8217;s suitable for use both as plain text and for fancier formatting
+(i.e. docstrings and autodoc)</p>
 <p>But more extensible than most others &#8211; so good for sphinx</p>
 </div>
 <div class="section" id="id2">
 <h3>reStructuredText<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>============================
+<div class="highlight-default"><div class="highlight"><pre><span></span>****************************
 This is the top level header
-============================
+****************************
 
 And now some normal text
 
 And a level-2 header
-=====================
+====================
 
 more text: **this** is bold.
 
@@ -274,16 +277,50 @@ And ``this`` is code.
       do_something_interesting(i)
 </pre></div>
 </div>
+<p>You can actually use anthing to underline for a header.</p>
+<p>rst will assume they are in order:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The first form is sees is Header 1</li>
+<li>The second encountered is Header 2</li>
+<li>The third is header 3</li>
+<li>. . . .</li>
+</ul>
+</div></blockquote>
 </div>
-<div class="section" id="restructuredtext-documentation-sources">
-<h3>reStructuredText documentation sources<a class="headerlink" href="#restructuredtext-documentation-sources" title="Permalink to this headline">¶</a></h3>
-<p>RST directives:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. toctree::
-   :maxdepth: 2
+<div class="section" id="restructuredtext-directives">
+<h3>reStructuredText directives<a class="headerlink" href="#restructuredtext-directives" title="Permalink to this headline">¶</a></h3>
+<p>Directives are an extension mechanism for RST.</p>
+<p>A directive starts iwth 2 dots, then a smapce, then the directive, then two colons.</p>
+<p>Directives are indicated by an explicit markup start (&#8221;.. &#8221;) followed by the directive type, two colons, and whitespace.</p>
+<p>Directive types are case-insensitive single words.</p>
+<p>There are three logical parts to the directive block:</p>
+<ul class="simple">
+<li>Directive arguments.</li>
+<li>Directive options.</li>
+<li>Directive content.</li>
+</ul>
+<p>For example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+   <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">toctree</span></code> is a reStructuredText directive:</p>
-<p>Directives can have arguments, options and content</p>
+<p><code class="docutils literal"><span class="pre">toctree</span></code> is the directive type</p>
+<p>there are no arguments</p>
+<p><code class="docutils literal"><span class="pre">:maxdepth:</span> <span class="pre">2</span></code> is an option</p>
+<p>The content follown, indentedone level</p>
+<p>Another example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">i</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">code-block</span></code> is the directive type</p>
+<p><code class="docutils literal"><span class="pre">python</span></code> is an argument (in this case, telling sphinx to format the coce black in python style)</p>
+<p>The code itself is the content.</p>
+<p>ONe hint for rst:</p>
+<p class="medium">when in doubt, put in an extra empty line!</p>
 <p>Some docs to get started:</p>
 <blockquote>
 <div><ul class="simple">
@@ -294,7 +331,8 @@ And ``this`` is code.
 </div>
 <div class="section" id="sphinx-directives-for-docstrings">
 <h3>Sphinx Directives for docstrings<a class="headerlink" href="#sphinx-directives-for-docstrings" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">&#39;fred&#39;</span><span class="p">):</span>
+<p>IF you put sphinx formatting in a docsting, then Sphinx Autodoc and format it nicely for you.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;fred&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    computes something which I would describe here.</span>
 
@@ -313,14 +351,37 @@ And ``this`` is code.
 </pre></div>
 </div>
 </div>
+<div class="section" id="an-alternative">
+<h3>An Alternative<a class="headerlink" href="#an-alternative" title="Permalink to this headline">¶</a></h3>
+<p>THe previous works OK, but it&#8217;s really pretty klunky, hard to write and kinda hard to read.</p>
+<p>To much markup not really the &#8220;just like plain next&#8221; we&#8217;re going for.</p>
+<p>Recent version os Sphinx include &#8220;napolean&#8221; to remedy this:</p>
+<p><a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.org">https://sphinxcontrib-napoleon.readthedocs.org</a></p>
+<p>It allows the use of &#8220;google style&#8221; or &#8220;numpy style&#8221; docstrings.</p>
+<p>So the previous example woulds look like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;fred&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes something which I would describe here.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (int): the first input value</span>
+<span class="sd">        b (float) the second input value</span>
+<span class="sd">        c=fred (str): a string flag</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a useless string</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="lab">
 <h3>LAB:<a class="headerlink" href="#lab" title="Permalink to this headline">¶</a></h3>
 <p>Set up a Sphinx project to document the package in:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Examples</span><span class="o">/</span><span class="n">Capitalize</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Examples</span><span class="o">/</span><span class="n">Capitalize</span>
 </pre></div>
 </div>
 <p>Put it in:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Examples</span><span class="o">/</span><span class="n">Capitalize</span><span class="o">/</span><span class="n">doc</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Examples</span><span class="o">/</span><span class="n">Capitalize</span><span class="o">/</span><span class="n">doc</span>
 </pre></div>
 </div>
 <p>Set it up to autodoc</p>
@@ -332,56 +393,55 @@ And ``this`` is code.
 <p>The following as a script to follow for setting up and starting to document a pacakge with Sphinx and Autodoc.</p>
 <p>It uses the <code class="docutils literal"><span class="pre">Capitalize</span></code> package (included in this repo) as an example, but you can follow along with your own package if you like.</p>
 <p>First, you need the tool:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ pip install sphinx
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip install sphinx
 </pre></div>
 </div>
-<p>(Thanks to: <a class="reference external" href="http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/">http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/</a>
-)</p>
+<p>(Thanks to: <a class="reference external" href="http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/">http://codeandchaos.wordpress.com/2012/07/30/sphinx-autodoc-tutorial-for-dummies/</a>)</p>
 </div>
 <div class="section" id="setting-up-sphinx">
 <h3>Setting Up sphinx:<a class="headerlink" href="#setting-up-sphinx" title="Permalink to this headline">¶</a></h3>
 <p>You need to be in a good place to build your docs:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd code/Capitalize/doc
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd code/Capitalize/doc
 </pre></div>
 </div>
 <p>Sphinx comes with a nice utility for getting your documentation set up:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ sphinx-quickstart
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sphinx-quickstart
 </pre></div>
 </div>
 <p>It will ask you a number of questions on the command line: You can use the defaults for most of these.</p>
 <p>You are already in a doc dir, so you can use <code class="docutils literal"><span class="pre">.</span></code> (the default) for the root path:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; Root path for the documentation [.]:
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Root</span> <span class="n">path</span> <span class="k">for</span> <span class="n">the</span> <span class="n">documentation</span> <span class="p">[</span><span class="o">.</span><span class="p">]:</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="quickstart-cont">
 <h3>QuickStart (cont):<a class="headerlink" href="#quickstart-cont" title="Permalink to this headline">¶</a></h3>
-<p>I like to keep the source can built docs separate:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; Separate source and build directories (y/N) [n]: y
+<p>I like to keep the source and the built docs separate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Separate</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">build</span> <span class="n">directories</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="p">[</span><span class="n">n</span><span class="p">]:</span> <span class="n">y</span>
 </pre></div>
 </div>
 <p>Give it a name and an author:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; Project name: Capitalize
-&gt; Author name(s): Chris Barker
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Project</span> <span class="n">name</span><span class="p">:</span> <span class="n">Capitalize</span>
+<span class="o">&gt;</span> <span class="n">Author</span> <span class="n">name</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="n">Chris</span> <span class="n">Barker</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal"><span class="pre">.rst</span></code> for restructured text:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; Source file suffix [.rst]:
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Source</span> <span class="n">file</span> <span class="n">suffix</span> <span class="p">[</span><span class="o">.</span><span class="n">rst</span><span class="p">]:</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id3">
 <h3>QuickStart (cont):<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>You absolutely want autodoc!:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; autodoc: automatically insert docstrings from modules (y/N) [n]: y
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">autodoc</span><span class="p">:</span> <span class="n">automatically</span> <span class="n">insert</span> <span class="n">docstrings</span> <span class="kn">from</span> <span class="nn">modules</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="p">[</span><span class="n">n</span><span class="p">]:</span> <span class="n">y</span>
 </pre></div>
 </div>
 <p>This is kind of nice, to help you keep in line:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; coverage: checks for documentation coverage (y/N) [n]: y
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">coverage</span><span class="p">:</span> <span class="n">checks</span> <span class="k">for</span> <span class="n">documentation</span> <span class="n">coverage</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="p">[</span><span class="n">n</span><span class="p">]:</span> <span class="n">y</span>
 </pre></div>
 </div>
 <p>A Makefile (and/or DOS batch file) is really handy:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; Create Makefile? (Y/n) [y]: y
+<div class="highlight-default"><div class="highlight"><pre><span></span>&gt; Create Makefile? (Y/n) [y]: y
 &gt; Create Windows command file? (Y/n) [y]: y
 </pre></div>
 </div>
@@ -389,7 +449,7 @@ And ``this`` is code.
 <div class="section" id="project-structure">
 <h3>Project Structure:<a class="headerlink" href="#project-structure" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">sphinx-quickstart</span></code> will have created the project structure for you:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ls
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ls
 Makefile   README.txt build      make.bat   source
 
 $ ls source
@@ -402,7 +462,7 @@ _static    _templates conf.py    index.rst
 <div class="section" id="building-the-docs">
 <h3>Building the docs:<a class="headerlink" href="#building-the-docs" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">Makefile</span></code> will build the docs for you in various ways:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ make html
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ make html
 sphinx-build -b html -d build/doctrees   source build/html
 Making output directory...
 Running Sphinx v1.1.3
@@ -411,7 +471,7 @@ Build finished. The HTML pages are in build/html.
 </pre></div>
 </div>
 <p>Or:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ make latexpdf
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ make latexpdf
 </pre></div>
 </div>
 <p>(if you have LaTeX installed...)</p>
@@ -420,7 +480,7 @@ Build finished. The HTML pages are in build/html.
 <div class="section" id="getting-started-with-writing">
 <h3>Getting Started with Writing:<a class="headerlink" href="#getting-started-with-writing" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">index.rst</span></code> file will look like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>Welcome to Capitalize&#39;s documentation!
+<div class="highlight-default"><div class="highlight"><pre><span></span>Welcome to Capitalize&#39;s documentation!
 ======================================
 
 Contents:
@@ -440,13 +500,13 @@ Indices and tables
 <div class="section" id="a-tiny-bit-of-rst">
 <h3>A tiny bit of RST<a class="headerlink" href="#a-tiny-bit-of-rst" title="Permalink to this headline">¶</a></h3>
 <p>Underlining creates headings:</p>
-<div class="highlight-python"><div class="highlight"><pre>Welcome to Capitalize&#39;s documentation!
-======================================
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Capitalize</span><span class="s1">&#39;s documentation!</span>
+<span class="o">======================================</span>
 </pre></div>
 </div>
 <p>This will give you a lower level heading:</p>
-<div class="highlight-python"><div class="highlight"><pre>Welcome to a Subsection
-------------------------
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">a</span> <span class="n">Subsection</span>
+<span class="o">------------------------</span>
 </pre></div>
 </div>
 <p>(each new underlining character you introduce goes another level down.)</p>
@@ -454,8 +514,8 @@ Indices and tables
 <div class="section" id="id4">
 <h3>A tiny bit of RST<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">..</span></code> is either a comment or a &#8220;directive&#8221;:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. toctree::
-   :maxdepth: 2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+   <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
 </pre></div>
 </div>
 <p>if sphinx understand the directive <code class="docutils literal"><span class="pre">toctree</span></code>, then it is used. Otherwise, it is treated as a comment.</p>
@@ -467,7 +527,7 @@ Indices and tables
 <p>In order to find them &#8211; sphinx needs to be able to import the code.</p>
 <p>Another reason to build a package and use <code class="docutils literal"><span class="pre">develop</span></code> mode!</p>
 <p>Alternatively, you can add the path to your code by adding this to the conf.py file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;mydir/myfile.txt&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;mydir/myfile.txt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>(Path is relative to the conf.py file)</p>
@@ -475,29 +535,57 @@ Indices and tables
 </div>
 <div class="section" id="adding-autodoc-to-your-docs">
 <h3>Adding Autodoc to your docs.<a class="headerlink" href="#adding-autodoc-to-your-docs" title="Permalink to this headline">¶</a></h3>
-<p>Add the automodule directive to your <code class="docutils literal"><span class="pre">index.rst</span></code> file:</p>
-<div class="highlight-python"><div class="highlight"><pre>The Capitalize Package
------------------------
-
-.. automodule:: capitalize
+<p>I like to put the auto-generated docs in a &#8220;reference&#8221; page.</p>
+<p>Create a new file names <code class="docutils literal"><span class="pre">reference.rst</span></code></p>
+<p>Give it a header:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Capitalize</span> <span class="n">Reference</span>
+<span class="o">====================</span>
 </pre></div>
 </div>
-<p>Then rebuild:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ make html
+<p>save it and add a reference to it in your <code class="docutils literal"><span class="pre">index.rst</span></code> file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Contents</span><span class="p">:</span>
+
+<span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+   <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
+
+   <span class="n">reference</span><span class="o">.</span><span class="n">rst</span>
+</pre></div>
+</div>
+<p>now remake the docs, ans look at the index:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-up-autodoc">
+<h3>Setting up Autodoc<a class="headerlink" href="#setting-up-autodoc" title="Permalink to this headline">¶</a></h3>
+<p>Add the automodule directive to your <code class="docutils literal"><span class="pre">reference.rst</span></code> file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Capitalize</span> <span class="n">Reference</span>
+<span class="o">====================</span>
+
+<span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">reference</span> <span class="n">docs</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="n">capitalize</span> <span class="n">package</span>
+<span class="o">----------------------</span>
+
+<span class="o">..</span> <span class="n">automodule</span><span class="p">::</span> <span class="n">capitalize</span>
+</pre></div>
+</div>
+<p>Then rebuild again:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ make html
 </pre></div>
 </div>
 <p>And reload <code class="docutils literal"><span class="pre">index.rst</span></code></p>
 </div>
 <div class="section" id="finding-the-members">
 <h3>Finding the members.<a class="headerlink" href="#finding-the-members" title="Permalink to this headline">¶</a></h3>
-<p>Not much there, is there? Where is the capital_mod module?</p>
-<p>Sphinx only creates the main doc for each package.</p>
+<p>Not much there, is there? Where is the module? Where are the functions?</p>
+<p>Sphinx only creates the main doc for each pacakge or module.</p>
 <p>You need to create a entry for each module yourself:</p>
-<div class="highlight-python"><div class="highlight"><pre>capital_mod
-............
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">capital_mod</span>
+<span class="o">............</span>
 
-.. automodule:: capitalize.capital_mod
-   :members:
+<span class="o">..</span> <span class="n">automodule</span><span class="p">::</span> <span class="n">capitalize</span><span class="o">.</span><span class="n">capital_mod</span>
+   <span class="p">:</span><span class="n">members</span><span class="p">:</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">:members:</span></code> directive tells Sphinx you want all the members documented as well.</p>
@@ -505,13 +593,13 @@ Indices and tables
 <div class="section" id="documenting-the-members">
 <h3>Documenting the members.<a class="headerlink" href="#documenting-the-members" title="Permalink to this headline">¶</a></h3>
 <p>You can specify only particular ones if you want:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. automodule:: capitalize.capital_mod
-   :members: capitalize
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">automodule</span><span class="p">::</span> <span class="n">capitalize</span><span class="o">.</span><span class="n">capital_mod</span>
+   <span class="p">:</span><span class="n">members</span><span class="p">:</span> <span class="n">capitalize</span>
 </pre></div>
 </div>
 <p>For classes, there is <code class="docutils literal"><span class="pre">autoclass</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. autoclass:: a_package.a_class
-   :members:
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">autoclass</span><span class="p">::</span> <span class="n">a_package</span><span class="o">.</span><span class="n">a_class</span>
+   <span class="p">:</span><span class="n">members</span><span class="p">:</span>
 </pre></div>
 </div>
 <p>You may want to set <code class="docutils literal"><span class="pre">autoclass_content</span></code> configuration to one of: &#8220;class&#8221;,
@@ -521,12 +609,12 @@ Indices and tables
 <div class="section" id="multiple-files">
 <h3>Multiple Files<a class="headerlink" href="#multiple-files" title="Permalink to this headline">¶</a></h3>
 <p>For most projects, you&#8217;ll want multiple pages in your docs. You can put each in their own <cite>*.rst</cite> file, and reference them in the <code class="docutils literal"><span class="pre">toctree</span></code> section:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. toctree::
-   :maxdepth: 2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+   <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
 
-   installation.rst
-   tutorial.rst
-   api.rst
+   <span class="n">installation</span><span class="o">.</span><span class="n">rst</span>
+   <span class="n">tutorial</span><span class="o">.</span><span class="n">rst</span>
+   <span class="n">api</span><span class="o">.</span><span class="n">rst</span>
 </pre></div>
 </div>
 <p>Then you need to create and populate those files - make sure they have a header!</p>
@@ -536,7 +624,9 @@ Indices and tables
 <h3>APIdoc<a class="headerlink" href="#apidoc" title="Permalink to this headline">¶</a></h3>
 <p>For a substantial package, hand writing all those files and autodoc directives can get pretty tedious.</p>
 <p>So you can use APIdoc:</p>
-<div class="highlight-python"><div class="highlight"><pre>sphinx-apidoc [options] -o &lt;outputdir&gt; &lt;sourcedir&gt; [pathnames ...]
+<div class="highlight-default"><div class="highlight"><pre><span></span>pip install apidoc
+
+sphinx-apidoc [options] -o &lt;outputdir&gt; &lt;sourcedir&gt; [pathnames ...]
 
 $ sphinx-apidoc -o test ../capitalize
 Creating file test/capitalize.rst.
@@ -551,7 +641,7 @@ Creating file test/modules.rst.
 <p>If you don&#8217;t like the default looks, there are a number of other options, or you can build your own:</p>
 <p><a class="reference external" href="http://sphinx-doc.org/theming.html">http://sphinx-doc.org/theming.html</a></p>
 <p>In <code class="docutils literal"><span class="pre">conf.py</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">html_theme</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">html_theme</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
 </pre></div>
 </div>
 <p>Of course, this is the primary source of how to use Sphinx itself:</p>

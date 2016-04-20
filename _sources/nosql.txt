@@ -127,7 +127,6 @@ Example Data Model
 
 An Address Book with a not quite trivial data model.
 
-::
 
 There are people::
 
@@ -311,8 +310,8 @@ Adding some stuff:
 
    <div class="section slide">
 
-.. rubric:: Pulling Data Out
-   :name: pulling-data-out
+Pulling Data Out
+-----------------
 
 ::
 
@@ -325,34 +324,5 @@ Adding some stuff:
 Note that it adds an ObjectID for you. See
 examples/NoSQL/address\_book\_mongo.py
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Questions?
-   :name: questions
-
-.. raw:: html
-
-   </div>
-
-`← <#>`__ `→ <#>`__
-
- /
-
-Go to slide:
-
-`# <.>`__
-
-.. |image0| image:: images/database.gif
-   :target: images/database.gif
-.. |image1| image:: images/image.png
-   :target: images/image.png
-.. |image2| image:: images/sql_anatomy.png
-   :width: 90.0%
-.. |image3| image:: images/3vl.png
-   :width: 90.0%
+Questions?

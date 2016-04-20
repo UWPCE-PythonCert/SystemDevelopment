@@ -150,7 +150,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -247,7 +247,7 @@ what to test should take into account the volatility of the project.</p>
 <li>name test methods test_foo so the test runner finds them</li>
 <li>make calls to the self.assert* family of methods to validate results</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
 <span class="k">class</span> <span class="nc">TestTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -257,9 +257,9 @@ what to test should take into account the volatility of the project.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">test_len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -268,18 +268,18 @@ what to test should take into account the volatility of the project.</p>
 <h3>Assert Methods<a class="headerlink" href="#assert-methods" title="Permalink to this headline">¶</a></h3>
 <p>TestCase contains a number of methods named assert* which can be used
 for validation, here are a few common ones:</p>
-<div class="highlight-python"><div class="highlight"><pre>assertEqual(first, second, msg=None)
-assertNotEqual(first, second, msg=None)
-assertTrue(expr, msg=None)
-assertFalse(expr, msg=None)
-assertIn(first, second)
-assertRaises(exc, fun, msg=None, \*args, \*\*kwargs)
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">assertEqual</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertNotEqual</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertTrue</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertFalse</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">assertIn</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+<span class="n">assertRaises</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> \<span class="o">*</span><span class="n">args</span><span class="p">,</span> \<span class="o">*</span>\<span class="o">*</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>See a full list at:</p>
 <p><a class="reference external" href="http://docs.python.org/3/library/unittest.html#assert-methods">http://docs.python.org/3/library/unittest.html#assert-methods</a> or</p>
 <p><code class="docutils literal"><span class="pre">dir(unittest.TestCase)</span></code> or to get really fancy</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;assert&#39;</span><span class="p">)]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -302,6 +302,20 @@ in case a test throws an exception</li>
 </div>
 <div class="section" id="testing-floating-point-values">
 <h2>Testing floating point values<a class="headerlink" href="#testing-floating-point-values" title="Permalink to this headline">¶</a></h2>
+<p class="left">Why can&#8217;t we just test if .5 == .5 ?</p>
+<div class="left highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="mi">3</span> <span class="o">*</span> <span class="o">.</span><span class="mi">15</span> <span class="o">==</span> <span class="o">.</span><span class="mi">45</span>
+<span class="gh">Out[1]: </span><span class="go">False</span>
+
+<span class="gp">In [2]: </span><span class="mi">3</span> <span class="o">*</span> <span class="o">.</span><span class="mi">15</span>
+<span class="gh">Out[2]: </span><span class="go">0.44999999999999996</span>
+
+<span class="gp">In [3]: </span><span class="mi">3</span> <span class="o">*</span> <span class="o">.</span><span class="mi">15</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">10</span>  <span class="o">==</span> <span class="o">.</span><span class="mi">45</span>
+<span class="gh">Out[3]: </span><span class="go">True</span>
+</pre></div>
+</div>
+<p class="left">There are an infinite number of floating point numbers, so they are
+stored as an approximation in computing hardware.</p>
+<p class="left"><a class="reference external" href="https://docs.python.org/3/tutorial/floatingpoint.html">https://docs.python.org/3/tutorial/floatingpoint.html</a></p>
 <div class="section" id="levels-of-precision-of-floating-point">
 <h3>levels of precision of floating point<a class="headerlink" href="#levels-of-precision-of-floating-point" title="Permalink to this headline">¶</a></h3>
 <p>Floating point numbers are stored in <a class="reference external" href="http://en.wikipedia.org/wiki/IEEE_floating_point">IEEE
@@ -309,13 +323,13 @@ in case a test throws an exception</li>
 precision format, so 1 bit for the sign, 11 bits for the exponent, and
 the remaining 52 for the fraction</p>
 <p>So we can count on up to 16 digits of precision in decimal:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [39]: </span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">52</span><span class="p">))</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">52</span><span class="p">))</span>
 <span class="gh">Out[39]: </span><span class="go">16</span>
 
 <span class="gp">In [40]: </span><span class="o">.</span><span class="mi">1</span><span class="o">+.</span><span class="mi">2</span>
 <span class="gh">Out[40]: </span><span class="go">0.30000000000000004</span>
 
-<span class="gp">In [41]: </span><span class="nb">len</span><span class="p">(</span><span class="s">&#39;3000000000000000&#39;</span><span class="p">)</span>
+<span class="gp">In [41]: </span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;3000000000000000&#39;</span><span class="p">)</span>
 <span class="gh">Out[41]: </span><span class="go">16</span>
 
 <span class="go"># with repeated operations, the errors eventually build up:</span>
@@ -331,7 +345,7 @@ the remaining 52 for the fraction</p>
 <p>Verifies that two floating point values are close enough to each other.
 Add a places keyword argument to specify the number of significant
 digits.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
 
 <span class="k">class</span> <span class="nc">TestAlmostEqual</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
@@ -363,11 +377,11 @@ i.e. the number of digits after the decimal point.</p>
 <p>Remember that python floating point numbers store the exponent and up
 to 16 decimal digits.</p>
 <p>So those two are almost as close as you can get. But:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [30]: </span><span class="n">x</span> <span class="o">=</span> <span class="mf">1e22</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [30]: </span><span class="n">x</span> <span class="o">=</span> <span class="mf">1e22</span>
 
 <span class="gp">In [31]: </span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0000000000001e22</span>
 
-<span class="gp">In [32]: </span><span class="s">&#39;</span><span class="si">%g</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">In [32]: </span><span class="s1">&#39;</span><span class="si">%g</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
 <span class="gh">Out[32]: </span><span class="go">&#39;1.00034e+09&#39;</span>
 </pre></div>
 </div>
@@ -380,7 +394,7 @@ certain number of decimal places.</p>
 <h3><code class="docutils literal"><span class="pre">isclose()</span></code><a class="headerlink" href="#isclose" title="Permalink to this headline">¶</a></h3>
 <p>Python 3.5 introduced the isclose() function in the math module:</p>
 <p><a class="reference external" href="https://www.python.org/dev/peps/pep-0485/">https://www.python.org/dev/peps/pep-0485/</a></p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [39]: </span><span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="kn">import</span> <span class="nn">math</span>
 
 <span class="gp">In [40]: </span><span class="n">x</span>
 <span class="gh">Out[40]: </span><span class="go">1e+22</span>
@@ -393,18 +407,18 @@ certain number of decimal places.</p>
 </pre></div>
 </div>
 <p>So this works for any magnitude number.</p>
-<div class="highlight-python"><div class="highlight"><pre>is_close(a, b, *, rel_tol=1e-09, abs_tol=0.0) -&gt; bool
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">is_close</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">09</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
 
-Determine whether two floating point numbers are close in value.
+<span class="n">Determine</span> <span class="n">whether</span> <span class="n">two</span> <span class="n">floating</span> <span class="n">point</span> <span class="n">numbers</span> <span class="n">are</span> <span class="n">close</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span>
 
-   rel_tol
-       maximum difference for being considered &quot;close&quot;, relative to the
-       magnitude of the input values
-    abs_tol
-       maximum difference for being considered &quot;close&quot;, regardless of the
-       magnitude of the input values
+   <span class="n">rel_tol</span>
+       <span class="n">maximum</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">being</span> <span class="n">considered</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">the</span>
+       <span class="n">magnitude</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">values</span>
+    <span class="n">abs_tol</span>
+       <span class="n">maximum</span> <span class="n">difference</span> <span class="k">for</span> <span class="n">being</span> <span class="n">considered</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="n">regardless</span> <span class="n">of</span> <span class="n">the</span>
+       <span class="n">magnitude</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">values</span>
 
-Return True if a is close in value to b, and False otherwise.
+<span class="n">Return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">close</span> <span class="ow">in</span> <span class="n">value</span> <span class="n">to</span> <span class="n">b</span><span class="p">,</span> <span class="ow">and</span> <span class="kc">False</span> <span class="n">otherwise</span><span class="o">.</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">rel_tol</span></code> essentially specifies how many significant figures you want:
@@ -416,7 +430,7 @@ Return True if a is close in value to b, and False otherwise.
 <h3>Using <code class="docutils literal"><span class="pre">isclose()</span></code> with <code class="docutils literal"><span class="pre">unittest</span></code><a class="headerlink" href="#using-isclose-with-unittest" title="Permalink to this headline">¶</a></h3>
 <p>Ideally, <code class="docutils literal"><span class="pre">TestCase</span></code> would have an <code class="docutils literal"><span class="pre">assertIsClose</span></code> method.
 But you can use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isclose</span>
 
 <span class="k">class</span> <span class="nc">TestAlmostEqual</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
@@ -436,13 +450,13 @@ But you can use:</p>
 <div class="section" id="running-tests-in-a-single-module">
 <h3>running tests in a single module<a class="headerlink" href="#running-tests-in-a-single-module" title="Permalink to this headline">¶</a></h3>
 <p>Call unittest.main() right in your module</p>
-<div class="highlight-python"><div class="highlight"><pre>if __name__ == &quot;__main__&quot;:
-    unittest.main()
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 
-# or from the command line:
-python -m unittest test_my_module  # with or without .py on end
-python -m unittest test_my_module.TestClass  # particular class in a module
-python -m unittest test_my_module.TestClass.test_method  # particular test
+<span class="c1"># or from the command line:</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">test_my_module</span>  <span class="c1"># with or without .py on end</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">test_my_module</span><span class="o">.</span><span class="n">TestClass</span>  <span class="c1"># particular class in a module</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">test_my_module</span><span class="o">.</span><span class="n">TestClass</span><span class="o">.</span><span class="n">test_method</span>  <span class="c1"># particular test</span>
 </pre></div>
 </div>
 <p>If it gets cumbersome with many TestCases, organize the tests into a
@@ -451,9 +465,9 @@ test suite</p>
 <div class="section" id="test-suites">
 <h3>Test Suites<a class="headerlink" href="#test-suites" title="Permalink to this headline">¶</a></h3>
 <p>Test suites group test cases into a single testable unit</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
 
-<span class="kn">from</span> <span class="nn">calculator_test</span> <span class="kn">import</span> <span class="n">TestCalculatorFunctions</span>
+<span class="kn">from</span> <span class="nn">calculator_test</span> <span class="k">import</span> <span class="n">TestCalculatorFunctions</span>
 
 <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestCalculatorFunctions</span><span class="p">)</span>
 
@@ -472,7 +486,7 @@ test suite</p>
 maintaining test suites</p>
 <p>To find tests, nose2 looks for modules (such as python files) whose names start with ‘test’. In those modules, nose2 will load tests from all unittest.TestCase subclasses, as well as functions whose names start with ‘test’.</p>
 <p>Running your tests is as easy as</p>
-<div class="highlight-python"><div class="highlight"><pre>$ nose2
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nose2
 </pre></div>
 </div>
 <p><a class="reference external" href="http://nose2.readthedocs.org/en/latest/getting_started.html#running-tests">http://nose2.readthedocs.org/en/latest/getting_started.html#running-tests</a></p>
@@ -481,7 +495,7 @@ maintaining test suites</p>
 <h3>nose2 plugins<a class="headerlink" href="#nose2-plugins" title="Permalink to this headline">¶</a></h3>
 <p>Many plugins exist for nose2, such as code coverage:
 Some plugins, such as coverage, must be additionally installed</p>
-<div class="highlight-python"><div class="highlight"><pre>$ pip install cov-core
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip install cov-core
 # now it can be used
 $ nose2 --with-coverage
 </pre></div>
@@ -504,37 +518,37 @@ $ nose2 --with-coverage
 <h3>running coverage<a class="headerlink" href="#running-coverage" title="Permalink to this headline">¶</a></h3>
 <p>Install with <code class="docutils literal"><span class="pre">pip</span></code>. Written by Ned Batchelder</p>
 <p>To run coverage on your test suite:</p>
-<div class="highlight-python"><div class="highlight"><pre>coverage run my_program.py arg1 arg2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">run</span> <span class="n">my_program</span><span class="o">.</span><span class="n">py</span> <span class="n">arg1</span> <span class="n">arg2</span>
 </pre></div>
 </div>
 <p>This generates a .coverage file. To analyze it on the console:</p>
-<div class="highlight-python"><div class="highlight"><pre>coverage report
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">report</span>
 </pre></div>
 </div>
 <p>Else generate an HTML report in the current directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>coverage html
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">html</span>
 </pre></div>
 </div>
 <p>To find out coverage across the standard library, add -L:</p>
-<div class="highlight-python"><div class="highlight"><pre>-L, --pylib           Measure coverage even inside the Python installed
-                      library, which isn&#39;t done by default.
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">L</span><span class="p">,</span> <span class="o">--</span><span class="n">pylib</span>           <span class="n">Measure</span> <span class="n">coverage</span> <span class="n">even</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">installed</span>
+                      <span class="n">library</span><span class="p">,</span> <span class="n">which</span> <span class="n">isn</span><span class="s1">&#39;t done by default.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="branch-coverage">
 <h3>branch coverage<a class="headerlink" href="#branch-coverage" title="Permalink to this headline">¶</a></h3>
 <p>consider the following code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c"># 1</span>
-<span class="k">if</span> <span class="n">x</span><span class="p">:</span>      <span class="c"># 2</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;in branch&quot;</span><span class="p">)</span>  <span class="c"># 3</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;out of branch&quot;</span><span class="p">)</span>  <span class="c"># 4</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 1</span>
+<span class="k">if</span> <span class="n">x</span><span class="p">:</span>      <span class="c1"># 2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in branch&quot;</span><span class="p">)</span>  <span class="c1"># 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;out of branch&quot;</span><span class="p">)</span>  <span class="c1"># 4</span>
 </pre></div>
 </div>
 <p>We want to make sure the branch is being bypassed correctly in the False
 case</p>
 <p>Track which branch destinations were not visited with the &#8211;branch
 option to run</p>
-<div class="highlight-python"><div class="highlight"><pre>coverage run --branch myprog.py
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">branch</span> <span class="n">myprog</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="http://nedbatchelder.com/code/coverage/branch.html">http://nedbatchelder.com/code/coverage/branch.html</a></p>
@@ -543,7 +557,7 @@ option to run</p>
 <h3>Doctests<a class="headerlink" href="#doctests" title="Permalink to this headline">¶</a></h3>
 <p>Tests placed in docstrings to demonstrate usage of a component to a
 human in a machine testable way</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Squares x.</span>
 
@@ -555,11 +569,11 @@ human in a machine testable way</p>
     <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>python -m doctest -v example.py
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">doctest</span> <span class="o">-</span><span class="n">v</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 <p>Now generate documentation, using epydoc for example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ epydoc example.py
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ epydoc example.py
 </pre></div>
 </div>
 <p><a class="reference external" href="http://docs.python.org/3/library/doctest.html">http://docs.python.org/3/library/doctest.html</a></p>
@@ -575,7 +589,7 @@ exists.</p>
 <p>Once the collection of tests passes, the requirement is considered met.</p>
 <p>We don&#8217;t always want to run the entire test suite. In order to run a
 single test with nose:</p>
-<div class="highlight-python"><div class="highlight"><pre>nose2 test_calculator.TestCalculatorFunctions.test_add
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nose2</span> <span class="n">test_calculator</span><span class="o">.</span><span class="n">TestCalculatorFunctions</span><span class="o">.</span><span class="n">test_add</span>
 </pre></div>
 </div>
 </div>
@@ -599,8 +613,8 @@ class methods. Are they behaving how you expect?</li>
 <h3>Context managers via the &#8220;with&#8221; statement<a class="headerlink" href="#context-managers-via-the-with-statement" title="Permalink to this headline">¶</a></h3>
 <p>If you&#8217;ve been opening files using &#8220;with&#8221; (and you probably should be),
 you have been using context managers:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;file.txt&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;file.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>A context manager is just a class with __enter__ and __exit__
@@ -617,7 +631,7 @@ traceback) on a class</p>
 <p>If __exit__ returns a true value, a caught exception is not
 re-raised</p>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
 
 <span class="k">class</span> <span class="nc">TemporaryDirectory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A context manager for creating a temporary directory</span>
@@ -632,9 +646,9 @@ re-raised</p>
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="s">&quot;/tmp/foo&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">dir</span><span class="p">:</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s">&quot;foo.txt&quot;</span><span class="p">),</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="s2">&quot;/tmp/foo&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">dir</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s2">&quot;foo.txt&quot;</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -644,11 +658,11 @@ re-raised</p>
 <h3>Context Manager exercise<a class="headerlink" href="#context-manager-exercise" title="Permalink to this headline">¶</a></h3>
 <p>Create a context manager which prints information on all exceptions
 which occur in the context and continues execution</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">YourExceptionHandler</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;do some stuff here&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">YourExceptionHandler</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;do some stuff here&quot;</span><span class="p">)</span>
     <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;should still reach this point&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;should still reach this point&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Also see the <a class="reference external" href="http://docs.python.org/3/library/contextlib.html">contextlib
@@ -656,27 +670,27 @@ module</a></p>
 <p>Why might using a context manager be better than implementing this with
 try..except..finally ?</p>
 <p>For entire code block, see <a class="reference external" href="https://www.python.org/dev/peps/pep-0343/">https://www.python.org/dev/peps/pep-0343/</a> (Specification)</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">EXPR</span> <span class="k">as</span> <span class="n">VAR</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">EXPR</span> <span class="k">as</span> <span class="n">VAR</span><span class="p">:</span>
     <span class="n">BLOCK</span>
-<span class="c"># vs.</span>
+<span class="c1"># vs.</span>
 <span class="n">mgr</span> <span class="o">=</span> <span class="p">(</span><span class="n">EXPR</span><span class="p">)</span>
-<span class="nb">exit</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__exit__</span>  <span class="c"># Not calling it yet</span>
+<span class="n">exit</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__exit__</span>  <span class="c1"># Not calling it yet</span>
 <span class="n">value</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span><span class="o">.</span><span class="n">__enter__</span><span class="p">(</span><span class="n">mgr</span><span class="p">)</span>
-<span class="n">exc</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">exc</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">VAR</span> <span class="o">=</span> <span class="n">value</span>  <span class="c"># Only if &quot;as VAR&quot; is present</span>
+        <span class="n">VAR</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># Only if &quot;as VAR&quot; is present</span>
         <span class="n">BLOCK</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="c"># The exceptional case is handled here</span>
-        <span class="n">exc</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()):</span>
+        <span class="c1"># The exceptional case is handled here</span>
+        <span class="n">exc</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()):</span>
             <span class="k">raise</span>
-        <span class="c"># The exception is swallowed if exit() returns true</span>
+        <span class="c1"># The exception is swallowed if exit() returns true</span>
 <span class="k">finally</span><span class="p">:</span>
-    <span class="c"># The normal and non-local-goto cases are handled here</span>
+    <span class="c1"># The normal and non-local-goto cases are handled here</span>
     <span class="k">if</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="n">mgr</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -684,7 +698,7 @@ try..except..finally ?</p>
 <h3>Now we&#8217;ve got the tools to really test<a class="headerlink" href="#now-we-ve-got-the-tools-to-really-test" title="Permalink to this headline">¶</a></h3>
 <p>Consider the application in the examples/wikidef directory. Give the
 command line utility a subject, and it will return a definition.</p>
-<div class="highlight-python"><div class="highlight"><pre>./define.py Robot
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">define</span><span class="o">.</span><span class="n">py</span> <span class="n">Robot</span>
 </pre></div>
 </div>
 <p>How can we test our application code without abusing (and waiting for)
@@ -706,14 +720,14 @@ execution</p>
 <p>The MagickMock class will keep track of calls to it so we can verify
 that the class is being called correctly, without having to execute the
 code underneath</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mock</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mock</span>
 
 <span class="n">mock_object</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
-<span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&quot;foo return&quot;</span>
-<span class="k">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>
-<span class="c"># raise an exception by assigning to the side_effect attribute</span>
+<span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s2">&quot;foo return&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>
+<span class="c1"># raise an exception by assigning to the side_effect attribute</span>
 <span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="ne">Exception</span>
 <span class="n">mock_object</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>
 </pre></div>
@@ -729,17 +743,17 @@ undone</p>
 </div>
 <div class="section" id="using-patch">
 <h3>Using patch<a class="headerlink" href="#using-patch" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># patch with a decorator</span>
-<span class="nd">@patch.object</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="s">&#39;article&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># patch with a decorator</span>
+<span class="nd">@patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="s1">&#39;article&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">test_article_success_decorator_mocked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_method</span><span class="p">):</span>
-    <span class="n">article</span> <span class="o">=</span> <span class="n">Definitions</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s">&quot;Robot&quot;</span><span class="p">)</span>
-    <span class="n">mock_method</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">&quot;Robot&quot;</span><span class="p">)</span>
+    <span class="n">article</span> <span class="o">=</span> <span class="n">Definitions</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
+    <span class="n">mock_method</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
 
-<span class="c"># patch with a context manager</span>
+<span class="c1"># patch with a context manager</span>
 <span class="k">def</span> <span class="nf">test_article_success_context_manager_mocked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="s">&#39;article&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_method</span><span class="p">:</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="n">Definitions</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s">&quot;Robot&quot;</span><span class="p">)</span>
-        <span class="n">mock_method</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">&quot;Robot&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="s1">&#39;article&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_method</span><span class="p">:</span>
+        <span class="n">article</span> <span class="o">=</span> <span class="n">Definitions</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
+        <span class="n">mock_method</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s2">&quot;Robot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="http://www.voidspace.org.uk/python/mock/patch.html">http://www.voidspace.org.uk/python/mock/patch.html</a></p>

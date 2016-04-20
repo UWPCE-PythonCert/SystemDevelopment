@@ -127,7 +127,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -189,17 +189,17 @@ count is increased</li>
 <h3>What makes a reference?<a class="headerlink" href="#what-makes-a-reference" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">Binding to a name:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="n">an_object</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">an_object</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Putting it in a container:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Passing it to a function:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">func</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">func</span><span class="p">(</span><span class="n">an_object</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -208,12 +208,12 @@ count is increased</li>
 </div>
 <div class="section" id="how-do-i-see-what-s-going-on">
 <h3>How do I see what&#8217;s going on?<a class="headerlink" href="#how-do-i-see-what-s-going-on" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> This will always return one more than you&#8217;d expect, as passing the object to the function increases its refcount by one:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="gp">In [6]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go">2</span>
@@ -230,7 +230,7 @@ count is increased</li>
 <div class="section" id="playing-with-references">
 <h3>Playing with References<a class="headerlink" href="#playing-with-references" title="Permalink to this headline">¶</a></h3>
 <p>(live demo)</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="gp">In [8]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="gh">Out[8]: </span><span class="go">2</span>
@@ -246,7 +246,7 @@ count is increased</li>
 <span class="gh">Out[12]: </span><span class="go">4</span>
 </pre></div>
 </div>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [13]: </span><span class="k">del</span> <span class="n">b</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="k">del</span> <span class="n">b</span>
 
 <span class="gp">In [14]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="gh">Out[14]: </span><span class="go">3</span>
@@ -258,7 +258,7 @@ count is increased</li>
 <span class="gh">Out[16]: </span><span class="go">2</span>
 </pre></div>
 </div>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="go"># function local variables</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="go"># function local variables</span>
 
 <span class="go">    In [17]: def test(x):</span>
 <span class="go">       ....:     print &quot;x has a refcount of:&quot;, sys.getrefcount(x)</span>
@@ -274,7 +274,7 @@ count is increased</li>
 <span class="go">    Out[20]: 2</span>
 </pre></div>
 </div>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [21]: </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="gp">In [22]: </span><span class="n">sys</span><span class="o">.</span><span class="n">getrefcount</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gh">Out[22]: </span><span class="go">428</span>
@@ -312,7 +312,7 @@ object:</p>
 </div>
 <div class="section" id="circular-references">
 <h2>Circular References<a class="headerlink" href="#circular-references" title="Permalink to this headline">¶</a></h2>
-<div class="left highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,]</span> <span class="p">;</span> <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,]</span>
+<div class="left highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,]</span> <span class="p">;</span> <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,]</span>
 
 <span class="gp">In [9]: </span><span class="n">l1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2</span><span class="p">);</span> <span class="n">l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
 
@@ -329,7 +329,7 @@ object:</p>
 <span class="gh">Out[13]: </span><span class="go">[1, [2, [...]]]</span>
 </pre></div>
 </div>
-<p>(demo) &#8211; <a class="reference download internal" href="_downloads/simple_circular.py"><code class="xref download docutils literal"><span class="pre">simple_circular.py</span></code></a></p>
+<p>(demo) &#8211; <a class="reference download internal" href="_downloads/simple_circular.py" download=""><code class="xref download docutils literal"><span class="pre">simple_circular.py</span></code></a></p>
 <div class="section" id="the-garbage-collector">
 <h3>The Garbage Collector<a class="headerlink" href="#the-garbage-collector" title="Permalink to this headline">¶</a></h3>
 <p>As of Python 2.0 &#8211; a garbage collector was added.</p>
@@ -340,14 +340,14 @@ object:</p>
 </div></blockquote>
 <p>It can find and clean up &#8220;unreachable&#8221; references.</p>
 <p>It is turned on by default:</p>
-<div class="highlight-python"><div class="highlight"><pre>In [1]: import gc
-In [2]: gc.isenabled()
-Out[2]: True
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">gc</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">gc</span><span class="o">.</span><span class="n">isenabled</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kc">True</span>
 </pre></div>
 </div>
 <p>or you can force it:</p>
-<div class="highlight-python"><div class="highlight"><pre>In [4]: gc.collect()
-Out[4]: 64
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="mi">64</span>
 </pre></div>
 </div>
 <p>But it can be slow, and doesn&#8217;t always work!</p>
@@ -387,7 +387,7 @@ they are cleaned up in the wrong order.</li>
 is growing.</p>
 <p>It can be subtle &#8211;python (and the OS) do tricks to re-use memory, etc.</p>
 <p>But if you have a &#8220;real&#8221; leak &#8211; you&#8217;ll see it. (Example to follow)</p>
-<p><a class="reference download internal" href="_downloads/memcount.py"><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a></p>
+<p><a class="reference download internal" href="_downloads/memcount.py" download=""><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a></p>
 <p>provides functions that report the memory use of the current running process.</p>
 <p>(*nix and Windows code)</p>
 </div>
@@ -405,15 +405,15 @@ object pointed to by an id (memory address) &#8211; &#8220;di&#8221;:</p>
 </div>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="_downloads/simple_circular_di.py"><code class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></code></a></p>
+<p><a class="reference download internal" href="_downloads/simple_circular_di.py" download=""><code class="xref download docutils literal"><span class="pre">simple_circular_di.py</span></code></a></p>
 <p>uses the ref_by_id() function to see what&#8217;s going on with a circular
 reference and garbage collection.</p>
 <p>More real examples in iPython notebook:</p>
-<p><a class="reference download internal" href="_downloads/CircularReferenceExample.ipynb"><code class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></code></a></p>
-<p>Or: <a class="reference download internal" href="_downloads/circular.py"><code class="xref download docutils literal"><span class="pre">circular.py</span></code></a></p>
-<p><a class="reference download internal" href="_downloads/memcount.py"><code class="xref download docutils literal"><span class="pre">memcount.py</span></code></a> is a test
+<p><a class="reference download internal" href="_downloads/CircularReferenceExample.ipynb" download=""><code class="xref download docutils literal"><span class="pre">CircularReferenceExample.ipynb</span></code></a></p>
+<p>Or: <a class="reference download internal" href="_downloads/circular.py" download=""><code class="xref download docutils literal"><span class="pre">circular.py</span></code></a></p>
+<p><a class="reference download internal" href="_downloads/memcount.py" download=""><code class="xref download docutils literal"><span class="pre">memcount.py</span></code></a> is a test
 file that show memory growth if circular references are not cleaned up.</p>
-<p>( <a class="reference download internal" href="_downloads/mem_check.py"><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a> )
+<p>( <a class="reference download internal" href="_downloads/mem_check.py" download=""><code class="xref download docutils literal"><span class="pre">mem_check.py</span></code></a> )
 is code that reports process memory use.</p>
 <p>You can find this code in the main repo here:</p>
 <p><a class="reference external" href="https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/ref_counting">https://github.com/UWPCE-PythonCert/SystemDevelopment2015/tree/master/Examples/ref_counting</a></p>

@@ -99,7 +99,7 @@
 <li><a class="reference internal" href="#basic-structure">Basic Structure</a><ul>
 <li><a class="reference internal" href="#event-driven-programming">Event-Driven programming</a></li>
 <li><a class="reference internal" href="#wx-window">wx.Window</a></li>
-<li><a class="reference internal" href="#id9">Event-Driven programming</a></li>
+<li><a class="reference internal" href="#id3">Event-Driven programming</a></li>
 <li><a class="reference internal" href="#wx-app">wx.App</a></li>
 <li><a class="reference internal" href="#wx-frame">wx.Frame</a></li>
 </ul>
@@ -111,6 +111,14 @@
 <li><a class="reference internal" href="#wx-filedialog">wx.FileDialog</a></li>
 <li><a class="reference internal" href="#basic-widgets">Basic Widgets</a></li>
 <li><a class="reference internal" href="#using-a-control">Using a Control</a></li>
+<li><a class="reference internal" href="#wx-panel">wx.Panel</a></li>
+<li><a class="reference internal" href="#control-layout">Control Layout</a></li>
+<li><a class="reference internal" href="#absolute-positioning">Absolute Positioning</a></li>
+<li><a class="reference internal" href="#sizers">Sizers:</a></li>
+<li><a class="reference internal" href="#sizer-example">Sizer Example</a></li>
+<li><a class="reference internal" href="#nested-sizers">Nested Sizers</a></li>
+<li><a class="reference internal" href="#widget-inspection-tool">Widget Inspection Tool</a></li>
+<li><a class="reference internal" href="#other-sizers">Other Sizers</a></li>
 <li><a class="reference internal" href="#hierarchies">Hierarchies...</a></li>
 <li><a class="reference internal" href="#accessing-inputs">Accessing inputs</a></li>
 <li><a class="reference internal" href="#setting-values">Setting Values</a></li>
@@ -119,7 +127,7 @@
 </li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
 <li><a class="reference internal" href="#long-running-tasks">Long Running Tasks</a></li>
-<li><a class="reference internal" href="#callafter">CallAfter</a></li>
+<li><a class="reference internal" href="#wx-callafter"><code class="docutils literal"><span class="pre">wx.CallAfter</span></code></a></li>
 <li><a class="reference internal" href="#bils">BILS</a></li>
 <li><a class="reference internal" href="#lab">LAB</a></li>
 </ul>
@@ -148,7 +156,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -231,7 +239,7 @@
 <p>wxPython is a big complicated build:</p>
 <blockquote>
 <div><ul class="simple">
-<li>can&#8217;t do <cite>pip</cite> or <cite>easy_install</cite></li>
+<li>can&#8217;t do <code class="docutils literal"><span class="pre">pip</span></code> or <code class="docutils literal"><span class="pre">easy_install</span></code></li>
 </ul>
 </div></blockquote>
 <p>Windows or OS-X:</p>
@@ -242,23 +250,17 @@
 </div></blockquote>
 <p>Linux: use your system&#8217;s package</p>
 <p>NOTE: there are some issues with some packages:</p>
-<blockquote>
-<div><ul>
-<li><p class="first">May be old version</p>
-</li>
-<li><p class="first">May use standard wx build &#8211; more crash prone!</p>
-<blockquote>
-<div><p>(some run-time checking turned off)</p>
-</div></blockquote>
-</li>
+<ul class="simple">
+<li>May be old version</li>
+<li>May use standard wx build &#8211; more crash prone!</li>
 </ul>
-</div></blockquote>
+<p>(some run-time checking turned off)</p>
 </div>
 <div class="section" id="versions">
 <h3>Versions<a class="headerlink" href="#versions" title="Permalink to this headline">¶</a></h3>
 <p>&#8220;Stable&#8221; version: 2.8.12.1</p>
 <p>(&#8220;stable&#8221; means stable API, not less likely to crash)</p>
-<p><a href="#id3"><span class="problematic" id="id4">``</span></a>Development&#8217;&#8217; version: 2.9.4.0</p>
+<p>&#8220;Development&#8221; version: 2.9.4.0</p>
 <p>(Under active development, API may change (but not much)</p>
 <p>wx project very slow to do official releases &#8211; You probably want to use the development version: it&#8217;s getting more attention</p>
 <p>&#8220;Phoenix&#8221;: next generation version: new bindings, Py3 support, etc.</p>
@@ -267,25 +269,22 @@
 </div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>Docs and Demos:</dt>
-<dd>download these!</dd>
-<dt>wxPython Demo</dt>
-<dd>run this!</dd>
-</dl>
+<p><strong>Docs and Demos:</strong> download these!</p>
+<p><strong>wxPython Demo:</strong> run this!</p>
 <p>(Examples of every Widget available)</p>
-<p>Primary wx docs:</p>
-<blockquote>
-<div><p>Written for C++, with Python notes...</p>
-<p><a class="reference external" href="http://wxpython.org/onlinedocs.php">http://wxpython.org/onlinedocs.php</a></p>
-<p>This may help: <a class="reference external" href="http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers">http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers</a></p>
-</div></blockquote>
-<p>Semi-experimental Sphinx docs:</p>
-<blockquote>
-<div><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/">http://xoomer.virgilio.it/infinity77/wxPython/</a></div></blockquote>
-<p>The wxPython wiki: lots of good stuff here:</p>
-<blockquote>
-<div><a class="reference external" href="http://wiki.wxpython.org/">http://wiki.wxpython.org/</a></div></blockquote>
+<p><strong>Primary wx docs:</strong></p>
+<ul class="simple">
+<li>Written for C++, with Python notes: <a class="reference external" href="http://wxpython.org/onlinedocs.php">http://wxpython.org/onlinedocs.php</a></li>
+<li>This may help: <a class="reference external" href="http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers">http://wiki.wxpython.org/C%2B%2BGuideForwxPythoneers</a></li>
+</ul>
+<p><strong>Semi-experimental Sphinx docs:</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/">http://xoomer.virgilio.it/infinity77/wxPython/</a></li>
+</ul>
+<p><strong>The wxPython wiki:</strong> lots of good stuff here:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://wiki.wxpython.org/">http://wiki.wxpython.org/</a></li>
+</ul>
 </div>
 <div class="section" id="some-starting-points">
 <h3>Some starting points<a class="headerlink" href="#some-starting-points" title="Permalink to this headline">¶</a></h3>
@@ -303,20 +302,20 @@
 <p>Over the years, wxPython has grown a number of things to make it more &#8220;pythonic&#8221; &#8211; hide some of that C++ legacy</p>
 <p>Properties:</p>
 <p>The C++ classes are full of getters and setters:</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div>wxTextCtrl::SetValue
-wxTextCtrl::GetValue</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">wxTextCtrl</span><span class="p">::</span><span class="n">SetValue</span>
+<span class="n">wxTextCtrl</span><span class="p">::</span><span class="n">GetValue</span>
+</pre></div>
+</div>
 <p>These methods have been translated into properties for Python</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div>MyTextCtrl.Value = some_string
-another_string = wxTextCtrl.Value</div></blockquote>
-<p>(The <code class="docutils literal"><span class="pre">Get/Set</span></code> versions are still there, but it&#8217;s klunkier code)</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MyTextCtrl</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="n">some_string</span>
+<span class="n">another_string</span> <span class="o">=</span> <span class="n">wxTextCtrl</span><span class="o">.</span><span class="n">Value</span>
+</pre></div>
+</div>
+<p>(The &#8220;Get/Set&#8221; versions are still there, but it&#8217;s klunkier code)</p>
 <p>Other Python options: some specific wx types can be accessed with standard python types:</p>
-<p><cite>wxPoint</cite> &#8212; <cite>(x,y)</cite> ( tuple )</p>
-<p><cite>wx.List</cite> &#8212; <cite>[1,2,3]</cite> (python list)</p>
-<p><cite>wxSize</cite> &#8212; <cite>(w,h)</cite> (tuple)</p>
+<p><code class="docutils literal"><span class="pre">wxPoint</span></code> &#8212; <code class="docutils literal"><span class="pre">(x,y)</span></code> ( tuple )</p>
+<p><code class="docutils literal"><span class="pre">wxList</span></code> &#8212; <code class="docutils literal"><span class="pre">[1,2,3]</span></code> (python list)</p>
+<p><code class="docutils literal"><span class="pre">wxSize</span></code> &#8212; <code class="docutils literal"><span class="pre">(w,h)</span></code> (tuple)</p>
 <p>...</p>
 <p>Using these makes your code cleaner and more pythonic</p>
 </div>
@@ -336,29 +335,26 @@ another_string = wxTextCtrl.Value</div></blockquote>
 </div>
 <div class="section" id="wx-window">
 <h3>wx.Window<a class="headerlink" href="#wx-window" title="Permalink to this headline">¶</a></h3>
-<p>Pretty much everything you see on the screen is a <cite>wx.Window</cite></p>
-<p>It is the superclass for all the <a href="#id5"><span class="problematic" id="id6">``</span></a>widgets&#8217;&#8216;, <a href="#id7"><span class="problematic" id="id8">``</span></a>controls&#8217;&#8216;, or whatever you want to call them</p>
+<p>Pretty much everything you see on the screen is a <code class="docutils literal"><span class="pre">wx.Window</span></code></p>
+<p>It is the superclass for all the &#8220;widgets&#8221;, &#8220;controls&#8221;, or whatever you want to call them</p>
 <p>It is essentially a rectangle on the screen that catches events</p>
-<p>You generally don&#8217;t use it by iteself, though you may derive from it to make a new widget</p>
-<p>large(Historical Note: <a href="#id50"><span class="problematic" id="id51">|wxWidgets|</span></a> was called <a href="#id52"><span class="problematic" id="id53">|wxWindows|</span></a> &#8211; until Microsoft threatened to sue them.)</p>
-<p>Since everything is a <cite>wx.Window</cite>, it&#8217;s good to know its methods and signature:</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>def __init__(parent,</dt>
-<dd>id=wx.ID_ANY,
-pos=wx.DefaultPosition,
-size=wx.DefaultSize,
-style=0,
-name=wx.PanelNameStr)</dd>
-</dl>
-<p>parent (wx.Window)
-id (int)
-pos (wx.Point)
-size (wx.Size)
-style (long)
-name (string)</p>
-</div></blockquote>
+<p>You generally don&#8217;t use it by itself, though you may derive from it to make a new widget</p>
+<p><strong>Historical Note:</strong> &#8220;wxWidgets&#8221; was called &#8220;wxWindows&#8221; &#8211; until Microsoft threatened to sue them.</p>
+<p>Since everything is a <code class="docutils literal"><span class="pre">wx.Window</span></code>, it&#8217;s good to know its methods and signature:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span>
+             <span class="nb">id</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">ID_ANY</span><span class="p">,</span>
+             <span class="n">pos</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">DefaultPosition</span><span class="p">,</span>
+             <span class="n">size</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">DefaultSize</span><span class="p">,</span>
+             <span class="n">style</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+             <span class="n">name</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">PanelNameStr</span><span class="p">)</span>
+<span class="n">parent</span> <span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Window</span><span class="p">)</span>
+<span class="nb">id</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">pos</span> <span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Point</span><span class="p">)</span>
+<span class="n">size</span> <span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Size</span><span class="p">)</span>
+<span class="n">style</span> <span class="p">(</span><span class="nb">long</span><span class="p">)</span>
+<span class="n">name</span> <span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html">http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html</a></p>
 <p>Methods types:</p>
 <ul class="simple">
@@ -369,8 +365,8 @@ name (string)</p>
 </ul>
 <p><a class="reference external" href="http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html">http://xoomer.virgilio.it/infinity77/wxPython/Widgets/wx.Window.html</a></p>
 </div>
-<div class="section" id="id9">
-<h3>Event-Driven programming<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Event-Driven programming<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>On app startup, the .MainLoop() method is called.</p>
 <p>The mainloop takes control &#8211; monitoring for events, then dispatching them.</p>
 <p>Events can come from the system, or user interaction: keyboard, mouse, etc.</p>
@@ -382,251 +378,264 @@ name (string)</p>
 <div class="section" id="wx-app">
 <h3>wx.App<a class="headerlink" href="#wx-app" title="Permalink to this headline">¶</a></h3>
 <p>Every wx app has a single wx.App instance:</p>
-<dl class="docutils">
-<dt>..code-block:: python</dt>
-<dd>app = wx.App(False)
-frame = DemoFrame(None, title=&#8221;Micro App&#8221;)
-frame.Show()
-app.MainLoop()</dd>
-</dl>
-<p>(the <cite>False</cite> means: <a href="#id10"><span class="problematic" id="id11">``</span></a>don&#8217;t re-direct stdout to a Window&#8217;&#8216;)</p>
-<p>And you almost always start the <cite>MainLoop</cite></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">App</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">DemoFrame</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Micro App&quot;</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">Show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(the <code class="docutils literal"><span class="pre">False</span></code> means: &#8220;don&#8217;t re-direct stdout to a Window&#8221;)</p>
+<p>And you almost always start the <code class="docutils literal"><span class="pre">MainLoop</span></code></p>
 </div>
 <div class="section" id="wx-frame">
 <h3>wx.Frame<a class="headerlink" href="#wx-frame" title="Permalink to this headline">¶</a></h3>
-<p><cite>wx.Frame</cite> is a <a href="#id12"><span class="problematic" id="id13">``</span></a>top level&#8217;&#8217; Window: One with a title bar, min-max buttons,etc.</p>
-<p>Most apps have a single <cite>wx.Frame</cite> &#8211; central interaction with the app.</p>
+<p><code class="docutils literal"><span class="pre">wx.Frame</span></code> is a &#8220;top level&#8221; Window: One with a title bar, min-max buttons,etc.</p>
+<p>Most apps have a single <code class="docutils literal"><span class="pre">wx.Frame</span></code> &#8211; central interaction with the app.</p>
 <p>This is where menu bars, etc are placed, and often the core GUI logic of the app.</p>
-<p>..code-block:: python</p>
-<dl class="docutils">
-<dt>class TestFrame(wx.Frame):</dt>
-<dd><dl class="first last docutils">
-<dt>def __init__(self, <a href="#id14"><span class="problematic" id="id15">*</span></a>args, <a href="#id16"><span class="problematic" id="id17">**</span></a>kwargs):</dt>
-<dd>kwargs.setdefault(&#8216;title&#8217;, &#8220;Simple test App&#8221;)
-wx.Frame.__init__(self, <a href="#id18"><span class="problematic" id="id19">*</span></a>args, <a href="#id20"><span class="problematic" id="id21">**</span></a>kwargs)</dd>
-</dl>
-</dd>
-</dl>
-<p>demo: <cite>codebasic_app_1.py</cite></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestFrame</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s2">&quot;Simple test App&quot;</span><span class="p">)</span>
+        <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>demo: <code class="docutils literal"><span class="pre">code\basic_app_1.py</span></code></p>
 </div>
 </div>
 <div class="section" id="controls">
 <h2>controls<a class="headerlink" href="#controls" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="menus">
 <h3>Menus<a class="headerlink" href="#menus" title="Permalink to this headline">¶</a></h3>
-<p>A <cite>wx.Frame</cite> has a menu bar you can add items to:</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div><p># create the menu bar object
-menuBar = wx.MenuBar()</p>
-<p># add a menu to it
-fileMenu = wx.Menu()</p>
-<p># add an item to the menu
-openMenuItem = fileMenu.Append(wx.ID_ANY, &#8220;&amp;Open&#8221;, &#8220;Open a file&#8221; )
-#bind a handler to the menu event
-self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)</p>
-<p>self.SetMenuBar(menuBar)</p>
-</div></blockquote>
-<p>demo: <cite>codebasic_app_2.py</cite></p>
+<p>A <code class="docutils literal"><span class="pre">wx.Frame</span></code> has a menu bar you can add items to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># create the menu bar object</span>
+<span class="n">menuBar</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">MenuBar</span><span class="p">()</span>
+
+<span class="c1"># add a menu to it</span>
+<span class="n">fileMenu</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+
+<span class="c1"># add an item to the menu</span>
+<span class="n">openMenuItem</span> <span class="o">=</span> <span class="n">fileMenu</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">ID_ANY</span><span class="p">,</span> <span class="s2">&quot;&amp;Open&quot;</span><span class="p">,</span> <span class="s2">&quot;Open a file&quot;</span> <span class="p">)</span>
+<span class="c1">#bind a handler to the menu event</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_MENU</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onOpen</span><span class="p">,</span> <span class="n">openMenuItem</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">SetMenuBar</span><span class="p">(</span><span class="n">menuBar</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>demo: <code class="docutils literal"><span class="pre">code\basic_app_2.py</span></code></p>
 </div>
 <div class="section" id="event-handlers">
 <h3>Event Handlers<a class="headerlink" href="#event-handlers" title="Permalink to this headline">¶</a></h3>
 <p>Event handlers have a common signature:</p>
-<dl class="docutils">
-<dt>..code-block:: python</dt>
-<dd><dl class="first last docutils">
-<dt>def onOpen(self, evt=None):</dt>
-<dd>print &#8220;open menu selected&#8221;
-self.app_logic.file_open()</dd>
-</dl>
-</dd>
-</dl>
-<p>The second parameter is the <cite>wx.Event</cite> object that initiated the call &#8211; it holds information about the event that can be useful}</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onOpen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">&quot;open menu selected&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">app_logic</span><span class="o">.</span><span class="n">file_open</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The second parameter is the <code class="docutils literal"><span class="pre">wx.Event</span></code> object that initiated the call &#8211; it holds information about the event that can be useful}</p>
 <p>I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.</p>
-<p>demo: <cite>codebasic_app_2.py</cite></p>
+<p>demo: <code class="docutils literal"><span class="pre">code\basic_app_2.py</span></code></p>
 </div>
 <div class="section" id="common-dialogs">
 <h3>Common Dialogs<a class="headerlink" href="#common-dialogs" title="Permalink to this headline">¶</a></h3>
 <p>wxPython provides a number of common Dialogs. These wrap the native ones where possible for a native look and feel.</p>
-<blockquote>
-<div>item <cite>wx.MessageDialog</cite>
-item <cite>wx.ColourDialog</cite>
-item <cite>wx.FileDialog</cite>
-item <cite>wx.PageSetupDialog</cite>
-item <cite>wx.FontDialog</cite>
-item <cite>wx.DirDialog</cite>
-item <cite>wx.SingleChoiceDialog</cite>
-item <cite>wx.TextEntryDialog</cite>
-item ...</div></blockquote>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">wx.MessageDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.ColourDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.FileDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.PageSetupDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.FontDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.DirDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.SingleChoiceDialog</span></code></li>
+<li><code class="docutils literal"><span class="pre">wx.TextEntryDialog</span></code></li>
+<li>...</li>
+</ul>
 <p>These do pretty much what you&#8217;d expect...</p>
 </div>
 <div class="section" id="wx-filedialog">
 <h3>wx.FileDialog<a class="headerlink" href="#wx-filedialog" title="Permalink to this headline">¶</a></h3>
-<p>Example use of a common dialog: <cite>wx.FileDialog</cite></p>
-<p>..code-block:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>dlg = wx.FileDialog(self,</dt>
-<dd>message=&#8221;Save file as ...&#8221;,
-defaultDir=os.getcwd(),
-defaultFile=&#8221;&#8221;,
-wildcard=wildcard,
-style=wx.SAVE )</dd>
-<dt>if dlg.ShowModal() == wx.ID_OK:</dt>
-<dd>path = dlg.GetPath()</dd>
-<dt>else:</dt>
-<dd>print &#8220;The file dialog was canceled before anything was selected&#8221;</dd>
-</dl>
-<p>dlg.Destroy()</p>
-</div></blockquote>
-<p>example: <cite>code/basic_app_3.py</cite></p>
+<p>Example use of a common dialog: <code class="docutils literal"><span class="pre">wx.FileDialog</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dlg</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">FileDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Save file as ...&quot;</span><span class="p">,</span>
+                    <span class="n">defaultDir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+                    <span class="n">defaultFile</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="n">wildcard</span><span class="o">=</span><span class="n">wildcard</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">SAVE</span> <span class="p">)</span>
+<span class="k">if</span> <span class="n">dlg</span><span class="o">.</span><span class="n">ShowModal</span><span class="p">()</span> <span class="o">==</span> <span class="n">wx</span><span class="o">.</span><span class="n">ID_OK</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span class="n">GetPath</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s2">&quot;The file dialog was canceled before anything was selected&quot;</span>
+<span class="n">dlg</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>example: <code class="docutils literal"><span class="pre">code/basic_app_3.py</span></code></p>
 </div>
 <div class="section" id="basic-widgets">
 <h3>Basic Widgets<a class="headerlink" href="#basic-widgets" title="Permalink to this headline">¶</a></h3>
 <p>All the basic widgets (controls) you&#8217;d expect are there:</p>
-<blockquote>
-<div>item Buttons
-item TextCtrl (Text Control)
-item Check Boxes
-item List Box
-item Combo Box
-item Slider
-item Spin Control
-item ....</div></blockquote>
+<ul class="simple">
+<li>Buttons</li>
+<li>TextCtrl (Text Control)</li>
+<li>Check Boxes</li>
+<li>List Box</li>
+<li>Combo Box</li>
+<li>Slider</li>
+<li>Spin Control</li>
+<li>. . . . .</li>
+</ul>
 <p>Way too many to list here!</p>
 <p>See the docs and the Demo to find the one you need</p>
 </div>
 <div class="section" id="using-a-control">
 <h3>Using a Control<a class="headerlink" href="#using-a-control" title="Permalink to this headline">¶</a></h3>
 <p>A Button is about as simple as it gets</p>
-<p><cite>__init__(parent, id, label=&#8221;&#8221;, pos=wx.DefaultPosition, ...)</cite></p>
+<p><code class="docutils literal"><span class="pre">__init__(parent,</span> <span class="pre">id,</span> <span class="pre">label=&quot;&quot;,</span> <span class="pre">pos=wx.DefaultPosition,</span> <span class="pre">...)</span></code></p>
 <p>Mostly the same as wx.Window, and other controls....}</p>
-<p>..code-block:: python
-## add just a single button:
-self.theButton = wx.Button(self, label=&#8221;Push Me&#8221;)
-self.theButton.Bind(wx.EVT_BUTTON, self.onButton)</p>
-<p>## and give it an event handler
-def onButton(self, evt=None):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">## add just a single button:</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">theButton</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Push Me&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">theButton</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_BUTTON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onButton</span><span class="p">)</span>
+
+<span class="c1">## and give it an event handler</span>
+<span class="k">def</span> <span class="nf">onButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">&quot;You pushed the button!&quot;</span>
+</pre></div>
+</div>
+<p>code: <code class="docutils literal"><span class="pre">code\basic_app_4.py</span></code></p>
+</div>
+<div class="section" id="wx-panel">
+<h3>wx.Panel<a class="headerlink" href="#wx-panel" title="Permalink to this headline">¶</a></h3>
+<p>A <code class="docutils literal"><span class="pre">wx.Panel</span></code> is a <code class="docutils literal"><span class="pre">wx.Window</span></code> that you can put other controls on</p>
+<p>It supplies nifty things like tab traversal, etc.</p>
+<p>You emph{can} put controls right on a <code class="docutils literal"><span class="pre">wx.Frame</span></code> (we just did it), but a wx.Panel provided extra features, the &#8220;normal&#8221; look, and helps you organize and re-use your code</p>
+<p>Mostly the same as wx.Window, and other controls...</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ButtonPanel</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Panel</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">wx</span><span class="o">.</span><span class="n">Panel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">theButton</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Push Me&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theButton</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_BUTTON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onButton</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">onButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">&quot;You pushed the button!&quot;</span>
+</pre></div>
+</div>
+<p>And use it in the Frame:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">buttonPanel</span> <span class="o">=</span> <span class="n">ButtonPanel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>code: <code class="docutils literal"><span class="pre">code\basic_app_5.py</span></code></p>
+</div>
+<div class="section" id="control-layout">
+<h3>Control Layout<a class="headerlink" href="#control-layout" title="Permalink to this headline">¶</a></h3>
+<p>With more than one control, you need to figure out how to place them
+and how big to make them</p>
+<p>You may have noticed that <code class="docutils literal"><span class="pre">wx.Window</span></code> takes <code class="docutils literal"><span class="pre">pos</span></code> and <code class="docutils literal"><span class="pre">size</span></code> parameters</p>
+<p>You may have also noticed that I didn&#8217;t use them.</p>
+<p>Why not?</p>
+</div>
+<div class="section" id="absolute-positioning">
+<h3>Absolute Positioning<a class="headerlink" href="#absolute-positioning" title="Permalink to this headline">¶</a></h3>
+<p>Specifying the size and location of controls with pixel coordinates.</p>
+<p>This is a serious pain to do!</p>
+<p>Though it can be made a lot easier with GUI-building tools...</p>
+<p>So why not?</p>
+<p>When you add or remove a control, the layout changes:</p>
 <blockquote>
-<div>print &#8220;You pushed the button!&#8221;</div></blockquote>
-<p>code: <cite>codebasic_app_4.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-wx.Panel}</p>
-<p>A <cite>wx.Panel</cite> is a <cite>wx.Window</cite> that you can put other controls on}</p>
-<p>It supplies nifty things like tab traversal, etc.}</p>
-<p>You emph{can} put controls right on a <cite>wx.Frame</cite> (we just did it), but a wx.Panel provided extra features, the <a href="#id22"><span class="problematic" id="id23">``</span></a>normal&#8217;&#8217; look, and helps you organize and re-use your code}</p>
-<p>Mostly the same as wx.Window, and other controls....}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-wx.Panel}</p>
-<p>..code-block:: python
-class ButtonPanel(wx.Panel):</p>
+<div><ul class="simple">
+<li>recalculate all positions and sizes</li>
+</ul>
+</div></blockquote>
+<p>When you change the text on a control the layout changes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>recalculate all positions and sizes</li>
+</ul>
+</div></blockquote>
+<p>When you try it on another platform the layout changes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>recalculate all positions and sizes}</li>
+</ul>
+</div></blockquote>
+<p>When the user changes default font size, the layout changes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>recalculate all positions and sizes}</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="sizers">
+<h3>Sizers:<a class="headerlink" href="#sizers" title="Permalink to this headline">¶</a></h3>
+<p>The alternative is &#8220;Sizers&#8221;</p>
+<p><code class="docutils literal"><span class="pre">wx.Sizer</span></code> is wx&#8217;s system for automatically determining the size and location of controls</p>
+<p>Instead of thinking in terms of what size and position a given control should be, you think in terms of how they relate to each other:</p>
+<p>&#8220;I want a column of buttons all the same size along the left edge of the Panel&#8221;</p>
+<p>Sizers capture that logic and compute the sizes for you</p>
+<p>They will re-size things for you when anything changes &#8211; adding, removing, changing labels, re-sizing the Window, etc...</p>
+<p>Sizers take a while to wrap your brain around...</p>
+<p>But it&#8217;s worth the learning curve.</p>
+<p>Nice discussion here:</p>
+<p><a class="reference external" href="http://wiki.wxpython.org/UsingSizers">http://wiki.wxpython.org/UsingSizers</a></p>
+<p>I have the graphic posted on the wall by my desk...</p>
+</div>
+<div class="section" id="sizer-example">
+<h3>Sizer Example<a class="headerlink" href="#sizer-example" title="Permalink to this headline">¶</a></h3>
+<p>The Basic <code class="docutils literal"><span class="pre">BoxSizer</span></code>:</p>
+<ul class="simple">
+<li>Lays out a row or column of controls...</li>
+</ul>
+<p>..code-block:: python</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>def __init__(self, <a href="#id24"><span class="problematic" id="id25">*</span></a>args, <a href="#id26"><span class="problematic" id="id27">**</span></a>kwargs):</dt>
-<dd><p class="first">wx.Panel.__init__(self, <a href="#id28"><span class="problematic" id="id29">*</span></a>args, <a href="#id30"><span class="problematic" id="id31">**</span></a>kwargs)</p>
-<p class="last">self.theButton = wx.Button(self, label=&#8221;Push Me&#8221;)
-self.theButton.Bind(wx.EVT_BUTTON, self.onButton)</p>
-</dd>
-<dt>def onButton(self, evt=None):</dt>
-<dd>print &#8220;You pushed the button!&#8221;</dd>
-</dl>
-</div></blockquote>
-<p>And use it in the Frame:
-..code-block:: python</p>
-<blockquote>
-<div>self.buttonPanel = ButtonPanel(self)</div></blockquote>
-<p>code: <cite>codebasic_app_5.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Control Layout}</p>
-<p>With more than one control, you need to figure out how to place them
-and how big to make them}</p>
-<p>You may have noticed that <cite>wx.Window</cite> takes <cite>pos</cite> and <cite>size</cite> parameters}</p>
-<p>You may have also noticed that I didn&#8217;t use them.}</p>
-<p>Why not?}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Absolute Positioning}</p>
-<p>Absolute positioning:}</p>
-<p>Specifying the size and location of controls with pixel coordinates.}</p>
-<p>This is a serious pain to do!}</p>
-<p>Though it can be made a lot easier with GUI-building tools...}</p>
-<p>So why not?}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Absolute Positioning}</p>
-<p>When you add or remove a control, the layout changes:}\
-&#8211; recalculate all positions and sizes}</p>
-<p>When you change the text  on a control the layout changes:}\
-&#8211; recalculate all positions and sizes}</p>
-<p>When you try it on another platform the layout changes:}\
-&#8211; recalculate all positions and sizes}</p>
-<p>When the user changes default font size, the layout changes:}\
-&#8211; recalculate all positions and sizes}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Sizers:}</p>
-<p>The alternative is <a href="#id32"><span class="problematic" id="id33">``</span></a>Sizers&#8217;&#8216;}</p>
-<p><cite>wx.Sizer</cite> is wx&#8217;s system for automatically determining the size and location of controls}</p>
-<p>Instead of thinking in terms of what size and position a given control should be, you think in terms of how they relate to each other:}</p>
-<p>emph{<a href="#id34"><span class="problematic" id="id35">``</span></a>I want a column of buttons all the same size along the left edge of the Panel&#8217;&#8216;} }</p>
-<p>Sizers capture that logic and compute the sizes for you}</p>
-<p>They will re-size things for you when anything changes &#8211; adding, removing, changing labels, re-sizing the Window, etc...}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Sizers:}</p>
-<p>Sizers take a while to wrap your brain around...}</p>
-<p>But it&#8217;s worth the learning curve.}</p>
-<p>Nice discussion here:\
-{<a class="reference external" href="http://wiki.wxpython.org/UsingSizers">http://wiki.wxpython.org/UsingSizers</a>} }</p>
-<p>I have the graphic posted on the wall by my desk...}</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Sizer Example}</p>
-<dl class="docutils">
-<dt>The Basic <cite>BoxSizer</cite>}\</dt>
-<dd>&#8211; Lays out a row or column of controls...}</dd>
-</dl>
-<p>..code-block:: python
-Sizer.Add( window, proportion, flag, border )</p>
-<blockquote>
-<div><p>## do the layout
+<dt>Sizer.Add( window, proportion, flag, border )</dt>
+<dd><p class="first">## do the layout
 S = wx.BoxSizer(wx.VERTICAL)</p>
 <p>S.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
 S.Add(theButton2, 0, wx.GROW | wx.ALL, 4)</p>
-<p>self.SetSizerAndFit(S)</p>
+<p class="last">self.SetSizerAndFit(S)</p>
+</dd>
+</dl>
 </div></blockquote>
-<p>code: <cite>codebasic_app_6.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Nested Sizers}</p>
-<dl class="docutils">
-<dt>How do I get them centered both ways?}\</dt>
-<dd>&#8211; Nest a vertical sizer inside a horizonal one}\
-&#8211; And add stretchable spacers...}</dd>
-</dl>
-<p>..code-block:: python
-buttonSizer = wx.BoxSizer(wx.VERTICAL)</p>
-<p>buttonSizer.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
-buttonSizer.Add(theButton2, 0, wx.GROW | wx.ALL, 4)</p>
-<p>mainSizer = wx.BoxSizer(wx.HORIZONTAL)
-mainSizer.Add((1,1), 1)    # stretchable space
-mainSizer.Add(buttonSizer, 0, wx.ALIGN_CENTER) # the sizer with the buttons in it
-mainSizer.Add((1,1), 1)    # stretchable space</p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Widget Inspection Tool}</p>
-<p>How do I keep all this straight?}\</p>
+<p>code: <code class="docutils literal"><span class="pre">code\basic_app_6.py</span></code></p>
+</div>
+<div class="section" id="nested-sizers">
+<h3>Nested Sizers<a class="headerlink" href="#nested-sizers" title="Permalink to this headline">¶</a></h3>
+<p>How do I get them centered both ways?</p>
 <blockquote>
-<div>The Widget Inspection Tool (WIT) is very handy:}</div></blockquote>
-<dl class="docutils">
-<dt>..code-block:: python</dt>
-<dd>app = TestApp(False)
-## set up the WIT &#8211; to help debug sizers
-import wx.lib.inspection
-wx.lib.inspection.InspectionTool().Show()
-app.MainLoop()</dd>
-</dl>
+<div><ul class="simple">
+<li>Nest a vertical sizer inside a horizonal one</li>
+<li>And add stretchable spacers...</li>
+</ul>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">buttonSizer</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">BoxSizer</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">VERTICAL</span><span class="p">)</span>
+
+<span class="n">buttonSizer</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">theButton1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wx</span><span class="o">.</span><span class="n">GROW</span> <span class="o">|</span> <span class="n">wx</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">buttonSizer</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">theButton2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wx</span><span class="o">.</span><span class="n">GROW</span> <span class="o">|</span> <span class="n">wx</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="n">mainSizer</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">BoxSizer</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+<span class="n">mainSizer</span><span class="o">.</span><span class="n">Add</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>    <span class="c1"># stretchable space</span>
+<span class="n">mainSizer</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">buttonSizer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wx</span><span class="o">.</span><span class="n">ALIGN_CENTER</span><span class="p">)</span> <span class="c1"># the sizer with the buttons in it</span>
+<span class="n">mainSizer</span><span class="o">.</span><span class="n">Add</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>    <span class="c1"># stretchable space</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="widget-inspection-tool">
+<h3>Widget Inspection Tool<a class="headerlink" href="#widget-inspection-tool" title="Permalink to this headline">¶</a></h3>
+<p>How do I keep all this straight?</p>
+<p>The Widget Inspection Tool (WIT) is very handy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">TestApp</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="c1">## set up the WIT -- to help debug sizers</span>
+<span class="kn">import</span> <span class="nn">wx.lib.inspection</span>
+<span class="n">wx</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">inspection</span><span class="o">.</span><span class="n">InspectionTool</span><span class="p">()</span><span class="o">.</span><span class="n">Show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>(you can also bring it up from a menu event, or...)</p>
-<p>code: <cite>codebasic_app_7.py</cite></p>
-<p>%&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-Other Sizers}</p>
-<p>Sizers for laying out stuff in grids...}\</p>
-<p><cite>wx.GridSizer</cite></p>
-<p><cite>wx.FlexGridSizer</cite></p>
-<p><cite>wx.GridBagSizer</cite></p>
+<p>code: <code class="docutils literal"><span class="pre">code\basic_app_7.py</span></code></p>
+</div>
+<div class="section" id="other-sizers">
+<h3>Other Sizers<a class="headerlink" href="#other-sizers" title="Permalink to this headline">¶</a></h3>
+<p>Sizers for laying out stuff in grids...</p>
+<p><code class="docutils literal"><span class="pre">wx.GridSizer</span></code></p>
+<p><code class="docutils literal"><span class="pre">wx.FlexGridSizer</span></code></p>
+<p><code class="docutils literal"><span class="pre">wx.GridBagSizer</span></code></p>
 <p>(you can do it all with a GridBagSizer)</p>
 <p>See the docs for info.</p>
 </div>
@@ -635,12 +644,12 @@ Other Sizers}</p>
 <p>wxPython has multiple independent hierarchies ...</p>
 <p>The nested parent-child relationship:</p>
 <ul class="simple">
-<li>every <cite>wx.Window</cite> has a parent</li>
-<li>every <cite>wx.Window</cite> has zero or more children</li>
+<li>every <code class="docutils literal"><span class="pre">wx.Window</span></code> has a parent</li>
+<li>every <code class="docutils literal"><span class="pre">wx.Window</span></code> has zero or more children</li>
 </ul>
 <p>The class Hierarchy</p>
 <ul class="simple">
-<li>sub classes of <cite>wx.Window</cite></li>
+<li>sub classes of <code class="docutils literal"><span class="pre">wx.Window</span></code></li>
 <li>classes with instances as attributes</li>
 </ul>
 <p>The Layout Hierarchy</p>
@@ -648,47 +657,39 @@ Other Sizers}</p>
 <li>Sizers within Sizers...</li>
 <li>Arbitrarily deep.</li>
 </ul>
-<dl class="docutils">
-<dt>Each of these takes care of different concerns:</dt>
-<dd>confusing but powerful</dd>
-</dl>
+<p>Each of these takes care of different concerns: confusing but powerful</p>
 </div>
 <div class="section" id="accessing-inputs">
 <h3>Accessing inputs<a class="headerlink" href="#accessing-inputs" title="Permalink to this headline">¶</a></h3>
 <p>Much of the point of a GUI is to collect data from the user.</p>
 <p>So you need to be able to access what s/he has input</p>
-<dl class="docutils">
-<dt>..code-block:: python</dt>
-<dd><p class="first">## add a text control:
+<p>..code-block:: python</p>
+<blockquote>
+<div><p>## add a text control:
 self.textControl = wx.TextCtrl(self)</p>
-<dl class="last docutils">
+<dl class="docutils">
 <dt>def onGetData(self, evt=None):</dt>
 <dd>print &#8220;get data button pressed&#8221;
 contents = self.textControl.Value
 print &#8220;the contents are:&#8221;, contents</dd>
 </dl>
-</dd>
-</dl>
-<p>Most controls have a <cite>.Value</cite> property</p>
+</div></blockquote>
+<p>Most controls have a <code class="docutils literal"><span class="pre">.Value</span></code> property</p>
 </div>
 <div class="section" id="setting-values">
 <h3>Setting Values<a class="headerlink" href="#setting-values" title="Permalink to this headline">¶</a></h3>
 <p>You also want to display data...</p>
 <p>So you need to be able to set the values, too:</p>
-<dl class="docutils">
-<dt>..code-block:: python</dt>
-<dd><p class="first"># and another text control:
-self.outTextControl = wx.TextCtrl(self,</p>
-<blockquote>
-<div>style=wx.TE_READONLY)</div></blockquote>
-<dl class="last docutils">
-<dt>def onGetData(self, evt=None):</dt>
-<dd>self.outTextControl.Value = self.inTextControl.Value</dd>
-</dl>
-</dd>
-</dl>
-<p>You can set the <cite>.Value</cite> property too...</p>
-<p>example: <cite>codebasic_app8.py</cite></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># and another text control:</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">outTextControl</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">TextCtrl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                  <span class="n">style</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">TE_READONLY</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">onGetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outTextControl</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inTextControl</span><span class="o">.</span><span class="n">Value</span>
+</pre></div>
+</div>
+<p>You can set the <code class="docutils literal"><span class="pre">.Value</span></code> property too...</p>
+<p>example: <code class="docutils literal"><span class="pre">code\basic_app8.py</span></code></p>
 </div>
 <div class="section" id="code-generated-guis">
 <h3>Code-generated GUIs...<a class="headerlink" href="#code-generated-guis" title="Permalink to this headline">¶</a></h3>
@@ -706,29 +707,19 @@ self.outTextControl = wx.TextCtrl(self,</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>example: <cite>code/CalculatorDemo.py</cite></p>
-<p>Code-generated GUIs...
-.. nextslide:</p>
-<p>The <a href="#id36"><span class="problematic" id="id37">``</span></a>lambda trick&#8217;&#8216;</p>
+<p>example: <code class="docutils literal"><span class="pre">code/CalculatorDemo.py</span></code></p>
+<p>The &#8220;lambda trick&#8221;</p>
 <p>&#8211; a way to pass custom data to an event handler:</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>for name in [&#8220;first&#8221;, &#8220;second&#8221;, &#8220;third&#8221;]:</dt>
-<dd><p class="first">btn = wx.Button(self, label=name)
-btn.Bind(wx.EVT_BUTTON,</p>
-<blockquote class="last">
-<div>lambda evt, n=name: self.OnButton(evt, n) )</div></blockquote>
-</dd>
-</dl>
-</div></blockquote>
-<hr class="docutils" />
-<blockquote>
-<div><dl class="docutils">
-<dt>def OnButton(self, Event, name):</dt>
-<dd>print &#8220;In OnButton:&#8221;, name</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;second&quot;</span><span class="p">,</span> <span class="s2">&quot;third&quot;</span><span class="p">]:</span>
+    <span class="n">btn</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">btn</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_BUTTON</span><span class="p">,</span>
+             <span class="k">lambda</span> <span class="n">evt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnButton</span><span class="p">(</span><span class="n">evt</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">)</span>
+<span class="o">....</span>
+
+<span class="k">def</span> <span class="nf">OnButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">&quot;In OnButton:&quot;</span><span class="p">,</span> <span class="n">name</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks">http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks</a></p>
 </div>
 </div>
@@ -743,17 +734,17 @@ btn.Bind(wx.EVT_BUTTON,</p>
 <p>But: wxPython is not thread-safe: almost all wx methods must be called from within the same thread.</p>
 <p>Thread-safe operations: Creating and Posting Events</p>
 </div>
-<div class="section" id="callafter">
-<h3>CallAfter<a class="headerlink" href="#callafter" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="wx-callafter">
+<h3><code class="docutils literal"><span class="pre">wx.CallAfter</span></code><a class="headerlink" href="#wx-callafter" title="Permalink to this headline">¶</a></h3>
 <p>Easiest way to communicate with threads:</p>
-<p><cite>wx.CallAfter</cite></p>
+<p><code class="docutils literal"><span class="pre">wx.CallAfter</span></code></p>
 <p>Puts an event on the event stack, calls the designated function or method when the stack is cleared:</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div><p>wx.CallAfter(function_to_call, <a href="#id38"><span class="problematic" id="id39">*</span></a>args, <a href="#id40"><span class="problematic" id="id41">**</span></a>kwargs)</p>
-<p># <a href="#id42"><span class="problematic" id="id43">*</span></a>args, <a href="#id44"><span class="problematic" id="id45">**</span></a>kwargs are passed on to FunctionToCall</p>
-</div></blockquote>
-<p>(see also: <cite>wx.CallLater()</cite>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">wx</span><span class="o">.</span><span class="n">CallAfter</span><span class="p">(</span><span class="n">function_to_call</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="c1"># *args, **kwargs are passed on to function_to_call</span>
+</pre></div>
+</div>
+<p>(see also: <code class="docutils literal"><span class="pre">wx.CallLater()</span></code>)</p>
 <p><a class="reference external" href="http://wiki.wxpython.org/LongRunningTasks">http://wiki.wxpython.org/LongRunningTasks</a></p>
 </div>
 <div class="section" id="bils">
@@ -770,24 +761,24 @@ btn.Bind(wx.EVT_BUTTON,</p>
 <h3>LAB<a class="headerlink" href="#lab" title="Permalink to this headline">¶</a></h3>
 <p>Make a very simple address book app:</p>
 <ol class="arabic">
-<li><p class="first">Really basic data model is in <cite>address_book_data.py</cite></p>
+<li><p class="first">Really basic data model is in <code class="docutils literal"><span class="pre">address_book_data.py</span></code></p>
 </li>
-<li><p class="first">Finish the form to edit an entry &#8211; subclass of a <cite>wx.Panel</cite> (<cite>entry_form.py</cite>)</p>
+<li><p class="first">Finish the form to edit an entry &#8211; subclass of a <code class="docutils literal"><span class="pre">wx.Panel</span></code> (<code class="docutils literal"><span class="pre">entry_form.py</span></code>)</p>
 </li>
 <li><dl class="first docutils">
-<dt>The form goes on a <cite>wx.Frame</cite> (<cite>address_book_app.py</cite>)</dt>
-<dd><p class="first last">add a way to switch between entries (<cite>switcher.py</cite>)</p>
+<dt>The form goes on a <code class="docutils literal"><span class="pre">wx.Frame</span></code> (<code class="docutils literal"><span class="pre">address_book_app.py</span></code>)</dt>
+<dd><p class="first last">add a way to switch between entries (<code class="docutils literal"><span class="pre">switcher.py</span></code>)</p>
 </dd>
 </dl>
 </li>
-<li><p class="first">Add a <a href="#id46"><span class="problematic" id="id47">``</span></a>new record&#8217;&#8217; button</p>
+<li><p class="first">Add a &#8220;new record&#8221; button</p>
 </li>
 <li><p class="first">Add file&#8211;save and file&#8211;open menus to the frame</p>
 </li>
 <li><p class="first">Add some validation, better layout, etc....</p>
 </li>
 </ol>
-<p><a href="#id48"><span class="problematic" id="id49">`</span></a>codeaddress_book`</p>
+<p><code class="docutils literal"><span class="pre">code\address_book\</span></code></p>
 </div>
 </div>
 </div>

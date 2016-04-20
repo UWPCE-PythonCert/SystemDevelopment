@@ -151,7 +151,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -217,13 +217,13 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)</p>
 </div>
 <div class="section" id="python-literal-example">
 <h3>Python Literal Example<a class="headerlink" href="#python-literal-example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="go"># a list of dicts</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="go"># a list of dicts</span>
 <span class="go">data = [{&#39;this&#39;:5, &#39;that&#39;:4}, {&#39;spam&#39;:7, &#39;eggs&#39;:3.4}]</span>
-<span class="gp">In [51]: </span><span class="n">s</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c"># save a string version:</span>
-<span class="gp">In [52]: </span><span class="n">data2</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c"># re-construct with eval:</span>
-<span class="gp">In [53]: </span><span class="n">data2</span> <span class="o">==</span> <span class="n">data</span> <span class="c"># they are equal</span>
+<span class="gp">In [51]: </span><span class="n">s</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># save a string version:</span>
+<span class="gp">In [52]: </span><span class="n">data2</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># re-construct with eval:</span>
+<span class="gp">In [53]: </span><span class="n">data2</span> <span class="o">==</span> <span class="n">data</span> <span class="c1"># they are equal</span>
 <span class="gh">Out[53]: </span><span class="go">True</span>
-<span class="gp">In [54]: </span><span class="n">data</span> <span class="ow">is</span> <span class="n">data2</span> <span class="c"># but not the same object</span>
+<span class="gp">In [54]: </span><span class="n">data</span> <span class="ow">is</span> <span class="n">data2</span> <span class="c1"># but not the same object</span>
 <span class="gh">Out[54]: </span><span class="go">False</span>
 </pre></div>
 </div>
@@ -231,8 +231,8 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)</p>
 <p>In fact, using a python file and importing it is a great way to handle configuration for your app &#8211; very powerful and flexible.</p>
 <p>NOTE: <code class="docutils literal"><span class="pre">eval()</span></code> is <strong>DANGEROUS</strong>:</p>
 <p>Not so bad if you know where your data is coming from, but <code class="docutils literal"><span class="pre">eval()</span></code> will run any code it gets, even:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;cd /; rm -rf *&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;cd /; rm -rf *&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You really don&#8217;t want that run on your machine!</p>
@@ -246,7 +246,7 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)</p>
 </div>
 <div class="section" id="pretty-print">
 <h3>pretty print<a class="headerlink" href="#pretty-print" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [68]: </span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;this&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;that&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;eggs&#39;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span> <span class="s">&#39;spam&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [68]: </span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;this&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;that&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;eggs&#39;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
 <span class="go">         {&#39;foo&#39;: 86, &#39;bar&#39;: 4.5}, {&#39;fun&#39;: 43, &#39;baz&#39;: 6.5}]</span>
 <span class="gp">In [69]: </span><span class="kn">import</span> <span class="nn">pprint</span>
 <span class="gp">In [71]: </span><span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -265,15 +265,15 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)</p>
 <h3>Pickle<a class="headerlink" href="#pickle" title="Permalink to this headline">¶</a></h3>
 <p>Pickle is a custom binary format for python objects.</p>
 <p>You can essentially dump any python object to disk (or string, or socket, or...</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [87]: </span><span class="kn">import</span> <span class="nn">pickle</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [87]: </span><span class="kn">import</span> <span class="nn">pickle</span>
 <span class="gp">In [83]: </span><span class="n">data</span>
 <span class="gh">Out[83]:</span>
 <span class="go">[{&#39;that&#39;: 4, &#39;this&#39;: 5},</span>
 <span class="go"> {&#39;eggs&#39;: 3.4, &#39;spam&#39;: 7},</span>
 <span class="go"> {&#39;bar&#39;: 4.5, &#39;foo&#39;: 86},</span>
 <span class="go"> {&#39;baz&#39;: 6.5, &#39;fun&#39;: 43}]</span>
-<span class="gp">In [84]: </span><span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">))</span>
-<span class="gp">In [85]: </span><span class="n">data2</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;data.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">))</span>
+<span class="gp">In [84]: </span><span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+<span class="gp">In [85]: </span><span class="n">data2</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
 <span class="gp">In [86]: </span><span class="n">data2</span> <span class="o">==</span> <span class="n">data</span>
 <span class="gh">Out[86]: </span><span class="go">True</span>
 </pre></div>
@@ -295,13 +295,13 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)</p>
 <p>If less that 100s of MB &#8211; just use a dict and pickle it.</p>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/shelve.html">https://docs.python.org/3.5/library/shelve.html</a></p>
 <p><code class="docutils literal"><span class="pre">shelve</span></code>  presents a <code class="docutils literal"><span class="pre">dict</span></code>  interface:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shelve</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-<span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>   <span class="c"># store data at key</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>   <span class="c"># retrieve a COPY of data at key</span>
-<span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>      <span class="c"># delete data stored at key</span>
-<span class="n">flag</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>   <span class="c"># true if the key exists</span>
-<span class="n">d</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>       <span class="c"># close it</span>
+<span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>   <span class="c1"># store data at key</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>   <span class="c1"># retrieve a COPY of data at key</span>
+<span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>      <span class="c1"># delete data stored at key</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>   <span class="c1"># true if the key exists</span>
+<span class="n">d</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>       <span class="c1"># close it</span>
 </pre></div>
 </div>
 <p>(it uses pickle under the hood &#8211; same security issues)</p>
@@ -310,12 +310,12 @@ a file), but not all persistence mechanisms are serial (i.e RDBMS)</p>
 <div class="section" id="lab">
 <h3>LAB<a class="headerlink" href="#lab" title="Permalink to this headline">¶</a></h3>
 <p>Here are two datasets embedded in Python:</p>
-<p><a class="reference download internal" href="_downloads/add_book_data.py"><code class="xref download docutils literal"><span class="pre">add_book_data.py</span></code></a>
+<p><a class="reference download internal" href="_downloads/add_book_data.py" download=""><code class="xref download docutils literal"><span class="pre">add_book_data.py</span></code></a>
 and
-<a class="reference download internal" href="_downloads/add_book_data_flat.py"><code class="xref download docutils literal"><span class="pre">add_book_data_flat.py</span></code></a></p>
+<a class="reference download internal" href="_downloads/add_book_data_flat.py" download=""><code class="xref download docutils literal"><span class="pre">add_book_data_flat.py</span></code></a></p>
 <p>[also available in the class repo: <code class="docutils literal"><span class="pre">Examples/persistence</span></code>]</p>
 <p>They can be loaded with:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">add_book_data</span> <span class="kn">import</span> <span class="n">AddressBook</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">add_book_data</span> <span class="k">import</span> <span class="n">AddressBook</span>
 </pre></div>
 </div>
 <p>They have address book data &#8211; one with a nested dict, one &#8220;flat&#8221;. Use the nested version for this exercise.</p>
@@ -344,7 +344,7 @@ and
 <h3>INI<a class="headerlink" href="#ini" title="Permalink to this headline">¶</a></h3>
 <p>INI files</p>
 <p>(the old Windows config files)</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">Section1</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Section1</span><span class="p">]</span>
 <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
 <span class="nb">bool</span> <span class="o">=</span> <span class="n">true</span>
 <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.1415</span>
@@ -359,25 +359,25 @@ and
 <h3>ConfigParser<a class="headerlink" href="#configparser" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">configparser</span></code> module provides tools for working with INI files:</p>
 <p>Writing:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">configparser</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
 <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
-<span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;Section1&#39;</span><span class="p">)</span>
-<span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Section1&#39;</span><span class="p">,</span> <span class="s">&#39;an_integer&#39;</span><span class="p">,</span> <span class="s">&#39;15&#39;</span><span class="p">)</span>
-<span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Section1&#39;</span><span class="p">,</span> <span class="s">&#39;a_boolean&#39;</span><span class="p">,</span> <span class="s">&#39;true&#39;</span><span class="p">)</span>
-<span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Section1&#39;</span><span class="p">,</span> <span class="s">&#39;a_float&#39;</span><span class="p">,</span> <span class="s">&#39;3.1415&#39;</span><span class="p">)</span>
-<span class="c"># Writing our configuration file to &#39;example.cfg&#39;</span>
-<span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;example.cfg&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">))</span>
+<span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;an_integer&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;a_boolean&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;a_float&#39;</span><span class="p">,</span> <span class="s1">&#39;3.1415&#39;</span><span class="p">)</span>
+<span class="c1"># Writing our configuration file to &#39;example.cfg&#39;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;example.cfg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Note: all keys and values are strings</p>
 <p>Reading <code class="docutils literal"><span class="pre">ini</span></code>  files:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;example.cfg&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;example.cfg&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
 <span class="go">[&#39;Section1&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Section1&#39;</span><span class="p">,</span> <span class="s">&#39;a_float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;a_float&#39;</span><span class="p">)</span>
 <span class="go">&#39;3.1415&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s">&#39;Section1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">)</span>
 <span class="go">[(&#39;an_integer&#39;, &#39;15&#39;), (&#39;a_boolean&#39;, &#39;true&#39;), (&#39;a_float&#39;, &#39;3.1415&#39;)]</span>
 </pre></div>
 </div>
@@ -393,9 +393,9 @@ and
 <div class="section" id="the-csv-module">
 <h3>The CSV module<a class="headerlink" href="#the-csv-module" title="Permalink to this headline">¶</a></h3>
 <p>Reading <code class="docutils literal"><span class="pre">CSV</span></code>  files:</p>
-<p>(uses: <a class="reference download internal" href="_downloads/eggs.csv"><code class="xref download docutils literal"><span class="pre">eggs.csv</span></code></a>)</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">csv</span>
-<span class="gp">In [17]: </span><span class="n">spam_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;eggs.csv&#39;</span><span class="p">),</span>
+<p>(uses: <a class="reference download internal" href="_downloads/eggs.csv" download=""><code class="xref download docutils literal"><span class="pre">eggs.csv</span></code></a>)</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="gp">In [17]: </span><span class="n">spam_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;eggs.csv&#39;</span><span class="p">),</span>
 <span class="go">                                  skipinitialspace=True)</span>
 <span class="gp">In [19]: </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">spam_reader</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
@@ -411,13 +411,13 @@ and
 interpretting quotes correctly.</p>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/csv.html">https://docs.python.org/3.5/library/csv.html</a></p>
 <p>Writing <code class="docutils literal"><span class="pre">CSV</span></code>  files:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">csv</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;eggs2.csv&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;eggs2.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span>
 <span class="go">                                 quoting=csv.QUOTE_MINIMAL)</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s">&#39;Spam&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;Baked Beans&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s">&#39;Spam&#39;</span><span class="p">,</span> <span class="s">&#39;Lovely Spam&#39;</span><span class="p">,</span> <span class="s">&#39;Wonderful Spam&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s">&#39;Spam&#39;</span><span class="p">,</span> <span class="s">&#39;Spam, Wonderful spam..&#39;</span><span class="p">,</span> <span class="s">&#39;Very-Wonderful Spam&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Spam&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Baked Beans&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Spam&#39;</span><span class="p">,</span> <span class="s1">&#39;Lovely Spam&#39;</span><span class="p">,</span> <span class="s1">&#39;Wonderful Spam&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">spam_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Spam&#39;</span><span class="p">,</span> <span class="s1">&#39;Spam, Wonderful spam..&#39;</span><span class="p">,</span> <span class="s1">&#39;Very-Wonderful Spam&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">csv</span></code> module takes care of string quoting, etc. for you.</p>
@@ -437,7 +437,7 @@ interpretting quotes correctly.</p>
 </div>
 <div class="section" id="python-json-module">
 <h3>Python json module<a class="headerlink" href="#python-json-module" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [93]: </span><span class="kn">import</span> <span class="nn">json</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [93]: </span><span class="kn">import</span> <span class="nn">json</span>
 <span class="gp">In [94]: </span><span class="n">s</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="gh">Out[95]: </span><span class="go">&#39;[{&quot;this&quot;: 5, &quot;that&quot;: 4}, {&quot;eggs&quot;: 3.4, &quot;spam&quot;: 7},</span>
 <span class="go">           {&quot;foo&quot;: 86, &quot;bar&quot;: 4.5}, {&quot;fun&quot;: 43, &quot;baz&quot;: 6.5}]&#39;</span>
@@ -457,8 +457,8 @@ interpretting quotes correctly.</p>
 <div class="section" id="id2">
 <h3>LAB<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Use the same addressbook data:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># load with:</span>
-<span class="kn">from</span> <span class="nn">add_book_data</span> <span class="kn">import</span> <span class="n">AddressBook</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># load with:</span>
+<span class="kn">from</span> <span class="nn">add_book_data</span> <span class="k">import</span> <span class="n">AddressBook</span>
 </pre></div>
 </div>
 <ul>
@@ -538,9 +538,9 @@ interpretting quotes correctly.</p>
 <div class="section" id="the-dbm-module">
 <h3>the <code class="docutils literal"><span class="pre">dbm</span></code> module<a class="headerlink" href="#the-dbm-module" title="Permalink to this headline">¶</a></h3>
 <p>Writing data:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#creating a dbm file:</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">#creating a dbm file:</span>
 <span class="kn">import</span> <span class="nn">dbm</span>
-<span class="n">dbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">)</span>
+<span class="n">dbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>flag options are:</p>
@@ -553,15 +553,15 @@ interpretting quotes correctly.</p>
 <p><strong>caution</strong> &#8211; these are different than the file open modes!</p>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/dbm.html">https://docs.python.org/3.5/library/dbm.html</a></p>
 <p><code class="docutils literal"><span class="pre">dbm</span></code>  provides a dict-like interface:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">dbm</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">dbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;dbm&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>
-<span class="n">db</span><span class="p">[</span><span class="s">&quot;first&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;bruce&quot;</span>
-<span class="n">db</span><span class="p">[</span><span class="s">&quot;second&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;micheal&quot;</span>
-<span class="n">db</span><span class="p">[</span><span class="s">&quot;third&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;fred&quot;</span>
-<span class="n">db</span><span class="p">[</span><span class="s">&quot;second&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;john&quot;</span> <span class="c">#overwrite</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dbm</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">dbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;dbm&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;bruce&quot;</span>
+<span class="n">db</span><span class="p">[</span><span class="s2">&quot;second&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;micheal&quot;</span>
+<span class="n">db</span><span class="p">[</span><span class="s2">&quot;third&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fred&quot;</span>
+<span class="n">db</span><span class="p">[</span><span class="s2">&quot;second&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;john&quot;</span> <span class="c1">#overwrite</span>
 <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="c"># read it:</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">dbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;dbm&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="c1"># read it:</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">dbm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;dbm&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">db</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
 </pre></div>
@@ -585,30 +585,30 @@ interpretting quotes correctly.</p>
 <p>Can provide high performance, flexible, portable storage for your app</p>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/sqlite3.html">https://docs.python.org/3.5/library/sqlite3.html</a></p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="c"># open a connection to a db file:</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;example.db&#39;</span><span class="p">)</span>
-<span class="c"># or build one in-memory</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;:memory:&#39;</span><span class="p">)</span>
-<span class="c"># create a cursor</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="c1"># open a connection to a db file:</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;example.db&#39;</span><span class="p">)</span>
+<span class="c1"># or build one in-memory</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">)</span>
+<span class="c1"># create a cursor</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/sqlite3.html">https://docs.python.org/3.5/library/sqlite3.html</a></p>
 <p>Execute SQL with the cursor:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create table</span>
-<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;&#39;CREATE TABLE stocks (date text, trans text, symbol text, qty real, price real)&#39;&quot;</span><span class="p">)</span>
-<span class="c"># Insert a row of data</span>
-<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO stocks VALUES (&#39;2006-01-05&#39;,&#39;BUY&#39;,&#39;RHAT&#39;,100,35.14)&quot;</span><span class="p">)</span>
-<span class="c"># Save (commit) the changes</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Create table</span>
+<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&#39;CREATE TABLE stocks (date text, trans text, symbol text, qty real, price real)&#39;&quot;</span><span class="p">)</span>
+<span class="c1"># Insert a row of data</span>
+<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;INSERT INTO stocks VALUES (&#39;2006-01-05&#39;,&#39;BUY&#39;,&#39;RHAT&#39;,100,35.14)&quot;</span><span class="p">)</span>
+<span class="c1"># Save (commit) the changes</span>
 <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-<span class="c"># Close the cursor if we are done with it</span>
+<span class="c1"># Close the cursor if we are done with it</span>
 <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/sqlite3.html">https://docs.python.org/3.5/library/sqlite3.html</a></p>
 <p><code class="docutils literal"><span class="pre">SELECT</span></code>  creates an cursor that can be iterated:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;SELECT * FROM stocks ORDER BY price&#39;</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM stocks ORDER BY price&#39;</span><span class="p">):</span>
 <span class="go">        print row</span>
 <span class="go">(&#39;2006-01-05&#39;, &#39;BUY&#39;, &#39;RHAT&#39;, 100, 35.14)</span>
 <span class="go">(&#39;2006-03-28&#39;, &#39;BUY&#39;, &#39;IBM&#39;, 1000, 45.0)</span>
@@ -616,20 +616,20 @@ interpretting quotes correctly.</p>
 </pre></div>
 </div>
 <p>Or you can get the rows one by one or in a list:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
 <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Good idea to use the DB-API’s parameter substitution:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">symbol</span><span class="p">,)</span>
-<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;SELECT * FROM stocks WHERE symbol=?&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">symbol</span><span class="p">,)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM stocks WHERE symbol=?&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
-<span class="c"># Larger example that inserts many records at a time</span>
-<span class="n">purchases</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;2006-03-28&#39;</span><span class="p">,</span> <span class="s">&#39;BUY&#39;</span><span class="p">,</span> <span class="s">&#39;IBM&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">45.00</span><span class="p">),</span>
-             <span class="p">(</span><span class="s">&#39;2006-04-05&#39;</span><span class="p">,</span> <span class="s">&#39;BUY&#39;</span><span class="p">,</span> <span class="s">&#39;MSFT&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">72.00</span><span class="p">),</span>
-             <span class="p">(</span><span class="s">&#39;2006-04-06&#39;</span><span class="p">,</span> <span class="s">&#39;SELL&#39;</span><span class="p">,</span> <span class="s">&#39;IBM&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mf">53.00</span><span class="p">),</span>
+<span class="c1"># Larger example that inserts many records at a time</span>
+<span class="n">purchases</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;2006-03-28&#39;</span><span class="p">,</span> <span class="s1">&#39;BUY&#39;</span><span class="p">,</span> <span class="s1">&#39;IBM&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">45.00</span><span class="p">),</span>
+             <span class="p">(</span><span class="s1">&#39;2006-04-05&#39;</span><span class="p">,</span> <span class="s1">&#39;BUY&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">72.00</span><span class="p">),</span>
+             <span class="p">(</span><span class="s1">&#39;2006-04-06&#39;</span><span class="p">,</span> <span class="s1">&#39;SELL&#39;</span><span class="p">,</span> <span class="s1">&#39;IBM&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mf">53.00</span><span class="p">),</span>
             <span class="p">]</span>
-<span class="n">c</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s">&#39;INSERT INTO stocks VALUES (?,?,?,?,?)&#39;</span><span class="p">,</span> <span class="n">purchases</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s1">&#39;INSERT INTO stocks VALUES (?,?,?,?,?)&#39;</span><span class="p">,</span> <span class="n">purchases</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="http://xkcd.com/327/">http://xkcd.com/327/</a></p>
@@ -669,7 +669,7 @@ A custom class, or amore complex built-in?</li>
 <p>Saves you writing that glue code (and the SQL)</p>
 <p>Usually deal with mapping to variety of back-ends:</p>
 <ul class="simple">
-<li>test with SQLite, deploy with PostreSQL</li>
+<li>test with SQLite, deploy with PostgreSQL</li>
 </ul>
 <p>SQL Alchemy</p>
 <ul class="simple">
@@ -682,7 +682,7 @@ A custom class, or amore complex built-in?</li>
 </div>
 <div class="section" id="object-databases">
 <h3>Object Databases<a class="headerlink" href="#object-databases" title="Permalink to this headline">¶</a></h3>
-<p>(we&#8217;ll be talking more about this in another class: <a class="reference internal" href="nosql.html#nosql"><span>Non RDBMS Database Options</span></a>)</p>
+<p>(we&#8217;ll be talking more about this in another class: <a class="reference internal" href="nosql.html#nosql"><span class="std std-ref">Non RDBMS Database Options</span></a>)</p>
 <p>Directly store and retrieve Python Objects.</p>
 <p>Kind of like <code class="docutils literal"><span class="pre">shelve</span></code>, but more flexible, and give you searching, etc.</p>
 <p>ZODB: (<a class="reference external" href="http://www.zodb.org/">http://www.zodb.org/</a>)</p>
@@ -705,7 +705,7 @@ A custom class, or amore complex built-in?</li>
 <div class="section" id="id3">
 <h3>LAB<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Load data with:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">add_book_data</span> <span class="kn">import</span> <span class="n">AddressBook</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">add_book_data</span> <span class="kn">import</span> <span class="n">AddressBook</span>
 </pre></div>
 </div>
 <ul class="simple">

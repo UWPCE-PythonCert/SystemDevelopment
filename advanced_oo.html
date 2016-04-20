@@ -130,7 +130,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -163,7 +163,7 @@
 <p>Pulling methods from more than one class</p>
 <div class="section" id="id1">
 <h3>multiple inheritance<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Combined</span><span class="p">(</span><span class="n">Super1</span><span class="p">,</span> <span class="n">Super2</span><span class="p">,</span> <span class="n">Super3</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Combined</span><span class="p">(</span><span class="n">Super1</span><span class="p">,</span> <span class="n">Super2</span><span class="p">,</span> <span class="n">Super3</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">something</span><span class="p">,</span> <span class="n">something</span> <span class="k">else</span><span class="p">):</span>
         <span class="n">Super1</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">......</span><span class="p">)</span>
         <span class="n">Super2</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">......</span><span class="p">)</span>
@@ -208,25 +208,25 @@
 </div>
 <div class="section" id="the-diamond-problem">
 <h3>The Diamond Problem<a class="headerlink" href="#the-diamond-problem" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;doing A&#39;s stuff&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;doing A&#39;s stuff&quot;</span>
 
 <span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">A</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;doing B&#39;s stuff&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;doing B&#39;s stuff&quot;</span>
 
 <span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">A</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;doing C&#39;s stuff&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;doing C&#39;s stuff&quot;</span>
 
 <span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">B</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">C</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;doing D&#39;s stuff&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;doing D&#39;s stuff&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -253,11 +253,11 @@ linearization algorithm:</p>
 <div class="section" id="super">
 <h3>super()<a class="headerlink" href="#super" title="Permalink to this headline">¶</a></h3>
 <p>Getting the superclass:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SafeVehicle</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SafeVehicle</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Safe Vehicle subclass of Vehicle base class...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s">&#39;S&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;S&#39;</span><span class="p">):</span>
         <span class="n">Vehicle</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">icon</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -267,11 +267,11 @@ linearization algorithm:</p>
 <div class="section" id="id3">
 <h3>super()<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Getting the superclass:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SafeVehicle</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SafeVehicle</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Safe Vehicle subclass of Vehicle base class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s">&#39;S&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;S&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SafeVehicle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">icon</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -289,13 +289,13 @@ you call.</p>
 <p><a class="reference external" href="http://docs.python.org/2/library/functions.html#super">http://docs.python.org/2/library/functions.html#super</a></p>
 <p>Not the same as calling one superclass method: <code class="docutils literal"><span class="pre">super()</span></code>
 will call all the sibling superclass methods:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
        <span class="nb">super</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>same as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
        <span class="n">C</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
        <span class="n">B</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
@@ -310,11 +310,11 @@ will call all the sibling superclass methods:</p>
 <div class="section" id="super-mechanics">
 <h3>super() mechanics<a class="headerlink" href="#super-mechanics" title="Permalink to this headline">¶</a></h3>
 <p>Notice this (frankly ugly) requirement:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nb">super</span><span class="p">(</span><span class="nb">type</span><span class="p">[,</span> <span class="nb">object</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nb">type</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">super</span><span class="p">(</span><span class="nb">type</span><span class="p">[,</span> <span class="nb">object</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nb">type</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>which usually is somethign like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">a_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">a_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
@@ -322,7 +322,7 @@ will call all the sibling superclass methods:</p>
 <p>So why in the world do you need to specify both <cite>B</cite> (the type), and
 <cite>self</cite> (the instance?)</p>
 <p>First: Python 3 has cleaned this up, it&#8217;s just:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">a_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">a_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
@@ -373,11 +373,11 @@ of the external interface for your class, like it or not.</li>
 <p>Never call super with anything but the exact arguments you received,
 unless you really know what you&#8217;re doing.</p>
 <p>If you add one or more optional arguments, always accept</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 </pre></div>
 </div>
 <p>and call super like</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">args_declared</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">args_declared</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -401,7 +401,7 @@ Bike? Is it what you expected?</p>
 <h3>Class Creation<a class="headerlink" href="#class-creation" title="Permalink to this headline">¶</a></h3>
 <p>What happens when a class instance is created?</p>
 <p>This is the usual thing...</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arg1</span> <span class="o">=</span> <span class="n">arg1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arg2</span> <span class="o">=</span> <span class="n">arg2</span>
@@ -416,7 +416,7 @@ Bike? Is it what you expected?</p>
 <p>Note that <code class="docutils literal"><span class="pre">self</span></code> is already an instance of the class.</p>
 <p>What if you need to do something before creation?</p>
 <p>Enter: <code class="docutils literal"><span class="pre">__new__</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
         <span class="n">some_code_here</span>
         <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
@@ -430,7 +430,7 @@ Bike? Is it what you expected?</p>
 <li>The code in <code class="docutils literal"><span class="pre">__init__</span></code> is run to initialize the instance</li>
 </ul>
 <p><code class="docutils literal"><span class="pre">__new__</span></code> is a static method &#8211; but it must be called with a class object as the first argument.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="n">superclass</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="n">superclass</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
         <span class="n">some_code_here</span>
         <span class="k">return</span> <span class="n">superclass</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>

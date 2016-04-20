@@ -127,7 +127,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -195,7 +195,7 @@ as your code.</p>
 <p class="left">The logging module provides a very flexible framework for customizing the logging in a simple or complex application.</p>
 <div class="section" id="id1">
 <h3>The <code class="docutils literal"><span class="pre">logging</span></code> module<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 </pre></div>
 </div>
 <p>The logging module not only provides the classes and functions required to build a logging system, but also a place to centrally manage the logging for an entire application.</p>
@@ -209,16 +209,16 @@ as your code.</p>
 <p>The built in way to catagorize logging messages is by level.</p>
 <p>Levels are ordered numerically, so you can think of them as in order of importance, and it&#8217;s easy to choose how much detail you want.</p>
 <p>The built-in set is:</p>
-<div class="highlight-python"><div class="highlight"><pre>CRITICAL    50
-ERROR       40
-WARNING     30
-INFO        20
-DEBUG       10
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CRITICAL</span>    <span class="mi">50</span>
+<span class="n">ERROR</span>       <span class="mi">40</span>
+<span class="n">WARNING</span>     <span class="mi">30</span>
+<span class="n">INFO</span>        <span class="mi">20</span>
+<span class="n">DEBUG</span>       <span class="mi">10</span>
 </pre></div>
 </div>
 <p>so DEBUG provides the most detail, and CRITICAL you&#8217;d pretty much always want to see.</p>
 <p>The logging API provides easy ways to send messages with these levels:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;this is a debuggin message&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;this is a debuggin message&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://docs.python.org/3/library/logging.html#levels">https://docs.python.org/3/library/logging.html#levels</a></p>
@@ -241,9 +241,9 @@ DEBUG       10
 <p>There is always a root logger, and often the only one you need.</p>
 <p>Each <code class="docutils literal"><span class="pre">Logger</span></code> represents a single logging channel.</p>
 <p><code class="docutils literal"><span class="pre">Logger</span></code> instances are given text names, with module-style &#8220;dots&#8221; representing the hierarchy:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;main&quot;</span>
-<span class="s">&quot;main.sub_logger1&quot;</span>
-<span class="s">&quot;main.sub_logger2&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="s2">&quot;main&quot;</span>
+<span class="s2">&quot;main.sub_logger1&quot;</span>
+<span class="s2">&quot;main.sub_logger2&quot;</span>
 <span class="o">...</span>
 </pre></div>
 </div>
@@ -253,8 +253,8 @@ DEBUG       10
 <div class="section" id="logging-get-logger">
 <h3><code class="docutils literal"><span class="pre">logging.get_logger()</span></code><a class="headerlink" href="#logging-get-logger" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">logging.get_logger()</span></code> function returns the logger you ask for:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">the_root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
-<span class="n">another_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">the_root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+<span class="n">another_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If the logger you ask for doesn&#8217;t exist, <code class="docutils literal"><span class="pre">get_logger</span></code> will create a new one for you by that name. (It won&#8217;t be configured, though...)</p>
@@ -282,7 +282,7 @@ DEBUG       10
 <p><code class="docutils literal"><span class="pre">Formatters</span></code> are responsible for formatting the log message.</p>
 <p>Each log message is stored in a <code class="docutils literal"><span class="pre">LogRecord</span></code> object, which has a lot of data about the message and where it came from.</p>
 <p>So you can use a formatter to add the data you want to your log entry.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(levelname)9s</span><span class="s"> - </span><span class="si">%(module)s</span><span class="s"> - </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(levelname)9s</span><span class="s1"> - </span><span class="si">%(module)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">levelname</span></code> is the &#8220;level&#8221; of the log message: debug, warning, etc. <code class="docutils literal"><span class="pre">module</span></code> is the name of the module the message came from. <code class="docutils literal"><span class="pre">message</span></code> is the message itself.</p>
@@ -304,11 +304,11 @@ DEBUG       10
 <p>The system was ported from Java &#8211; can you tell?</p>
 <p>However, the module provides a Pythonic API for common usage: the <code class="docutils literal"><span class="pre">logging.basicConfig()</span></code> function.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;example.log&#39;</span><span class="p">,</span>
-                    <span class="n">filemode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">,</span>
-                    <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(asctime)s</span><span class="s"> </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example.log&#39;</span><span class="p">,</span>
+                    <span class="n">filemode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                    <span class="n">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
                     <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -334,10 +334,10 @@ DEBUG       10
 <h3>What does <code class="docutils literal"><span class="pre">basicConfig</span></code> do for you?<a class="headerlink" href="#what-does-basicconfig-do-for-you" title="Permalink to this headline">¶</a></h3>
 <p>A LOT!</p>
 <p>If you were to do this by hand:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;example.log&#39;</span>
-<span class="n">filemode</span> <span class="o">=</span> <span class="s">&#39;w&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;example.log&#39;</span>
+<span class="n">filemode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
 <span class="n">handler</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-<span class="n">format_str</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%(asctime)s</span><span class="s"> </span><span class="si">%(message)s</span><span class="s">&#39;</span>
+<span class="n">format_str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
 <span class="n">fmt</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">format_str</span><span class="p">)</span>
 <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
 <span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>

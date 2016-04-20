@@ -113,7 +113,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -141,17 +141,17 @@
 <div class="section" id="linux">
 <h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <p>Linux is pretty straightforward &#8211; most systems are set up to build stuff out of the box. If not, you&#8217;ll need to install the development tools. In Ubuntu, that&#8217;s:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo apt-get install build-essential
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
 </pre></div>
 </div>
 <p>Other systems will have something similar.</p>
 <p>To make sure it&#8217;s working, you can make sure gcc is there with:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">gcc</span> <span class="o">--</span><span class="n">version</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">--</span><span class="n">version</span>
 </pre></div>
 </div>
 <p>at the command line, and make sure you get something!</p>
 <p>To compile Python extensions, you&#8217;ll need the some extra files that come with python. Most distros have an extra package, called something like &#8220;python-dev&#8221; that you&#8217;ll need to get the headers, etc. required to build extensions:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install python-dev
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
 </div>
 <p>That should do it.</p>
@@ -163,7 +163,7 @@
 <p>MS has recently started distributing a version of the compiler set up specifically to build Python extensions:</p>
 <p><a class="reference external" href="http://www.microsoft.com/en-us/download/details.aspx?id=44266">http://www.microsoft.com/en-us/download/details.aspx?id=44266</a></p>
 <p>The trick is that this installs things a bit differently than distutils expects. But newer versions of setuptools do support it. So make sure you have an updated setuptools:</p>
-<div class="highlight-python"><div class="highlight"><pre>pip install --upgrade setuptools
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">setuptools</span>
 </pre></div>
 </div>
 <p>and that the extension you are trying to compile is using setuptools, rather than raw distutils.</p>
@@ -174,7 +174,7 @@
 You can get it for free from the App store, but be prepared, it is a big download!</p>
 <p>Just the command line tools:</p>
 <p>It looks like you can just get the command line tools by running this command on the command line:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
 </pre></div>
 </div>
 <p>see: <a class="reference external" href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a></p>
@@ -191,12 +191,12 @@ You can get it for free from the App store, but be prepared, it is a big downloa
 <p>In the <code class="docutils literal"><span class="pre">Examples\week-08</span> <span class="pre">class</span></code>, you&#8217;ll find a number of samples.</p>
 <p>Go to the: <code class="docutils literal"><span class="pre">Examples\week-08-extensions/c-api</span></code> dir.</p>
 <p>type:</p>
-<div class="highlight-python"><div class="highlight"><pre>python setup.py build_ext --inplace
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
 </pre></div>
 </div>
 <p>This should spew out a bunch of stuff while it builds the extension, then hopefully finish without an error. On Linux and the Mac, you should get an add.so file, on Windows, an add.pyd file.</p>
 <p>Try:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">py</span><span class="o">.</span><span class="n">test</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">py</span><span class="o">.</span><span class="n">test</span>
 </pre></div>
 </div>
 <p>and hopefully 3 tests will pass.</p>
