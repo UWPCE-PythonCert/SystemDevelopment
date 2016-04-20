@@ -6,15 +6,9 @@ test code for capitalize module
 can be run with py.test or nosetests
 """
 
-import capitalize
-from capitalize import capital_mod
+import capital_mod
 
-print(capitalize.__file__)
-
-def test_init():
-    """ makes sure it imports and can be read"""
-    import capitalize
-    assert hasattr(capitalize, '__version__')
+#print(capitalize.__file__)
 
 def test_capitalize_line():
     line =     "this is a Line to capitalize"
