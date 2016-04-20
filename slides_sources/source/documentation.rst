@@ -488,11 +488,12 @@ Add the automodule directive to your ``reference.rst`` file::
 
   This is the reference docs.
 
-  The capitilize module
-  -------------------
+  The capitalize package
+  ----------------------
+
   .. automodule:: capitalize
 
-Then rebuild::
+Then rebuild again::
 
   $ make html
 
@@ -501,9 +502,9 @@ And reload ``index.rst``
 Finding the members.
 ---------------------
 
-Not much there, is there? Where is the capital_mod module?
+Not much there, is there? Where is the module? Where are the functions?
 
-Sphinx only creates the main doc for each package.
+Sphinx only creates the main doc for each pacakge or module.
 
 You need to create a entry for each module yourself::
 
@@ -516,7 +517,7 @@ You need to create a entry for each module yourself::
 The ``:members:`` directive tells Sphinx you want all the members documented as well.
 
 Documenting the members.
--------------------------
+------------------------
 
 You can specify only particular ones if you want::
 

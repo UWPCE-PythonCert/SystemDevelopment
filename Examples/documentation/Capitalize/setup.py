@@ -9,7 +9,7 @@ It installs the capitalize module and script
 
 from setuptools import setup
 
-import capitalize # to get __version__
+import capitalize  # to get __version__
 
 setup(
     name='Capitalize',
@@ -18,9 +18,10 @@ setup(
     author_email='PythonCHB@gmail.com',
     packages=['capitalize',
               'capitalize/test'],
-    scripts=['bin/cap_script',],
+    scripts=['bin/cap_script.py', ],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     license='LICENSE.txt',
     description='Not very useful capitalizing module and script',
     long_description=open('README.txt').read(),
 )
-
