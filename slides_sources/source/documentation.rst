@@ -456,11 +456,40 @@ But I'm not going to do that, 'cause I use ``develop`` mode
 Adding Autodoc to your docs.
 ----------------------------
 
-Add the automodule directive to your ``index.rst`` file::
+I like to put the auto-generated docs in a "reference" page.
 
-  The Capitalize Package
-  -----------------------
+Create a new file names ``reference.rst``
 
+Give it a header::
+
+  Capitalize Reference
+  ====================
+
+save it and add a reference to it in your ``index.rst`` file::
+
+  Contents:
+
+  .. toctree::
+     :maxdepth: 2
+
+     reference.rst
+
+now remake the docs, ans look at the index::
+
+  make html
+
+Setting up Autodoc
+------------------
+
+Add the automodule directive to your ``reference.rst`` file::
+
+  Capitalize Reference
+  ====================
+
+  This is the reference docs.
+
+  The capitilize module
+  -------------------
   .. automodule:: capitalize
 
 Then rebuild::
