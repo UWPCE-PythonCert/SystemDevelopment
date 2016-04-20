@@ -61,7 +61,7 @@ Code Reviews begin
 
   - :ref:`documentation`
 
-  - `datetime <html_slides/06-datetime.html>`_
+..  - `datetime <html_slides/06-datetime.html>`_
 
 
 Session 5
@@ -101,7 +101,7 @@ Session 9
 
 .. rst-class:: left
 
-  - GUI development: wxPython
+  - :ref:wxpython
 
 
 Session 10

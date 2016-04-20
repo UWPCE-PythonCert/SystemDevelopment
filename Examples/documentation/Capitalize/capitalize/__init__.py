@@ -1,12 +1,9 @@
-"""
-Capitalize package
-
-A package to hold the code that capitalizes text for you.
-
-This only exists to demonstrate package structure and
-documentation, so not that much here.
-
-And this is a new line!!
+# init for Capitalize package
 
 """
-__version__ = '0.0.1'
+A little package to make it easy to Capitalize things.
+
+Really useless -- but here to demostrate packaging and documentation
+"""
+
+__version__ = "0.1.1"
