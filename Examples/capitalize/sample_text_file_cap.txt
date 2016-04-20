@@ -1,0 +1,7 @@
+This Is A Really Simple Text File.
+It Is Here So That I Can Test The Capitalize Script.
+
+And That's Only There To Try Out Distutils.
+
+So There.
+

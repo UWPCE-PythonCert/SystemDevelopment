@@ -1,6 +1,7 @@
 slides_sources/build
 .idea
 .DS_Store
+.cache*
 #ignore compiled files, sublime workspace and project files
 *.pyc
 *junk*

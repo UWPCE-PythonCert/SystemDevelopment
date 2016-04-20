@@ -700,7 +700,7 @@ Saves you writing that glue code (and the SQL)
 
 Usually deal with mapping to variety of back-ends:
 
-- test with SQLite, deploy with PostreSQL
+- test with SQLite, deploy with PostgreSQL
 
 SQL Alchemy
 
