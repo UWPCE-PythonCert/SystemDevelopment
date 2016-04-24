@@ -149,11 +149,11 @@ reStructuredText
 
 .. nextslide::
 
-You can actually use anthing to underline for a header.
+You can actually use anything to underline for a header.
 
 rst will assume they are in order:
 
-  - The first form is sees is Header 1
+  - The first form it sees is Header 1
   - The second encountered is Header 2
   - The third is header 3
   - . . . .
@@ -175,6 +175,8 @@ There are three logical parts to the directive block:
 - Directive options.
 - Directive content.
 
+.. nextslide::
+
 For example ::
 
   .. toctree::
@@ -186,7 +188,9 @@ there are no arguments
 
 ``:maxdepth: 2`` is an option
 
-The content follown, indentedone level
+The content follown, indented one level
+
+.. nextslide::
 
 Another example::
 
@@ -201,7 +205,9 @@ Another example::
 
 The code itself is the content.
 
-ONe hint for rst:
+.. nextslide::
+
+One hint for rst:
 
 .. rst-class:: medium
 
@@ -217,7 +223,7 @@ Some docs to get started:
 Sphinx Directives for docstrings
 ---------------------------------
 
-IF you put sphinx formatting in a docsting, then Sphinx Autodoc and format it nicely for you.
+If you put sphinx formatting in a docsting, then Sphinx Autodoc and format it nicely for you.
 
 ::
 
@@ -241,7 +247,7 @@ IF you put sphinx formatting in a docsting, then Sphinx Autodoc and format it ni
 An Alternative
 --------------
 
-THe previous works OK, but it's really pretty klunky, hard to write and kinda hard to read.
+The previous works OK, but it's really pretty klunky, hard to write and kinda hard to read.
 
 To much markup not really the "just like plain next" we're going for.
 
@@ -251,7 +257,9 @@ https://sphinxcontrib-napoleon.readthedocs.org
 
 It allows the use of "google style" or "numpy style" docstrings.
 
-So the previous example woulds look like:
+.. nextslide::
+
+So the previous example would look like:
 
 .. code-block:: python
 
