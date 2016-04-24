@@ -1,15 +1,8 @@
 .. _scipy:
 
-======================
+######################
 Intro to Numpy / Scipy
-======================
-
-- Chris Barker
-
-.. Contents:
-
-.. .. toctree::
-..    :maxdepth: 2
+######################
 
 
 Scipy
@@ -21,9 +14,7 @@ Scipy
 
   http://www.scipy.org/stackspec.html
 
-  Many other domain-specific packages area available:
-
-    Core "stack" is what most people will want, regardless of domain.
+  Many other domain-specific packages area available: The core "stack" is what most people will want, regardless of domain.
 
 What's in the scipy stack?
 --------------------------
@@ -33,6 +24,8 @@ What's in the scipy stack?
 * SciPy library (http://www.scipy.org)
 * Matplotlib (http://matplotlib.org/)
 * IPython (http://ipython.org/)
+
+|
 
 * nose (https://nose.readthedocs.org)
 * pandas (http://pandas.pydata.org/)
@@ -90,7 +83,7 @@ numpy
   numpy is the core package that the rest of the scipy stack is built on.
   numpy is really the core of everything.
 
-  All the rest requires an understanding good understanding of what a numpy array is -- so that's mostly what I'll talk about here.
+  All the rest requires an understanding good understanding of what a numpy array is -- so that's mostly what I'll talk about today.
 
 So what is numpy?
 -----------------
@@ -153,11 +146,12 @@ Then, I'm going to cover a bit about the guts and some advanced issues.
 
 This is harder to find explanations for -- and will help you understand what's really going on under the hood.
 
-NOTE: I've been using numpy and its predecessors for long time -- so have kind of forgotten what is obvious and what is not -- so:
+NOTE: I've been using numpy and its predecessors for long time --
 
- **ask questions**
+so have kind of forgotten what is obvious and what is not -- so:
 
- as we go!
+**ask questions** as we go!
+
 
 Getting started
 ================
@@ -166,7 +160,7 @@ Getting started
 
   Example code is in the class repo:
 
-  ``SystemDevelopment2015/Examples/week-05-numpy``
+  ``/Examples/numpy``
 
   Those are a bunch of ipython notebooks.
 
