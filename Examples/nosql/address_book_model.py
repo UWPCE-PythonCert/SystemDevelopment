@@ -249,7 +249,7 @@ def create_sample():
 if __name__ == "__main__":
     address_book = create_sample() 
 
-    print "Here is the address book"
-    print address_book
+    print("Here is the address book")
+    print(address_book)
 
 

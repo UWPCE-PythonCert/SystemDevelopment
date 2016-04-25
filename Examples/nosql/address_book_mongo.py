@@ -11,7 +11,8 @@ $ mongod --dbpath=mongo_data/
 
 """
 
-import bson
+from bson.objectid import ObjectId
+
 
 class PersistObject(object):
     """
@@ -58,7 +59,9 @@ class Person(PersistObject):
         self.middle_name = middle_name.strip()
         self.cell_phone = cell_phone.strip()
         self.email = email.strip()
-        self._id = bson.objectid.ObjectId() if _id is None else _id
+        #import pdb; pdb.set_trace()
+        self._id = ObjectId() if _id is None else _id
+        #self._id = bson.objectid.ObjectId() if _id is None else _id
 
 
     @property
@@ -194,7 +197,7 @@ class AddressBook(object):
         self.people.insert(person.to_dict())
 
     def add_household(self, household):
-        print "adding a household"
+        print("adding a household")
         self.households.insert(household.to_dict())
 
     def add_business(self, business):
@@ -359,7 +362,7 @@ def create_sample():
 if __name__ == "__main__":
     address_book = create_sample()
 
-    print "Here is the address book"
-    print address_book
+    print("Here is the address book")
+    print(address_book)
 
 

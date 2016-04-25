@@ -81,6 +81,7 @@ NoSQL in Python:
 
 Three Categories:
 
+
 1. Simple key-value object store:
 ---------------------------------
 
