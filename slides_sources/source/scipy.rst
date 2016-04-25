@@ -150,7 +150,7 @@ NOTE: I've been using numpy and its predecessors for long time --
 
 so have kind of forgotten what is obvious and what is not -- so:
 
-**ask questions** as we go!
+**Ask questions** as we go!
 
 
 Getting started
@@ -220,7 +220,8 @@ Element-wise operations among two different rank arrays:
 This is the key power of numpy!
 
 Simple case: scalar and array:
-::
+
+.. code-block:: ipython
 
     In [37]: a
     Out[37]: array([1, 2, 3])
@@ -230,12 +231,14 @@ Simple case: scalar and array:
 
 Great for functions of more than one variable on a grid
 
+code is more concise and runs much faster
+
 demo: ``broadcasting.ipynb``
 
 Fancy Indexing
 --------------
 
-As we've seen, you can slice and dice nd arrays much like regular python sequences.
+As we've seen, you can slice and dice ndarrays much like regular python sequences.
 
 This model is extended to multiple dimensions.
 
@@ -304,24 +307,25 @@ Text File I/O
 
 Loading from text (CSV, etc):
 
-  * ``np.loadtxt``
-  * ``np.genfromtxt`` ( a few more features )
+* ``np.loadtxt``
+* ``np.genfromtxt`` ( a few more features, and a bit slower )
 
 Saving as text (CSV):
 
-  * ``np.savetxt()``
+* ``np.savetxt()``
 
 Compound dtypes
 ---------------
 
-  * Can define any combination of other types
+* Can define any combination of other types
 
-    - Still Homogeneous:  Array of structs.
-  * Can name the fields
+  - Still Homogeneous:  Array of structs.
 
-  * Can be like a database table
+* Can name the fields
 
-  * Useful for reading binary data
+* Can be like a database table
+
+* Useful for reading binary data
 
 
 demo: ``dtypes.ipynb``
@@ -346,9 +350,9 @@ Numpy Persistence:
 
   * Hdf
 
-    - Pyhdf
+    - h5py: http://www.h5py.org/
 
-    - pytables
+    - pytables: http://www.pytables.org/
 
 
 Stride Tricks

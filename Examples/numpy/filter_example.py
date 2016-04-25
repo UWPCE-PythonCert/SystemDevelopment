@@ -2,7 +2,6 @@
 
 """
 Example of using stride trick to implement a moving filter
-
 """
 
 import numpy as np
@@ -71,7 +70,7 @@ if __name__ == "__main__":
     np.random.shuffle(a)
 
     result = moving_average(a, 3)
-    print result
+    print(result)
 
     result2 = scaled_by_max(a, 4)
-    print result2
+    print(result2)
