@@ -2,6 +2,8 @@
 
 """
 simple test file for mongoDB
+remember to start database: 
+$ mongod --dbpath=mongo_data/
 
 """
 
@@ -22,7 +24,7 @@ chris = {'last_name':'Barker',
 
 collection.insert(chris)
 
-print "all the collections"
-print db.collection_names()
+print("all the collections")
+print(db.collection_names())
 
-print collection.find_one()
+print(collection.find_one())

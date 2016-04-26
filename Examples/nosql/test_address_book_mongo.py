@@ -2,6 +2,8 @@
 
 """
 test code for address book model code
+remember to start mongo database first
+$ mongod --dbpath=mongo_data/
 """
 
 import address_book_mongo as model
@@ -31,7 +33,7 @@ def test_person_to_from_dict():
     dct = chris.to_dict()
     chris2 = model.Person.from_dict(dct)
 
-    print chris2
+    print(chris2)
 
     assert chris2.last_name == 'Barker'
     assert chris2.first_name == 'Chris'
@@ -92,6 +94,3 @@ def test_household_to_dict_to_object():
     assert home2.address.line_1 == home.address.line_1
     assert home2.address.line_2 == home.address.line_2
     assert home2.people == home.people
-
-
-

@@ -2,6 +2,8 @@
 
 """
 test code for address book model code
+if testing mongo, remember to start database first
+$ mongod --dbpath=mongo_data/
 """
 
 #import address_book_model as model

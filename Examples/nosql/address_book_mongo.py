@@ -59,9 +59,7 @@ class Person(PersistObject):
         self.middle_name = middle_name.strip()
         self.cell_phone = cell_phone.strip()
         self.email = email.strip()
-        #import pdb; pdb.set_trace()
         self._id = ObjectId() if _id is None else _id
-        #self._id = bson.objectid.ObjectId() if _id is None else _id
 
 
     @property

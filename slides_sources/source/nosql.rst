@@ -15,7 +15,7 @@ An SQL system is not always the best way to store your data.
 What is a Database?
 -------------------
 
-"A database is an organized collection of data. The data are typically organized to model relevant aspects of reality in a way that supports processes requiring this information.
+A database is an organized collection of data. The data are typically organized to model relevant aspects of reality in a way that supports processes requiring this information.
 
 Usually a way to persist and recover that organized data.
 
@@ -304,7 +304,7 @@ mongoDB is separate program. Installers here:
 
 http://www.mongodb.org/downloads
 
-Simple copy and paste install (at least on OS-X)
+Simple copy and paste install or use homebrew (at least on OS-X)
 
 (drop the files from ``bin`` into ``usr/local/bin`` or similar)
 
