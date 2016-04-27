@@ -277,11 +277,11 @@ And ``this`` is code.
       do_something_interesting(i)
 </pre></div>
 </div>
-<p>You can actually use anthing to underline for a header.</p>
+<p>You can actually use anything to underline for a header.</p>
 <p>rst will assume they are in order:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The first form is sees is Header 1</li>
+<li>The first form it sees is Header 1</li>
 <li>The second encountered is Header 2</li>
 <li>The third is header 3</li>
 <li>. . . .</li>
@@ -308,7 +308,7 @@ And ``this`` is code.
 <p><code class="docutils literal"><span class="pre">toctree</span></code> is the directive type</p>
 <p>there are no arguments</p>
 <p><code class="docutils literal"><span class="pre">:maxdepth:</span> <span class="pre">2</span></code> is an option</p>
-<p>The content follown, indentedone level</p>
+<p>The content follown, indented one level</p>
 <p>Another example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
 
@@ -319,7 +319,7 @@ And ``this`` is code.
 <p><code class="docutils literal"><span class="pre">code-block</span></code> is the directive type</p>
 <p><code class="docutils literal"><span class="pre">python</span></code> is an argument (in this case, telling sphinx to format the coce black in python style)</p>
 <p>The code itself is the content.</p>
-<p>ONe hint for rst:</p>
+<p>One hint for rst:</p>
 <p class="medium">when in doubt, put in an extra empty line!</p>
 <p>Some docs to get started:</p>
 <blockquote>
@@ -331,7 +331,7 @@ And ``this`` is code.
 </div>
 <div class="section" id="sphinx-directives-for-docstrings">
 <h3>Sphinx Directives for docstrings<a class="headerlink" href="#sphinx-directives-for-docstrings" title="Permalink to this headline">¶</a></h3>
-<p>IF you put sphinx formatting in a docsting, then Sphinx Autodoc and format it nicely for you.</p>
+<p>If you put sphinx formatting in a docsting, then Sphinx Autodoc and format it nicely for you.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;fred&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    computes something which I would describe here.</span>
@@ -353,12 +353,12 @@ And ``this`` is code.
 </div>
 <div class="section" id="an-alternative">
 <h3>An Alternative<a class="headerlink" href="#an-alternative" title="Permalink to this headline">¶</a></h3>
-<p>THe previous works OK, but it&#8217;s really pretty klunky, hard to write and kinda hard to read.</p>
+<p>The previous works OK, but it&#8217;s really pretty klunky, hard to write and kinda hard to read.</p>
 <p>To much markup not really the &#8220;just like plain next&#8221; we&#8217;re going for.</p>
 <p>Recent version os Sphinx include &#8220;napolean&#8221; to remedy this:</p>
 <p><a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.org">https://sphinxcontrib-napoleon.readthedocs.org</a></p>
 <p>It allows the use of &#8220;google style&#8221; or &#8220;numpy style&#8221; docstrings.</p>
-<p>So the previous example woulds look like:</p>
+<p>So the previous example would look like:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;fred&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes something which I would describe here.</span>

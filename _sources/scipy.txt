@@ -1,15 +1,8 @@
 .. _scipy:
 
-======================
+######################
 Intro to Numpy / Scipy
-======================
-
-- Chris Barker
-
-.. Contents:
-
-.. .. toctree::
-..    :maxdepth: 2
+######################
 
 
 Scipy
@@ -21,9 +14,7 @@ Scipy
 
   http://www.scipy.org/stackspec.html
 
-  Many other domain-specific packages area available:
-
-    Core "stack" is what most people will want, regardless of domain.
+  Many other domain-specific packages area available: The core "stack" is what most people will want, regardless of domain.
 
 What's in the scipy stack?
 --------------------------
@@ -33,6 +24,8 @@ What's in the scipy stack?
 * SciPy library (http://www.scipy.org)
 * Matplotlib (http://matplotlib.org/)
 * IPython (http://ipython.org/)
+
+|
 
 * nose (https://nose.readthedocs.org)
 * pandas (http://pandas.pydata.org/)
@@ -90,7 +83,7 @@ numpy
   numpy is the core package that the rest of the scipy stack is built on.
   numpy is really the core of everything.
 
-  All the rest requires an understanding good understanding of what a numpy array is -- so that's mostly what I'll talk about here.
+  All the rest requires an understanding good understanding of what a numpy array is -- so that's mostly what I'll talk about today.
 
 So what is numpy?
 -----------------
@@ -153,11 +146,12 @@ Then, I'm going to cover a bit about the guts and some advanced issues.
 
 This is harder to find explanations for -- and will help you understand what's really going on under the hood.
 
-NOTE: I've been using numpy and its predecessors for long time -- so have kind of forgotten what is obvious and what is not -- so:
+NOTE: I've been using numpy and its predecessors for long time --
 
- **ask questions**
+so have kind of forgotten what is obvious and what is not -- so:
 
- as we go!
+**Ask questions** as we go!
+
 
 Getting started
 ================
@@ -166,7 +160,7 @@ Getting started
 
   Example code is in the class repo:
 
-  ``SystemDevelopment2015/Examples/week-05-numpy``
+  ``/Examples/numpy``
 
   Those are a bunch of ipython notebooks.
 
@@ -226,7 +220,8 @@ Element-wise operations among two different rank arrays:
 This is the key power of numpy!
 
 Simple case: scalar and array:
-::
+
+.. code-block:: ipython
 
     In [37]: a
     Out[37]: array([1, 2, 3])
@@ -236,12 +231,14 @@ Simple case: scalar and array:
 
 Great for functions of more than one variable on a grid
 
+code is more concise and runs much faster
+
 demo: ``broadcasting.ipynb``
 
 Fancy Indexing
 --------------
 
-As we've seen, you can slice and dice nd arrays much like regular python sequences.
+As we've seen, you can slice and dice ndarrays much like regular python sequences.
 
 This model is extended to multiple dimensions.
 
@@ -310,24 +307,25 @@ Text File I/O
 
 Loading from text (CSV, etc):
 
-  * ``np.loadtxt``
-  * ``np.genfromtxt`` ( a few more features )
+* ``np.loadtxt``
+* ``np.genfromtxt`` ( a few more features, and a bit slower )
 
 Saving as text (CSV):
 
-  * ``np.savetxt()``
+* ``np.savetxt()``
 
 Compound dtypes
 ---------------
 
-  * Can define any combination of other types
+* Can define any combination of other types
 
-    - Still Homogeneous:  Array of structs.
-  * Can name the fields
+  - Still Homogeneous:  Array of structs.
 
-  * Can be like a database table
+* Can name the fields
 
-  * Useful for reading binary data
+* Can be like a database table
+
+* Useful for reading binary data
 
 
 demo: ``dtypes.ipynb``
@@ -352,9 +350,9 @@ Numpy Persistence:
 
   * Hdf
 
-    - Pyhdf
+    - h5py: http://www.h5py.org/
 
-    - pytables
+    - pytables: http://www.pytables.org/
 
 
 Stride Tricks

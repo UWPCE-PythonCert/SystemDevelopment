@@ -1,45 +1,73 @@
 .. _nosql:
 
 
+################
+No SQL Databases
+################
 
-Non RDBMS Database Options
-===========================
+"No SQL"?
+=========
 
-NoSQL databases
-----------------
+An SQL system is not always the best way to store your data.
 
-In "NoSQL" these key features are mostly shared:
 
--  "schema less" - Document oriented
--  More direct mapping to an object model.
--  Scalable - Easy to distribute / parallelize
+
+What is a Database?
+-------------------
+
+A database is an organized collection of data. The data are typically organized to model relevant aspects of reality in a way that supports processes requiring this information.
+
+Usually a way to persist and recover that organized data.
+
+These days, when you say "Database" almost everyone thinks "Relational Database", and SQL is the standard way to do that.
+
+SQL RDBMS systems are robust, powerful, scalable and very well optimized.
+
+But: They require you to adapt the relational data model.
+
+
+Non RDBMS options:
+------------------
+
+A key buzzword these days is "NOSQL"
+
+OK: They don't use SQL -- but what are they?
+
+Not one thing, but key features are mostly shared:
+
+* "schema less"
+ - Document oriented
+
+* More direct mapping to an object model.
+
+* Highly Scalable
+ - Easier to distribute / parallelize
+
 
 Database Schema
-----------------
+---------------
 
-A database schema is the organization of data, and description of how a
-database is constructed: Divided into database tables, and
-relationships: foreign keys, etc.
 
-Includes what fields in what tables, what data types each field is,
-normalization of shared data, etc.
+**Schema:**
 
-This requires work up-front, and can be hard to adapt as the system
-requirements change.
+A database schema is the organization of data, and description of how a database is constructed: Divided into database tables, and relationships: foreign keys, etc...
 
-It can also require effort to map your programming data model to the
-schema.
+Includes what fields in what tables, what data types each field is, normalization of shared data, etc.
+
+This requires a fair bit of work up-front, and can be hard to adapt as the system requirements change.
+
+It also can be a bit ugly to map your programming data model to the schema.
 
 
 Schemaless
------------
+----------
 
 Schemaless databases generally follow a "document model".
 
 Each entry in the database is a "document":
 
--  essentially an arbitrary collection of fields.
--  often looks like a Python dict.
+* essentially an arbitrary collection of fields.
+* often looks like a Python dict.
 
 Not every entry has to have exactly the same structure.
 
@@ -47,86 +75,136 @@ Maps well to dynamic programming languages.
 
 Adapts well as the system changes.
 
+
 NoSQL in Python:
------------------
+----------------
 
 Three Categories:
 
-1. Simple key-value object store
 
--  `shelve <https://docs.python.org/2/library/shelve.html>`__, based on
-   `pickle <https://docs.python.org/2/library/pickle.html>`__ and
-   `anydbm <https://docs.python.org/2/library/anydbm.html>`__
--  Can store any `picklable Python
-   object <https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickled>`__
--  Only provides storage and retrieval
+1. Simple key-value object store:
+---------------------------------
 
-2. External NoSQL systems
+- shelve
+- anydbm
+- Can store (almost) any Python object
+- Only provides storage and retrieval
+
+
+
+2. External NoSQL system:
 -------------------------
 
--  Python bindings to external NoSQL system
--  Doesn't store full Python objects
--  Generally stores arbitrary collections of data (but not classes)
--  Can be simple key-value stores - Redis, etc...
--  Or a more full featured document database: in-database searching,
-   etc. - mongoDB, etc...
--  Or a Map/Reduce engine: - Hadoop
+* Python bindings to external NoSQL system
+
+* Doesn't store full Python objects
+
+* Generally stores arbitrary collections of data (but not classes)
+
+* Can be simple key-value stores
+
+  - Redis, etc...
+
+* Or a more full featured document database:
+
+  - in-database searching, etc.
+  - mongoDB, etc...
+
+* Or a Map/Reduce engine:
+
+   - Hadoop
 
 
-3. Python object database
+3. Python object database:
 --------------------------
 
--  Stores and retrieves arbitrary Python objects.
--  Don't need to adapt your data model at all.
--  ZODB is the most robust and maintained system
+* Stores and retrieves arbitrary Python objects.
 
-`ZODB <http://http://www.zodb.org/>`__
---------------------------------------
+  - Don't need to adapt your data model at all.
+
+* ZODB is the only robust maintained system (I know of)
+
+* ZODB is as close a match as you can get between the store and your code -- references and everything.
+
+http://blog.startifact.com/posts/older/a-misconception-about-the-zodb.html
+
+Why a DB at all?
+----------------
+
+Reasons to use a database:
+
+- Need to persist the data your application uses
+
+- May need to store more data than you can hold in memory
+
+- May need to have multiple apps (or multiple instances) accessing the same data
+
+- May need to scale -- have the DB running on a separate server(s)
+
+- May need to access data from systems written in different languages.
+
+
+ZODB
+----
 
 The Zope Object Data Base: A native object database for Python
 
--  Transparent persistence for Python objects
--  Full ACID-compatible transaction support (including savepoints)
--  History/undo ability
--  Efficient support for binary large objects (BLOBs)
--  Pluggable storages
--  Scalable architecture
+* Transparent persistence for Python objects
+
+* Full ACID-compatible transaction support (including savepoints)
+
+* History/undo ability
+
+* Efficient support for binary large objects (BLOBs)
+
+* Pluggable storages
+
+* Scalable architecture
+
+http://http://www.zodb.org/
+
+MongoDB
+--------
+
+Document-Oriented Storage
+ * JSON-style documents with dynamic schemas offer simplicity and power.
+
+Full Index Support
+ * Index on any attribute, just like you're used to.
+
+Replication & High Availability
+ * Mirror across LANs and WANs for scale and peace of mind.
+
+Auto-Sharding
+ * Scale horizontally without compromising functionality.
+
+Querying
+ * Rich, document-based queries.
+
+https://www.mongodb.org/
 
 
-
-`MongoDB <https://www.mongodb.org/>`__
----------------------------------------
-
--  Document-Oriented Storage - JSON-style documents with dynamic schemas
-   offer simplicity and power.
--  Full Index Support - Index on any attribute, just like you're used
-   to.
--  Replication and High Availability - Mirror across LANs and WANs for
-   scale and peace of mind.
--  Auto-Sharding - Scale horizontally without compromising
-   functionality.
--  Querying - Rich, document-based queries.
-
-Other Options to Consider
--------------------------
+Other Options to Consider:
+--------------------------
 
 
-`Redis <http://redis.io/>`__: Advanced, Scalable key-value store.
+Redis: Advanced, Scalable  key-value store.
+ - http://redis.io/
 
-`Riak <http://docs.basho.com/riak/latest/dev/taste-of-riak/python/>`__:
-High availability/scalablity
+Riak: High availablity/scalablity (but not so good for small)
+ - http://docs.basho.com/riak/latest/dev/taste-of-riak/python/
 
-`HyperDex <http://hyperdex.org/>`__: "Next generation key-value store"
+HyperDex: "Next generation key-value store"
+ - http://hyperdex.org/
 
-`Apache Cassandra <http://pycassa.github.io/pycassa/>`__: A more
-schema-based NoSQL solution
+Apache Cassandra: A more schema-based NoSQL solution
+ - http://pycassa.github.io/pycassa/
 
 
-Example Data Model
--------------------
+A Data Model
+------------
 
 An Address Book with a not quite trivial data model.
-
 
 There are people::
 
@@ -143,186 +221,142 @@ There are households::
         self.address
         self.phone
 
-    (similarly businesses)
+(similarly businesses)
 
-see examples/NoSQL/address\_book\_model.py
+``address_book_model.py``
 
-.. raw:: html
+Using ZODB
+----------
 
-   </div>
+ZODB stored Python objects.
 
-.. raw:: html
+To make an object persistent::
 
-   <div class="section slide">
+  import persistent
 
-.. rubric:: Using ZODB
-   :name: using-zodb
-
-ZODB stores Python objects. To make an object persistent:
-
-::
-
-    import persistent
-
-    class Something(persistent.Persistent):
+  class Something(persistent.Persistent):
       def __init__(self):
           self.a_field = ''
           self.another_field ''
 
 When a change is made to the fields, the DB will keep it updated.
 
-See examples/NoSQL/address\_book\_zodb.py
+``Examples/nosql/address_book_zodb.py``
 
-.. raw:: html
+Mutable Attributes
+-------------------
 
-   </div>
+``Something.this = that`` will trigger a DB action
 
-.. raw:: html
+But:
 
-   <div class="section slide">
+``Something.a_list.append`` will not trigger anything.
 
-.. rubric:: Mutable Attributes in ZODB
-   :name: mutable-attributes-in-zodb
+The DB doesn't know that that the list has been altered.
 
-::
+Solution:
 
-    Something.this = that
-    # will trigger a DB action
+``self.a_list = PersistentList()``
 
-    # But:
+(also ``PersistantDict()`` )
 
-    Something.a_list.append
-    # will not trigger anything.
+(or write getters and setters...)
 
-    # The DB doesn't know that that the list has been altered.
-    # Solution:
+``Examples/nosql/address_book_zodb.py``
 
-    self.a_list = PersistentList()
-    # (also PersistantDict() )
+mongoDB
+-------
 
-    # (or write getter and setter properties...)
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: MongoDB
-   :name: mongodb-1
-
-Essentially a key-value store, but the values are JSON-like objects in
-the `BSON (binary JSON) <http://bsonspec.org/>`__ format
+Essentially a key-value store, but the values are JSON-like objects. (Actually BSON (binary JSON) )
 
 So you can store any object that can look like JSON:
+  * dicts
+  * lists
+  * numbers
+  * strings
+  * richer than JSON.
 
--  dicts
--  lists
--  numbers
--  strings
--  richer than JSON.
+mongoDB and Python
+------------------
 
-.. raw:: html
+mongoDB is written in C++ -- can be accessed by various language drivers.
 
-   </div>
+( http://docs.mongodb.org/manual/applications/drivers/ )
 
-.. raw:: html
+For Python: ``PyMongo``
 
-   <div class="section slide">
+http://api.mongodb.org/python/current/tutorial.html
 
-.. rubric:: MongoDB and Python
-   :name: mongodb-and-python
+(``pip install pymongo`` - binary wheels available!)
 
-MongoDB is written in C++ -- can be accessed by various language
-`drivers <http://docs.mongodb.org/manual/applications/drivers/>`__
+There are also various tools for integrating mongoDB with Frameworks:
 
-For Python we have
-`PyMongo <http://api.mongodb.org/python/current/tutorial.html%0A>`__
+* Django MongoDB Engine
+* mongodb_beaker
+* MongoLog: Python logging handler
+* Flask-PyMongo
+* others...
 
-There are also various tools for integrating mongoDB with Python
-frameworks:
-
--  Django MongoDB Engine
--  mongodb\_beaker
--  MongoLog: Python logging handler
--  Flask-PyMongo
--  others...
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Getting started with mongoDB
-   :name: getting-started-with-mongodb
+Getting started with mongoDB
+----------------------------
 
 mongoDB is separate program. Installers here:
+
 http://www.mongodb.org/downloads
+
+Simple copy and paste install or use homebrew (at least on OS-X)
+
+(drop the files from ``bin`` into ``usr/local/bin`` or similar)
 
 Create a dir for the database:
 
-::
+``$ mkdir mongo_data``
 
-    $ mkdir mongo_data
-    # And start it up:
-    $ mongod --dbpath=mongo_data/
+And start it up:
 
-.. raw:: html
+``$ mongod --dbpath=mongo_data/``
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Creating a Mongo DB:
-   :name: creating-a-mongo-db
+Creating a DB:
+--------------
 
 ::
 
-    # create the DB
-    from pymongo import MongoClient
+  # create the DB
+  from pymongo import MongoClient
 
-    client = MongoClient('localhost', 27017)
-    store = client.store_name # creates a Database
-    people = store.people # creates a collection
+  client = MongoClient('localhost', 27017)
+  store = client.store_name # creates a Database
+  people = store.people # creates a collection
 
-mongo will link to the given database and collection, or create new ones
-if they don't exist.
+mongo will link to the given database ans collection, or create new ones if they don't exist.
 
-Adding some stuff:
-
-::
+Adding some stuff::
 
     people.insert({'first_name': 'Fred',
-                  'last_name': 'Jones'})
+                 'last_name': 'Jones'})
 
-.. raw:: html
+Pulling Stuff Out:
+------------------
 
-   </div>
+And reading it back::
 
-.. raw:: html
-
-   <div class="section slide">
-
-Pulling Data Out
------------------
-
-::
-
-    In [16]: people.find_one({'first_name':"Fred"})
-    Out[16]:
+  In [16]: people.find_one({'first_name':"Fred"})
+  Out[16]:
     {u'_id': ObjectId('534dcdcb5c84d28b596ad15e'),
      u'first_name': u'Fred',
      u'last_name': u'Jones'}
 
-Note that it adds an ObjectID for you. See
-examples/NoSQL/address\_book\_mongo.py
+Note that it adds an ObjectID for you.
+
+``Examples/nosql/address_book_mongo.py``
 
 
-Questions?
+
+
+
+
+
+
+
+
+

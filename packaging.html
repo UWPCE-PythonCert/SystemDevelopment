@@ -238,7 +238,7 @@ structured package eases development.</p>
 <p>Your <code class="docutils literal"><span class="pre">setup.py</span></code> file is what describes your package, and tells the distutils how to pacakge, build and install it</p>
 <p>It is python code, so you can add anything custom you need to it</p>
 <p>But in the simple case, it is essentially declarative.</p>
-<p><code class="docutils literal"><span class="pre">http://docs.python.org/2/distutils/</span></code></p>
+<p><code class="docutils literal"><span class="pre">http://docs.python.org/3/distutils/</span></code></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span>
 
  <span class="n">setup</span><span class="p">(</span>
@@ -410,7 +410,7 @@ $ python setup.py <span class="nb">test</span>
 </div>
 <p><a class="reference external" href="https://pytest.org/latest/goodpractices.html#integrating-with-setuptools-python-setup-py-test-pytest-runner">https://pytest.org/latest/goodpractices.html#integrating-with-setuptools-python-setup-py-test-pytest-runner</a></p>
 <p><strong>unittest</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test_suite</span> <span class="o">=</span> <span class="s1">&#39;unittest2.collector&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test_suite</span><span class="o">=</span><span class="s2">&quot;tests&quot;</span>
 </pre></div>
 </div>
 <p>(does py3 unittest have this??)</p>
@@ -438,7 +438,7 @@ $ python setup.py <span class="nb">test</span>
 </li>
 <li>If you are ready &#8211; it can be the start of your project package.</li>
 </ul>
-<p>(example in <code class="docutils literal"><span class="pre">code/Capitalize</span></code>)</p>
+<p>(otherwise you may start with the silly code in <code class="docutils literal"><span class="pre">Examples/capitalize</span></code>)</p>
 </div>
 </div>
 </div>

@@ -141,7 +141,7 @@ It is python code, so you can add anything custom you need to it
 But in the simple case, it is essentially declarative.
 
 
-``http://docs.python.org/2/distutils/``
+``http://docs.python.org/3/distutils/``
 
 
 .. nextslide::
@@ -354,7 +354,8 @@ https://pytest.org/latest/goodpractices.html#integrating-with-setuptools-python-
 
 .. code-block:: python
 
-  test_suite = 'unittest2.collector'
+
+  test_suite="tests"
 
 (does py3 unittest have this??)
 
@@ -391,7 +392,7 @@ LAB
 
 * If you are ready -- it can be the start of your project package.
 
-(example in ``code/Capitalize``)
+(otherwise you may start with the silly code in ``Examples/capitalize``)
 
 
 

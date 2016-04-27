@@ -61,8 +61,6 @@ Code Reviews begin
 
   - :ref:`documentation`
 
-..  - `datetime <html_slides/06-datetime.html>`_
-
 
 Session 5
 =========
@@ -93,6 +91,8 @@ Session 8
 =========
 
 .. rst-class:: left
+
+  - `datetime <html_slides/06-datetime.html>`_
 
   - Performance and Profiling
 

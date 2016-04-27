@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Non RDBMS Database Options &mdash; System Development With Python 2.0 documentation</title>
+  <title>No SQL Databases &mdash; System Development With Python 2.0 documentation</title>
   
 
   
@@ -81,18 +81,30 @@
             
                 <!-- Local TOC -->
                 <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Non RDBMS Database Options</a><ul>
-<li><a class="reference internal" href="#nosql-databases">NoSQL databases</a></li>
+<li><a class="reference internal" href="#">No SQL Databases</a><ul>
+<li><a class="reference internal" href="#no-sql">&#8220;No SQL&#8221;?</a><ul>
+<li><a class="reference internal" href="#what-is-a-database">What is a Database?</a></li>
+<li><a class="reference internal" href="#non-rdbms-options">Non RDBMS options:</a></li>
 <li><a class="reference internal" href="#database-schema">Database Schema</a></li>
 <li><a class="reference internal" href="#schemaless">Schemaless</a></li>
 <li><a class="reference internal" href="#nosql-in-python">NoSQL in Python:</a></li>
-<li><a class="reference internal" href="#external-nosql-systems">2. External NoSQL systems</a></li>
-<li><a class="reference internal" href="#python-object-database">3. Python object database</a></li>
+<li><a class="reference internal" href="#simple-key-value-object-store">1. Simple key-value object store:</a></li>
+<li><a class="reference internal" href="#external-nosql-system">2. External NoSQL system:</a></li>
+<li><a class="reference internal" href="#python-object-database">3. Python object database:</a></li>
+<li><a class="reference internal" href="#why-a-db-at-all">Why a DB at all?</a></li>
 <li><a class="reference internal" href="#zodb">ZODB</a></li>
 <li><a class="reference internal" href="#mongodb">MongoDB</a></li>
-<li><a class="reference internal" href="#other-options-to-consider">Other Options to Consider</a></li>
-<li><a class="reference internal" href="#example-data-model">Example Data Model</a></li>
-<li><a class="reference internal" href="#pulling-data-out">Pulling Data Out</a></li>
+<li><a class="reference internal" href="#other-options-to-consider">Other Options to Consider:</a></li>
+<li><a class="reference internal" href="#a-data-model">A Data Model</a></li>
+<li><a class="reference internal" href="#using-zodb">Using ZODB</a></li>
+<li><a class="reference internal" href="#mutable-attributes">Mutable Attributes</a></li>
+<li><a class="reference internal" href="#id1">mongoDB</a></li>
+<li><a class="reference internal" href="#mongodb-and-python">mongoDB and Python</a></li>
+<li><a class="reference internal" href="#getting-started-with-mongodb">Getting started with mongoDB</a></li>
+<li><a class="reference internal" href="#creating-a-db">Creating a DB:</a></li>
+<li><a class="reference internal" href="#pulling-stuff-out">Pulling Stuff Out:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -125,7 +137,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Non RDBMS Database Options</li>
+    <li>No SQL Databases</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -139,31 +151,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="non-rdbms-database-options">
-<span id="nosql"></span><h1>Non RDBMS Database Options<a class="headerlink" href="#non-rdbms-database-options" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="nosql-databases">
-<h2>NoSQL databases<a class="headerlink" href="#nosql-databases" title="Permalink to this headline">¶</a></h2>
-<p>In &#8220;NoSQL&#8221; these key features are mostly shared:</p>
+  <div class="section" id="no-sql-databases">
+<span id="nosql"></span><h1>No SQL Databases<a class="headerlink" href="#no-sql-databases" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="no-sql">
+<h2>&#8220;No SQL&#8221;?<a class="headerlink" href="#no-sql" title="Permalink to this headline">¶</a></h2>
+<p>An SQL system is not always the best way to store your data.</p>
+<div class="section" id="what-is-a-database">
+<h3>What is a Database?<a class="headerlink" href="#what-is-a-database" title="Permalink to this headline">¶</a></h3>
+<p>A database is an organized collection of data. The data are typically organized to model relevant aspects of reality in a way that supports processes requiring this information.</p>
+<p>Usually a way to persist and recover that organized data.</p>
+<p>These days, when you say &#8220;Database&#8221; almost everyone thinks &#8220;Relational Database&#8221;, and SQL is the standard way to do that.</p>
+<p>SQL RDBMS systems are robust, powerful, scalable and very well optimized.</p>
+<p>But: They require you to adapt the relational data model.</p>
+</div>
+<div class="section" id="non-rdbms-options">
+<h3>Non RDBMS options:<a class="headerlink" href="#non-rdbms-options" title="Permalink to this headline">¶</a></h3>
+<p>A key buzzword these days is &#8220;NOSQL&#8221;</p>
+<p>OK: They don&#8217;t use SQL &#8211; but what are they?</p>
+<p>Not one thing, but key features are mostly shared:</p>
 <ul class="simple">
-<li>&#8220;schema less&#8221; - Document oriented</li>
-<li>More direct mapping to an object model.</li>
-<li>Scalable - Easy to distribute / parallelize</li>
+<li>&#8220;schema less&#8221;</li>
 </ul>
+<blockquote>
+<div><ul class="simple">
+<li>Document oriented</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>More direct mapping to an object model.</li>
+<li>Highly Scalable</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Easier to distribute / parallelize</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="database-schema">
-<h2>Database Schema<a class="headerlink" href="#database-schema" title="Permalink to this headline">¶</a></h2>
-<p>A database schema is the organization of data, and description of how a
-database is constructed: Divided into database tables, and
-relationships: foreign keys, etc.</p>
-<p>Includes what fields in what tables, what data types each field is,
-normalization of shared data, etc.</p>
-<p>This requires work up-front, and can be hard to adapt as the system
-requirements change.</p>
-<p>It can also require effort to map your programming data model to the
-schema.</p>
+<h3>Database Schema<a class="headerlink" href="#database-schema" title="Permalink to this headline">¶</a></h3>
+<p><strong>Schema:</strong></p>
+<p>A database schema is the organization of data, and description of how a database is constructed: Divided into database tables, and relationships: foreign keys, etc...</p>
+<p>Includes what fields in what tables, what data types each field is, normalization of shared data, etc.</p>
+<p>This requires a fair bit of work up-front, and can be hard to adapt as the system requirements change.</p>
+<p>It also can be a bit ugly to map your programming data model to the schema.</p>
 </div>
 <div class="section" id="schemaless">
-<h2>Schemaless<a class="headerlink" href="#schemaless" title="Permalink to this headline">¶</a></h2>
+<h3>Schemaless<a class="headerlink" href="#schemaless" title="Permalink to this headline">¶</a></h3>
 <p>Schemaless databases generally follow a &#8220;document model&#8221;.</p>
 <p>Each entry in the database is a &#8220;document&#8221;:</p>
 <ul class="simple">
@@ -175,42 +208,72 @@ schema.</p>
 <p>Adapts well as the system changes.</p>
 </div>
 <div class="section" id="nosql-in-python">
-<h2>NoSQL in Python:<a class="headerlink" href="#nosql-in-python" title="Permalink to this headline">¶</a></h2>
+<h3>NoSQL in Python:<a class="headerlink" href="#nosql-in-python" title="Permalink to this headline">¶</a></h3>
 <p>Three Categories:</p>
-<ol class="arabic simple">
-<li>Simple key-value object store</li>
-</ol>
+</div>
+<div class="section" id="simple-key-value-object-store">
+<h3>1. Simple key-value object store:<a class="headerlink" href="#simple-key-value-object-store" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.python.org/2/library/shelve.html">shelve</a>, based on
-<a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickle</a> and
-<a class="reference external" href="https://docs.python.org/2/library/anydbm.html">anydbm</a></li>
-<li>Can store any <a class="reference external" href="https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickled">picklable Python
-object</a></li>
+<li>shelve</li>
+<li>anydbm</li>
+<li>Can store (almost) any Python object</li>
 <li>Only provides storage and retrieval</li>
 </ul>
 </div>
-<div class="section" id="external-nosql-systems">
-<h2>2. External NoSQL systems<a class="headerlink" href="#external-nosql-systems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="external-nosql-system">
+<h3>2. External NoSQL system:<a class="headerlink" href="#external-nosql-system" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Python bindings to external NoSQL system</p>
+</li>
+<li><p class="first">Doesn&#8217;t store full Python objects</p>
+</li>
+<li><p class="first">Generally stores arbitrary collections of data (but not classes)</p>
+</li>
+<li><p class="first">Can be simple key-value stores</p>
 <ul class="simple">
-<li>Python bindings to external NoSQL system</li>
-<li>Doesn&#8217;t store full Python objects</li>
-<li>Generally stores arbitrary collections of data (but not classes)</li>
-<li>Can be simple key-value stores - Redis, etc...</li>
-<li>Or a more full featured document database: in-database searching,
-etc. - mongoDB, etc...</li>
-<li>Or a Map/Reduce engine: - Hadoop</li>
+<li>Redis, etc...</li>
+</ul>
+</li>
+<li><p class="first">Or a more full featured document database:</p>
+<ul class="simple">
+<li>in-database searching, etc.</li>
+<li>mongoDB, etc...</li>
+</ul>
+</li>
+<li><p class="first">Or a Map/Reduce engine:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Hadoop</li>
+</ul>
+</div></blockquote>
+</li>
 </ul>
 </div>
 <div class="section" id="python-object-database">
-<h2>3. Python object database<a class="headerlink" href="#python-object-database" title="Permalink to this headline">¶</a></h2>
+<h3>3. Python object database:<a class="headerlink" href="#python-object-database" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Stores and retrieves arbitrary Python objects.</li>
+<li>Stores and retrieves arbitrary Python objects.<ul>
 <li>Don&#8217;t need to adapt your data model at all.</li>
-<li>ZODB is the most robust and maintained system</li>
+</ul>
+</li>
+<li>ZODB is the only robust maintained system (I know of)</li>
+<li>ZODB is as close a match as you can get between the store and your code &#8211; references and everything.</li>
+</ul>
+<p><a class="reference external" href="http://blog.startifact.com/posts/older/a-misconception-about-the-zodb.html">http://blog.startifact.com/posts/older/a-misconception-about-the-zodb.html</a></p>
+</div>
+<div class="section" id="why-a-db-at-all">
+<h3>Why a DB at all?<a class="headerlink" href="#why-a-db-at-all" title="Permalink to this headline">¶</a></h3>
+<p>Reasons to use a database:</p>
+<ul class="simple">
+<li>Need to persist the data your application uses</li>
+<li>May need to store more data than you can hold in memory</li>
+<li>May need to have multiple apps (or multiple instances) accessing the same data</li>
+<li>May need to scale &#8211; have the DB running on a separate server(s)</li>
+<li>May need to access data from systems written in different languages.</li>
 </ul>
 </div>
 <div class="section" id="zodb">
-<h2><a class="reference external" href="http://http://www.zodb.org/">ZODB</a><a class="headerlink" href="#zodb" title="Permalink to this headline">¶</a></h2>
+<h3>ZODB<a class="headerlink" href="#zodb" title="Permalink to this headline">¶</a></h3>
 <p>The Zope Object Data Base: A native object database for Python</p>
 <ul class="simple">
 <li>Transparent persistence for Python objects</li>
@@ -220,32 +283,66 @@ etc. - mongoDB, etc...</li>
 <li>Pluggable storages</li>
 <li>Scalable architecture</li>
 </ul>
+<p><a class="reference external" href="http://http://www.zodb.org/">http://http://www.zodb.org/</a></p>
 </div>
 <div class="section" id="mongodb">
-<h2><a class="reference external" href="https://www.mongodb.org/">MongoDB</a><a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Document-Oriented Storage - JSON-style documents with dynamic schemas
-offer simplicity and power.</li>
-<li>Full Index Support - Index on any attribute, just like you&#8217;re used
-to.</li>
-<li>Replication and High Availability - Mirror across LANs and WANs for
-scale and peace of mind.</li>
-<li>Auto-Sharding - Scale horizontally without compromising
-functionality.</li>
-<li>Querying - Rich, document-based queries.</li>
+<h3>MongoDB<a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Document-Oriented Storage</dt>
+<dd><ul class="first last simple">
+<li>JSON-style documents with dynamic schemas offer simplicity and power.</li>
 </ul>
+</dd>
+<dt>Full Index Support</dt>
+<dd><ul class="first last simple">
+<li>Index on any attribute, just like you&#8217;re used to.</li>
+</ul>
+</dd>
+<dt>Replication &amp; High Availability</dt>
+<dd><ul class="first last simple">
+<li>Mirror across LANs and WANs for scale and peace of mind.</li>
+</ul>
+</dd>
+<dt>Auto-Sharding</dt>
+<dd><ul class="first last simple">
+<li>Scale horizontally without compromising functionality.</li>
+</ul>
+</dd>
+<dt>Querying</dt>
+<dd><ul class="first last simple">
+<li>Rich, document-based queries.</li>
+</ul>
+</dd>
+</dl>
+<p><a class="reference external" href="https://www.mongodb.org/">https://www.mongodb.org/</a></p>
 </div>
 <div class="section" id="other-options-to-consider">
-<h2>Other Options to Consider<a class="headerlink" href="#other-options-to-consider" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://redis.io/">Redis</a>: Advanced, Scalable key-value store.</p>
-<p><a class="reference external" href="http://docs.basho.com/riak/latest/dev/taste-of-riak/python/">Riak</a>:
-High availability/scalablity</p>
-<p><a class="reference external" href="http://hyperdex.org/">HyperDex</a>: &#8220;Next generation key-value store&#8221;</p>
-<p><a class="reference external" href="http://pycassa.github.io/pycassa/">Apache Cassandra</a>: A more
-schema-based NoSQL solution</p>
+<h3>Other Options to Consider:<a class="headerlink" href="#other-options-to-consider" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Redis: Advanced, Scalable  key-value store.</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://redis.io/">http://redis.io/</a></li>
+</ul>
+</dd>
+<dt>Riak: High availablity/scalablity (but not so good for small)</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://docs.basho.com/riak/latest/dev/taste-of-riak/python/">http://docs.basho.com/riak/latest/dev/taste-of-riak/python/</a></li>
+</ul>
+</dd>
+<dt>HyperDex: &#8220;Next generation key-value store&#8221;</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://hyperdex.org/">http://hyperdex.org/</a></li>
+</ul>
+</dd>
+<dt>Apache Cassandra: A more schema-based NoSQL solution</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://pycassa.github.io/pycassa/">http://pycassa.github.io/pycassa/</a></li>
+</ul>
+</dd>
+</dl>
 </div>
-<div class="section" id="example-data-model">
-<h2>Example Data Model<a class="headerlink" href="#example-data-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-data-model">
+<h3>A Data Model<a class="headerlink" href="#a-data-model" title="Permalink to this headline">¶</a></h3>
 <p>An Address Book with a not quite trivial data model.</p>
 <p>There are people:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span>
@@ -256,63 +353,65 @@ schema-based NoSQL solution</p>
 </pre></div>
 </div>
 <p>There are households:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">people</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">address</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">phone</span>
-
-<span class="p">(</span><span class="n">similarly</span> <span class="n">businesses</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">people</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">address</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">phone</span>
 </pre></div>
 </div>
-<p>see examples/NoSQL/address_book_model.py</p>
-</div><div class="section slide"><p class="rubric" id="using-zodb">Using ZODB</p>
-<p>ZODB stores Python objects. To make an object persistent:</p>
+<p>(similarly businesses)</p>
+<p><code class="docutils literal"><span class="pre">address_book_model.py</span></code></p>
+</div>
+<div class="section" id="using-zodb">
+<h3>Using ZODB<a class="headerlink" href="#using-zodb" title="Permalink to this headline">¶</a></h3>
+<p>ZODB stored Python objects.</p>
+<p>To make an object persistent:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">persistent</span>
 
 <span class="k">class</span> <span class="nc">Something</span><span class="p">(</span><span class="n">persistent</span><span class="o">.</span><span class="n">Persistent</span><span class="p">):</span>
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">a_field</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">another_field</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a_field</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">another_field</span> <span class="s1">&#39;&#39;</span>
 </pre></div>
 </div>
 <p>When a change is made to the fields, the DB will keep it updated.</p>
-<p>See examples/NoSQL/address_book_zodb.py</p>
-</div><div class="section slide"><p class="rubric" id="mutable-attributes-in-zodb">Mutable Attributes in ZODB</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Something</span><span class="o">.</span><span class="n">this</span> <span class="o">=</span> <span class="n">that</span>
-<span class="c1"># will trigger a DB action</span>
-
-<span class="c1"># But:</span>
-
-<span class="n">Something</span><span class="o">.</span><span class="n">a_list</span><span class="o">.</span><span class="n">append</span>
-<span class="c1"># will not trigger anything.</span>
-
-<span class="c1"># The DB doesn&#39;t know that that the list has been altered.</span>
-<span class="c1"># Solution:</span>
-
-<span class="bp">self</span><span class="o">.</span><span class="n">a_list</span> <span class="o">=</span> <span class="n">PersistentList</span><span class="p">()</span>
-<span class="c1"># (also PersistantDict() )</span>
-
-<span class="c1"># (or write getter and setter properties...)</span>
-</pre></div>
+<p><code class="docutils literal"><span class="pre">Examples/nosql/address_book_zodb.py</span></code></p>
 </div>
-</div><div class="section slide"><p class="rubric" id="mongodb-1">MongoDB</p>
-<p>Essentially a key-value store, but the values are JSON-like objects in
-the <a class="reference external" href="http://bsonspec.org/">BSON (binary JSON)</a> format</p>
-<p>So you can store any object that can look like JSON:</p>
-<ul class="simple">
+<div class="section" id="mutable-attributes">
+<h3>Mutable Attributes<a class="headerlink" href="#mutable-attributes" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">Something.this</span> <span class="pre">=</span> <span class="pre">that</span></code> will trigger a DB action</p>
+<p>But:</p>
+<p><code class="docutils literal"><span class="pre">Something.a_list.append</span></code> will not trigger anything.</p>
+<p>The DB doesn&#8217;t know that that the list has been altered.</p>
+<p>Solution:</p>
+<p><code class="docutils literal"><span class="pre">self.a_list</span> <span class="pre">=</span> <span class="pre">PersistentList()</span></code></p>
+<p>(also <code class="docutils literal"><span class="pre">PersistantDict()</span></code> )</p>
+<p>(or write getters and setters...)</p>
+<p><code class="docutils literal"><span class="pre">Examples/nosql/address_book_zodb.py</span></code></p>
+</div>
+<div class="section" id="id1">
+<h3>mongoDB<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Essentially a key-value store, but the values are JSON-like objects. (Actually BSON (binary JSON) )</p>
+<dl class="docutils">
+<dt>So you can store any object that can look like JSON:</dt>
+<dd><ul class="first last simple">
 <li>dicts</li>
 <li>lists</li>
 <li>numbers</li>
 <li>strings</li>
 <li>richer than JSON.</li>
 </ul>
-</div><div class="section slide"><p class="rubric" id="mongodb-and-python">MongoDB and Python</p>
-<p>MongoDB is written in C++ &#8211; can be accessed by various language
-<a class="reference external" href="http://docs.mongodb.org/manual/applications/drivers/">drivers</a></p>
-<p>For Python we have
-<a class="reference external" href="http://api.mongodb.org/python/current/tutorial.html%0A">PyMongo</a></p>
-<p>There are also various tools for integrating mongoDB with Python
-frameworks:</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="mongodb-and-python">
+<h3>mongoDB and Python<a class="headerlink" href="#mongodb-and-python" title="Permalink to this headline">¶</a></h3>
+<p>mongoDB is written in C++ &#8211; can be accessed by various language drivers.</p>
+<p>( <a class="reference external" href="http://docs.mongodb.org/manual/applications/drivers/">http://docs.mongodb.org/manual/applications/drivers/</a> )</p>
+<p>For Python: <code class="docutils literal"><span class="pre">PyMongo</span></code></p>
+<p><a class="reference external" href="http://api.mongodb.org/python/current/tutorial.html">http://api.mongodb.org/python/current/tutorial.html</a></p>
+<p>(<code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pymongo</span></code> - binary wheels available!)</p>
+<p>There are also various tools for integrating mongoDB with Frameworks:</p>
 <ul class="simple">
 <li>Django MongoDB Engine</li>
 <li>mongodb_beaker</li>
@@ -320,16 +419,20 @@ frameworks:</p>
 <li>Flask-PyMongo</li>
 <li>others...</li>
 </ul>
-</div><div class="section slide"><p class="rubric" id="getting-started-with-mongodb">Getting started with mongoDB</p>
-<p>mongoDB is separate program. Installers here:
-<a class="reference external" href="http://www.mongodb.org/downloads">http://www.mongodb.org/downloads</a></p>
-<p>Create a dir for the database:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir mongo_data
-# And start it up:
-$ mongod --dbpath=mongo_data/
-</pre></div>
 </div>
-</div><div class="section slide"><p class="rubric" id="creating-a-mongo-db">Creating a Mongo DB:</p>
+<div class="section" id="getting-started-with-mongodb">
+<h3>Getting started with mongoDB<a class="headerlink" href="#getting-started-with-mongodb" title="Permalink to this headline">¶</a></h3>
+<p>mongoDB is separate program. Installers here:</p>
+<p><a class="reference external" href="http://www.mongodb.org/downloads">http://www.mongodb.org/downloads</a></p>
+<p>Simple copy and paste install or use homebrew (at least on OS-X)</p>
+<p>(drop the files from <code class="docutils literal"><span class="pre">bin</span></code> into <code class="docutils literal"><span class="pre">usr/local/bin</span></code> or similar)</p>
+<p>Create a dir for the database:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">mkdir</span> <span class="pre">mongo_data</span></code></p>
+<p>And start it up:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">mongod</span> <span class="pre">--dbpath=mongo_data/</span></code></p>
+</div>
+<div class="section" id="creating-a-db">
+<h3>Creating a DB:<a class="headerlink" href="#creating-a-db" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># create the DB</span>
 <span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
 
@@ -338,26 +441,26 @@ $ mongod --dbpath=mongo_data/
 <span class="n">people</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">people</span> <span class="c1"># creates a collection</span>
 </pre></div>
 </div>
-<p>mongo will link to the given database and collection, or create new ones
-if they don&#8217;t exist.</p>
+<p>mongo will link to the given database ans collection, or create new ones if they don&#8217;t exist.</p>
 <p>Adding some stuff:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">people</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jones&#39;</span><span class="p">})</span>
+             <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jones&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
-</div><div class="section slide"></div>
-<div class="section" id="pulling-data-out">
-<h2>Pulling Data Out<a class="headerlink" href="#pulling-data-out" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="pulling-stuff-out">
+<h3>Pulling Stuff Out:<a class="headerlink" href="#pulling-stuff-out" title="Permalink to this headline">¶</a></h3>
+<p>And reading it back:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="n">people</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="s2">&quot;Fred&quot;</span><span class="p">})</span>
 <span class="n">Out</span><span class="p">[</span><span class="mi">16</span><span class="p">]:</span>
-<span class="p">{</span><span class="s1">u&#39;_id&#39;</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s1">&#39;534dcdcb5c84d28b596ad15e&#39;</span><span class="p">),</span>
- <span class="s1">u&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Fred&#39;</span><span class="p">,</span>
- <span class="s1">u&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Jones&#39;</span><span class="p">}</span>
+  <span class="p">{</span><span class="s1">u&#39;_id&#39;</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s1">&#39;534dcdcb5c84d28b596ad15e&#39;</span><span class="p">),</span>
+   <span class="s1">u&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Fred&#39;</span><span class="p">,</span>
+   <span class="s1">u&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Jones&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that it adds an ObjectID for you. See
-examples/NoSQL/address_book_mongo.py</p>
-<p>Questions?</p>
+<p>Note that it adds an ObjectID for you.</p>
+<p><code class="docutils literal"><span class="pre">Examples/nosql/address_book_mongo.py</span></code></p>
+</div>
 </div>
 </div>
 

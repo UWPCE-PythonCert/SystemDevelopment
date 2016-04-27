@@ -171,16 +171,11 @@
             
   <div class="section" id="intro-to-numpy-scipy">
 <span id="scipy"></span><h1>Intro to Numpy / Scipy<a class="headerlink" href="#intro-to-numpy-scipy" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li>Chris Barker</li>
-</ul>
 <div class="section" id="id1">
 <h2>Scipy<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p class="left">The scipy &#8220;Stack&#8221; is a collection of core packages used for scientific / numerical computing.</p>
 <p class="left"><a class="reference external" href="http://www.scipy.org/stackspec.html">http://www.scipy.org/stackspec.html</a></p>
-<p class="left">Many other domain-specific packages area available:</p>
-<blockquote class="left">
-<div>Core &#8220;stack&#8221; is what most people will want, regardless of domain.</div></blockquote>
+<p class="left">Many other domain-specific packages area available: The core &#8220;stack&#8221; is what most people will want, regardless of domain.</p>
 <div class="section" id="what-s-in-the-scipy-stack">
 <h3>What&#8217;s in the scipy stack?<a class="headerlink" href="#what-s-in-the-scipy-stack" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -189,6 +184,11 @@
 <li>SciPy library (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
 <li>Matplotlib (<a class="reference external" href="http://matplotlib.org/">http://matplotlib.org/</a>)</li>
 <li>IPython (<a class="reference external" href="http://ipython.org/">http://ipython.org/</a>)</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
 <li>nose (<a class="reference external" href="https://nose.readthedocs.org">https://nose.readthedocs.org</a>)</li>
 <li>pandas (<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>)</li>
 <li>Sympy (<a class="reference external" href="http://sympy.org/">http://sympy.org/</a>)</li>
@@ -225,7 +225,7 @@ Python code.</p>
 <h2>numpy<a class="headerlink" href="#numpy" title="Permalink to this headline">¶</a></h2>
 <p class="left">numpy is the core package that the rest of the scipy stack is built on.
 numpy is really the core of everything.</p>
-<p class="left">All the rest requires an understanding good understanding of what a numpy array is &#8211; so that&#8217;s mostly what I&#8217;ll talk about here.</p>
+<p class="left">All the rest requires an understanding good understanding of what a numpy array is &#8211; so that&#8217;s mostly what I&#8217;ll talk about today.</p>
 <div class="section" id="so-what-is-numpy">
 <h3>So what is numpy?<a class="headerlink" href="#so-what-is-numpy" title="Permalink to this headline">¶</a></h3>
 <p>Not just for lots of numbers!
@@ -289,17 +289,15 @@ numpy is really the core of everything.</p>
 <p>So I&#8217;m going to spend about an hour or so on the regular old &#8220;how do you use it&#8221; stuff.</p>
 <p>Then, I&#8217;m going to cover a bit about the guts and some advanced issues.</p>
 <p>This is harder to find explanations for &#8211; and will help you understand what&#8217;s really going on under the hood.</p>
-<p>NOTE: I&#8217;ve been using numpy and its predecessors for long time &#8211; so have kind of forgotten what is obvious and what is not &#8211; so:</p>
-<blockquote>
-<div><p><strong>ask questions</strong></p>
-<p>as we go!</p>
-</div></blockquote>
+<p>NOTE: I&#8217;ve been using numpy and its predecessors for long time &#8211;</p>
+<p>so have kind of forgotten what is obvious and what is not &#8211; so:</p>
+<p><strong>Ask questions</strong> as we go!</p>
 </div>
 </div>
 <div class="section" id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p class="left">Example code is in the class repo:</p>
-<p class="left"><code class="docutils literal"><span class="pre">SystemDevelopment2015/Examples/week-05-numpy</span></code></p>
+<p class="left"><code class="docutils literal"><span class="pre">/Examples/numpy</span></code></p>
 <p class="left">Those are a bunch of ipython notebooks.</p>
 <p class="left">Get your command line into that dir, then start up the iPyhton notebook:</p>
 <p class="left"><code class="docutils literal"><span class="pre">$</span> <span class="pre">ipython</span> <span class="pre">notebook</span></code></p>
@@ -333,18 +331,19 @@ numpy is really the core of everything.</p>
 <p>Element-wise operations among two different rank arrays:</p>
 <p>This is the key power of numpy!</p>
 <p>Simple case: scalar and array:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">a</span>
-<span class="n">Out</span><span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">In</span> <span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">a</span><span class="o">*</span><span class="mi">3</span>
-<span class="n">Out</span><span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [37]: </span><span class="n">a</span>
+<span class="gh">Out[37]: </span><span class="go">array([1, 2, 3])</span>
+<span class="gp">In [38]: </span><span class="n">a</span><span class="o">*</span><span class="mi">3</span>
+<span class="gh">Out[38]: </span><span class="go">array([3, 6, 9])</span>
 </pre></div>
 </div>
 <p>Great for functions of more than one variable on a grid</p>
+<p>code is more concise and runs much faster</p>
 <p>demo: <code class="docutils literal"><span class="pre">broadcasting.ipynb</span></code></p>
 </div>
 <div class="section" id="fancy-indexing">
 <h3>Fancy Indexing<a class="headerlink" href="#fancy-indexing" title="Permalink to this headline">¶</a></h3>
-<p>As we&#8217;ve seen, you can slice and dice nd arrays much like regular python sequences.</p>
+<p>As we&#8217;ve seen, you can slice and dice ndarrays much like regular python sequences.</p>
 <p>This model is extended to multiple dimensions.</p>
 <p>But it still only lets you extract rectangular blocks of elements.</p>
 <p>For more complex sub-selection: we use &#8220;fancy indexing&#8221;:</p>
@@ -407,23 +406,18 @@ numpy is really the core of everything.</p>
 <div class="section" id="text-file-i-o">
 <h3>Text File I/O<a class="headerlink" href="#text-file-i-o" title="Permalink to this headline">¶</a></h3>
 <p>Loading from text (CSV, etc):</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><code class="docutils literal"><span class="pre">np.loadtxt</span></code></li>
-<li><code class="docutils literal"><span class="pre">np.genfromtxt</span></code> ( a few more features )</li>
+<li><code class="docutils literal"><span class="pre">np.genfromtxt</span></code> ( a few more features, and a bit slower )</li>
 </ul>
-</div></blockquote>
 <p>Saving as text (CSV):</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><code class="docutils literal"><span class="pre">np.savetxt()</span></code></li>
 </ul>
-</div></blockquote>
 </div>
 <div class="section" id="compound-dtypes">
 <h3>Compound dtypes<a class="headerlink" href="#compound-dtypes" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>Can define any combination of other types<ul>
 <li>Still Homogeneous:  Array of structs.</li>
 </ul>
@@ -432,7 +426,6 @@ numpy is really the core of everything.</p>
 <li>Can be like a database table</li>
 <li>Useful for reading binary data</li>
 </ul>
-</div></blockquote>
 <p>demo: <code class="docutils literal"><span class="pre">dtypes.ipynb</span></code></p>
 </div>
 <div class="section" id="numpy-persistence">
@@ -453,8 +446,8 @@ numpy is really the core of everything.</p>
 </ul>
 </li>
 <li>Hdf<ul>
-<li>Pyhdf</li>
-<li>pytables</li>
+<li>h5py: <a class="reference external" href="http://www.h5py.org/">http://www.h5py.org/</a></li>
+<li>pytables: <a class="reference external" href="http://www.pytables.org/">http://www.pytables.org/</a></li>
 </ul>
 </li>
 </ul>
