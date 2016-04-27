@@ -1,0 +1,13 @@
+README.txt
+setup.cfg
+setup.py
+bin/cap_script.py
+capitalize/__init__.py
+capitalize/capital_mod.py
+capitalize.egg-info/PKG-INFO
+capitalize.egg-info/SOURCES.txt
+capitalize.egg-info/dependency_links.txt
+capitalize.egg-info/requires.txt
+capitalize.egg-info/top_level.txt
+capitalize/test/__init__.py
+capitalize/test/test_capital_mod.py

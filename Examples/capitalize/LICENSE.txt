@@ -1,0 +1,4 @@
+The license for the capitalize package
+
+Public Domain: do with it what you will.
+
