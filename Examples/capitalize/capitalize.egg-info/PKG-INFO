@@ -1,0 +1,21 @@
+Metadata-Version: 1.0
+Name: capitalize
+Version: 0.1.0
+Summary: An awesome package that does something
+Home-page: http://pypi.python.org/pypi/capitalize/
+Author: gabriel meringolo
+Author-email: gabriel.meringolo@gmail.com
+License: LICENSE.txt
+Description: ===================
+        Capitalize Package
+        ===================
+        
+        A basic pacakge for Capitalizing text in files
+        
+        Purpose
+        ========
+        
+        Nothing useful, just something to demonstrate packaging with.
+        
+        
+Platform: UNKNOWN
