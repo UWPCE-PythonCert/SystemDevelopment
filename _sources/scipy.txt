@@ -24,6 +24,7 @@ What's in the scipy stack?
 * SciPy library (http://www.scipy.org)
 * Matplotlib (http://matplotlib.org/)
 * IPython (http://ipython.org/)
+* (now Jupyter: http://jupyter.org/)
 
 |
 
@@ -52,27 +53,44 @@ For those familiar with MATLAB:
 
 http://wiki.scipy.org/NumPy_for_Matlab_Users
 
-The ipython "notebook"
+The Jupyter "notebook"
 -----------------------
 
 We've been using iPython a lot in this class (at least I have)
 
-It provides a great interactive environment fo testing and running
+It provides a great interactive environment for testing and running
 Python code.
 
 It turns out it has antoher interface: the "notebook"
 
-The notebook provides a way to interspese littel chunks of code, adn text, adn images, etc...
+The notebook provides a way to intersperse little chunks of code, and text, and images, etc...
 
 It runs in a browser, you start it up with:
 
 .. code-block:: bash
 
-  ipython notebook
+  jupyter notebook
 
 It should start your browser, and show you the notebooks in the dir you started it up in.
 
 I'll be using it for lots of demos in this class.
+
+Jupyter
+-------
+
+Let's get the Jupyter notebook installed and running.
+
+Hopefully::
+
+  pip install jupyter
+
+Will do it.
+
+Then::
+
+  jupyter notebook
+
+Should start it up.
 
 
 numpy
