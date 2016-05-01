@@ -52,16 +52,9 @@ With 3 arguments, ``type()`` returns a new class
     bases: tuple of the parent classes
     dict: dict containing attribute names and values
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: using type() to build a class
-   :name: using-type-to-build-a-class
+using type() to build a class
+-----------------------------
 
 The ``class`` keyword is syntactic sugar, we can get by without it by
 using type
@@ -79,16 +72,8 @@ OR
 
 (``object`` is automatically a superclass)
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Adding methods to a class built with ``type()``
-   :name: adding-methods-to-a-class-built-with-type
+Adding methods to a class built with ``type()``
+-----------------------------------------------
 
 Just define a function with the correct signature and add it to the attr
 dictionary
@@ -102,35 +87,19 @@ dictionary
     o = MyClass()
     o.my_method()
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: What type is type?
-   :name: what-type-is-type
+What type is type?
+------------------
 
 ::
 
     type(type)
     Out[1]: type
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: \_\_metaclass\_\_
-   :name: metaclass__
+\_\_metaclass\_\_
+-----------------
 
 ::
-
     class Foo(object):
       __metaclass__ = MyMetaClass
 
@@ -145,16 +114,9 @@ If it doesn't, it will use type to create the class.
 Whatever is assigned to \_\_metaclass\_\_ should be a callable with the
 same signature as type()
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Why use metaclasses?
-   :name: why-use-metaclasses
+Why use metaclasses?
+--------------------
 
 Useful when creating an API or framework
 
@@ -162,16 +124,16 @@ Whenever you need to manage object creation for one or more classes
 
 For example, see examples/singleton.py
 
-Or consider the Django ORM: ````
+Or consider the Django ORM:
 
 ::
 
-    class Person(models.Model):
+  class Person(models.Model):
       name = models.CharField(max_length=30)
       age = models.IntegerField()
 
-    person = Person(name='bob', age=35)
-    print person.name
+  person = Person(name='bob', age=35)
+  print person.name
 
 When the Person class is created, it is dynamically modified to
 integrate with the database configured backend. Thus, different
@@ -179,32 +141,15 @@ configurations will lead to different class definitions. This is
 abstracted from the user of the Model class.
 
 Here is the Django Model metaclass:
+
 https://github.com/django/django/blob/master/django/db/models/base.py#L59
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Metaclass example
-   :name: metaclass-example
+Metaclass example
+-----------------
 
 Consider wanting a metaclass which mangles all attribute names to
 provide uppercase and lower case attributes
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Metaclass example
-   :name: metaclass-example-1
 
 ::
 
@@ -216,16 +161,9 @@ provide uppercase and lower case attributes
     print f.X
     print f.x
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: NameMangler
-   :name: namemangler
+NameMangler
+-----------
 
 ::
 
@@ -245,18 +183,11 @@ provide uppercase and lower case attributes
         __metaclass__ = NameMangler
         x = 1
 
-.. raw:: html
 
-   </div>
+Exercise: Working with NameMangler
+----------------------------------
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exercise: Working with NameMangler
-   :name: exercise-working-with-namemangler
-
-In the repository, find and run examples/mangler.py
+In the repository, find and run Examples/metaclasses/mangler.py
 
 Modify the NameMangler metaclass such that setting an attribute f.x also
 sets f.xx
