@@ -77,7 +77,7 @@ Session 6
 
   - :ref:`advanced_oo`
 
-  - `Metaclasses <html_slides/06-metaclasses.html>`_
+  - :ref:`metaclasses`
 
 
 Session 7

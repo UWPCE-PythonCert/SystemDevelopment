@@ -1,18 +1,25 @@
-class Singleton(type):
-    def __init__(cls, name, bases, dict):
-        super(Singleton, cls).__init__(name, bases, dict)
-        cls.instance = None 
+#!/usr/bin/env python3
 
-    def __call__(cls,*args,**kw):
+"""
+example of using __metaclass__ to impliment the singleton pattern
+"""
+
+
+class Singleton(type):
+    instance = None
+
+    def __call__(cls, *args, **kwargs):
+        print("singleton called")
         if cls.instance is None:
-            cls.instance = super(Singleton, cls).__call__(*args, **kw)
+            cls.instance = super().__call__(*args, **kwargs)
         return cls.instance
 
-class MyClass(object):
-    __metaclass__ = Singleton
+
+class MyClass(metaclass=Singleton):
+    pass
 
 object1 = MyClass()
 object2 = MyClass()
 
-print id(object1)
-print id(object2)
+print(id(object1))
+print(id(object2))

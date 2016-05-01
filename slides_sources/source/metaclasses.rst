@@ -11,12 +11,13 @@ A class is just an object
 
 .. rst-class:: left
 
-Objects get created from classes. So what is the class of a class?
-The class of Class is a metaclass
+  Objects get created from classes. So what is the class of a class?
 
-The metaclass can be used to dynamically create a class
+  The class of Class is a metaclass
 
-The metaclass, being a class, also has a metaclass
+  The metaclass can be used to dynamically create a class
+
+  The metaclass, being a class, also has a metaclass
 
 
 What is a metaclass?
@@ -25,11 +26,12 @@ What is a metaclass?
 -  A class is something that makes instances
 -  A metaclass is something that makes classes
 -  A metaclass is most commonly used as a class factory
--  metaclasses allow you to do 'extra things' when creating a class,
+-  Metaclasses allow you to do 'extra things' when creating a class,
    like registering the new class with some registry, adding methods
    dynamically, or even replace the class with something else entirely
 -  Every object in Python has a metaclass
--  The default metaclass is type()
+-  The default metaclass is ``type()``
+
 
 ``type()``
 ----------
@@ -38,7 +40,7 @@ With one argument, ``type()`` returns the type of the argument
 
 With 3 arguments, ``type()`` returns a new class
 
-::
+.. code-block:: ipython
 
     type?
     Type:       type
@@ -59,14 +61,14 @@ using type() to build a class
 The ``class`` keyword is syntactic sugar, we can get by without it by
 using type
 
-::
+.. code-block:: python
 
     class MyClass(object):
         x = 1
 
-OR
+or
 
-::
+.. code-block:: python
 
     MyClass = type('MyClass', (), {'x': 1})
 
@@ -78,41 +80,51 @@ Adding methods to a class built with ``type()``
 Just define a function with the correct signature and add it to the attr
 dictionary
 
-::
+.. code-block:: python
 
     def my_method(self):
-        print "called my_method, x = %s" % self.x
+        print("called my_method, x = %s" % self.x)
 
     MyClass = type('MyClass',(), {'x': 1, 'my_method': my_method})
     o = MyClass()
     o.my_method()
 
+
 What type is type?
 ------------------
 
-::
+.. code-block:: ipython
 
-    type(type)
-    Out[1]: type
+  In [30]: type(type)
+  Out[30]: type
 
 
-\_\_metaclass\_\_
------------------
+``metaclass``
+---------------
 
-::
+Setting a class' metaclass:
+
+.. code-block:: python
+
+  class Foo(metaclass=MyMetaClass):
+      pass
+
+
+the class assigned to the ``metaclass`` keyword argument will be used to create the object class ``Foo``.
+
+If the ``metaclass`` kwarg is not defined, it will use type to create the class.
+
+Whatever is assigned to ``__metaclass__`` should be a callable with the
+same signature as type()
+
+**Python2 NOTE:**
+
+In Pyhton 2, a special class attribute: ``__metaclass__`` is used:
+
+.. code-block:: python
+
     class Foo(object):
       __metaclass__ = MyMetaClass
-
-Python will look for \_\_metaclass\_\_ in the class definition.
-
-If it finds it, it will use it to create the object class Foo.
-
-If it doesn't, it will use type to create the class.
-
-\_\_metaclass\_\_ can be defined at the module level
-
-Whatever is assigned to \_\_metaclass\_\_ should be a callable with the
-same signature as type()
 
 
 Why use metaclasses?
@@ -122,11 +134,11 @@ Useful when creating an API or framework
 
 Whenever you need to manage object creation for one or more classes
 
-For example, see examples/singleton.py
+For example, see ``Examples/metclasses/singleton.py``
 
 Or consider the Django ORM:
 
-::
+.. code-block:: python
 
   class Person(models.Model):
       name = models.CharField(max_length=30)
@@ -142,8 +154,7 @@ abstracted from the user of the Model class.
 
 Here is the Django Model metaclass:
 
-https://github.com/django/django/blob/master/django/db/models/base.py#L59
-
+https://github.com/django/django/blob/master/django/db/models/base.py#L77
 
 Metaclass example
 -----------------
@@ -151,101 +162,87 @@ Metaclass example
 Consider wanting a metaclass which mangles all attribute names to
 provide uppercase and lower case attributes
 
-::
+.. code-block:: python
 
-    class Foo(object):
-        __metaclass__ = NameMangler
+    class Foo(metaclass=NameMangler):
         x = 1
 
     f = Foo()
-    print f.X
-    print f.x
+    print(f.X)
+    print(f.x)
 
 
 NameMangler
 -----------
 
-::
+.. code-block:: python
 
-    class NameMangler(type):
-        def __new__(cls, clsname, bases, dct):
-            uppercase_attr = {}
-            for name, val in dct.items():
-                if not name.startswith('__'):
-                    uppercase_attr[name.upper()] = val
-                    uppercase_attr[name] = val
-                else:
-                    uppercase_attr[name] = val
+  class NameMangler(type):
 
-            return super(NameMangler, cls).__new__(cls, clsname, bases, uppercase_attr)
+      def __new__(cls, clsname, bases, _dict):
+          uppercase_attr = {}
+          for name, val in _dict.items():
+              if not name.startswith('__'):
+                  uppercase_attr[name.upper()] = val
+                  uppercase_attr[name] = val
+              else:
+                  uppercase_attr[name] = val
 
-    class Foo(object):
-        __metaclass__ = NameMangler
-        x = 1
+          return super().__new__(cls, clsname, bases, uppercase_attr)
+
+
+  class Foo(metaclass=NameMangler):
+      x = 1
 
 
 Exercise: Working with NameMangler
 ----------------------------------
 
-In the repository, find and run Examples/metaclasses/mangler.py
+In the repository, find and run ``Examples/metaclasses/mangler.py``
 
 Modify the NameMangler metaclass such that setting an attribute f.x also
 sets f.xx
 
 Now create a new metaclass, MangledSingleton, composed of the
-NameMangler and Singleton classes in the examples/ directory. Assign it
-to the \_\_metaclass\_\_ attribute of a new class and verify that it
-works.
+NameMangler and Singleton classes in the ``Examples/metaclasses`` directory.
+
+Assign it to the ``metaclass`` keyword argument of a new class and verify that it works.
 
 Your code should look like this:
 
-::
+.. code-block:: python
 
-    class MyClass(object):
-        __metaclass__ = MangledSingleton # define this
+    class MyClass(metaclass=MangledSingleton) # define this
         x = 1
 
     o1 = MyClass()
     o2 = MyClass()
-    print o1.X
+    print(o1.X)
     assert id(o1) == id(o2)
 
-.. raw:: html
+Reference reading
+-----------------
 
-   </div>
+About metaclasses (Python 3):
 
-.. raw:: html
+http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses
 
-   <div class="section slide">
+Python 2 -- mostly the same:
 
-.. rubric:: Reference reading
-   :name: reference-reading
+What is a metaclass in Python?
 
-`What is a metaclass in
-Python? <http://stackoverflow.com/a/6581949/747729>`__
+http://stackoverflow.com/a/6581949/747729
 
-`Python metaclasses by
-example <http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/>`__
+Python metaclasses by example:
 
-`A Primer on Python
-Metaclasses <http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/>`__
+http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/
 
-.. raw:: html
+A Primer on Python Metaclasses
 
-   </div>
+http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/
 
-.. raw:: html
+And some even more advanced tricks:
 
-   <div aria-role="navigation">
+http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses
 
-`← <#>`__ `→ <#>`__
 
-.. raw:: html
-
-   </div>
-
- /
-
-.. raw:: html
-
-   </div>
