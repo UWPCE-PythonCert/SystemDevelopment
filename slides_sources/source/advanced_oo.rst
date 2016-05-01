@@ -86,23 +86,23 @@ The Diamond Problem
 
     class A(object):
         def do_your_stuff(self):
-            print "doing A's stuff"
+            print("doing A's stuff")
 
     class B(A):
         def do_your_stuff(self):
             A.do_your_stuff(self)
-            print "doing B's stuff"
+            print("doing B's stuff")
 
     class C(A):
         def do_your_stuff(self):
             A.do_your_stuff(self)
-            print "doing C's stuff"
+            print("doing C's stuff")
 
     class D(B,C):
         def do_your_stuff(self):
             B.do_your_stuff(self)
             C.do_your_stuff(self)
-            print "doing D's stuff"
+            print("doing D's stuff")
 
 
 The Diamond Problem
@@ -116,7 +116,7 @@ Multiple paths to the same superclass:
 
 A's methods can get called twice.
 
-(demo: ``Examples/week-06-OO/diamond.py``)
+(demo: ``Examples/advancedOO/diamond.py``)
 
 
 The Method Resolution Order
@@ -443,22 +443,21 @@ LAB
 
 **Demo:**
 
- ``Examples/week-06-OO/new_example.py``
+ ``Examples/advancedOO/new_example.py``
 
 **Exercise:**
 
 Write a subclass of int that will always be an even number:
 round the input to the closest even number:
 
-  ``Examples/week-06-OO/even_int.py``
+  ``Examples/advancedOO/even_int.py``
 
 
-  ``Examples/week-06-OO/test_even_int.py``
-
+  ``Examples/advancedOO/test_even_int.py``
 
 
 Wrap Up
----------
+-------
 
 Thinking OO in Python:
 

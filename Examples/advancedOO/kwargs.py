@@ -1,5 +1,5 @@
 def foo(bar, **kwargs):
-    print bar
+    print(bar)
 
 foo("lion")
 foo(bar="lion")

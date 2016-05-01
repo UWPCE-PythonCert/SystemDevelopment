@@ -8,15 +8,16 @@ class Base(object):
 
 class LoggingMixin(Base):
     def log(self):
-        print "%s" % time.time(),
-        print "self is:", self
+        print("%s" % time.time(),)
+        print("self is:", self)
         super(LoggingMixin, self).log()
 
 
 class Vehicle(Base):
     def log(self):
-        print self.__repr__()
+        print(self.__repr__())
         super(Vehicle, self).log()
+
 
 class TwoWheeledVehicle(Vehicle):
     pass

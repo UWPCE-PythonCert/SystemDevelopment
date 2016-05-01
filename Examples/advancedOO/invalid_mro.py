@@ -1,11 +1,21 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-O = object
 
-class X(O): pass
-class Y(O): pass
+class X():
+    pass
 
-class A(X,Y): pass
-class B(Y,X): pass
 
-class C(A,B): pass
+class Y():
+    pass
+
+
+class A(X, Y):
+    pass
+
+
+class B(Y, X):
+    pass
+
+
+class C(A, B):
+    pass
