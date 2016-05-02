@@ -2,6 +2,7 @@ import unittest
 
 from constrained_int import ConstrainedInt
 
+
 class TestConstrainedInt(unittest.TestCase):
 
     def test_constrainedint(self):
@@ -15,4 +16,4 @@ class TestConstrainedInt(unittest.TestCase):
     def test_constrainedint_handles_addition(self):
         x = ConstrainedInt(10)
         x += 246
-        self.assertEqual(x,0)
+        self.assertEqual(x, 0)
