@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Metaclasses &mdash; System Development With Python 2.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="System Development With Python 2.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> System Development With Python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Metaclasses</a><ul>
+<li><a class="reference internal" href="#a-class-is-just-an-object">A class is just an object</a><ul>
+<li><a class="reference internal" href="#what-is-a-metaclass">What is a metaclass?</a></li>
+<li><a class="reference internal" href="#type"><code class="docutils literal"><span class="pre">type()</span></code></a></li>
+<li><a class="reference internal" href="#using-type-to-build-a-class">using type() to build a class</a></li>
+<li><a class="reference internal" href="#adding-methods-to-a-class-built-with-type">Adding methods to a class built with <code class="docutils literal"><span class="pre">type()</span></code></a></li>
+<li><a class="reference internal" href="#what-type-is-type">What type is type?</a></li>
+<li><a class="reference internal" href="#metaclass"><code class="docutils literal"><span class="pre">metaclass</span></code></a></li>
+<li><a class="reference internal" href="#why-use-metaclasses">Why use metaclasses?</a></li>
+<li><a class="reference internal" href="#metaclass-example">Metaclass example</a></li>
+<li><a class="reference internal" href="#namemangler">NameMangler</a></li>
+<li><a class="reference internal" href="#exercise-working-with-namemangler">Exercise: Working with NameMangler</a></li>
+<li><a class="reference internal" href="#reference-reading">Reference reading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">System Development With Python</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Metaclasses</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/metaclasses.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="metaclasses">
+<span id="id1"></span><h1>Metaclasses<a class="headerlink" href="#metaclasses" title="Permalink to this headline">¶</a></h1>
+<p>adapted from work by Joseph Sheedy</p>
+<div class="section" id="a-class-is-just-an-object">
+<h2>A class is just an object<a class="headerlink" href="#a-class-is-just-an-object" title="Permalink to this headline">¶</a></h2>
+<p class="left">Objects get created from classes. So what is the class of a class?</p>
+<p class="left">The class of Class is a metaclass</p>
+<p class="left">The metaclass can be used to dynamically create a class</p>
+<p class="left">The metaclass, being a class, also has a metaclass</p>
+<div class="section" id="what-is-a-metaclass">
+<h3>What is a metaclass?<a class="headerlink" href="#what-is-a-metaclass" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>A class is something that makes instances</li>
+<li>A metaclass is something that makes classes</li>
+<li>A metaclass is most commonly used as a class factory</li>
+<li>Metaclasses allow you to do &#8216;extra things&#8217; when creating a class,
+like registering the new class with some registry, adding methods
+dynamically, or even replace the class with something else entirely</li>
+<li>Every object in Python has a metaclass</li>
+<li>The default metaclass is <code class="docutils literal"><span class="pre">type()</span></code></li>
+</ul>
+</div>
+<div class="section" id="type">
+<h3><code class="docutils literal"><span class="pre">type()</span></code><a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h3>
+<p>With one argument, <code class="docutils literal"><span class="pre">type()</span></code> returns the type of the argument</p>
+<p>With 3 arguments, <code class="docutils literal"><span class="pre">type()</span></code> returns a new class</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span>type<span class="o">?</span>
+<span class="n">Type</span><span class="p">:</span>       <span class="nb">type</span>
+<span class="n">String</span> <span class="n">Form</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;type&#39;</span><span class="o">&gt;</span>
+<span class="n">Namespace</span><span class="p">:</span>  <span class="n">Python</span> <span class="n">builtin</span>
+<span class="n">Docstring</span><span class="p">:</span>
+<span class="nb">type</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">the</span> <span class="nb">object</span><span class="s1">&#39;s type</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="n">new</span> <span class="nb">type</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">string</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="k">class</span>
+<span class="nc">bases</span><span class="p">:</span> <span class="nb">tuple</span> <span class="n">of</span> <span class="n">the</span> <span class="n">parent</span> <span class="n">classes</span>
+<span class="nb">dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="n">containing</span> <span class="n">attribute</span> <span class="n">names</span> <span class="ow">and</span> <span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-type-to-build-a-class">
+<h3>using type() to build a class<a class="headerlink" href="#using-type-to-build-a-class" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">class</span></code> keyword is syntactic sugar, we can get by without it by
+using type</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MyClass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;MyClass&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>(<code class="docutils literal"><span class="pre">object</span></code> is automatically a superclass)</p>
+</div>
+<div class="section" id="adding-methods-to-a-class-built-with-type">
+<h3>Adding methods to a class built with <code class="docutils literal"><span class="pre">type()</span></code><a class="headerlink" href="#adding-methods-to-a-class-built-with-type" title="Permalink to this headline">¶</a></h3>
+<p>Just define a function with the correct signature and add it to the attr
+dictionary</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;called my_method, x = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">MyClass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;MyClass&#39;</span><span class="p">,(),</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;my_method&#39;</span><span class="p">:</span> <span class="n">my_method</span><span class="p">})</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+<span class="n">o</span><span class="o">.</span><span class="n">my_method</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-type-is-type">
+<h3>What type is type?<a class="headerlink" href="#what-type-is-type" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [30]: </span><span class="nb">type</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+<span class="gh">Out[30]: </span><span class="go">type</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="metaclass">
+<h3><code class="docutils literal"><span class="pre">metaclass</span></code><a class="headerlink" href="#metaclass" title="Permalink to this headline">¶</a></h3>
+<p>Setting a class&#8217; metaclass:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">MyMetaClass</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>the class assigned to the <code class="docutils literal"><span class="pre">metaclass</span></code> keyword argument will be used to create the object class <code class="docutils literal"><span class="pre">Foo</span></code>.</p>
+<p>If the <code class="docutils literal"><span class="pre">metaclass</span></code> kwarg is not defined, it will use type to create the class.</p>
+<p>Whatever is assigned to <code class="docutils literal"><span class="pre">__metaclass__</span></code> should be a callable with the
+same signature as type()</p>
+<p><strong>Python2 NOTE:</strong></p>
+<p>In Pyhton 2, a special class attribute: <code class="docutils literal"><span class="pre">__metaclass__</span></code> is used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">MyMetaClass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="why-use-metaclasses">
+<h3>Why use metaclasses?<a class="headerlink" href="#why-use-metaclasses" title="Permalink to this headline">¶</a></h3>
+<p>Useful when creating an API or framework</p>
+<p>Whenever you need to manage object creation for one or more classes</p>
+<p>For example, see <code class="docutils literal"><span class="pre">Examples/metclasses/singleton.py</span></code></p>
+<p>Or consider the Django ORM:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">person</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>When the Person class is created, it is dynamically modified to
+integrate with the database configured backend. Thus, different
+configurations will lead to different class definitions. This is
+abstracted from the user of the Model class.</p>
+<p>Here is the Django Model metaclass:</p>
+<p><a class="reference external" href="https://github.com/django/django/blob/master/django/db/models/base.py#L77">https://github.com/django/django/blob/master/django/db/models/base.py#L77</a></p>
+</div>
+<div class="section" id="metaclass-example">
+<h3>Metaclass example<a class="headerlink" href="#metaclass-example" title="Permalink to this headline">¶</a></h3>
+<p>Consider wanting a metaclass which mangles all attribute names to
+provide uppercase and lower case attributes</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">NameMangler</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="namemangler">
+<h3>NameMangler<a class="headerlink" href="#namemangler" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NameMangler</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">_dict</span><span class="p">):</span>
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">NameMangler</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-working-with-namemangler">
+<h3>Exercise: Working with NameMangler<a class="headerlink" href="#exercise-working-with-namemangler" title="Permalink to this headline">¶</a></h3>
+<p>In the repository, find and run <code class="docutils literal"><span class="pre">Examples/metaclasses/mangler.py</span></code></p>
+<p>Modify the NameMangler metaclass such that setting an attribute f.x also
+sets f.xx</p>
+<p>Now create a new metaclass, MangledSingleton, composed of the
+NameMangler and Singleton classes in the <code class="docutils literal"><span class="pre">Examples/metaclasses</span></code> directory.</p>
+<p>Assign it to the <code class="docutils literal"><span class="pre">metaclass</span></code> keyword argument of a new class and verify that it works.</p>
+<p>Your code should look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">MangledSingleton</span><span class="p">)</span> <span class="c1"># define this</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">o1</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+<span class="n">o2</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o1</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">id</span><span class="p">(</span><span class="n">o1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">o2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference-reading">
+<h3>Reference reading<a class="headerlink" href="#reference-reading" title="Permalink to this headline">¶</a></h3>
+<p>About metaclasses (Python 3):</p>
+<p><a class="reference external" href="http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses">http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses</a></p>
+<p>Python 2 &#8211; mostly the same:</p>
+<p>What is a metaclass in Python?</p>
+<p><a class="reference external" href="http://stackoverflow.com/a/6581949/747729">http://stackoverflow.com/a/6581949/747729</a></p>
+<p>Python metaclasses by example:</p>
+<p><a class="reference external" href="http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/">http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/</a></p>
+<p>A Primer on Python Metaclasses</p>
+<p><a class="reference external" href="http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/">http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/</a></p>
+<p>And some even more advanced tricks:</p>
+<p><a class="reference external" href="http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses">http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Christopher Barker, Joseph Sheedy, Maria McKinley.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

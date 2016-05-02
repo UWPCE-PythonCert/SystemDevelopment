@@ -210,23 +210,23 @@
 <h3>The Diamond Problem<a class="headerlink" href="#the-diamond-problem" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s2">&quot;doing A&#39;s stuff&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;doing A&#39;s stuff&quot;</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">A</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s2">&quot;doing B&#39;s stuff&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;doing B&#39;s stuff&quot;</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">A</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s2">&quot;doing C&#39;s stuff&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;doing C&#39;s stuff&quot;</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">B</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">C</span><span class="o">.</span><span class="n">do_your_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s2">&quot;doing D&#39;s stuff&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;doing D&#39;s stuff&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -235,7 +235,7 @@
 <p>Multiple paths to the same superclass:</p>
 <a class="reference internal image-reference" href="_images/Diamond_inheritance.png"><img alt="_images/Diamond_inheritance.png" class="align-center" src="_images/Diamond_inheritance.png" style="height: 400px;" /></a>
 <p>A&#8217;s methods can get called twice.</p>
-<p>(demo: <code class="docutils literal"><span class="pre">Examples/week-06-OO/diamond.py</span></code>)</p>
+<p>(demo: <code class="docutils literal"><span class="pre">Examples/advancedOO/diamond.py</span></code>)</p>
 </div>
 <div class="section" id="the-method-resolution-order">
 <h3>The Method Resolution Order<a class="headerlink" href="#the-method-resolution-order" title="Permalink to this headline">¶</a></h3>
@@ -465,13 +465,13 @@ go right</p>
 <h3>LAB<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p><strong>Demo:</strong></p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">Examples/week-06-OO/new_example.py</span></code></div></blockquote>
+<div><code class="docutils literal"><span class="pre">Examples/advancedOO/new_example.py</span></code></div></blockquote>
 <p><strong>Exercise:</strong></p>
 <p>Write a subclass of int that will always be an even number:
 round the input to the closest even number:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">Examples/week-06-OO/even_int.py</span></code></p>
-<p><code class="docutils literal"><span class="pre">Examples/week-06-OO/test_even_int.py</span></code></p>
+<div><p><code class="docutils literal"><span class="pre">Examples/advancedOO/even_int.py</span></code></p>
+<p><code class="docutils literal"><span class="pre">Examples/advancedOO/test_even_int.py</span></code></p>
 </div></blockquote>
 </div>
 <div class="section" id="wrap-up">
