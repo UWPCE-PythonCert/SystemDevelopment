@@ -152,6 +152,8 @@ integrate with the database configured backend. Thus, different
 configurations will lead to different class definitions. This is
 abstracted from the user of the Model class.
 
+.. nextslide::
+
 Here is the Django Model metaclass:
 
 https://github.com/django/django/blob/master/django/db/models/base.py#L77
@@ -225,24 +227,34 @@ Reference reading
 
 About metaclasses (Python 3):
 
-http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses
+.. rst-class:: small
 
-Python 2 -- mostly the same:
+  http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses
+
+Python 2 (mostly the same):
 
 What is a metaclass in Python?
 
-http://stackoverflow.com/a/6581949/747729
+.. rst-class:: small
+
+  http://stackoverflow.com/a/6581949/747729
 
 Python metaclasses by example:
 
-http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/
+.. rst-class:: small
 
-A Primer on Python Metaclasses
+  http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/
 
-http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/
+A Primer on Python Metaclasses:
+
+.. rst-class:: small
+
+  http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/
 
 And some even more advanced tricks:
 
-http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses
+.. rst-class:: small
+
+  http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses
 
 
