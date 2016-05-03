@@ -28,7 +28,7 @@ multiple inheritance
             Super2.__init__(self, ......)
             Super3.__init__(self, ......)
 
-(calls to the super classes ``__init__`` are optional and case dependent)
+(calls to the super class' ``__init__`` are optional and case dependent)
 
 
 .. nextslide::
@@ -76,7 +76,11 @@ Hierarchies are not always simple:
 Where do you put a Platypus?
 
 
-Real World Example: ``wxPython FloatCanvas``
+Real World Example: ``wxPython FloatCanvas``:
+
+.. rst-class:: small
+
+  https://github.com/wxWidgets/Phoenix/blob/master/wx/lib/floatcanvas/FCObjects.py
 
 
 The Diamond Problem
@@ -139,10 +143,12 @@ And one more:
 
 http://www.python.org/download/releases/2.3/mro/
 
-demo: ``__mro__``
+demo: ``Examples/advancedOO/mro.py``
 
-super()
--------
+``super()``
+-----------
+
+``super()`` can handle the MRO for you dynamically
 
 Getting the superclass:
 
@@ -162,7 +168,7 @@ And there were a bunch of references to Vehicle?
 
 
 super()
---------
+-------
 
 Getting the superclass:
 
@@ -173,7 +179,7 @@ Getting the superclass:
         Safe Vehicle subclass of Vehicle base class
         """
         def __init__(self, position=0, velocity=0, icon='S'):
-            super(SafeVehicle, self).__init__(position, velocity, icon)
+            super().__init__(position, velocity, icon)
 
 
 ``super`` is about more than just making it easier to refactor.
@@ -188,30 +194,30 @@ What does super() do?
 
 ``super`` returns a "proxy object" that delegates method calls.
 
-
 It's not returning the object itself -- but you can call methods on it.
-
 
 It runs through the method resolution order (MRO) to find the method
 you call.
 
-
 Key point: the MRO is determined *at run time*
 
-
-http://docs.python.org/2/library/functions.html#super
+https://docs.python.org/3.5/library/functions.html#super
 
 
 .. nextslide::
 
 Not the same as calling one superclass method: ``super()``
-will call all the sibling superclass methods: ::
+will call all the sibling superclass methods:
+
+.. code-block:: python
 
     class D(C, B, A):
         def __init__(self):
            super(D, self).__init__()
 
-same as::
+same as:
+
+.. code-block:: python
 
     class D(C, B, A):
         def __init__(self):
@@ -220,7 +226,7 @@ same as::
            A.__init__()
 
 | You may not want that --
-| demo: ``Examples/week-06-OO/super_test.ipnb``
+| demo: ``Examples/advancedOO/super_test.ipnb``
 
 
 super() mechanics
@@ -435,7 +441,7 @@ go right
 
 More detail here:
 
-http://www.python.org/download/releases/2.7/descrintro/#__new__
+https://docs.python.org/3/reference/datamodel.html#object.__new__
 
 
 LAB
