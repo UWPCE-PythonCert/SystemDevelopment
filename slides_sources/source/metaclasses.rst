@@ -11,6 +11,57 @@ A class is just an object
 
 .. rst-class:: left
 
+  A class is a first-class object:
+
+  Can be created at runtime
+
+  Passed as a parameter
+
+  Returned from a function
+
+  Assigned to a variable
+
+
+Example
+-------
+
+::
+
+   >>> def create_a_class(**kw):
+   ...    return type('CoolClass', (object,), dict(**kw))
+   ...
+   >>> cool_class = create_a_class(foo='nice', bar='sweet')
+   >>> cool_class
+   <class '__main__.CoolClass'>
+   >>> cool_object = cool_class()
+   >>> cool_object
+   <__main__.CoolClass object at 0x10224e208>
+   >>> cool_object.foo
+   'nice'
+   >>> cool_object.bar
+   'sweet'
+
+
+Equivalent to:
+--------------
+
+
+::
+
+   class CoolClass(object):
+      foo = 'nice'
+      bar = 'sweet'
+
+      
+But it was created at runtime, returned from a function and assigned to a variable.
+
+
+http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example
+
+
+More on Classes
+---------------
+  
   Objects get created from classes. So what is the class of a class?
 
   The class of Class is a metaclass
@@ -74,6 +125,7 @@ or
 
 (``object`` is automatically a superclass)
 
+
 Adding methods to a class built with ``type()``
 -----------------------------------------------
 
@@ -89,7 +141,14 @@ dictionary
     o = MyClass()
     o.my_method()
 
+    
+MyClass = type(name, bases, dct)
 
+-  name: name of newly created class
+-  bases: tuple of class's base classes
+-  dct: class attribute mapping
+
+    
 What type is type?
 ------------------
 
@@ -157,6 +216,45 @@ abstracted from the user of the Model class.
 Here is the Django Model metaclass:
 
 https://github.com/django/django/blob/master/django/db/models/base.py#L77
+
+
+__new__  vs  __init__ in Metaclasses
+------------------------------------
+
+
+__new__ is used when you want to control the creation of the class (object) 
+
+__init__ is used when you want to control the initiation of the class (object) 
+
+__new__ and __init__ are both called when the module containing the class is imported for the first time.
+
+__call__ is used when you want to control how a class (object) is called (instantiation)
+
+
+.. nextslide::
+
+
+::
+
+
+   class CoolMeta(type):
+       def __new__(meta, name, bases, dct):
+           print('Creating class', name)
+           return super(CoolMeta, meta).__new__(meta, name, bases, dct)
+       def __init__(cls, name, bases, dct):
+	   print('Initializing class', name)
+	   super(CoolMeta, cls).__init__(name, bases, dct)
+       def __call__(cls, *args, **kw):
+           print('Meta has been called')
+	   return type.__call__(cls, *args, **kw)
+
+   class CoolClass(metaclass=CoolMeta):
+       def __init__(self):
+           print('And now my CoolClass exists')
+
+   print('Actually instantiating now')
+   foo = CoolClass()
+
 
 Metaclass example
 -----------------
