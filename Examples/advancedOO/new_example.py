@@ -30,6 +30,7 @@ class CapitalString(str):
     """
     def __new__(cls, in_string):
         print("in CapitalString.__new__")
+        print(cls)
         # return str.__new__(cls, in_string.title())
         return super().__new__(cls, in_string.title())
 

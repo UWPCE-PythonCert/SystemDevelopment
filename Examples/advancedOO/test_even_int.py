@@ -40,7 +40,7 @@ def test_negative():
 
 
 def test_negative_odd():
-    assert EvenInt(-1) == -2
+    assert EvenInt(-1) == 0
 
 
 def test_negative_odd2():

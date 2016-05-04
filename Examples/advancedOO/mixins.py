@@ -9,7 +9,7 @@ class Base():
 class LoggingMixin(Base):
     def log(self):
         print("time is: %s" % time.time())
-        print("this is:", self)
+        # print("this is:", self)
         super().log()
 
 
@@ -31,7 +31,7 @@ class HeavyVehicle(Vehicle):
     pass
 
 
-class Bike(TwoWheeledVehicle, LightVehicle):
+class Bike(LoggingMixin, TwoWheeledVehicle, LightVehicle):
     pass
 
 
