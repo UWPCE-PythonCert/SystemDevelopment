@@ -320,6 +320,18 @@ Your code should look like this:
     print(o1.X)
     assert id(o1) == id(o2)
 
+
+The Singleton
+-------------
+
+One common use of metaclasses is to create a singleton. There is an example of this called singleton.py in the Exaples directory. However, meataclasses are not the only way to create a singleton. It really depends on what you are trying to do with your singleton.
+
+
+http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Singleton.html
+
+http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python
+
+
 Reference reading
 -----------------
 
