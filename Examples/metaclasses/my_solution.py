@@ -7,7 +7,7 @@ class TestClass(object):
         self.config = config
         self.data = None
 
-    def initialize(self, engine):
+    def initialize(self):
         print('initialize data')
         self.data = 'initialized'
 
