@@ -324,7 +324,7 @@ Your code should look like this:
 The Singleton
 -------------
 
-One common use of metaclasses is to create a singleton. There is an example of this called singleton.py in the Exaples directory. However, meataclasses are not the only way to create a singleton. It really depends on what you are trying to do with your singleton.
+One common use of metaclasses is to create a singleton. There is an example of this called singleton.py in the Examples directory. However, metaclasses are not the only way to create a singleton. It really depends on what you are trying to do with your singleton.
 
 
 http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Singleton.html
