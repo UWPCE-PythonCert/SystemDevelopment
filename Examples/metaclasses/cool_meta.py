@@ -11,7 +11,7 @@ class CoolMeta(type):
     
 class CoolClass(metaclass=CoolMeta):
     def __init__(self):
-        print('And now my CoolClass exists')
+        print('And now my CoolClass object exists')
         
-print('everything loaded, instantiate coolclass now')
+print('everything loaded, instantiate a coolclass object now')
 foo = CoolClass()
