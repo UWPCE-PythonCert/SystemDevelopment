@@ -83,6 +83,9 @@
                 <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Metaclasses</a><ul>
 <li><a class="reference internal" href="#a-class-is-just-an-object">A class is just an object</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#equivalent-to">Equivalent to:</a></li>
+<li><a class="reference internal" href="#more-on-classes">More on Classes</a></li>
 <li><a class="reference internal" href="#what-is-a-metaclass">What is a metaclass?</a></li>
 <li><a class="reference internal" href="#type"><code class="docutils literal"><span class="pre">type()</span></code></a></li>
 <li><a class="reference internal" href="#using-type-to-build-a-class">using type() to build a class</a></li>
@@ -90,6 +93,7 @@
 <li><a class="reference internal" href="#what-type-is-type">What type is type?</a></li>
 <li><a class="reference internal" href="#metaclass"><code class="docutils literal"><span class="pre">metaclass</span></code></a></li>
 <li><a class="reference internal" href="#why-use-metaclasses">Why use metaclasses?</a></li>
+<li><a class="reference internal" href="#new-vs-init-in-metaclasses">__new__  vs  __init__ in Metaclasses</a></li>
 <li><a class="reference internal" href="#metaclass-example">Metaclass example</a></li>
 <li><a class="reference internal" href="#namemangler">NameMangler</a></li>
 <li><a class="reference internal" href="#exercise-working-with-namemangler">Exercise: Working with NameMangler</a></li>
@@ -147,10 +151,48 @@
 <p>adapted from work by Joseph Sheedy</p>
 <div class="section" id="a-class-is-just-an-object">
 <h2>A class is just an object<a class="headerlink" href="#a-class-is-just-an-object" title="Permalink to this headline">¶</a></h2>
-<p class="left">Objects get created from classes. So what is the class of a class?</p>
-<p class="left">The class of Class is a metaclass</p>
-<p class="left">The metaclass can be used to dynamically create a class</p>
-<p class="left">The metaclass, being a class, also has a metaclass</p>
+<p class="left">A class is a first-class object:</p>
+<p class="left">Can be created at runtime</p>
+<p class="left">Passed as a parameter</p>
+<p class="left">Returned from a function</p>
+<p class="left">Assigned to a variable</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">create_a_class</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;CoolClass&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cool_class</span> <span class="o">=</span> <span class="n">create_a_class</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="s1">&#39;nice&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;sweet&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cool_class</span>
+<span class="go">&lt;class &#39;__main__.CoolClass&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cool_object</span> <span class="o">=</span> <span class="n">cool_class</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cool_object</span>
+<span class="go">&lt;__main__.CoolClass object at 0x10224e208&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cool_object</span><span class="o">.</span><span class="n">foo</span>
+<span class="go">&#39;nice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cool_object</span><span class="o">.</span><span class="n">bar</span>
+<span class="go">&#39;sweet&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="equivalent-to">
+<h3>Equivalent to:<a class="headerlink" href="#equivalent-to" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CoolClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+   <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;nice&#39;</span>
+   <span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;sweet&#39;</span>
+</pre></div>
+</div>
+<p>But it was created at runtime, returned from a function and assigned to a variable.</p>
+<p><a class="reference external" href="http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example">http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example</a></p>
+</div>
+<div class="section" id="more-on-classes">
+<h3>More on Classes<a class="headerlink" href="#more-on-classes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Objects get created from classes. So what is the class of a class?</p>
+<p>The class of Class is a metaclass</p>
+<p>The metaclass can be used to dynamically create a class</p>
+<p>The metaclass, being a class, also has a metaclass</p>
+</div></blockquote>
+</div>
 <div class="section" id="what-is-a-metaclass">
 <h3>What is a metaclass?<a class="headerlink" href="#what-is-a-metaclass" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -208,6 +250,12 @@ dictionary</p>
 <span class="n">o</span><span class="o">.</span><span class="n">my_method</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>MyClass = type(name, bases, dct)</p>
+<ul class="simple">
+<li>name: name of newly created class</li>
+<li>bases: tuple of class&#8217;s base classes</li>
+<li>dct: class attribute mapping</li>
+</ul>
 </div>
 <div class="section" id="what-type-is-type">
 <h3>What type is type?<a class="headerlink" href="#what-type-is-type" title="Permalink to this headline">¶</a></h3>
@@ -254,6 +302,32 @@ configurations will lead to different class definitions. This is
 abstracted from the user of the Model class.</p>
 <p>Here is the Django Model metaclass:</p>
 <p><a class="reference external" href="https://github.com/django/django/blob/master/django/db/models/base.py#L77">https://github.com/django/django/blob/master/django/db/models/base.py#L77</a></p>
+</div>
+<div class="section" id="new-vs-init-in-metaclasses">
+<h3>__new__  vs  __init__ in Metaclasses<a class="headerlink" href="#new-vs-init-in-metaclasses" title="Permalink to this headline">¶</a></h3>
+<p>__new__ is used when you want to control the creation of the class (object)</p>
+<p>__init__ is used when you want to control the initiation of the class (object)</p>
+<p>__new__ and __init__ are both called when the module containing the class is imported for the first time.</p>
+<p>__call__ is used when you want to control how a class (object) is called (instantiation)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CoolMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Creating class&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CoolMeta</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing class&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CoolMeta</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Meta has been called&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CoolClass</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">CoolMeta</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;And now my CoolClass exists&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Actually instantiating now&#39;</span><span class="p">)</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">CoolClass</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="metaclass-example">
 <h3>Metaclass example<a class="headerlink" href="#metaclass-example" title="Permalink to this headline">¶</a></h3>
@@ -311,16 +385,16 @@ NameMangler and Singleton classes in the <code class="docutils literal"><span cl
 <div class="section" id="reference-reading">
 <h3>Reference reading<a class="headerlink" href="#reference-reading" title="Permalink to this headline">¶</a></h3>
 <p>About metaclasses (Python 3):</p>
-<p><a class="reference external" href="http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses">http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses</a></p>
-<p>Python 2 &#8211; mostly the same:</p>
+<p class="small"><a class="reference external" href="http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses">http://blog.thedigitalcatonline.com/blog/2014/09/01/python-3-oop-part-5-metaclasses</a></p>
+<p>Python 2 (mostly the same):</p>
 <p>What is a metaclass in Python?</p>
-<p><a class="reference external" href="http://stackoverflow.com/a/6581949/747729">http://stackoverflow.com/a/6581949/747729</a></p>
+<p class="small"><a class="reference external" href="http://stackoverflow.com/a/6581949/747729">http://stackoverflow.com/a/6581949/747729</a></p>
 <p>Python metaclasses by example:</p>
-<p><a class="reference external" href="http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/">http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/</a></p>
-<p>A Primer on Python Metaclasses</p>
-<p><a class="reference external" href="http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/">http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/</a></p>
+<p class="small"><a class="reference external" href="http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/">http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example/</a></p>
+<p>A Primer on Python Metaclasses:</p>
+<p class="small"><a class="reference external" href="http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/">http://jakevdp.github.io/blog/2012/12/01/a-primer-on-python-metaclasses/</a></p>
 <p>And some even more advanced tricks:</p>
-<p><a class="reference external" href="http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses">http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses</a></p>
+<p class="small"><a class="reference external" href="http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses">http://blog.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses</a></p>
 </div>
 </div>
 </div>

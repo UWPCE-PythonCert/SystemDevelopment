@@ -88,11 +88,11 @@
 <li><a class="reference internal" href="#the-diamond-problem">The Diamond Problem</a></li>
 <li><a class="reference internal" href="#id2">The Diamond Problem</a></li>
 <li><a class="reference internal" href="#the-method-resolution-order">The Method Resolution Order</a></li>
-<li><a class="reference internal" href="#super">super()</a></li>
+<li><a class="reference internal" href="#super"><code class="docutils literal"><span class="pre">super()</span></code></a></li>
 <li><a class="reference internal" href="#id3">super()</a></li>
 <li><a class="reference internal" href="#what-does-super-do">What does super() do?</a></li>
 <li><a class="reference internal" href="#super-mechanics">super() mechanics</a></li>
-<li><a class="reference internal" href="#more-detail-about-super">More detail about super()</a></li>
+<li><a class="reference internal" href="#for-more-information-about-super">For more information about super()</a></li>
 <li><a class="reference internal" href="#super-issues">super() issues...</a></li>
 <li><a class="reference internal" href="#calling-super">calling super():</a></li>
 <li><a class="reference internal" href="#lab">LAB</a></li>
@@ -170,7 +170,7 @@
         <span class="n">Super3</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">......</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>(calls to the super classes <code class="docutils literal"><span class="pre">__init__</span></code> are optional and case dependent)</p>
+<p>(calls to the super class&#8217; <code class="docutils literal"><span class="pre">__init__</span></code> are optional and case dependent)</p>
 <p><strong>Method Resolution Order:</strong>  left to right</p>
 <ol class="arabic simple">
 <li>Is it an instance attribute ?</li>
@@ -204,7 +204,8 @@
 </li>
 </ul>
 <p>Where do you put a Platypus?</p>
-<p>Real World Example: <code class="docutils literal"><span class="pre">wxPython</span> <span class="pre">FloatCanvas</span></code></p>
+<p>Real World Example: <code class="docutils literal"><span class="pre">wxPython</span> <span class="pre">FloatCanvas</span></code>:</p>
+<p class="small"><a class="reference external" href="https://github.com/wxWidgets/Phoenix/blob/master/wx/lib/floatcanvas/FCObjects.py">https://github.com/wxWidgets/Phoenix/blob/master/wx/lib/floatcanvas/FCObjects.py</a></p>
 </div>
 <div class="section" id="the-diamond-problem">
 <h3>The Diamond Problem<a class="headerlink" href="#the-diamond-problem" title="Permalink to this headline">¶</a></h3>
@@ -248,10 +249,11 @@ linearization algorithm:</p>
 <p><a class="reference external" href="http://www.python.org/download/releases/2.2.2/descrintro/#mro">http://www.python.org/download/releases/2.2.2/descrintro/#mro</a></p>
 <p>And one more:</p>
 <p><a class="reference external" href="http://www.python.org/download/releases/2.3/mro/">http://www.python.org/download/releases/2.3/mro/</a></p>
-<p>demo: <code class="docutils literal"><span class="pre">__mro__</span></code></p>
+<p>demo: <code class="docutils literal"><span class="pre">Examples/advancedOO/mro.py</span></code></p>
 </div>
 <div class="section" id="super">
-<h3>super()<a class="headerlink" href="#super" title="Permalink to this headline">¶</a></h3>
+<h3><code class="docutils literal"><span class="pre">super()</span></code><a class="headerlink" href="#super" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">super()</span></code> can handle the MRO for you dynamically</p>
 <p>Getting the superclass:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SafeVehicle</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -272,7 +274,7 @@ linearization algorithm:</p>
 <span class="sd">    Safe Vehicle subclass of Vehicle base class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;S&#39;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SafeVehicle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">icon</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">icon</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">super</span></code> is about more than just making it easier to refactor.</p>
@@ -286,34 +288,37 @@ linearization algorithm:</p>
 <p>It runs through the method resolution order (MRO) to find the method
 you call.</p>
 <p>Key point: the MRO is determined <em>at run time</em></p>
-<p><a class="reference external" href="http://docs.python.org/2/library/functions.html#super">http://docs.python.org/2/library/functions.html#super</a></p>
+<p><a class="reference external" href="https://docs.python.org/3.5/library/functions.html#super">https://docs.python.org/3.5/library/functions.html#super</a></p>
 <p>Not the same as calling one superclass method: <code class="docutils literal"><span class="pre">super()</span></code>
 will call all the sibling superclass methods:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-       <span class="nb">super</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>same as:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
        <span class="n">C</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
        <span class="n">B</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
        <span class="n">A</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="line-block">
-<div class="line">You may not want that &#8211;</div>
-<div class="line">demo: <code class="docutils literal"><span class="pre">Examples/week-06-OO/super_test.ipnb</span></code></div>
-</div>
+<p>You may not want that &#8211;</p>
 </div>
 <div class="section" id="super-mechanics">
 <h3>super() mechanics<a class="headerlink" href="#super-mechanics" title="Permalink to this headline">¶</a></h3>
-<p>Notice this (frankly ugly) requirement:</p>
+<p>In python3, you can usually call super() with no arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">a_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">a_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, the actual signature is:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">super</span><span class="p">(</span><span class="nb">type</span><span class="p">[,</span> <span class="nb">object</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nb">type</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>which usually is somethign like:</p>
+<p>and in py2, you needed to specify those:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">a_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">a_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -321,23 +326,22 @@ will call all the sibling superclass methods:</p>
 </div>
 <p>So why in the world do you need to specify both <cite>B</cite> (the type), and
 <cite>self</cite> (the instance?)</p>
-<p>First: Python 3 has cleaned this up, it&#8217;s just:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">a_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">a_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>In py3.</p>
-<p>In Python2, super was tacked on, so the additonal info is
-needed, and it does have the advantage of being explicit about the two
-inputs to the computation (the mro of self and the current position in
-the mro).</p>
+<p>In py3, those two values are &#8220;magically&#8221; taken from context.</p>
+<p>But <code class="docutils literal"><span class="pre">super()</span></code> still needs to know that info.</p>
+<p><code class="docutils literal"><span class="pre">super()</span></code> determines the method resolution at run-time, so it needs to
+know two things:</p>
+<ul class="simple">
+<li>The mro of current <em>instance</em></li>
+<li>The current <em>position</em> in the mro</li>
+</ul>
 <p>Note that while <cite>self</cite> needs to be a subclass of B here, it may not
 actually be an <em>instance</em> of B &#8211; it could be a subclass.</p>
 <p>That&#8217;s why both need to be specified.</p>
+<p>Let&#8217;s experiment with some of this:</p>
+<p>demo: <code class="docutils literal"><span class="pre">Examples/advancedOO/super_test.ipnb</span></code></p>
 </div>
-<div class="section" id="more-detail-about-super">
-<h3>More detail about super()<a class="headerlink" href="#more-detail-about-super" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="for-more-information-about-super">
+<h3>For more information about super()<a class="headerlink" href="#for-more-information-about-super" title="Permalink to this headline">¶</a></h3>
 <p>Two seminal articles about <code class="docutils literal"><span class="pre">super()</span></code>:</p>
 <p>&#8220;<em>Super Considered Harmful</em>&#8220;</p>
 <blockquote>
@@ -377,13 +381,13 @@ unless you really know what you&#8217;re doing.</p>
 </pre></div>
 </div>
 <p>and call super like</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">args_declared</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">args_declared</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="lab">
 <h3>LAB<a class="headerlink" href="#lab" title="Permalink to this headline">¶</a></h3>
-<p>In <code class="docutils literal"><span class="pre">Examples/week-06-OO/mixins.py</span></code>, you will find a few Vehicle classes
+<p>In <code class="docutils literal"><span class="pre">Examples/advancedOO/mixins.py</span></code>, you will find a few Vehicle classes
 laid out in a hierarchy</p>
 <p>The log() method is defined on Vehicle then called on a couple of
 instances</p>
@@ -401,7 +405,7 @@ Bike? Is it what you expected?</p>
 <h3>Class Creation<a class="headerlink" href="#class-creation" title="Permalink to this headline">¶</a></h3>
 <p>What happens when a class instance is created?</p>
 <p>This is the usual thing...</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arg1</span> <span class="o">=</span> <span class="n">arg1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arg2</span> <span class="o">=</span> <span class="n">arg2</span>
@@ -416,7 +420,7 @@ Bike? Is it what you expected?</p>
 <p>Note that <code class="docutils literal"><span class="pre">self</span></code> is already an instance of the class.</p>
 <p>What if you need to do something before creation?</p>
 <p>Enter: <code class="docutils literal"><span class="pre">__new__</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Class</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
         <span class="n">some_code_here</span>
         <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
@@ -440,11 +444,11 @@ Bike? Is it what you expected?</p>
 <p><code class="docutils literal"><span class="pre">cls</span></code> is the class object.</p>
 <p>The arguments (arg1, arg2) are what&#8217;s passed in when calling the class.</p>
 <p>It needs to return a class instance &#8211; usually by directly calling the superclass <code class="docutils literal"><span class="pre">__new__</span></code></p>
-<p>If nothing else, you can call <code class="docutils literal"><span class="pre">object.__new__</span></code></p>
+<p>If nothing else, you can call <code class="docutils literal"><span class="pre">object.__new__</span></code> (or <code class="docutils literal"><span class="pre">super().__new__</span></code>)</p>
 </div>
 <div class="section" id="when-to-use-new">
 <h3>When to use <code class="docutils literal"><span class="pre">__new__</span></code><a class="headerlink" href="#when-to-use-new" title="Permalink to this headline">¶</a></h3>
-<p class="medium">When would  you need to use it:</p>
+<p>When would  you need to use it:</p>
 <ul class="simple">
 <li>Subclassing an immutable type:<ul>
 <li>It&#8217;s too late to change it once you get to <code class="docutils literal"><span class="pre">__init__</span></code></li>
@@ -459,20 +463,17 @@ Bike? Is it what you expected?</p>
 <p>You may need to put some code in <code class="docutils literal"><span class="pre">__new__</span></code> to make sure things
 go right</p>
 <p>More detail here:</p>
-<p><a class="reference external" href="http://www.python.org/download/releases/2.7/descrintro/#__new__">http://www.python.org/download/releases/2.7/descrintro/#__new__</a></p>
+<p><a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#object.__new__">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
 </div>
 <div class="section" id="id4">
 <h3>LAB<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p><strong>Demo:</strong></p>
-<blockquote>
-<div><code class="docutils literal"><span class="pre">Examples/advancedOO/new_example.py</span></code></div></blockquote>
+<p><code class="docutils literal"><span class="pre">Examples/advancedOO/new_example.py</span></code></p>
 <p><strong>Exercise:</strong></p>
 <p>Write a subclass of int that will always be an even number:
 round the input to the closest even number:</p>
-<blockquote>
-<div><p><code class="docutils literal"><span class="pre">Examples/advancedOO/even_int.py</span></code></p>
+<p><code class="docutils literal"><span class="pre">Examples/advancedOO/even_int.py</span></code></p>
 <p><code class="docutils literal"><span class="pre">Examples/advancedOO/test_even_int.py</span></code></p>
-</div></blockquote>
 </div>
 <div class="section" id="wrap-up">
 <h3>Wrap Up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h3>
@@ -490,14 +491,13 @@ round the input to the closest even number:</p>
 <h3>Wrap Up<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>OO in Python:</p>
 <p><em>The Art of Subclassing</em>:  &#8211; Raymond Hettinger</p>
-<blockquote>
-<div><a class="reference external" href="http://pyvideo.org/video/879/the-art-of-subclassing">http://pyvideo.org/video/879/the-art-of-subclassing</a></div></blockquote>
+<p><a class="reference external" href="http://pyvideo.org/video/879/the-art-of-subclassing">http://pyvideo.org/video/879/the-art-of-subclassing</a></p>
 <p>&#8220;classes are for code re-use &#8211; not creating taxonomies&#8221;</p>
 <p><em>Stop Writing Classes</em>:  &#8211; Jack Diederich</p>
 <p><a class="reference external" href="http://pyvideo.org/video/880/stop-writing-classes">http://pyvideo.org/video/880/stop-writing-classes</a></p>
-<p>&#8220;If your class has only two methods and one of them is <code class="docutils literal"><span class="pre">__init__</span></code> &#8211; you don&#8217;t need a class&#8221;</p>
-<p>and</p>
 <p>&#8220;I hate code: I want as little of it in our product as possible&#8221;</p>
+<p>and</p>
+<p>&#8220;If your class has only two methods and one of them is <code class="docutils literal"><span class="pre">__init__</span></code> &#8211; you don&#8217;t need a class&#8221;</p>
 </div>
 </div>
 </div>
