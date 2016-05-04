@@ -213,7 +213,7 @@ will call all the sibling superclass methods:
 
     class D(C, B, A):
         def __init__(self):
-           super(D, self).__init__()
+           super().__init__()
 
 same as:
 
@@ -225,20 +225,26 @@ same as:
            B.__init__()
            A.__init__()
 
-| You may not want that --
-| demo: ``Examples/advancedOO/super_test.ipnb``
-
+You may not want that --
 
 super() mechanics
 ------------------
 
-Notice this (frankly ugly) requirement:
+In python3, you can usually call super() with no arguments:
+
+.. code-block:: python
+
+  class B(A):
+      def a_method(self, *args, **kwargs)
+          super().a_method(*args, **kwargs)
+
+However, the actual signature is:
 
 .. code-block:: python
 
   super(type[, object-or-type])
 
-which usually is somethign like:
+and in py2, you needed to specify those:
 
 .. code-block:: python
 
@@ -251,29 +257,28 @@ So why in the world do you need to specify both `B` (the type), and
 
 .. nextslide::
 
-First: Python 3 has cleaned this up, it's just:
+In py3, those two values are "magically" taken from context.
 
-.. code-block:: python
+But ``super()`` still needs to know that info.
 
-  class B(A):
-      def a_method(self, *args, **kwargs)
-          super().a_method(*args, **kwargs)
+``super()`` determines the method resolution at run-time, so it needs to
+know two things:
 
-In py3.
-
-In Python2, super was tacked on, so the additonal info is
-needed, and it does have the advantage of being explicit about the two
-inputs to the computation (the mro of self and the current position in
-the mro).
+* The mro of current *instance*
+* The current *position* in the mro
 
 Note that while `self` needs to be a subclass of B here, it may not
 actually be an *instance* of B -- it could be a subclass.
 
 That's why both need to be specified.
 
+Let's experiment with some of this:
 
-More detail about super()
--------------------------
+demo: ``Examples/advancedOO/super_test.ipnb``
+
+
+For more information about super()
+----------------------------------
 
 Two seminal articles about ``super()``:
 
@@ -325,12 +330,12 @@ and call super like
 
 .. code-block:: python
 
-  super(MyClass, self).method(args_declared, *args, **kwargs)
+  super().method(args_declared, *args, **kwargs)
 
 LAB
 ----
 
-In ``Examples/week-06-OO/mixins.py``, you will find a few Vehicle classes
+In ``Examples/advancedOO/mixins.py``, you will find a few Vehicle classes
 laid out in a hierarchy
 
 The log() method is defined on Vehicle then called on a couple of
@@ -363,7 +368,7 @@ This is the usual thing...
 
 .. code-block:: python
 
-    class Class(object):
+    class Class():
         def __init__(self, arg1, arg2):
             self.arg1 = arg1
             self.arg2 = arg2
@@ -383,7 +388,7 @@ Enter: ``__new__``
 
 .. code-block:: python
 
-    class Class(object):
+    class Class():
         def __new__(cls, arg1, arg2):
             some_code_here
             return cls(...)
@@ -416,15 +421,14 @@ The arguments (arg1, arg2) are what's passed in when calling the class.
 
 It needs to return a class instance -- usually by directly calling the superclass ``__new__``
 
-If nothing else, you can call ``object.__new__``
+If nothing else, you can call ``object.__new__`` (or ``super().__new__``)
 
 
 When to use ``__new__``
 ------------------------
 
-.. rst-class:: medium
 
-  When would  you need to use it:
+When would  you need to use it:
 
 * Subclassing an immutable type:
 
@@ -449,17 +453,17 @@ LAB
 
 **Demo:**
 
- ``Examples/advancedOO/new_example.py``
+``Examples/advancedOO/new_example.py``
 
 **Exercise:**
 
 Write a subclass of int that will always be an even number:
 round the input to the closest even number:
 
-  ``Examples/advancedOO/even_int.py``
+``Examples/advancedOO/even_int.py``
 
 
-  ``Examples/advancedOO/test_even_int.py``
+``Examples/advancedOO/test_even_int.py``
 
 
 Wrap Up
@@ -490,7 +494,7 @@ OO in Python:
 *The Art of Subclassing*:  -- Raymond Hettinger
 
 
-  http://pyvideo.org/video/879/the-art-of-subclassing
+http://pyvideo.org/video/879/the-art-of-subclassing
 
 
 "classes are for code re-use -- not creating taxonomies"
@@ -501,10 +505,8 @@ OO in Python:
 
 http://pyvideo.org/video/880/stop-writing-classes
 
-"If your class has only two methods and one of them is ``__init__`` -- you don't need a class"
+"I hate code: I want as little of it in our product as possible"
 
 and
 
-"I hate code: I want as little of it in our product as possible"
-
-
+"If your class has only two methods and one of them is ``__init__`` -- you don't need a class"

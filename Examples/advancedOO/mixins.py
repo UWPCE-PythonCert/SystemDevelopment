@@ -1,22 +1,22 @@
 import time
 
 
-class Base(object):
+class Base():
     def log(self):
         pass
 
 
 class LoggingMixin(Base):
     def log(self):
-        print("%s" % time.time(),)
-        print("self is:", self)
-        super(LoggingMixin, self).log()
+        print("time is: %s" % time.time())
+        print("this is:", self)
+        super().log()
 
 
 class Vehicle(Base):
     def log(self):
-        print(self.__repr__())
-        super(Vehicle, self).log()
+        print("this is:", self.__repr__())
+        super().log()
 
 
 class TwoWheeledVehicle(Vehicle):
@@ -31,7 +31,7 @@ class HeavyVehicle(Vehicle):
     pass
 
 
-class Bike(LoggingMixin, TwoWheeledVehicle, LightVehicle):
+class Bike(TwoWheeledVehicle, LightVehicle):
     pass
 
 

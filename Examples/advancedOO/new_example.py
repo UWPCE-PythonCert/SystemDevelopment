@@ -10,8 +10,10 @@ class Test():
     def __new__(cls, arg):
         print("in __new__:")
         print(arg)
-        obj = object.__new__(cls, arg)
-        obj.this = arg  # but you probably don't want to do this!
+        obj = super().__new__(cls)
+        # you _could_ do something with arg here:
+        obj.arg = arg
+        # but it's usally better to save that for the __init__
         return obj
 
     def __init__(self, arg):
@@ -28,9 +30,8 @@ class CapitalString(str):
     """
     def __new__(cls, in_string):
         print("in CapitalString.__new__")
-        return Test.__new__(cls, in_string)
-        # return str.__new__(cls, in_string.title() )
+        # return str.__new__(cls, in_string.title())
+        return super().__new__(cls, in_string.title())
 
-# try it:
-# if __name__ == "__main__":
-#     print(CapitalString("this is a string"))
+if __name__ == "__main__":
+    print(CapitalString("this is a string"))
