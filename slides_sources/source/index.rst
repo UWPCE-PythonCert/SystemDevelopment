@@ -85,7 +85,8 @@ Session 7
 
 .. rst-class:: left
 
-  - `multi-threading/processing <html_slides/07-threading-and-multiprocessing.html>`_
+  - :ref:`threading`
+
 
 Session 8
 =========
