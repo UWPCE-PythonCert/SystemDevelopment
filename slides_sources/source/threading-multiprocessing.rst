@@ -1,103 +1,67 @@
-.. raw:: html
+.. _threading:
 
-   <div class="deck-container">
+#############################
+Threading and multiprocessing
+#############################
 
-.. raw:: html
+Threading / multiprocessing
+===========================
 
-   <div class="section slide">
-
-.. rubric:: System Development with Python
-   :name: system-development-with-python
-
-.. rubric:: Week 7 :: threading and multiprocessing
-   :name: week-7-threading-and-multiprocessing
-
-Joseph Sheedy
-
-*joseph.sheedy@gmail.com*
-
-Git repository:
-https://github.com/UWPCE-PythonCert/SystemDevelopment2015
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Threading / multiprocessing
-   :name: threading-multiprocessing
-
-.. rubric:: Today's topics
-   :name: todays-topics
+Today's topics:
 
 -  Threading / multiprocessing motivation and options
 -  threading module
 -  multiprocessing module
 -  other options
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Motivations for parallel execution
-   :name: motivations-for-parallel-execution
+Motivations for parallel execution
+----------------------------------
 
 -  Performance
 
-   -  Limited by `Amdahl's
-      Law <http://en.wikipedia.org/wiki/Amdahl%27s_law>`__
+   -  Limited by "Amdahl's Law"
+      http://en.wikipedia.org/wiki/Amdahl%27s_law
+
    -  CPUs aren't getting much faster
 
 -  Event handling
 
-   If a system handles asynchronous events, a seperate thread of
-   execution could handle those events and let other threads do other
-   work
+   - If a system handles asynchronous events, a seperate thread of
+     execution could handle those events and let other threads do other
+     work
 
-   Examples:
+   - Examples:
 
-   -  Network applications
-   -  User interfaces
+     -  Network applications
+
+     -  User interfaces
 
 Parallel programming can be hard!
 
 If your problem can be solved sequentially, consider the costs and
 benefits before going parallel.
 
-.. raw:: html
 
-   </div>
+Parallelization strategy for performance
+----------------------------------------
 
-.. raw:: html
+1. Break problem down into chunks
+1. Execute chunks in parallel
+1. Reassemble output of chunks into result
 
-   <div class="section slide">
+.. image:: images/OPP.0108.gif
+   :align: center
+   :width: 60.0%
 
-.. rubric:: Parallelization strategy for performance
-   :name: parallelization-strategy-for-performance
+..   :height: 100px
+..   :width: 200 px
+..   :scale: 50 %
+..   :alt: alternate text
 
-#. Break problem down into chunks
-#. Execute chunks in parallel
-#. Reassemble output of chunks into result
 
-|image0|
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Parallelization strategy for performance
-   :name: parallelization-strategy-for-performance-1
+Parallelization strategy for performance
+----------------------------------------
 
 -  Not every problem is parallelizable
 -  There is an optimal number of threads for each problem in each
@@ -109,19 +73,9 @@ benefits before going parallel.
    -  queues
    -  signaling/messaging mechanisms
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Threads versus processes in Python
-   :name: threads-versus-processes-in-python
-
-.. rubric:: Threads
-   :name: threads
+Threads versus processes in Python
+----------------------------------
 
 Threads are lightweight processes, run in the address space of an OS
 process.
@@ -136,8 +90,8 @@ due to the Global Interpreter Lock (GIL)
 But the GIL is released during IO, allowing IO bound processes to
 benefit from threading
 
-.. rubric:: Processes
-   :name: processes
+Processes
+---------
 
 A process contains all the instructions and data required to execute
 independently
@@ -145,31 +99,24 @@ independently
 The Python interpreter isn't lightweight!
 
 Communication between processes can be achieved via
-multiprocessing.Queue, multiprocessing.Pipe, and regular IPC
+``multiprocessing.Queue``, ``multiprocessing.Pipe``, and regular IPC
 
-processes require multiple copies of the data, or expensive IPC to
+Processes require multiple copies of the data, or expensive IPC to
 access it
 
-data moved between processes must be pickleable
+Data moved between processes must be pickleable
 
-.. raw:: html
+GIL
+---
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: GIL
-   :name: gil
-
-.. rubric:: Global Interpreter Lock
-   :name: global-interpreter-lock
+**Global Interpreter Lock**
 
 This is a lock which must be obtained by each thread before it can
 execute, ensuring thread safety
 
-|image1|
+.. image:: images/gil.png
+    :width: 100.0%
+
 The GIL is released during IO operations, so threads which spend time
 waiting on network or disk access can enjoy performance gains
 
@@ -182,55 +129,34 @@ Launch multiple processes to speed up CPU bound operations. Luckily,
 this is easy with the multiprocessing module.
 
 -  http://wiki.python.org/moin/GlobalInterpreterLock
--  http://docs.python.org/2/c-api/init.html#threads
+-  https://docs.python.org/3.5/c-api/init.html#threads
 -  http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761
 
-.. raw:: html
+Posted without comment
+----------------------
 
-   </div>
+.. image:: images/killGIL.jpg
+  :width: 500px
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: posted without comment
-   :name: posted-without-comment
-
-|image2|
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: A CPU bound problem
-   :name: a-cpu-bound-problem
+A CPU bound problem
+-------------------
 
 Numerically integrate the function `y =
 x\ :sup:`2` <http://www.wolframalpha.com/input/?i=x%5E2>`__ from 0 to
 10.
 
-| |image3|
-| `Solution <http://www.wolframalpha.com/input/?i=int%28x%5E2%2C0%2C10%29>`__
+.. image:: images/x2.png
 
-.. raw:: html
+Solution: http://www.wolframalpha.com/input/?i=int(x%5E2,0,10)
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Parallel execution example
-   :name: parallel-execution-example
+Parallel execution example
+--------------------------
 
 Consider the following code from
-week-07/threading\_and\_multiprocessing/examples/integrate/sequential
 
-::
+``Examples/integrate/integrate.py``
+
+.. code-block:: python
 
     def f(x):
         return x**2
@@ -242,28 +168,19 @@ week-07/threading\_and\_multiprocessing/examples/integrate/sequential
             s += f(a+i*dx)
         return s * dx
 
-    print integrate(f, 0, 10, 100)
-          
+    print(integrate(f, 0, 10, 100))
 
 Break down the problem into parallelizable chunks, then add the results
 together:
 
 We can do better than this
 
-.. raw:: html
+The threading module
+--------------------
 
-   </div>
+Starting threads doesn't take much:
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: the threading module
-   :name: the-threading-module
-
-starting threads doesn't take much:
-
-::
+.. code-block:: python
 
     import sys
     import threading
@@ -271,7 +188,7 @@ starting threads doesn't take much:
 
     def func():
         for i in xrange(5):
-            print "hello from thread %s" % threading.current_thread().name
+            print("hello from thread %s" % threading.current_thread().name)
             time.sleep(1)
 
     threads = []
@@ -288,22 +205,15 @@ starting threads doesn't take much:
    things like garbage collection, network keepalives, ..
 -  You can block and wait for a thread to exit with thread.join()
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Subclassing Thread
-   :name: subclassing-thread
+Subclassing Thread
+------------------
 
 You can adding threading capability to your own classes
 
 Subclass Thread and implement the run method
 
-::
+code-block:: python
 
     import threading
 
@@ -314,16 +224,8 @@ Subclass Thread and implement the run method
     thread = MyThread()
     thread.start()
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Race Conditions
-   :name: race-conditions
+Race Conditions
+---------------
 
 In the last example we saw threads competing for access to stdout.
 
@@ -333,7 +235,7 @@ an unexpected race condition
 Race conditions occur when multiple statements need to execute
 atomically, but get interrupted midway
 
-See examples/race\_condition.py
+See ``Examples/race_condition.py``
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
@@ -371,47 +273,31 @@ See examples/race\_condition.py
 |                    | write back         | →                  | 1                  |
 +--------------------+--------------------+--------------------+--------------------+
 
-http://en.wikipedia.org/wiki/Race_condition
+``http://en.wikipedia.org/wiki/Race_condition``
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Deadlocks
-   :name: deadlocks
+Deadlocks
+---------
 
 Synchronization and Critical Sections are used to control race
 conditions
 
 But they introduce other potential problems...
 
-...like `Deadlocks <http://en.wikipedia.org/wiki/Deadlock>`__!
+like: http://en.wikipedia.org/wiki/Deadlock
 
 "A deadlock is a situation in which two or more competing actions are
 each waiting for the other to finish, and thus neither ever does."
 
 *When two trains approach each other at a crossing, both shall come to a
-full stop and neither shall start up again until the other has gone.*
+full stop and neither shall start up again until the other has gone*
 
 See also *Livelock*: *Two people meet in a narrow corridor, and each
 tries to be polite by moving aside to let the other pass, but they end
 up swaying from side to side without making any progress because they
 both repeatedly move the same way at the same time.*
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Locks
-   :name: locks
+Locks
+-----
 
 Lock objects allow threads to control access to a resource until they're
 done with it
@@ -424,14 +310,14 @@ instead.
 A Lock has two states: locked and unlocked
 
 If multiple threads have access to the same Lock, they can police
-themselves by calling its .acquire() and .release() methods
+themselves by calling its ``.acquire()`` and ``.release()`` methods
 
 If a Lock is locked, .acquire will block until it becomes unlocked
 
 These threads will wait in line politely for access to the statements in
 f()
 
-::
+.. code-block:: python
 
     import threading
     import time
@@ -448,109 +334,70 @@ f()
     threading.Thread(target=f).start()
     threading.Thread(target=f).start()
 
-.. raw:: html
+Nonblocking Locking
+-------------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: nonblocking locking
-   :name: nonblocking-locking
-
-.acquire() will return True if it successfully acquires a lock
+``.acquire()`` will return True if it successfully acquires a lock
 
 Its first argument is a boolean which specifies whether a lock should
-block or not. The default is True ````
+block or not. The default is ``True``
 
-::
+.. code-block:: python
 
     import threading
     lock = threading.Lock()
     lock.acquire()
     if not lock.acquire(False):
-        print "couldn't get lock"
+        print("couldn't get lock")
     lock.release()
     if lock.acquire(False):
-        print "got lock"
+        print("got lock")
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: threading.RLock - Reentrant Lock
-   :name: threading.rlock---reentrant-lock
+``threading.RLock`` - Reentrant Lock
+------------------------------------
 
 Useful for recursive algorithms, a thread-specific count of the locks is
 maintained
 
 A reentrant lock can be acquired multiple times by the same thread
 
-Lock.release() must be called the same number of times as Lock.acquire()
+``Lock.release()`` must be called the same number of times as ``Lock.acquire()``
 by that thread
 
-.. raw:: html
+``threading.Semaphore``
+-----------------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: threading.Semaphore
-   :name: threading.semaphore
-
-Like an RLock, but in reverse
+Like an ``RLock``, but in reverse
 
 A Semaphore is given an initial counter value, defaulting to 1
 
-Each call to acquire() decrements the counter, release() increments it
+Each call to ``acquire()`` decrements the counter, ``release()`` increments it
 
-If acquire() is called on a Semaphore with a counter of 0, it will block
+If ``acquire()`` is called on a Semaphore with a counter of 0, it will block
 until the Semaphore counter is greater than 0.
 
 Useful for controlling the maximum number of threads allowed to access a
 resource simultaneously
 
-|image4|
+.. image:: images/flags.jpg
 
 http://en.wikipedia.org/wiki/Semaphore_(programming)
 
-.. raw:: html
+Locking Exercise
+----------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Locking Exercise
-   :name: locking-exercise
-
-find examples/lock/stdout\_writer.py
+find ``Examples/lock/stdout_writer.py``
 
 multiple threads in the script write to stdout, and their output gets
 jumbled
 
-#. Add a locking mechanism to give each thread exclusive access to
+1. Add a locking mechanism to give each thread exclusive access to
    stdout
-#. Try adding a Semaphore to allow 2 threads access at once
+1. Try adding a Semaphore to allow 2 threads access at once
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Managing thread results
-   :name: managing-thread-results
+Managing thread results
+-----------------------
 
 We need a thread safe way of storing results from multiple threads of
 execution. That is provided by the Queue module.
@@ -564,7 +411,7 @@ It will block consumers if empty and block producers if full
 
 If maxsize is less than or equal to zero, the queue size is infinite
 
-::
+.. code-block:: python
 
     from Queue import Queue
     q = Queue(maxsize=10)
@@ -576,38 +423,22 @@ If maxsize is less than or equal to zero, the queue size is infinite
 -  http://docs.python.org/2/library/threading.html
 -  http://docs.python.org/2/library/queue.html
 
-.. raw:: html
+Other Queue types
+-----------------
 
-   </div>
+``Queue.LifoQueue`` - Last In, First Out
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Other Queue types
-   :name: other-queue-types
-
-Queue.LifoQueue - Last In, First Out
-
-Queue.PriorityQueue - Lowest valued entries are retrieved first
+``Queue.PriorityQueue`` - Lowest valued entries are retrieved first
 
 One pattern for PriorityQueue is to insert entries of form data by
-inserting the tuple: (priority\_number, data)
+inserting the tuple: ``(priority_number, data)``
 
-.. raw:: html
+Threading example
+-----------------
 
-   </div>
+See Examples/threading/integrate_main.py
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: threading example
-   :name: threading-example
-
-See examples/threading/integrate\_main.py
-
-::
+.. code-block::python
 
     #!/usr/bin/env python
 
@@ -659,22 +490,14 @@ See examples/threading/integrate\_main.py
         print "Numerical solution with N=%(N)d : %(x)f" % \
                 {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Threading on a CPU bound problem
-   :name: threading-on-a-cpu-bound-problem
+Threading on a CPU bound problem
+--------------------------------
 
 Try running the code in examples/threading/integrate\_main.py
 
 It accepts 4 arguments:
 
-::
+.. code-block:; python
 
     ./integrate_main.py -h
     usage: integrate_main.py [-h] [a] [b] [N] [thread_count]
@@ -686,33 +509,21 @@ It accepts 4 arguments:
       b
       N
       thread_count
-          
 
-````
-::
-
-    ./integrate_main.py 0 10 1000000 4
+``./integrate_main.py 0 10 1000000 4``
 
 What happens when you change the thread count? What thread count gives
 the maximum speed?
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: multiprocessing
-   :name: multiprocessing
+multiprocessing
+---------------
 
 multiprocessing provides an API very similar to threading, so the
 transition is easy
 
 use multiprocessing.Process instead of threading.Thread
 
-::
+.. code-block:: python
 
     import multiprocessing
     import os
@@ -727,74 +538,47 @@ use multiprocessing.Process instead of threading.Thread
     proc = multiprocessing.Process(target=func, args=())
     proc.start()
 
-.. raw:: html
+Differences with threading
+--------------------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Differences with threading
-   :name: differences-with-threading
-
-multiprocessing has its own multiprocessing.Queue which handles
+Multiprocessing has its own multiprocessing.Queue which handles
 interprocess communication
 
 Also has its own versions of Lock, RLock, Semaphore
 
-::
+.. code-block:: python
 
-          from multiprocessing import Queue, Lock
-          
+    from multiprocessing import Queue, Lock
 
-multiprocessing.Pipe for 2-way process communication:
+``multiprocessing.Pipe`` for 2-way process communication:
 
-::
+.. code-block:: python
 
     from multiprocessing import Pipe
     parent_conn, child_conn = Pipe()
     child_conn.send("foo")
     print parent_conn.recv()
-          
 
-.. raw:: html
+Pooling
+-------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Pooling
-   :name: pooling
-
-a processing pool contains worker processes with only a configured
+A processing pool contains worker processes with only a configured
 number running at one time
 
-::
+.. code-block:: python
 
     from multiprocessing import Pool
     pool = Pool(processes=4)
-          
 
 The Pool module has several methods for adding jobs to the pool
 
--  apply\_async(func[, args[, kwargs[, callback]]])
--  map\_async(func, iterable[, chunksize[, callback]])
+-  apply_async(func[, args[, kwargs[, callback]]])
+-  map_async(func, iterable[, chunksize[, callback]])
 
-.. raw:: html
+Pooling example
+---------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Pooling example
-   :name: pooling-example
-
-::
+.. code-block:: python
 
     from multiprocessing import Pool
 
@@ -817,44 +601,26 @@ The Pool module has several methods for adding jobs to the pool
         import time
         result = pool.apply_async(time.sleep, (10,))
         print result.get(timeout=1)
-          
 
 http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool
 
-.. raw:: html
+ThreadPool
+----------
 
-   </div>
+Threading also has a pool
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: ThreadPool
-   :name: threadpool
-
-threading also has a pool
-
-confusingly, it lives in the multiprocessing module
+Confusingly, it lives in the multiprocessing module
 
 ::
 
           from multiprocessing.pool import ThreadPool
           pool = ThreadPool(processes=4)
-          
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: threading versus multiprocessing, networking edition
-   :name: threading-versus-multiprocessing-networking-edition
+threading versus multiprocessing, networking edition
+----------------------------------------------------
 
 We're going to test making concurrent connections to a web service in
-examples/server/app.py
+``Examples/server/app.py``
 
 It is a WSGI application which can be run with Green Unicorn or another
 WSGI server
@@ -863,26 +629,19 @@ WSGI server
 
     $ gunicorn app:app --bind 0.0.0.0:37337
 
-client-threading.py makes 100 threads to contact the web service
+``client-threading.py`` makes 100 threads to contact the web service
 
-client-mp.py makes 100 processes to contact the web service
+``client-mp.py`` makes 100 processes to contact the web service
 
-client-pooled.py creates a ThreadPool
+``client-pooled.py`` creates a ThreadPool
 
-client-pooled.py contains a results Queue, but doesn't use it. Can you
+``client-pooled.py`` contains a results Queue, but doesn't use it. Can you
 collect all the output from the pool into a single data structure using
 this Queue?
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Other options
-   :name: other-options
+Other options
+-------------
 
 Traditionally, concurency has been achieved through multiple process
 communication and in-process threads, as we've seen
@@ -904,16 +663,8 @@ model <http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitaski
    Concurrency <http://dabeaz.com/coroutines/>`__
 -  http://en.wikipedia.org/wiki/Coroutine
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: With send(), a generator becomes a coroutine
-   :name: with-send-a-generator-becomes-a-coroutine
+With send(), a generator becomes a coroutine
+--------------------------------------------
 
 ::
 
@@ -937,20 +688,12 @@ model <http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitaski
     for i in range(5):
         for target in targets:
             target.send(i)
-          
 
 http://dabeaz.com/coroutines/Coroutines.pdf
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Packages using coroutines for micro threads
-   :name: packages-using-coroutines-for-micro-threads
+Packages using coroutines for micro threads
+-------------------------------------------
 
 By "jumping" to parallel coroutines, our application can simulate true
 threads.
@@ -966,16 +709,8 @@ reader, but look into these packages which handle the dirty work
    greenlet and libevent, a portable event loop with strong OS support
 -  Python 3.4+ : the asyncio module
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Distributed programming
-   :name: distributed-programming
+Distributed programming
+-----------------------
 
 A distributed system is one in which components located on networked
 computers communicate and coordinate their actions by passing messages
@@ -983,16 +718,8 @@ computers communicate and coordinate their actions by passing messages
 There are lots of ways to do this at different layers. MPI, \*-RPC,
 Pyro, ...
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Celery
-   :name: celery
+Celery
+------
 
 "Celery is an asynchronous task queue/job queue based on distributed
 message passing"
@@ -1012,16 +739,8 @@ several:
 Celery worker processes are run on compute nodes, while the main process
 farms jobs out to them. http://www.celeryproject.org/
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Celery in one minute
-   :name: celery-in-one-minute
+Celery in one minute
+--------------------
 
 ::
 
@@ -1044,45 +763,8 @@ farms jobs out to them. http://www.celeryproject.org/
     from tasks import add
     result = add.delay(2,3)
     print result.get()
-          
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Questions?
-   :name: questions
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div aria-role="navigation">
-
-`← <#>`__ `→ <#>`__
-
-.. raw:: html
-
-   </div>
-
- /
-
-.. raw:: html
-
-   </div>
-
-.. |image0| image:: images/OPP.0108.gif
-   :width: 60.0%
-.. |image1| image:: images/gil.png
-   :width: 100.0%
-.. |image2| image:: images/killGIL.jpg
-   :width: 500px
-.. |image3| image:: images/x2.png
-.. |image4| image:: images/flags.jpg
+Questions?
+----------
 
