@@ -77,8 +77,10 @@ Parallelization strategy for performance
 Threads versus processes in Python
 ----------------------------------
 
-Threads are lightweight processes, run in the address space of an OS
-process.
+Threads are lightweight processes_, run in the address space of an OS
+process, so a component of a a process.
+
+.. _processes: https://en.wikipedia.org/wiki/Light-weight_process
 
 This allows multiple threads access to data in the same scope.
 
@@ -94,15 +96,15 @@ Processes
 ---------
 
 A process contains all the instructions and data required to execute
-independently
+independently, so processes do not share data!
+
+Mulitple processes best to speed up CPU bound operations. 
 
 The Python interpreter isn't lightweight!
 
 Communication between processes can be achieved via
-``multiprocessing.Queue``, ``multiprocessing.Pipe``, and regular IPC
+``multiprocessing.Queue``, ``multiprocessing.Pipe``, and regular IPC (inter-process communication)
 
-Processes require multiple copies of the data, or expensive IPC to
-access it
 
 Data moved between processes must be pickleable
 
@@ -120,14 +122,19 @@ execute, ensuring thread safety
 The GIL is released during IO operations, so threads which spend time
 waiting on network or disk access can enjoy performance gains
 
+The GIL is not unlike multitasking in humans, some things can truly be 
+done in parallel, others have to be done by time slicing.
+
+Note that potentially blocking or long-running operations, such as I/O, image processing, and NumPy number crunching, happen outside the GIL. Therefore it is only in multithreaded programs that spend a lot of time inside the GIL, interpreting CPython bytecode, that the GIL becomes a bottleneck. But: it can still cause performance degradation.
+
+Not only will threads not help cpu-bound problems, but it can actually make things worse, especially on multi-core machines!
+
 Some alternative Python implementations such as Jython and IronPython
 have no GIL
 
 cPython and PyPy have one
 
-Launch multiple processes to speed up CPU bound operations. Luckily,
-this is easy with the multiprocessing module.
-
+-  https://www.youtube.com/watch?v=Obt-vMVdM8s David Beazley's talk on the gil
 -  http://wiki.python.org/moin/GlobalInterpreterLock
 -  https://docs.python.org/3.5/c-api/init.html#threads
 -  http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761
