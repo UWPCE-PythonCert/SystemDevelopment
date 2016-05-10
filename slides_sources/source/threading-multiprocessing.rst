@@ -47,17 +47,16 @@ Parallelization strategy for performance
 ----------------------------------------
 
 1. Break problem down into chunks
-1. Execute chunks in parallel
-1. Reassemble output of chunks into result
+2. Execute chunks in parallel
+3. Reassemble output of chunks into result
+
+
+.. nextslide::
+
 
 .. image:: images/OPP.0108.gif
    :align: center
-   :width: 60.0%
-
-..   :height: 100px
-..   :width: 200 px
-..   :scale: 50 %
-..   :alt: alternate text
+   :width: 50.0%
 
 
 Parallelization strategy for performance
@@ -78,13 +77,13 @@ Threads versus processes in Python
 ----------------------------------
 
 Threads are lightweight processes_, run in the address space of an OS
-process, so a component of a a process.
+process, true OS level threads.
+
+Therefor, a component of a a process.
 
 .. _processes: https://en.wikipedia.org/wiki/Light-weight_process
 
 This allows multiple threads access to data in the same scope.
-
-Python threads are true OS level threads
 
 Threads can not gain the performance advantage of multiple processors
 due to the Global Interpreter Lock (GIL)
@@ -119,6 +118,9 @@ execute, ensuring thread safety
 .. image:: images/gil.png
     :width: 100.0%
 
+
+.. nextslide::
+
 The GIL is released during IO operations, so threads which spend time
 waiting on network or disk access can enjoy performance gains
 
@@ -129,10 +131,16 @@ Note that potentially blocking or long-running operations, such as I/O, image pr
 
 Not only will threads not help cpu-bound problems, but it can actually make things worse, especially on multi-core machines!
 
+
+.. nextslide::
+
+
 Some alternative Python implementations such as Jython and IronPython
 have no GIL
 
 cPython and PyPy have one
+
+More Information on the Gil
 
 -  https://www.youtube.com/watch?v=Obt-vMVdM8s David Beazley's talk on the gil
 -  http://wiki.python.org/moin/GlobalInterpreterLock
@@ -149,7 +157,7 @@ A CPU bound problem
 -------------------
 
 Numerically integrate the function `y =
-x\ :sup:`2` <http://www.wolframalpha.com/input/?i=x%5E2>`__ from 0 to
+x\`  :sup:`2` <http://www.wolframalpha.com/input/?i=x%5E2>`__ from 0 to
 10.
 
 .. image:: images/x2.png
@@ -204,6 +212,10 @@ Starting threads doesn't take much:
         thread.start()
         threads.append(thread)
 
+
+.. nextslide::
+
+
 -  The process will exit when the last non-daemon thread exits.
 -  A thread can be specified as a daemon thread by setting its daemon
    attribute: ``thread.daemon = True``
@@ -220,16 +232,20 @@ You can adding threading capability to your own classes
 
 Subclass Thread and implement the run method
 
-code-block:: python
+
+.. code-block:: python
 
     import threading
 
     class MyThread(threading.Thread):
-        def run(self):
-            print "hello from %s" % threading.current_thread().name
 
+        def run(self):
+            print("hello from %s" % threading.current_thread().name)
+        
     thread = MyThread()
     thread.start()
+
+
 
 Race Conditions
 ---------------
@@ -243,6 +259,10 @@ Race conditions occur when multiple statements need to execute
 atomically, but get interrupted midway
 
 See ``Examples/race_condition.py``
+
+
+.. nextslide::
+
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
@@ -262,6 +282,8 @@ See ``Examples/race_condition.py``
 |                    | write back         | →                  | 2                  |
 +--------------------+--------------------+--------------------+--------------------+
 
+.. nextslide::
+
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
 +====================+====================+====================+====================+
@@ -280,7 +302,7 @@ See ``Examples/race_condition.py``
 |                    | write back         | →                  | 1                  |
 +--------------------+--------------------+--------------------+--------------------+
 
-``http://en.wikipedia.org/wiki/Race_condition``
+http://en.wikipedia.org/wiki/Race_condition
 
 Deadlocks
 ---------
@@ -324,6 +346,8 @@ If a Lock is locked, .acquire will block until it becomes unlocked
 These threads will wait in line politely for access to the statements in
 f()
 
+.. nextslide::
+
 .. code-block:: python
 
     import threading
@@ -333,7 +357,7 @@ f()
 
     def f():
         lock.acquire()
-        print "%s got lock" % threading.current_thread().name
+        print("%s got lock" % threading.current_thread().name)
         time.sleep(1)
         lock.release()
 
@@ -386,9 +410,11 @@ until the Semaphore counter is greater than 0.
 Useful for controlling the maximum number of threads allowed to access a
 resource simultaneously
 
+http://en.wikipedia.org/wiki/Semaphore_(programming)
+
 .. image:: images/flags.jpg
 
-http://en.wikipedia.org/wiki/Semaphore_(programming)
+
 
 Locking Exercise
 ----------------
@@ -425,10 +451,10 @@ If maxsize is less than or equal to zero, the queue size is infinite
     q.put(37337)
     block = True
     timeout = 2
-    print q.get(block, timeout)
+    print(q.get(block, timeout))
 
--  http://docs.python.org/2/library/threading.html
--  http://docs.python.org/2/library/queue.html
+-  http://docs.python.org/3/library/threading.html
+-  http://docs.python.org/3/library/queue.html
 
 Other Queue types
 -----------------

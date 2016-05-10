@@ -5,7 +5,7 @@ lock = threading.Lock()
 
 def f():
     lock.acquire()
-    print "%s got lock" % threading.current_thread().name
+    print("%s got lock" % threading.current_thread().name)
     time.sleep(1)
     lock.release()
 
