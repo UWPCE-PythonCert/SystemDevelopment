@@ -52,7 +52,7 @@ Equivalent to:
       foo = 'nice'
       bar = 'sweet'
 
-      
+
 But it was created at runtime, returned from a function and assigned to a variable.
 
 
@@ -61,7 +61,7 @@ http://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example
 
 More on Classes
 ---------------
-  
+
   Objects get created from classes. So what is the class of a class?
 
   The class of Class is a metaclass
@@ -141,14 +141,14 @@ dictionary
     o = MyClass()
     o.my_method()
 
-    
+
 MyClass = type(name, bases, dct)
 
 -  name: name of newly created class
 -  bases: tuple of class's base classes
 -  dct: class attribute mapping
 
-    
+
 What type is type?
 ------------------
 
@@ -173,12 +173,12 @@ the class assigned to the ``metaclass`` keyword argument will be used to create 
 
 If the ``metaclass`` kwarg is not defined, it will use type to create the class.
 
-Whatever is assigned to ``__metaclass__`` should be a callable with the
+Whatever is assigned to ``metaclass`` should be a callable with the
 same signature as type()
 
 **Python2 NOTE:**
 
-In Pyhton 2, a special class attribute: ``__metaclass__`` is used:
+In Python 2, instead of the keyword argument, a special class attribute: ``__metaclass__`` is used:
 
 .. code-block:: python
 
@@ -222,31 +222,30 @@ __new__  vs  __init__ in Metaclasses
 ------------------------------------
 
 
-__new__ is used when you want to control the creation of the class (object) 
+``__new__`` is used when you want to control the creation of the class (object)
 
-__init__ is used when you want to control the initiation of the class (object) 
+``__init__`` is used when you want to control the initiation of the class (object)
 
-__new__ and __init__ are both called when the module containing the class is imported for the first time.
+``__new__`` and ``__init__`` are both called when the module containing the class is imported for the first time.
 
-__call__ is used when you want to control how a class (object) is called (instantiation)
+``__call__`` is used when you want to control how a class (object) is called (instantiation)
 
 
 .. nextslide::
 
 
-::
-
+..code-block:: python
 
    class CoolMeta(type):
        def __new__(meta, name, bases, dct):
            print('Creating class', name)
            return super(CoolMeta, meta).__new__(meta, name, bases, dct)
        def __init__(cls, name, bases, dct):
-	   print('Initializing class', name)
-	   super(CoolMeta, cls).__init__(name, bases, dct)
+     print('Initializing class', name)
+     super(CoolMeta, cls).__init__(name, bases, dct)
        def __call__(cls, *args, **kw):
            print('Meta has been called')
-	   return type.__call__(cls, *args, **kw)
+     return type(cls, *args, **kw)
 
    class CoolClass(metaclass=CoolMeta):
        def __init__(self):
@@ -319,6 +318,18 @@ Your code should look like this:
     o2 = MyClass()
     print(o1.X)
     assert id(o1) == id(o2)
+
+
+The Singleton
+-------------
+
+One common use of metaclasses is to create a singleton. There is an example of this called singleton.py in the Examples directory. However, metaclasses are not the only way to create a singleton. It really depends on what you are trying to do with your singleton.
+
+
+http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Singleton.html
+
+http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python
+
 
 Reference reading
 -----------------

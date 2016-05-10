@@ -97,6 +97,7 @@
 <li><a class="reference internal" href="#metaclass-example">Metaclass example</a></li>
 <li><a class="reference internal" href="#namemangler">NameMangler</a></li>
 <li><a class="reference internal" href="#exercise-working-with-namemangler">Exercise: Working with NameMangler</a></li>
+<li><a class="reference internal" href="#the-singleton">The Singleton</a></li>
 <li><a class="reference internal" href="#reference-reading">Reference reading</a></li>
 </ul>
 </li>
@@ -273,10 +274,10 @@ dictionary</p>
 </div>
 <p>the class assigned to the <code class="docutils literal"><span class="pre">metaclass</span></code> keyword argument will be used to create the object class <code class="docutils literal"><span class="pre">Foo</span></code>.</p>
 <p>If the <code class="docutils literal"><span class="pre">metaclass</span></code> kwarg is not defined, it will use type to create the class.</p>
-<p>Whatever is assigned to <code class="docutils literal"><span class="pre">__metaclass__</span></code> should be a callable with the
+<p>Whatever is assigned to <code class="docutils literal"><span class="pre">metaclass</span></code> should be a callable with the
 same signature as type()</p>
 <p><strong>Python2 NOTE:</strong></p>
-<p>In Pyhton 2, a special class attribute: <code class="docutils literal"><span class="pre">__metaclass__</span></code> is used:</p>
+<p>In Python 2, instead of the keyword argument, a special class attribute: <code class="docutils literal"><span class="pre">__metaclass__</span></code> is used:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">MyMetaClass</span>
 </pre></div>
@@ -305,29 +306,42 @@ abstracted from the user of the Model class.</p>
 </div>
 <div class="section" id="new-vs-init-in-metaclasses">
 <h3>__new__  vs  __init__ in Metaclasses<a class="headerlink" href="#new-vs-init-in-metaclasses" title="Permalink to this headline">¶</a></h3>
-<p>__new__ is used when you want to control the creation of the class (object)</p>
-<p>__init__ is used when you want to control the initiation of the class (object)</p>
-<p>__new__ and __init__ are both called when the module containing the class is imported for the first time.</p>
-<p>__call__ is used when you want to control how a class (object) is called (instantiation)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CoolMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Creating class&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CoolMeta</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing class&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CoolMeta</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Meta has been called&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-
-<span class="k">class</span> <span class="nc">CoolClass</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">CoolMeta</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;And now my CoolClass exists&#39;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Actually instantiating now&#39;</span><span class="p">)</span>
-<span class="n">foo</span> <span class="o">=</span> <span class="n">CoolClass</span><span class="p">()</span>
-</pre></div>
-</div>
+<p><code class="docutils literal"><span class="pre">__new__</span></code> is used when you want to control the creation of the class (object)</p>
+<p><code class="docutils literal"><span class="pre">__init__</span></code> is used when you want to control the initiation of the class (object)</p>
+<p><code class="docutils literal"><span class="pre">__new__</span></code> and <code class="docutils literal"><span class="pre">__init__</span></code> are both called when the module containing the class is imported for the first time.</p>
+<p><code class="docutils literal"><span class="pre">__call__</span></code> is used when you want to control how a class (object) is called (instantiation)</p>
+<p>..code-block:: python</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>class CoolMeta(type):</dt>
+<dd><blockquote class="first">
+<div><dl class="docutils">
+<dt>def __new__(meta, name, bases, dct):</dt>
+<dd>print(&#8216;Creating class&#8217;, name)
+return super(CoolMeta, meta).__new__(meta, name, bases, dct)</dd>
+</dl>
+<p>def __init__(cls, name, bases, dct):</p>
+</div></blockquote>
+<p>print(&#8216;Initializing class&#8217;, name)
+super(CoolMeta, cls).__init__(name, bases, dct)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __call__(cls, <a href="#id2"><span class="problematic" id="id3">*</span></a>args, <a href="#id4"><span class="problematic" id="id5">**</span></a>kw):</dt>
+<dd>print(&#8216;Meta has been called&#8217;)</dd>
+</dl>
+</div></blockquote>
+<p class="last">return type(cls, <a href="#id6"><span class="problematic" id="id7">*</span></a>args, <a href="#id8"><span class="problematic" id="id9">**</span></a>kw)</p>
+</dd>
+<dt>class CoolClass(metaclass=CoolMeta):</dt>
+<dd><dl class="first last docutils">
+<dt>def __init__(self):</dt>
+<dd>print(&#8216;And now my CoolClass exists&#8217;)</dd>
+</dl>
+</dd>
+</dl>
+<p>print(&#8216;Actually instantiating now&#8217;)
+foo = CoolClass()</p>
+</div></blockquote>
 </div>
 <div class="section" id="metaclass-example">
 <h3>Metaclass example<a class="headerlink" href="#metaclass-example" title="Permalink to this headline">¶</a></h3>
@@ -381,6 +395,12 @@ NameMangler and Singleton classes in the <code class="docutils literal"><span cl
 <span class="k">assert</span> <span class="nb">id</span><span class="p">(</span><span class="n">o1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">o2</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="the-singleton">
+<h3>The Singleton<a class="headerlink" href="#the-singleton" title="Permalink to this headline">¶</a></h3>
+<p>One common use of metaclasses is to create a singleton. There is an example of this called singleton.py in the Examples directory. However, metaclasses are not the only way to create a singleton. It really depends on what you are trying to do with your singleton.</p>
+<p><a class="reference external" href="http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Singleton.html">http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Singleton.html</a></p>
+<p><a class="reference external" href="http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python">http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python</a></p>
 </div>
 <div class="section" id="reference-reading">
 <h3>Reference reading<a class="headerlink" href="#reference-reading" title="Permalink to this headline">¶</a></h3>
@@ -440,6 +460,7 @@ NameMangler and Singleton classes in the <code class="docutils literal"><span cl
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
