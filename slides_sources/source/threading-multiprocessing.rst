@@ -311,10 +311,13 @@ each waiting for the other to finish, and thus neither ever does."
 *When two trains approach each other at a crossing, both shall come to a
 full stop and neither shall start up again until the other has gone*
 
-See also *Livelock*: *Two people meet in a narrow corridor, and each
+See also *Livelock*:
+
+*Two people meet in a narrow corridor, and each
 tries to be polite by moving aside to let the other pass, but they end
 up swaying from side to side without making any progress because they
 both repeatedly move the same way at the same time.*
+
 
 Locks
 -----
@@ -337,6 +340,8 @@ If a Lock is locked, .acquire will block until it becomes unlocked
 These threads will wait in line politely for access to the statements in
 f()
 
+.. nextslide::
+
 .. code-block:: python
 
     import threading
@@ -353,6 +358,7 @@ f()
     threading.Thread(target=f).start()
     threading.Thread(target=f).start()
     threading.Thread(target=f).start()
+
 
 Nonblocking Locking
 -------------------
@@ -373,6 +379,7 @@ block or not. The default is ``True``
     if lock.acquire(False):
         print("got lock")
 
+
 ``threading.RLock`` - Reentrant Lock
 ------------------------------------
 
@@ -383,6 +390,7 @@ A reentrant lock can be acquired multiple times by the same thread
 
 ``Lock.release()`` must be called the same number of times as ``Lock.acquire()``
 by that thread
+
 
 ``threading.Semaphore``
 -----------------------
@@ -400,20 +408,22 @@ Useful for controlling the maximum number of threads allowed to access a
 resource simultaneously
 
 .. image:: images/flags.jpg
+  :height: 250px
 
 http://en.wikipedia.org/wiki/Semaphore_(programming)
 
 Locking Exercise
 ----------------
 
-find ``Examples/lock/stdout_writer.py``
+In: ``Examples/lock/stdout_writer.py``
 
-multiple threads in the script write to stdout, and their output gets
+Multiple threads in the script write to stdout, and their output gets
 jumbled
 
 1. Add a locking mechanism to give each thread exclusive access to
    stdout
-1. Try adding a Semaphore to allow 2 threads access at once
+
+2. Try adding a Semaphore to allow 2 threads access at once
 
 
 Managing thread results
@@ -431,6 +441,8 @@ It will block consumers if empty and block producers if full
 
 If maxsize is less than or equal to zero, the queue size is infinite
 
+.. nextslide::
+
 .. code-block:: python
 
     from Queue import Queue
@@ -438,27 +450,33 @@ If maxsize is less than or equal to zero, the queue size is infinite
     q.put(37337)
     block = True
     timeout = 2
-    print q.get(block, timeout)
+    print(q.get(block, timeout))
 
--  http://docs.python.org/2/library/threading.html
--  http://docs.python.org/2/library/queue.html
+-  http://docs.python.org/3/library/threading.html
+-  http://docs.python.org/3/library/queue.html
 
 Other Queue types
 -----------------
 
-``Queue.LifoQueue`` - Last In, First Out
+``Queue.LifoQueue``
 
-``Queue.PriorityQueue`` - Lowest valued entries are retrieved first
+  - Last In, First Out
 
-One pattern for PriorityQueue is to insert entries of form data by
-inserting the tuple: ``(priority_number, data)``
+``Queue.PriorityQueue``
+
+  - Lowest valued entries are retrieved first
+
+One pattern for ``PriorityQueue`` is to insert entries of form data by
+inserting the tuple:
+
+``(priority_number, data)``
 
 Threading example
 -----------------
 
 See Examples/threading/integrate_main.py
 
-.. code-block::python
+.. code-block:: python
 
     #!/usr/bin/env python
 
@@ -471,6 +489,10 @@ See Examples/threading/integrate_main.py
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from integrate.integrate import integrate, f
     from decorators.decorators import timer
+
+.. nextslide::
+
+.. code-block:: python
 
     @timer
     def threading_integrate(f, a, b, N, thread_count=2):
@@ -491,8 +513,11 @@ See Examples/threading/integrate_main.py
             thread.start()
             print "Thread %s started" % thread.name
             # thread1.join()
-
         return sum( (results.get() for i in xrange(thread_count) ))
+
+.. nextslide::
+
+.. code-block:: python
 
     if __name__ == "__main__":
         parser = argparse.ArgumentParser(description='integrator')
@@ -507,8 +532,9 @@ See Examples/threading/integrate_main.py
         N = args.N
         thread_count = args.thread_count
 
-        print "Numerical solution with N=%(N)d : %(x)f" % \
-                {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}
+        print("Numerical solution with N=%(N)d : %(x)f" % \
+                {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)})
+
 
 Threading on a CPU bound problem
 --------------------------------
@@ -535,13 +561,13 @@ It accepts 4 arguments:
 What happens when you change the thread count? What thread count gives
 the maximum speed?
 
-multiprocessing
+Multiprocessing
 ---------------
 
 multiprocessing provides an API very similar to threading, so the
 transition is easy
 
-use multiprocessing.Process instead of threading.Thread
+use ``multiprocessing.Process`` instead of ``threading.Thread``
 
 .. code-block:: python
 
@@ -558,13 +584,14 @@ use multiprocessing.Process instead of threading.Thread
     proc = multiprocessing.Process(target=func, args=())
     proc.start()
 
+
 Differences with threading
 --------------------------
 
-Multiprocessing has its own multiprocessing.Queue which handles
+Multiprocessing has its own ``multiprocessing.Queue`` which handles
 interprocess communication
 
-Also has its own versions of Lock, RLock, Semaphore
+Also has its own versions of ``Lock``, ``RLock``, ``Semaphore``
 
 .. code-block:: python
 
@@ -592,37 +619,38 @@ number running at one time
 
 The Pool module has several methods for adding jobs to the pool
 
--  apply_async(func[, args[, kwargs[, callback]]])
--  map_async(func, iterable[, chunksize[, callback]])
+``apply_async(func[, args[, kwargs[, callback]]])``
+
+``map_async(func, iterable[, chunksize[, callback]])``
+
 
 Pooling example
 ---------------
 
-.. code-block:: python
+.. rst-class:: small
 
-    from multiprocessing import Pool
+  .. code-block:: python
 
-    def f(x):
-        return x*x
+      from multiprocessing import Pool
+      def f(x):
+          return x*x
+      if __name__ == '__main__':
+          pool = Pool(processes=4)
 
-    if __name__ == '__main__':
-        pool = Pool(processes=4)
+          result = pool.apply_async(f, (10,))
+          print(result.get(timeout=1))
+          print(pool.map(f, range(10)))
 
-        result = pool.apply_async(f, (10,))
-        print result.get(timeout=1)
+          it = pool.imap(f, range(10))
+          print(it.next())
+          print(it.next())
+          print(it.next(timeout=1))
 
-        print pool.map(f, range(10))
+          import time
+          result = pool.apply_async(time.sleep, (10,))
+          print(result.get(timeout=1))
 
-        it = pool.imap(f, range(10))
-        print it.next()
-        print it.next()
-        print it.next(timeout=1)
-
-        import time
-        result = pool.apply_async(time.sleep, (10,))
-        print result.get(timeout=1)
-
-http://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool
+  http://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.pool
 
 ThreadPool
 ----------
@@ -636,18 +664,18 @@ Confusingly, it lives in the multiprocessing module
           from multiprocessing.pool import ThreadPool
           pool = ThreadPool(processes=4)
 
-threading versus multiprocessing, networking edition
+
+Threading versus multiprocessing, networking edition
 ----------------------------------------------------
 
-We're going to test making concurrent connections to a web service in
+We're going to test making concurrent connections to a web service in:
+
 ``Examples/server/app.py``
 
 It is a WSGI application which can be run with Green Unicorn or another
 WSGI server
 
-::
-
-    $ gunicorn app:app --bind 0.0.0.0:37337
+``$ gunicorn app:app --bind 0.0.0.0:37337``
 
 ``client-threading.py`` makes 100 threads to contact the web service
 
@@ -672,44 +700,45 @@ and a scheduler
 A coroutine is a generalization of a subroutine which allows multiple
 entry points for suspending and resuming execution
 
-the threading and the multiprocessing modules follow a `preemptive
-multitasking
-model <http://en.wikipedia.org/wiki/Preemption_(computing)>`__
+The threading and the multiprocessing modules follow a `preemptive
+multitasking model: http://en.wikipedia.org/wiki/Preemption_(computing)
 
-coroutine based solutions follow a `cooperative multitasking
+Coroutine based solutions follow a `cooperative multitasking
 model <http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing>`__
 
--  `http://dabeaz.com/coroutines/, A Curious Course on Coroutines and
-   Concurrency <http://dabeaz.com/coroutines/>`__
--  http://en.wikipedia.org/wiki/Coroutine
+A Curious Course on Coroutines and Concurrency
+
+  -  http://dabeaz.com/coroutines/
+
+  -  http://en.wikipedia.org/wiki/Coroutine
+
 
 With send(), a generator becomes a coroutine
 --------------------------------------------
 
-::
+.. rst-class:: small
 
-    def coroutine(n):
-        try:
-            while True:
-                x = (yield)
-                print n+x
-        except GeneratorExit:
-            pass
+    .. code-block:: python
 
-    targets = [
-     coroutine(10),
-     coroutine(20),
-     coroutine(30),
-    ]
-
-    for target in targets:
-        target.next()
-
-    for i in range(5):
+        def coroutine(n):
+            try:
+                while True:
+                    x = (yield)
+                    print(n+x)
+            except GeneratorExit:
+                pass
+        targets = [
+         coroutine(10),
+         coroutine(20),
+         coroutine(30),
+        ]
         for target in targets:
-            target.send(i)
+            target.next()
+        for i in range(5):
+            for target in targets:
+                target.send(i)
 
-http://dabeaz.com/coroutines/Coroutines.pdf
+    http://dabeaz.com/coroutines/Coroutines.pdf
 
 
 Packages using coroutines for micro threads
@@ -721,13 +750,22 @@ threads.
 Creating the scheduler which does the jumping is an exercise for the
 reader, but look into these packages which handle the dirty work
 
--  https://pypi.python.org/pypi/greenlet - interface for creating
-   coroutine based microthreads
--  http://eventlet.net/ - a concurrent networking library, based on
-   greenlet. Developed for Second Life
--  http://www.gevent.org - forked from eventlet. Built on top of
-   greenlet and libevent, a portable event loop with strong OS support
+-  https://pypi.python.org/pypi/greenlet
+
+  - interface for creating coroutine based microthreads
+
+-  http://eventlet.net/
+
+  - a concurrent networking library, based on
+    greenlet. Developed for Second Life
+
+-  http://www.gevent.org
+
+  - forked from eventlet. Built on top of greenlet and libevent,
+    a portable event loop with strong OS support
+
 -  Python 3.4+ : the asyncio module
+
 
 Distributed programming
 -----------------------
@@ -757,12 +795,15 @@ several:
 -  ...
 
 Celery worker processes are run on compute nodes, while the main process
-farms jobs out to them. http://www.celeryproject.org/
+farms jobs out to them:
+
+http://www.celeryproject.org/
+
 
 Celery in one minute
 --------------------
 
-::
+.. code-block:: python
 
     # tasks.py
 
@@ -774,29 +815,12 @@ Celery in one minute
     def add(x, y):
         return x + y
 
-::
 
     % celery -A tasks worker --loglevel=INFO -c 4
-
-::
 
     from tasks import add
     result = add.delay(2,3)
     print result.get()
-
-References about the GIL
-------------------------
-
-If you want to understand the GIL, here are a few resources:
-
-David Beazley has explored the GIL in more detail, and certainly explained it better, then anyone else:
-
-http://www.dabeaz.com/GIL/
-
-and this talk by him -- which is quite entertaining and VERY informative:
-
-http://pyvideo.org/video/353/pycon-2010--understanding-the-python-gil---82
-
 
 Questions?
 ----------
