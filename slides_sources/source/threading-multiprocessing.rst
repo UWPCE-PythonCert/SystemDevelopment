@@ -46,19 +46,14 @@ benefits before going parallel.
 Parallelization strategy for performance
 ----------------------------------------
 
-1. Break problem down into chunks
-1. Execute chunks in parallel
-1. Reassemble output of chunks into result
+| 1. Break problem down into chunks
+| 2. Execute chunks in parallel
+| 3. Reassemble output of chunks into result
 
 .. image:: images/OPP.0108.gif
-   :align: center
-   :width: 60.0%
-
-..   :height: 100px
-..   :width: 200 px
-..   :scale: 50 %
-..   :alt: alternate text
-
+      :align: right
+      :height: 450px
+      :alt: multitasking flow diagram
 
 Parallelization strategy for performance
 ----------------------------------------
@@ -98,15 +93,20 @@ Processes
 A process contains all the instructions and data required to execute
 independently, so processes do not share data!
 
-Mulitple processes best to speed up CPU bound operations. 
+Mulitple processes best to speed up CPU bound operations.
 
 The Python interpreter isn't lightweight!
 
-Communication between processes can be achieved via
-``multiprocessing.Queue``, ``multiprocessing.Pipe``, and regular IPC (inter-process communication)
+Communication between processes can be achieved via:
 
+``multiprocessing.Queue``
+
+``multiprocessing.Pipe``
+
+and regular IPC (inter-process communication)
 
 Data moved between processes must be pickleable
+
 
 GIL
 ---
@@ -119,49 +119,57 @@ execute, ensuring thread safety
 .. image:: images/gil.png
     :width: 100.0%
 
+.. nextslide::
+
 The GIL is released during IO operations, so threads which spend time
 waiting on network or disk access can enjoy performance gains
 
-The GIL is not unlike multitasking in humans, some things can truly be 
+The GIL is not unlike multitasking in humans, some things can truly be
 done in parallel, others have to be done by time slicing.
 
 Note that potentially blocking or long-running operations, such as I/O, image processing, and NumPy number crunching, happen outside the GIL. Therefore it is only in multithreaded programs that spend a lot of time inside the GIL, interpreting CPython bytecode, that the GIL becomes a bottleneck. But: it can still cause performance degradation.
 
-Not only will threads not help cpu-bound problems, but it can actually make things worse, especially on multi-core machines!
+Not only will threads not help cpu-bound problems, but it can actually make things *worse*, especially on multi-core machines!
+
+.. nextslide::
 
 Some alternative Python implementations such as Jython and IronPython
 have no GIL
 
 cPython and PyPy have one
 
--  https://www.youtube.com/watch?v=Obt-vMVdM8s David Beazley's talk on the gil
+David Beazley's talk on the gil
+
+-  https://www.youtube.com/watch?v=Obt-vMVdM8s
+
 -  http://wiki.python.org/moin/GlobalInterpreterLock
+
 -  https://docs.python.org/3.5/c-api/init.html#threads
+
 -  http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761
 
 Posted without comment
 ----------------------
+.. figure:: images/killGIL.jpg
+   :class: fill
 
-.. image:: images/killGIL.jpg
-  :width: 500px
 
 A CPU bound problem
 -------------------
 
-Numerically integrate the function `y =
-x\ :sup:`2` <http://www.wolframalpha.com/input/?i=x%5E2>`__ from 0 to
-10.
+Numerically integrate the function
+:math:`y =x^2` from 0 to 10.
+http://www.wolframalpha.com/input/?i=x%5E2
 
 .. image:: images/x2.png
+  :height: 400px
 
 Solution: http://www.wolframalpha.com/input/?i=int(x%5E2,0,10)
 
 Parallel execution example
 --------------------------
 
-Consider the following code from
-
-``Examples/integrate/integrate.py``
+Consider the following code from: ``Examples/integrate/integrate.py``
 
 .. code-block:: python
 
@@ -174,8 +182,6 @@ Consider the following code from
         for i in xrange(N):
             s += f(a+i*dx)
         return s * dx
-
-    print(integrate(f, 0, 10, 100))
 
 Break down the problem into parallelizable chunks, then add the results
 together:
@@ -204,6 +210,8 @@ Starting threads doesn't take much:
         thread.start()
         threads.append(thread)
 
+.. nextslide::
+
 -  The process will exit when the last non-daemon thread exits.
 -  A thread can be specified as a daemon thread by setting its daemon
    attribute: ``thread.daemon = True``
@@ -220,7 +228,7 @@ You can adding threading capability to your own classes
 
 Subclass Thread and implement the run method
 
-code-block:: python
+.. code-block:: python
 
     import threading
 
@@ -230,6 +238,7 @@ code-block:: python
 
     thread = MyThread()
     thread.start()
+
 
 Race Conditions
 ---------------
@@ -243,6 +252,8 @@ Race conditions occur when multiple statements need to execute
 atomically, but get interrupted midway
 
 See ``Examples/race_condition.py``
+
+.. nextslide::
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
@@ -261,6 +272,8 @@ See ``Examples/race_condition.py``
 +--------------------+--------------------+--------------------+--------------------+
 |                    | write back         | →                  | 2                  |
 +--------------------+--------------------+--------------------+--------------------+
+
+.. nextslide::
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
@@ -770,6 +783,19 @@ Celery in one minute
     from tasks import add
     result = add.delay(2,3)
     print result.get()
+
+References about the GIL
+------------------------
+
+If you want to understand the GIL, here are a few resources:
+
+David Beazley has explored the GIL in more detail, and certainly explained it better, then anyone else:
+
+http://www.dabeaz.com/GIL/
+
+and this talk by him -- which is quite entertaining and VERY informative:
+
+http://pyvideo.org/video/353/pycon-2010--understanding-the-python-gil---82
 
 
 Questions?
