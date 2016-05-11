@@ -14,22 +14,22 @@ def threading_integrate(f, a, b, N, thread_count=2):
     """break work into two chunks"""
     N_chunk = int(float(N) / thread_count)
     dx = float(b-a) / thread_count
-    
+
     results = multiprocessing.Queue()
 
     def worker(*args):
         results.put(integrate(*args))
 
     threads = []
-    for i in xrange(thread_count):
-        x0 = dx*i 
+    for i in range(thread_count):
+        x0 = dx*i
         x1 = x0 + dx
         # thread = threading.Thread(target=worker, args=(f, x0, x1, N_chunk))
         process = multiprocessing.Process(target=worker, args=(f, x0, x1, N_chunk))
         process.start()
-        print "process %s started" % process.name
+        print("process %s started" % process.name)
 
-    return sum( (results.get() for i in xrange(thread_count) ))
+    return sum( (results.get() for i in range(thread_count) ))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='integrator')
@@ -44,6 +44,6 @@ if __name__ == "__main__":
     N = args.N
     thread_count = args.thread_count
 
-    print "Numerical solution with N=%(N)d : %(x)f" % \
-            {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)}
+    print("Numerical solution with N=%(N)d : %(x)f" %
+          {'N': N, 'x': threading_integrate(f, a, b, N, thread_count=thread_count)})
 
