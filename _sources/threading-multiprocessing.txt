@@ -55,6 +55,7 @@ Parallelization strategy for performance
       :height: 450px
       :alt: multitasking flow diagram
 
+
 Parallelization strategy for performance
 ----------------------------------------
 
@@ -73,13 +74,13 @@ Threads versus processes in Python
 ----------------------------------
 
 Threads are lightweight processes_, run in the address space of an OS
-process, so a component of a a process.
+process, true OS level threads.
+
+Therefor, a component of a a process.
 
 .. _processes: https://en.wikipedia.org/wiki/Light-weight_process
 
 This allows multiple threads access to data in the same scope.
-
-Python threads are true OS level threads
 
 Threads can not gain the performance advantage of multiple processors
 due to the Global Interpreter Lock (GIL)
@@ -131,7 +132,9 @@ Note that potentially blocking or long-running operations, such as I/O, image pr
 
 Not only will threads not help cpu-bound problems, but it can actually make things *worse*, especially on multi-core machines!
 
+
 .. nextslide::
+
 
 Some alternative Python implementations such as Jython and IronPython
 have no GIL
@@ -141,6 +144,8 @@ cPython and PyPy have one
 David Beazley's talk on the gil
 
 -  https://www.youtube.com/watch?v=Obt-vMVdM8s
+
+More about the gil
 
 -  http://wiki.python.org/moin/GlobalInterpreterLock
 
@@ -210,8 +215,10 @@ Starting threads doesn't take much:
         thread.start()
         threads.append(thread)
 
+	
 .. nextslide::
 
+   
 -  The process will exit when the last non-daemon thread exits.
 -  A thread can be specified as a daemon thread by setting its daemon
    attribute: ``thread.daemon = True``
@@ -228,13 +235,15 @@ You can adding threading capability to your own classes
 
 Subclass Thread and implement the run method
 
-.. code-block:: python
 
+.. code-block:: python
+		
     import threading
 
     class MyThread(threading.Thread):
+
         def run(self):
-            print "hello from %s" % threading.current_thread().name
+            print("hello from %s" % threading.current_thread().name)
 
     thread = MyThread()
     thread.start()
@@ -254,6 +263,7 @@ atomically, but get interrupted midway
 See ``Examples/race_condition.py``
 
 .. nextslide::
+
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
@@ -293,7 +303,7 @@ See ``Examples/race_condition.py``
 |                    | write back         | →                  | 1                  |
 +--------------------+--------------------+--------------------+--------------------+
 
-``http://en.wikipedia.org/wiki/Race_condition``
+http://en.wikipedia.org/wiki/Race_condition
 
 Deadlocks
 ---------
@@ -351,7 +361,7 @@ f()
 
     def f():
         lock.acquire()
-        print "%s got lock" % threading.current_thread().name
+        print("%s got lock" % threading.current_thread().name)
         time.sleep(1)
         lock.release()
 
@@ -407,10 +417,12 @@ until the Semaphore counter is greater than 0.
 Useful for controlling the maximum number of threads allowed to access a
 resource simultaneously
 
+http://en.wikipedia.org/wiki/Semaphore_(programming)
+
 .. image:: images/flags.jpg
   :height: 250px
 
-http://en.wikipedia.org/wiki/Semaphore_(programming)
+
 
 Locking Exercise
 ----------------

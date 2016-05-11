@@ -229,9 +229,9 @@ environment, so make it tunable</li>
 <div class="section" id="threads-versus-processes-in-python">
 <h3>Threads versus processes in Python<a class="headerlink" href="#threads-versus-processes-in-python" title="Permalink to this headline">¶</a></h3>
 <p>Threads are lightweight <a class="reference external" href="https://en.wikipedia.org/wiki/Light-weight_process">processes</a>, run in the address space of an OS
-process, so a component of a a process.</p>
+process, true OS level threads.</p>
+<p>Therefor, a component of a a process.</p>
 <p>This allows multiple threads access to data in the same scope.</p>
-<p>Python threads are true OS level threads</p>
 <p>Threads can not gain the performance advantage of multiple processors
 due to the Global Interpreter Lock (GIL)</p>
 <p>But the GIL is released during IO, allowing IO bound processes to
@@ -267,6 +267,9 @@ have no GIL</p>
 <p>David Beazley&#8217;s talk on the gil</p>
 <ul class="simple">
 <li><a class="reference external" href="https://www.youtube.com/watch?v=Obt-vMVdM8s">https://www.youtube.com/watch?v=Obt-vMVdM8s</a></li>
+</ul>
+<p>More about the gil</p>
+<ul class="simple">
 <li><a class="reference external" href="http://wiki.python.org/moin/GlobalInterpreterLock">http://wiki.python.org/moin/GlobalInterpreterLock</a></li>
 <li><a class="reference external" href="https://docs.python.org/3.5/c-api/init.html#threads">https://docs.python.org/3.5/c-api/init.html#threads</a></li>
 <li><a class="reference external" href="http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761">http://hg.python.org/cpython/file/05e8dde3229c/Python/pystate.c#l761</a></li>
@@ -281,7 +284,7 @@ have no GIL</p>
 <div class="section" id="a-cpu-bound-problem">
 <h3>A CPU bound problem<a class="headerlink" href="#a-cpu-bound-problem" title="Permalink to this headline">¶</a></h3>
 <p>Numerically integrate the function
-<span class="math">\(y =x^2\)</span> from 0 to 10.
+ from 0 to 10.
 <a class="reference external" href="http://www.wolframalpha.com/input/?i=x%5E2">http://www.wolframalpha.com/input/?i=x%5E2</a></p>
 <a class="reference internal image-reference" href="_images/x2.png"><img alt="_images/x2.png" src="_images/x2.png" style="height: 400px;" /></a>
 <p>Solution: <a class="reference external" href="http://www.wolframalpha.com/input/?i=int(x%5E2,0,10">http://www.wolframalpha.com/input/?i=int(x%5E2,0,10</a>)</p>
@@ -340,8 +343,9 @@ things like garbage collection, network keepalives, ..</li>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
 
 <span class="k">class</span> <span class="nc">MyThread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s2">&quot;hello from </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;hello from </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
 <span class="n">thread</span> <span class="o">=</span> <span class="n">MyThread</span><span class="p">()</span>
 <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -460,7 +464,7 @@ atomically, but get interrupted midway</p>
 </tr>
 </tbody>
 </table>
-<p><code class="docutils literal"><span class="pre">http://en.wikipedia.org/wiki/Race_condition</span></code></p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Race_condition">http://en.wikipedia.org/wiki/Race_condition</a></p>
 </div>
 <div class="section" id="deadlocks">
 <h3>Deadlocks<a class="headerlink" href="#deadlocks" title="Permalink to this headline">¶</a></h3>
@@ -498,7 +502,7 @@ f()</p>
 
 <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
     <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> got lock&quot;</span> <span class="o">%</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> got lock&quot;</span> <span class="o">%</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
 
@@ -541,8 +545,8 @@ by that thread</p>
 until the Semaphore counter is greater than 0.</p>
 <p>Useful for controlling the maximum number of threads allowed to access a
 resource simultaneously</p>
-<a class="reference internal image-reference" href="_images/flags.jpg"><img alt="_images/flags.jpg" src="_images/flags.jpg" style="height: 250px;" /></a>
 <p><a class="reference external" href="http://en.wikipedia.org/wiki/Semaphore_(programming">http://en.wikipedia.org/wiki/Semaphore_(programming</a>)</p>
+<a class="reference internal image-reference" href="_images/flags.jpg"><img alt="_images/flags.jpg" src="_images/flags.jpg" style="height: 250px;" /></a>
 </div>
 <div class="section" id="locking-exercise">
 <h3>Locking Exercise<a class="headerlink" href="#locking-exercise" title="Permalink to this headline">¶</a></h3>
@@ -927,7 +931,6 @@ farms jobs out to them:</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
