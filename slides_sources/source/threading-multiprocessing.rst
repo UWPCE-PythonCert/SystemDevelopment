@@ -215,10 +215,10 @@ Starting threads doesn't take much:
         thread.start()
         threads.append(thread)
 
-	
+
 .. nextslide::
 
-   
+
 -  The process will exit when the last non-daemon thread exits.
 -  A thread can be specified as a daemon thread by setting its daemon
    attribute: ``thread.daemon = True``
@@ -237,7 +237,7 @@ Subclass Thread and implement the run method
 
 
 .. code-block:: python
-		
+
     import threading
 
     class MyThread(threading.Thread):
@@ -262,8 +262,8 @@ atomically, but get interrupted midway
 
 See ``Examples/race_condition.py``
 
-.. nextslide::
-
+No race condition
+------------------
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
@@ -283,7 +283,8 @@ See ``Examples/race_condition.py``
 |                    | write back         | →                  | 2                  |
 +--------------------+--------------------+--------------------+--------------------+
 
-.. nextslide::
+Race Condition!
+---------------
 
 +--------------------+--------------------+--------------------+--------------------+
 | Thread 1           | Thread 2           |                    | Integer value      |
