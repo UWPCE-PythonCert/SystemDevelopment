@@ -215,8 +215,10 @@ Starting threads doesn't take much:
         thread.start()
         threads.append(thread)
 
+	
 .. nextslide::
 
+   
 -  The process will exit when the last non-daemon thread exits.
 -  A thread can be specified as a daemon thread by setting its daemon
    attribute: ``thread.daemon = True``
@@ -235,14 +237,14 @@ Subclass Thread and implement the run method
 
 
 .. code-block:: python
-
+		
     import threading
 
     class MyThread(threading.Thread):
 
         def run(self):
             print("hello from %s" % threading.current_thread().name)
-        
+
     thread = MyThread()
     thread.start()
 
