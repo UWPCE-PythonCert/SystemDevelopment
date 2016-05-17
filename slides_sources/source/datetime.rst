@@ -1,37 +1,11 @@
-.. raw:: html
+.. _datetime:
 
-   <div class="deck-container">
+########
+Datetime
+########
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: System Development with Python
-   :name: system-development-with-python
-
-.. rubric:: Week 6 :: datetime, time, pytz
-   :name: week-6-datetime-time-pytz
-
-Joseph Sheedy
-
-*joseph.sheedy@gmail.com*
-
-Git repository:
-https://github.com/UWPCE-PythonCert/Python300-SystemDevelopmentWithPython-Spring-2014
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: datetime, time, pytz
-   :name: datetime-time-pytz
-
-.. rubric:: What's so hard about representing time?
-   :name: whats-so-hard-about-representing-time
+What's so hard about representing time?
+#######################################
 
 Humans are mostly accustomed to communicating in their local timezone.
 
@@ -46,33 +20,19 @@ frequently
 
 Daylight savings time challenges
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: `DST <http://en.wikipedia.org/wiki/Daylight_saving_time>`__
-   :name: dst
+`DST <http://en.wikipedia.org/wiki/Daylight_saving_time>`__
+-----------------------------------------------------------
 
 Daylight savings time creates discontinuities in a time series
 
-|image0|
+.. image:: /_static/dst_sf_graph.png
+   :height: 400px
 
-|image1|
+.. image:: /_static/dst_fb_graph.png
+   :height: 400px
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: On representing a point in time
-   :name: on-representing-a-point-in-time
+On representing a point in time
+-------------------------------
 
 -  There are two major time standards which you should understand:
 
@@ -80,17 +40,12 @@ Daylight savings time creates discontinuities in a time series
       Coordonné) <http://en.wikipedia.org/wiki/UTC>`__
    -  `UNIX time <http://en.wikipedia.org/wiki/Unix_time>`__
 
-.. raw:: html
 
-   </div>
+.. nextslide::
 
-.. raw:: html
+`UTC: Coordinated Universal Time (French: Temps Universel
+<http://en.wikipedia.org/wiki/UTC>`__
 
-   <div class="section slide">
-
-.. rubric:: `UTC: Coordinated Universal Time (French: Temps Universel
-   Coordonné) <http://en.wikipedia.org/wiki/UTC>`__
-   :name: utc-coordinated-universal-time-french-temps-universel-coordonné
 
 This is the primary time standard in the world
 
@@ -104,18 +59,10 @@ the letter Z, e.g. 12:59Z
 It is similar to, but not the same as, Greenwich Mean Time (GMT). UTC is
 more precisely defined
 
-|image2|
+.. image:: /_static/Greenwich_clock.jpg
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: `UNIX time <http://en.wikipedia.org/wiki/Unix_time>`__
-   :name: unix-time
+`UNIX time <http://en.wikipedia.org/wiki/Unix_time>`__
+------------------------------------------------------
 
 -  UNIX time is represented as the number of seconds from one point in
    time known as the Epoch, defined to be 00:00 UTC January 1, 1970, not
@@ -129,38 +76,27 @@ more precisely defined
    the year 292 billion, at which time our universe is predicted to not
    exist
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: timezones and datetime calculations
-   :name: timezones-and-datetime-calculations
+timezones and datetime calculations
+-----------------------------------
 
 Calculating the time between two dates spanning timezones, daylight
-savings time transitions, and leap seconds is a task fraught with error
+savings time transitions, and leap seconds is a task fraught with error.
+
 The `Olson database <http://en.wikipedia.org/wiki/Tz_database>`__ is a
 reference database of the world's timezones.
+
 It can be obtained through the IANA
-`here <http://www.iana.org/time-zones>`__
-As in `datetime
-docs <https://docs.python.org/2.7/library/datetime.html>`__,
-    The rules for time adjustment across the world are more political
-    than rational
+`here. <http://www.iana.org/time-zones>`__
 
-.. raw:: html
+As stated in the `datetime
+docs <https://docs.python.org/3/library/datetime.html>`__,
 
-   </div>
+The rules for time adjustment across the world are more political than rational
 
-.. raw:: html
 
-   <div class="section slide">
-
-.. rubric:: from datetime import time, date, datetime
-   :name: from-datetime-import-time-date-datetime
+from datetime import time, date, datetime
+-----------------------------------------
 
 The datetime object represents a specific moment in time
 
@@ -177,19 +113,11 @@ The time object represents a time
 
     now = datetime.now()
 
-.. raw:: html
 
-   </div>
+limitations of datetime
+-----------------------
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: limitations of datetime
-   :name: limitations-of-datetime
-
--  precision is limited to microseconds
--  time range is limited:
+precision is limited to microseconds and time range is limited:
 
    ::
 
@@ -213,19 +141,10 @@ The time object represents a time
 
        ValueError: year is out of range
 
--  If you are on a 32-bit OS and using Python pre-2.6, you will be
-   limited to the year 2038.
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: datetime -> string
-   :name: datetime---string
+datetime -> string
+------------------
 
 ::
 
@@ -236,26 +155,19 @@ The time object represents a time
 
 strftime passes format codes to the strftime of the platform's C
 library. This may not be standardized! A list of format directives is
-`here <https://docs.python.org/2.7/library/datetime.html#strftime-strptime-behavior>`__
+`here <https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior>`__
 
 getting the current UNIX time :
 
 ::
 
-    int(datetime.datetime.now().strftime('%s'))
-    # in Python 3.3+:
     datetime.now().timestamp()
+    # in python 2:
+    int(datetime.datetime.now().strftime('%s'))
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: string -> datetime
-   :name: string---datetime
+string -> datetime
+------------------
 
 datetime.strptime(string, format)
 
@@ -276,16 +188,10 @@ If you need to parse arbitrary time strings, or don't want to maintain
 format strings, there is
 `python-dateutil.parser <http://labix.org/python-dateutil>`__
 
-.. raw:: html
 
-   </div>
+two types of datetimes - naive and aware
+----------------------------------------
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: two types of datetimes - naive and aware
-   :name: two-types-of-datetimes---naive-and-aware
 
 so far we haven't created any datetime objects with associated timezone
 information, these are known as 'naive' datetimes
@@ -295,6 +201,8 @@ required
 
 Some systems may expect naive times to represent UTC, others may decide
 on local time zone. It's usually safer to be explicit.
+
+.. nextslide::
 
 Timezone is specified with the tzinfo attribute, through the
 constructor: datetimes are immutable
@@ -313,16 +221,9 @@ pytz is based on the `Olson
 database <http://en.wikipedia.org/wiki/Tz_database>`__, a reference
 database of the world's timezones.
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: pytz
-   :name: pytz
+pytz
+----
 
 A list of all the timezones in pytz is available in pytz.all\_timezones
 
@@ -343,16 +244,9 @@ datetime do the calculations.
     us_pacific_tz = pytz.timezone('US/Pacific')
     t2 = datetime(2019,11,1, tzinfo=us_pacific_tz)
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: time calculations
-   :name: time-calculations
+time calculations
+-----------------
 
 datetime.timedelta([days[, seconds[, microseconds[, milliseconds[,
 minutes[, hours[, weeks]]]]]]]) represents a time difference
@@ -377,16 +271,9 @@ adding timedelta to a datetime will result in a new datetime
     utc = functools.partial(datetime.datetime, tzinfo=pytz.UTC)
     utc(2019,11,1,12,0) + datetime.timedelta(days=1)
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: time calculations
-   :name: time-calculations-1
+time calculations
+-----------------
 
 timedelta has a few functions and properties to retrieve the results:
 timedelta.total\_seconds(), timedelta.days, timedelta.seconds,
@@ -403,17 +290,19 @@ datetimes in the calculations must be all naive or all aware
     TypeError: can't subtract offset-naive and offset-aware datetimes
 
 
+Storing datetimes
+Try to deal in UTC as much as possible.  Do not depend on the machine's interpretation of local time.
+For instance, datetime.now() on my Mac will return a naive datetime containing the local time.  Alternatively:
 
-
-
-        Storing datetimes
-        Try to deal in UTC as much as possible.  Do not depend on the machine's interpretation of local time.
-        For instance, datetime.now() on my Mac will return a naive datetime containing the local time.  Alternatively:
+::
 
     # return the current time as an aware datetime in UTC:
     datetime.datetime.now(pytz.UTC)
     # this will return a naive datetime with the current UTC time
     datetime.datetime.utcnow()
+
+
+.. nextslide::
 
 When storing a datetime in a database, it will need to be translated
 into the database's native format. Depending on the database driver, it
@@ -422,16 +311,9 @@ the timezone information
 
 Discovering the behavior is part of your database integration work
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: datetimes in sqlite3
-   :name: datetimes-in-sqlite3
+datetimes in sqlite3
+--------------------
 
 From the `sqlite3 docs <http://www.sqlite.org/datatype3.html>`__:
 
@@ -445,11 +327,14 @@ From the `sqlite3 docs <http://www.sqlite.org/datatype3.html>`__:
 
 So Python datetime objects must be translated to these types
 
+
+.. nextslide::
+
 sqlite3 has support for "adapters" and "converters" to translate types
 going in and out of the DB
 
 `Default adapters and
-converters <https://docs.python.org/2/library/sqlite3.html#default-adapters-and-converters>`__
+converters <https://docs.python.org/3/library/sqlite3.html#default-adapters-and-converters>`__
 are supplied for date and datetime objects
 
 unfortunately, the default implementation does not handle timezone aware
@@ -458,43 +343,8 @@ datetimes, but they are simply implementable
 let's look at examples/datetime\_naive\_to\_sqlite.py and
 examples/datetime\_aware\_to\_sqlite.py
 
-.. raw:: html
 
-   </div>
+.. nextslide::
 
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: The End
-   :name: the-end
-
-.. rubric:: Questions?
-   :name: questions
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div aria-role="navigation">
-
-`← <#>`__ `→ <#>`__
-
-.. raw:: html
-
-   </div>
-
- /
-
-.. raw:: html
-
-   </div>
-
-.. |image0| image:: images/6libU.png
-   :width: 90.0%
-.. |image1| image:: images/FfBuN.png
-   :width: 90.0%
-.. |image2| image:: images/Greenwich_clock.jpg
-   :width: 30.0%
+Questions?
+----------
