@@ -2,7 +2,7 @@
 
 import os
 import sys
-import urllib2
+import urllib.request
 import multiprocessing
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
@@ -16,20 +16,20 @@ def threading_client(number_of_requests=10):
     url = "http://localhost:37337"
 
     def worker(*args):
-        conn = urllib2.urlopen(url)
+        conn = urllib.request.urlopen(url)
         result = conn.read()
         conn.close()
         results.put(result)
 
-    for i in xrange(number_of_requests):
+    for i in range(number_of_requests):
         proc = multiprocessing.Process(target=worker, args=())
         proc.start()
-        print "Process %s started" % proc.name
+        print("Process %s started" % proc.name)
 
-    for i in xrange(number_of_requests):
-        print results.get(timeout=2)
+    for i in range(number_of_requests):
+        print(results.get(timeout=2))
 
-    print "made %d requests" % number_of_requests
+    print("made %d requests" % number_of_requests)
 
 if __name__ == "__main__":
 
