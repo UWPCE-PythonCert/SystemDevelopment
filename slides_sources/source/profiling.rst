@@ -8,9 +8,11 @@ Performance and Profiling
 Today's topics
 ==============
 
--  Determining performance objectives
--  Measuring performance a.k.a. profiling
--  Performance optimizations
+.. rst-class:: left medium
+
+  -  Determining performance objectives
+  -  Measuring performance a.k.a. profiling
+  -  Performance optimizations
 
 What is Software Profiling
 --------------------------
@@ -45,17 +47,20 @@ An optimization strategy
 
 .. nextslide::
 
-    Programmers waste enormous amounts of time thinking about, or
-    worrying about, the speed of noncritical parts of their programs,
-    and these attempts at efficiency actually have a strong negative
-    impact when debugging and maintenance are considered. We should
-    forget about small efficiencies, say about 97% of the time:
-    *premature optimization is the root of all evil.*
+Programmers waste enormous amounts of time thinking about, or
+worrying about, the speed of noncritical parts of their programs,
+and these attempts at efficiency actually have a strong negative
+impact when debugging and maintenance are considered. We should
+forget about small efficiencies, say about 97% of the time:
 
-    *-Donald Knuth*
+*premature optimization is the root of all evil.*
+
+--Donald Knuth
 
 http://c2.com/cgi/wiki?PrematureOptimization
+
 http://c2.com/cgi/wiki?ProfileBeforeOptimizing
+
 
 Steps to better performance
 ---------------------------
@@ -65,15 +70,15 @@ Steps to better performance
 #. Efficient Algorithms (big O, etc...)
 #. Appropriate Python data types, etc.
 #. Appropriate Python style
-#. Specialized packges (numpy, scipy)
-#. Calling external pacakges
+#. Specialized packages (numpy, scipy)
+#. Calling external packages
 #. Extending with C/C++/Fortran/Cython
 
 
 Big O notation
 --------------
 
-The efficency of an algorithm is often described in “big O” notation.
+The efficiency of an algorithm is often described in “big O” notation.
 
 The letter O is used because the growth rate of a function is also
 referred to as Order of the function
@@ -81,22 +86,24 @@ referred to as Order of the function
 It describes how an algorithm behaves in terms of resource use as a
 function of amount of input data
 
-| O(1) - (Constant performance) Execution time stays constant regardless
-  of how much data is supplied
-| Example: adding to a dict
+.. nextslide::
 
-| O(n) - Time goes up linearly with number of items.
-| Example: scanning lists
+O(1) - (Constant performance) Execution time stays constant regardless of how much data is supplied
+  - Example: adding to a dict
 
-| O(n\ :sup:`2`) - Time goes up quadratically with number of items.
-| Example: bubble sort, worst case
+O(n) - Time goes up linearly with number of items.
+ - Example: scanning lists
 
-| O(log(n)) - goes up with the log of number of items
-| Example: bisection search
+O(n\ :sup:`2`) - Time goes up quadratically with number of items.
+ - Example: bubble sort, worst case
+
+O(log(n)) - goes up with the log of number of items
+ - Example: bisection search
 
 Reference:
-`TimeComplexity <https://wiki.python.org/moin/TimeComplexity>`__ of
-operations on Python containers
+
+https://wiki.python.org/moin/TimeComplexity
+
 
 .. nextslide::
 
@@ -126,22 +133,24 @@ For instance a run on a machine with fast network and slow disk may
 produce much different results on a system with slow network and fast
 disk
 
-time.clock() / time.time()
---------------------------
-
-   :name: time.clock-time.time
+``time.clock()`` / ``time.time()``
+----------------------------------
 
 Using the time module as a profiling decorator
 
-time.time() returns the unix system time (wall clock time)
+``time.time()`` returns the unix system time (wall clock time)
 
-time.clock() returns the CPU time of the current process
+``time.clock()`` returns the CPU time of the current process
 
 Precision is system dependent
 
-See examples/timer/timer\_test.py
+Quite course, but can capture the big picture
 
-::
+See ``Examples/profiling/timer/timer_test.py``
+
+.. nextslide::
+
+.. code-block:: python
 
     import time
 
@@ -151,7 +160,7 @@ See examples/timer/timer\_test.py
             t1 = time.time()
             result = func(*args, **kwargs)
             t2 = time.time()
-            print "-- executed %s in %.4f seconds" % (func.func_name, (t2 - t1))
+            print("-- executed %s in %.4f seconds" % (func.func_name, (t2 - t1)))
             return result
         return timer
 
@@ -166,16 +175,8 @@ See examples/timer/timer\_test.py
     expensive_function()
     less_expensive_function()
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: timeit
-   :name: timeit
+timeit
+------
 
 Used for testing small bits of code
 
@@ -186,86 +187,68 @@ execution time
 
 Can be run from the command line:
 
-::
+.. code-block:: python
 
     python -m timeit '"-".join(str(n) for n in range(100))'
 
-http://docs.python.org/library/timeit.html
+https://docs.python.org/3.5/library/timeit.html
 
-(See the `timeit.py
-source <https://hg.python.org/cpython/file/2.7/Lib/timeit.py>`__)
+See the ``timeit.py`` source:
 
-.. raw:: html
+https://hg.python.org/cpython/file/3.5/Lib/timeit.py
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: timeit command line interface
-   :name: timeit-command-line-interface
+``timeit`` command line interface
+---------------------------------
 
 options
 
--  -nN: execute the given statement N times in a loop. If this value is
+-  ``-nN``: execute the given statement N times in a loop. If this value is
    not given, a fitting value is chosen.
--  -rR: repeat the loop iteration R times and take the best result.
+-  ``-rR``: repeat the loop iteration R times and take the best result.
    Default: 3
--  -t: use time.time to measure the time, which is the default on Unix.
+-  ``-t``: use time.time to measure the time, which is the default on Unix.
    This function measures wall time.
--  -c: use time.clock to measure the time, which is the default on
+-  ``-c``: use time.clock to measure the time, which is the default on
    Windows and measures wall time. On Unix, resource.getrusage is used
    instead and returns the CPU user time.
--  -pP: use a precision of P digits to display the timing result.
+-  ``-pP``: use a precision of P digits to display the timing result.
    Default: 3
 
-::
+.. code-block:: bash
 
     $ python -m timeit -n 1000 -t "len([x**2 for x in range(1000)])"
 
-.. raw:: html
 
-   </div>
+.. nextslide::
 
-.. raw:: html
+``timeit`` can also be imported as a module
 
-   <div class="section slide">
+http://docs.python.org/3/library/timeit.html#timeit.timeit
 
-.. rubric:: timeit
-   :name: timeit-1
+.. code-block:: python
 
-timeit can also be imported as a module
-
-http://docs.python.org/2/library/timeit.html#timeit.timeit
-
-timeit.timeit(stmt='pass', setup='pass', timer=<default timer>,
-number=1000000)
+  timeit.timeit(stmt='pass',
+                setup='pass',
+                timer=<default timer>,
+                number=1000000)
 
 The setup kwarg contains a string of Python code to execute before the
 loops start, so that code is not part of the test
 
-::
+.. code-block:: python
 
     import timeit
     statement = "char in text"
     setup_code = """text = "sample string";char = "g" """
     timeit.timeit(statement, setup=setup_code)
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: timeit via iPython magic
-   :name: timeit-via-ipython-magic
+``timeit`` via iPython magic
+----------------------------
 
 Note that the code is passed without quoting it
 
-::
+.. code-block:: ipython
 
     %timeit pass
 
@@ -281,48 +264,45 @@ Note that the code is passed without quoting it
 
     %timeit -n 10000 "f" in "food"
 
-http://ipython.org/ipython-doc/dev/api/generated/IPython.core.magics.execution.html?highlight=timeit#IPython.core.magics.execution.ExecutionMagics.timeit
+http://ipython.readthedocs.io/en/stable/interactive/magics.html?#magic-timeit
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exercise
-   :name: exercise
-
+Exercise
+--------
 We just tried determining if a character exists in a string:
 
-::
+.. code-block:: python
 
     statement = "'f' in 'food'"
     timeit.timeit(statement)
 
 Run timeit with an alternative statement:
 
-::
+.. code-block:: python
 
     statement2 = "'food'.find('f') >= 0"
     timeit.timeit(statement2)
 
 Which is faster? Why?
 
-.. raw:: html
 
-   </div>
+Getting more detailed with Profiling
+------------------------------------
 
-.. raw:: html
+That kind of timing is only useful if you know what part of the code you want to optimize.
 
-   <div class="section slide">
+But what if you know your program is "slow", but don't know where is is spending the time?
 
-.. rubric:: Getting more detailed with Profiling
-   :name: getting-more-detailed-with-profiling
+**Do not Guess!** -- you will often be wrong, and you don't want to waste time optimizing the wrong thing.
 
-A profiler takes measurements of runtime performance and summarizes
-results into a profile report
+*Really* -- even very experienced programmers are often wrong about where the bottlenecks are.
+
+You really need to profile to be sure.
+
+Also: take into account the entire run-time: does it make sense to optimize an initialization routine that takes a few seconds before a multi-hour run?
+
+.. nextslide::
+
+A profiler takes measurements of runtime performance and summarizes results into a profile report
 
 Reported metrics could include
 
@@ -332,47 +312,30 @@ Reported metrics could include
 -  Duration of function calls
 -  Cumulative time spent in subfunction calls
 
-.. raw:: html
+Python's built-in profiler
+--------------------------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Python's builtin profiler
-   :name: pythons-builtin-profiler
-
-Python comes with a few profiling modules
+Python comes with a couple profiling modules
 
 -  profile - older, pure Python. If you need to extend the profiler,
    this might be good. Otherwise, it's slow.
+
 -  cProfile - same API as profile, but written in C for less overhead
--  hotshot - deprecated, still used sometimes. Emphasis on low overhead.
 
-http://docs.python.org/2/library/profile.html
+You almost always want to use cProfile
 
-http://docs.python.org/2/library/hotshot.html
+https://docs.python.org/3.5/library/profile.html
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: cProfiler
-   :name: cprofiler
+cProfiler
+---------
 
 Can be run as a module on an entire application
 
-::
+.. code-block:: bash
 
     python -m cProfile [-o output_file] [-s sort_order] integrate_main.py
-
     11111128 function calls in 8.283 seconds
-
     Ordered by: standard name
 
     ncalls  tottime  percall  cumtime  percall filename:lineno(function)
@@ -381,28 +344,36 @@ Can be run as a module on an entire application
     [....]
 
 -  ncalls: number of calls
--  tottime: total time spent in function, excluding time in
-   sub-functions
+-  tottime: total time spent in function, excluding time in sub-functions
 -  percall: tottime / ncalls
--  cumtime: total time spent in function, including time in
-   sub-functions
+-  cumtime: total time spent in function, including time in sub-functions
 -  percall: cumtime / ncalls
--  filename:lineno: location of function
+-  filename:lineno -- location of function
 
-.. raw:: html
+Distraction: pyGame
+-------------------
 
-   </div>
+The next profiling example uses PyGame:
 
-.. raw:: html
+http://www.pygame.org/hifi.html
 
-   <div class="section slide">
+Which you can install from binaries:
 
-.. rubric:: A more complex profile
-   :name: a-more-complex-profile
+Windows:
+http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame
+
+(you want the wheel file for the python you are running: probably cp35)
+
+Anaconda Python:
+https://anaconda.org/cogsci
+
+
+A more complex profile
+----------------------
 
 The amount of data in the previous example is readable, so now we'll
 look at the output from a more complex application:
-examples/pygame/swarm.py
+examples/profiling/pygame/swarm.py
 
 This program consists of calculating the gravitational acceleration of
 bodies around a central mass and displaying them
@@ -416,72 +387,47 @@ logic or in the pygame operations
 
 A simple way to get data for our own code is
 
-::
+.. code-block:: python
 
     python -m cProfile swarm.py  &> /tmp/output.txt
     grep swarm.py /tmp/output.txt
 
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: cProfiler
-   :name: cprofiler-1
+.. nextslide::
 
 Can run a single line of code similar to timeit:
 
-::
+.. code-block:: python
 
-              cProfile.run('None is None')
-
-
-Or from our old demo app examples/wikidef :
-
-::
-
-              cProfile.run("Definitions.article('python')")
+  cProfile.run('None is None')
 
 
-.. raw:: html
+Or from our old demo app examples/profiling/wikidef :
 
-   </div>
+.. code-block:: python
 
-.. raw:: html
+  cProfile.run("Definitions.article('python')")
 
-   <div class="section slide">
 
-.. rubric:: Analyzing profile data
-   :name: analyzing-profile-data
+Analyzing profile data
+----------------------
 
-output to a binary dump with -o <filename>
+Output to a binary dump with -o <filename>
 
 While doing performance work, save your profiles for comparison later
 
 This helps ensure that any changes do actually increase performance
 
-A profile dump file can be read with pstats
+A profile dump file can be read with ``pstats``
 
-::
+.. code-block:: python
 
     python -m pstats
 
-.. raw:: html
+``pstats``
+----------
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: pstats
-   :name: pstats
-
-::
+.. code-block:: python
 
     python -m cProfile -o prof_dump  ./define.py Robot
     python -m pstats
@@ -501,20 +447,11 @@ A profile dump file can be read with pstats
     # show results again:
     prof_dump% stats 5
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: pstats
-   :name: pstats-1
+.. nextslide::
 
 pstats also has method calls:
 
-::
+.. code-block:: python
 
     import pstats
     p = pstats.Stats('prof_dump')
@@ -530,41 +467,24 @@ pstats also has method calls:
     p.print_stats(5)
     p.print_stats('./api.py', 4)
 
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Analyzing profile data
-   :name: analyzing-profile-data-1
+Analyzing profile data
+----------------------
 
 Inspect only your local code with regular expression syntax:
 
-::
+.. code-block:: python
 
     import pstats
     prof = pstats.Stats('prof_dump')
     prof.sort_stats('cumulative')
     prof.print_stats('^./[a-z]*.py:')
 
+qcachegrind / kcachegrind
+-------------------------
 
-.. raw:: html
+profiling tool based on Valgrind:
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: qcachegrind / kcachegrind
-   :name: qcachegrind-kcachegrind
-
-profiling tool based on
-`Valgrind <http://kcachegrind.sourceforge.net/html/Valgrind.html>`__
+http://kcachegrind.sourceforge.net/html/Valgrind.html
 
 a runtime instrumentation framework for Linux/x86
 
@@ -573,7 +493,7 @@ Can be used with Python profile data with a profile format conversion
 Doesn't give all the information that a native valgrind run would
 provide
 
-::
+.. code-block:: python
 
     # convert python profile to calltree format
     pip install pyprof2calltree
@@ -584,24 +504,21 @@ provide
 
 http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat
 
-.. raw:: html
+Profiling C extensions
+----------------------
 
-   </div>
+Google Performance Tools:
 
-.. raw:: html
+https://code.google.com/p/gperftools/
 
-   <div class="section slide">
-
-.. rubric:: Profiling C extensions
-   :name: profiling-c-extensions
-
-`Google Performance Tools <https://code.google.com/p/gperftools/>`__ can
-be used to profile C extensions
+can be used to profile C extensions
 
 Just call ProfilerStart and ProfilerStop with ctypes around the code you
 want to profile
 
-::
+.. nextslide::
+
+.. code-block:: python
 
     import ctypes
 
@@ -612,54 +529,46 @@ want to profile
     a*=32432432
     libprof.ProfilerStop('/tmp/out.prof')
 
-::
+.. code-block:: bash
 
     # convert the profile to qcachegrind's format with google's pprof tool
     $ pprof --callgrind  ~/virtualenvs/uwpce/lib/python2.7/site-packages/numpy/core/multiarray.so out.prof > output.callgrind
     $ qcachegrind output.callgrind
 
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Run Snake Run
-   :name: run-snake-run
+SNAKEVIZ
+--------
 
 A graphical profile viewer for Python
 
-Functions are represented by a
-`SquareMap <https://pypi.python.org/pypi/SquareMap/>`__ in which square
-size is proportional to time spent in the function
+https://jiffyclub.github.io/snakeviz/
 
-|image1|
 
-.. raw:: html
+Inspired by "Run Snake Run": http://www.vrplumber.com/programming/runsnakerun/
 
-   </div>
+(which only works with Python 2.* for now)
 
-.. raw:: html
+.. image:: images/snakeviz.png
+..      :align: right
+..      :height: 450px
+      :alt: snakeviz visualization
 
-   <div class="section slide">
 
-.. rubric:: line profiler
-   :name: line-profiler
+line profiler
+-------------
 
 Thus far, we've seen how to collect data on the performance of functions
 as atomic units
 
-line\_profiler is a module for doing line-by-line profiling of functions
+``line_profiler`` is a module for doing line-by-line profiling of functions
 
-line\_profiler ships with its own profiler, kernprof.py. Enable
-line-by-line profiling with -l
+``line_profiler`` ships with its own profiler, ``kernprof.py``.
 
-Decorate the function you want to profile with @profile and run
+Enable line-by-line profiling with -l
 
-::
+Decorate the function you want to profile with ``@profile`` and run
+
+.. code-block:: bash
 
     # the -v option will display the profile data immediately, instead
     # of just writing it to <filename.py>.lprof
@@ -669,207 +578,78 @@ Decorate the function you want to profile with @profile and run
     $ python -m line_profiler integrate_main.py.lprof
 
 
-http://pythonhosted.org/line_profiler/
+https://github.com/rkern/line_profiler
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: pycallgraph
-   :name: pycallgraph
+pycallgraph
+-----------
 
 Sometimes a quick view of the call graph will help
 
 Python Call Graph is a Python module that creates call graph
 visualizations
 
-pycallgraph graphviz ./integrate\_main.py
+pycallgraph graphviz ./integrate_main.py
 
-|image2|
+.. image:: images/pycallgraph.png
+  :height: 450px
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: memory profilers
-   :name: memory-profilers
+memory profilers
+----------------
 
 There aren't any great ones
 
-one option is heapy, which comes with Guppy, a Python environment for
+One option is heapy, which comes with Guppy, a Python environment for
 memory profiling
 
-::
+.. code-block:: python
 
     from guppy import hpy; hp=hpy()
-    hp
     hp.doc.heap
     hp.heap()
     %run define.py Robot
     hp.heap()
 
+Others:
 
-Others
 https://pypi.python.org/pypi/memory_profiler
+
 http://mg.pov.lt/objgraph/
+
 https://launchpad.net/meliae
+
 http://pythonhosted.org/Pympler/muppy.html
+
 http://jmdana.github.io/memprof/
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: boosting Python performance
-   :name: boosting-python-performance
+Boosting Python performance
+---------------------------
 
 -  Overhead in function/method runtime lookup can be significant for
    small frequent calls.
+
 -  inlining code or caching function references might help. See
-   examples/data\_aggregation/agg.py
--  Python string handling idioms: use "".join(list\_of\_strings) rather
-   than sequential calls to += See examples/strings/str\_concat.py and
-   str\_comprehensions.py
--  using list comprehensions, generator expressions, or map() instead of
-   for loops can be faster (see data\_aggregation/loops.py)
--  Rewrite expensive code as C modules. Use ctypes, Cython, SWIG, ...
+   ``examples/data_aggregation/agg.py``
+
+-  Python string handling idioms: use ``"".join(list_of_strings)`` rather
+   than sequential calls to += See ``examples/strings/str_concat.py`` and
+   ``str_comprehensions.py``
+
+-  using list comprehensions, generator expressions, ``or map()`` instead of
+   for loops can be faster (see ``data_aggregation/loops.py``)
+
 -  Leverage existing domain specific C extension libraries, for instance
    Numpy for fast array operations.
 
+-  Rewrite expensive code as C modules. Use ctypes, Cython, SWIG, ...
+
 http://wiki.python.org/moin/PythonSpeed/PerformanceTips/
 
-.. raw:: html
 
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Numpy
-   :name: numpy
-
-.. rubric:: A fast array library
-   :name: a-fast-array-library
-
-Numpy provides mechanisms to create and manipulate large arrays in C
-with a Pythonic interface
-
-Advantages:
-
--  Faster
--  Less memory
--  `Data
-   typing <http://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html>`__
--  N-d array slicing
--  Vector operations
-
-Many projects involving gridded data use numpy arrays:
-
--  PyOpenGL
--  GDAL (Geospatial Data Abstraction Library)
--  NetCDF4 (file format for large gridded data sets)
--  Shapely (for GIS work)
--  PIL (Python Image Library)
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Numpy
-   :name: numpy-1
-
-Numpy arrays can be created by passing a sequence to numpy.array(), or
-generated from scratch with methods like zeros(), empty(), arange(), ...
-
-Numpy arrays can share data
-
-Creating a slice of an array generates a reference to that slice, it
-does not copy the data, saving memory and improving performance
-
-::
-
-    import numpy
-    # create a 2D array
-    x = numpy.array(((1,2,3), (4,5,6), (7,8,9)))
-    # take a vertical slice
-    y = x[:,1]
-    # changing a value in x..
-    x[0][1] = 99
-    # changes the value in y
-    print y[0]
-
-
-Fast serialization with numpy.tofile() / numpy.fromfile() – Just the raw
-bytes, no metadata
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Numpy
-   :name: numpy-2
-
-Operations on a numpy array
-
-Broadcasting: specifies an operation to broadcast across the array. e.g.
-``my_array*3`` will broadcast the (\*3) operation on each element, at
-the C level, not the Python level.
-
-See examples/numpy/matrix.py
-
-Numpy has a `large number of
-methods <http://docs.scipy.org/doc/numpy/reference/routines.html>`__ for
-operating on the arrays, for slicing, vector calculations, and
-statistics
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Exercise
-   :name: exercise-1
-
-examples/numpy/images.py contains a script to manipulate an image's
-pixel data with numpy
-
-Before saving a new copy of the image, mirror the image either
-horizontally or vertically
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Managing memory
-   :name: managing-memory
+Managing memory
+---------------
 
 Don’t forget memory:
 
@@ -883,44 +663,10 @@ Use the right data structures
 
 Use efficient algorithms
 
-Use generators, rather than lists: xrange, ...
+Use generators and iterators, rather than lists.
 
 Use iterators to pull in the data you need from databases, sockets,
 files, ...
 
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div class="section slide">
-
-.. rubric:: Questions?
-   :name: questions
-
-.. raw:: html
-
-   </div>
-
-.. raw:: html
-
-   <div aria-role="navigation">
-
-`← <#>`__ `→ <#>`__
-
-.. raw:: html
-
-   </div>
-
- /
-
-.. raw:: html
-
-   </div>
-
-.. |image0| image:: images/big_o.png
-   :width: 90.0%
-.. |image1| image:: images/runsnake.png
-.. |image2| image:: images/pycallgraph.png
-   :width: 60.0%
+Questions?
+----------

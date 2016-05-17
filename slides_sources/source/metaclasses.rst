@@ -234,7 +234,7 @@ __new__  vs  __init__ in Metaclasses
 .. nextslide::
 
 
-..code-block:: python
+.. code-block:: python
 
    class CoolMeta(type):
        def __new__(meta, name, bases, dct):

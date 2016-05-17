@@ -95,7 +95,7 @@ Session 8
 
   - `datetime <html_slides/06-datetime.html>`_
 
-  - :ref:profiling
+  - :ref:`profiling`
 
 Session 9
 =========

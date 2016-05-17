@@ -713,11 +713,11 @@ and a scheduler
 A coroutine is a generalization of a subroutine which allows multiple
 entry points for suspending and resuming execution
 
-The threading and the multiprocessing modules follow a `preemptive
+The threading and the multiprocessing modules follow a preemptive
 multitasking model: http://en.wikipedia.org/wiki/Preemption_(computing)
 
-Coroutine based solutions follow a `cooperative multitasking
-model <http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing>`__
+Coroutine based solutions follow a cooperative multitasking
+model: http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing
 
 A Curious Course on Coroutines and Concurrency
 
