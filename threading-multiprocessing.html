@@ -95,6 +95,8 @@
 <li><a class="reference internal" href="#the-threading-module">The threading module</a></li>
 <li><a class="reference internal" href="#subclassing-thread">Subclassing Thread</a></li>
 <li><a class="reference internal" href="#race-conditions">Race Conditions</a></li>
+<li><a class="reference internal" href="#no-race-condition">No race condition</a></li>
+<li><a class="reference internal" href="#race-condition">Race Condition!</a></li>
 <li><a class="reference internal" href="#deadlocks">Deadlocks</a></li>
 <li><a class="reference internal" href="#locks">Locks</a></li>
 <li><a class="reference internal" href="#nonblocking-locking">Nonblocking Locking</a></li>
@@ -284,7 +286,7 @@ have no GIL</p>
 <div class="section" id="a-cpu-bound-problem">
 <h3>A CPU bound problem<a class="headerlink" href="#a-cpu-bound-problem" title="Permalink to this headline">¶</a></h3>
 <p>Numerically integrate the function
-<span class="math">\(y =x^2\)</span> from 0 to 10.
+ from 0 to 10.
 <a class="reference external" href="http://www.wolframalpha.com/input/?i=x%5E2">http://www.wolframalpha.com/input/?i=x%5E2</a></p>
 <a class="reference internal image-reference" href="_images/x2.png"><img alt="_images/x2.png" src="_images/x2.png" style="height: 400px;" /></a>
 <p>Solution: <a class="reference external" href="http://www.wolframalpha.com/input/?i=int(x%5E2,0,10">http://www.wolframalpha.com/input/?i=int(x%5E2,0,10</a>)</p>
@@ -360,6 +362,9 @@ an unexpected race condition</p>
 <p>Race conditions occur when multiple statements need to execute
 atomically, but get interrupted midway</p>
 <p>See <code class="docutils literal"><span class="pre">Examples/race_condition.py</span></code></p>
+</div>
+<div class="section" id="no-race-condition">
+<h3>No race condition<a class="headerlink" href="#no-race-condition" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
 <col width="25%" />
@@ -412,6 +417,9 @@ atomically, but get interrupted midway</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="race-condition">
+<h3>Race Condition!<a class="headerlink" href="#race-condition" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
 <col width="25%" />
@@ -766,10 +774,10 @@ communication and in-process threads, as we&#8217;ve seen</p>
 and a scheduler</p>
 <p>A coroutine is a generalization of a subroutine which allows multiple
 entry points for suspending and resuming execution</p>
-<p>The threading and the multiprocessing modules follow a <a href="#id3"><span class="problematic" id="id4">`</span></a>preemptive
+<p>The threading and the multiprocessing modules follow a preemptive
 multitasking model: <a class="reference external" href="http://en.wikipedia.org/wiki/Preemption_(computing">http://en.wikipedia.org/wiki/Preemption_(computing</a>)</p>
-<p>Coroutine based solutions follow a <a class="reference external" href="http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing">cooperative multitasking
-model</a></p>
+<p>Coroutine based solutions follow a cooperative multitasking
+model: <a class="reference external" href="http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing">http://en.wikipedia.org/wiki/Computer_multitasking#Cooperative_multitasking.2Ftime-sharing</a></p>
 <p>A Curious Course on Coroutines and Concurrency</p>
 <blockquote>
 <div><ul class="simple">
@@ -931,7 +939,6 @@ farms jobs out to them:</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

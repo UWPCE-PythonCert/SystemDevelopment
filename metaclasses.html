@@ -310,38 +310,25 @@ abstracted from the user of the Model class.</p>
 <p><code class="docutils literal"><span class="pre">__init__</span></code> is used when you want to control the initiation of the class (object)</p>
 <p><code class="docutils literal"><span class="pre">__new__</span></code> and <code class="docutils literal"><span class="pre">__init__</span></code> are both called when the module containing the class is imported for the first time.</p>
 <p><code class="docutils literal"><span class="pre">__call__</span></code> is used when you want to control how a class (object) is called (instantiation)</p>
-<p>..code-block:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>class CoolMeta(type):</dt>
-<dd><blockquote class="first">
-<div><dl class="docutils">
-<dt>def __new__(meta, name, bases, dct):</dt>
-<dd>print(&#8216;Creating class&#8217;, name)
-return super(CoolMeta, meta).__new__(meta, name, bases, dct)</dd>
-</dl>
-<p>def __init__(cls, name, bases, dct):</p>
-</div></blockquote>
-<p>print(&#8216;Initializing class&#8217;, name)
-super(CoolMeta, cls).__init__(name, bases, dct)</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>def __call__(cls, <a href="#id2"><span class="problematic" id="id3">*</span></a>args, <a href="#id4"><span class="problematic" id="id5">**</span></a>kw):</dt>
-<dd>print(&#8216;Meta has been called&#8217;)</dd>
-</dl>
-</div></blockquote>
-<p class="last">return type(cls, <a href="#id6"><span class="problematic" id="id7">*</span></a>args, <a href="#id8"><span class="problematic" id="id9">**</span></a>kw)</p>
-</dd>
-<dt>class CoolClass(metaclass=CoolMeta):</dt>
-<dd><dl class="first last docutils">
-<dt>def __init__(self):</dt>
-<dd>print(&#8216;And now my CoolClass exists&#8217;)</dd>
-</dl>
-</dd>
-</dl>
-<p>print(&#8216;Actually instantiating now&#8217;)
-foo = CoolClass()</p>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CoolMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Creating class&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CoolMeta</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Initializing class&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+  <span class="nb">super</span><span class="p">(</span><span class="n">CoolMeta</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Meta has been called&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CoolClass</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">CoolMeta</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;And now my CoolClass exists&#39;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Actually instantiating now&#39;</span><span class="p">)</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">CoolClass</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="metaclass-example">
 <h3>Metaclass example<a class="headerlink" href="#metaclass-example" title="Permalink to this headline">¶</a></h3>
@@ -460,7 +447,6 @@ NameMangler and Singleton classes in the <code class="docutils literal"><span cl
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
