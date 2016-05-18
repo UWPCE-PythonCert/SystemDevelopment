@@ -26,10 +26,10 @@ Daylight savings time challenges
 Daylight savings time creates discontinuities in a time series
 
 .. image:: /_static/dst_sf_graph.png
-   :height: 400px
+   :height: 250px
 
 .. image:: /_static/dst_fb_graph.png
-   :height: 400px
+   :height: 250px
 
 On representing a point in time
 -------------------------------
@@ -59,8 +59,11 @@ the letter Z, e.g. 12:59Z
 It is similar to, but not the same as, Greenwich Mean Time (GMT). UTC is
 more precisely defined
 
+.. nextslide::
+   
 .. image:: /_static/Greenwich_clock.jpg
-
+   :height: 500px
+	   
 `UNIX time <http://en.wikipedia.org/wiki/Unix_time>`__
 ------------------------------------------------------
 
@@ -127,10 +130,8 @@ precision is limited to microseconds and time range is limited:
 
        In [3]: datetime.MINYEAR
        Out[3]: 1
-
        In [4]: datetime.MAXYEAR
        Out[4]: 9999
-
        In [5]: datetime.datetime(37337,1,1)
        ---------------------------------------------------------------------------
        ValueError                                Traceback (most recent call last)
@@ -295,6 +296,8 @@ datetimes in the calculations must be all naive or all aware
 
 
 Storing datetimes
+-----------------
+
 Try to deal in UTC as much as possible.  Do not depend on the machine's interpretation of local time.
 For instance, datetime.now() on my Mac will return a naive datetime containing the local time.  Alternatively:
 
@@ -344,11 +347,18 @@ are supplied for date and datetime objects
 unfortunately, the default implementation does not handle timezone aware
 datetimes, but they are simply implementable
 
-let's look at examples/datetime\_naive\_to\_sqlite.py and
-examples/datetime\_aware\_to\_sqlite.py
 
+Python Date and Time Useful links
+---------------------------------
 
-.. nextslide::
+http://agiliq.com/blog/2009/02/understanding-datetime-tzinfo-timedelta-amp-timezo/
+
+https://pymotw.com/3/calendar/index.html
+
+https://pymotw.com/3/datetime/index.html
+
+Dealing with DST and the same time twice in one day
+https://www.python.org/dev/peps/pep-0495/
 
 Questions?
 ----------
