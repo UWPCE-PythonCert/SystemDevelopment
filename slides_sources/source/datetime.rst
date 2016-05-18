@@ -97,6 +97,10 @@ docs <https://docs.python.org/3/library/datetime.html>`__,
 
 The rules for time adjustment across the world are more political than rational
 
+See: John Oliver -- Daylight Saving Time - How Is This Still A Thing?
+
+https://youtu.be/br0NW9ufUUw
+
 
 from datetime import time, date, datetime
 -----------------------------------------
@@ -176,7 +180,7 @@ datetime.strptime(string, format)
 
     In [88]: datetime.datetime.strptime?
     Type:        builtin_function_or_method
-    String form: 
+    String form:
     Docstring:   string, format -> new datetime parsed from a string (like time.strptime()).
 
     time_string = "2019/11/1 2300"
