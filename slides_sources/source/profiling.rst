@@ -468,11 +468,12 @@ Let's try that out now.
 Some other tools to consider
 ============================
 
-For better visualizing
+.. rst-class:: left
+  For better visualizing
 
-For C extensions
+  For C extensions
 
-For memory Profiling
+  For memory Profiling
 
 
 SNAKEVIZ
@@ -482,6 +483,9 @@ A graphical profile viewer for Python
 
 https://jiffyclub.github.io/snakeviz/
 
+::
+
+  pip install snakeviz
 
 Inspired by "Run Snake Run": http://www.vrplumber.com/programming/runsnakerun/
 
@@ -491,6 +495,7 @@ Inspired by "Run Snake Run": http://www.vrplumber.com/programming/runsnakerun/
 ..      :align: right
 ..      :height: 450px
       :alt: snakeviz visualization
+
 
 
 line profiler
