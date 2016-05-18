@@ -89,20 +89,20 @@ function of amount of input data
 .. nextslide::
 
 O(1) - (Constant performance) Execution time stays constant regardless of how much data is supplied
-  - Example: adding to a dict
+
+- Example: adding to a dict
 
 O(n) - Time goes up linearly with number of items.
- - Example: scanning lists
+
+- Example: scanning lists
 
 O(n\ :sup:`2`) - Time goes up quadratically with number of items.
- - Example: bubble sort, worst case
+
+- Example: bubble sort, worst case
 
 O(log(n)) - goes up with the log of number of items
- - Example: bisection search
 
-Reference:
-
-https://wiki.python.org/moin/TimeComplexity
+- Example: bisection search
 
 
 .. nextslide::
@@ -111,6 +111,22 @@ https://wiki.python.org/moin/TimeComplexity
 ..      :align: right
 ..      :height: 450px
       :alt: big O notation plot
+
+.. nextslide::
+
+**log?** you expect me to remember that math???
+
+Let's think about that a bit....
+
+Anyone know what a bisection search is?
+
+Why is that O(log(n))?
+
+|
+
+Reference:
+
+https://wiki.python.org/moin/TimeComplexity
 
 
 Measuring time with a stopwatch
@@ -246,25 +262,26 @@ loops start, so that code is not part of the test
 ``timeit`` via iPython magic
 ----------------------------
 
-Note that the code is passed without quoting it
+Note that all that setup_code stuff is kind of a pain.
+
+iPython has your back (again)
 
 .. code-block:: ipython
 
     %timeit pass
 
     u = None
-
     %timeit u is None
 
     %timeit -r 4 u == None
 
     import time
-
     %timeit -n1 time.sleep(2)
 
     %timeit -n 10000 "f" in "food"
 
 http://ipython.readthedocs.io/en/stable/interactive/magics.html?#magic-timeit
+
 
 Exercise
 --------
@@ -312,8 +329,8 @@ Reported metrics could include
 -  Duration of function calls
 -  Cumulative time spent in subfunction calls
 
-Python's built-in profiler
---------------------------
+Python's built-in profilers
+---------------------------
 
 Python comes with a couple profiling modules
 
@@ -322,19 +339,19 @@ Python comes with a couple profiling modules
 
 -  cProfile - same API as profile, but written in C for less overhead
 
-You almost always want to use cProfile
+**You almost always want to use ``cProfile``**
 
 https://docs.python.org/3.5/library/profile.html
 
 
-cProfiler
----------
+cProfile
+--------
 
 Can be run as a module on an entire application
 
 .. code-block:: bash
 
-    python -m cProfile [-o output_file] [-s sort_order] integrate_main.py
+    python -m cProfile [-o output_file] [-s sort_order] read_bna.py
     11111128 function calls in 8.283 seconds
     Ordered by: standard name
 
@@ -350,64 +367,6 @@ Can be run as a module on an entire application
 -  percall: cumtime / ncalls
 -  filename:lineno -- location of function
 
-Distraction: pyGame
--------------------
-
-The next profiling example uses PyGame:
-
-http://www.pygame.org/hifi.html
-
-Which you can install from binaries:
-
-Windows:
-http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame
-
-(you want the wheel file for the python you are running: probably cp35)
-
-Anaconda Python:
-https://anaconda.org/cogsci
-
-
-A more complex profile
-----------------------
-
-The amount of data in the previous example is readable, so now we'll
-look at the output from a more complex application:
-examples/profiling/pygame/swarm.py
-
-This program consists of calculating the gravitational acceleration of
-bodies around a central mass and displaying them
-
-There are two major consumers of resources: one is our own code
-calculating the physics, the other is pygame drawing the results on the
-screen
-
-Our goal is to figure out whether the major bottleneck is in our own
-logic or in the pygame operations
-
-A simple way to get data for our own code is
-
-.. code-block:: python
-
-    python -m cProfile swarm.py  &> /tmp/output.txt
-    grep swarm.py /tmp/output.txt
-
-
-.. nextslide::
-
-Can run a single line of code similar to timeit:
-
-.. code-block:: python
-
-  cProfile.run('None is None')
-
-
-Or from our old demo app examples/profiling/wikidef :
-
-.. code-block:: python
-
-  cProfile.run("Definitions.article('python')")
-
 
 Analyzing profile data
 ----------------------
@@ -420,16 +379,20 @@ This helps ensure that any changes do actually increase performance
 
 A profile dump file can be read with ``pstats``
 
-.. code-block:: python
+.. code-block:: bash
 
     python -m pstats
+
+Gives you a command line interface
+
+(help for help...)
 
 ``pstats``
 ----------
 
 .. code-block:: python
 
-    python -m cProfile -o prof_dump  ./define.py Robot
+    python -m cProfile -o prof_dump  ./read_bna.py
     python -m pstats
     % read prof_dump
 
@@ -464,8 +427,6 @@ pstats also has method calls:
     # or a regular expression (to pattern match the standard name that is printed.
     # If several restrictions are provided, then they are applied sequentially.
 
-    p.print_stats(5)
-    p.print_stats('./api.py', 4)
 
 Analyzing profile data
 ----------------------
@@ -479,61 +440,39 @@ Inspect only your local code with regular expression syntax:
     prof.sort_stats('cumulative')
     prof.print_stats('^./[a-z]*.py:')
 
-qcachegrind / kcachegrind
--------------------------
+I tend to write little scripts like this so I don't have to remember the commands.
 
-profiling tool based on Valgrind:
+Exercise / Example
+------------------
 
-http://kcachegrind.sourceforge.net/html/Valgrind.html
+Real world example:
 
-a runtime instrumentation framework for Linux/x86
+``Examples/profiling/bna_reader/read_bna.py``
 
-Can be used with Python profile data with a profile format conversion
+BNA is a (old) text file format for holding geospatial data.
 
-Doesn't give all the information that a native valgrind run would
-provide
+We were using some old code of mine that read these files, generated an internal data structure of polygons, and rendered them to a PNG.
 
-.. code-block:: python
+As these files got big -- this process started getting really slow.
 
-    # convert python profile to calltree format
-    pip install pyprof2calltree
+I had already optimized the file reading code a lot -- so could we do better?
 
-    python -m cProfile -o dump.profile integrate_main.py
-    pyprof2calltree -i dump.profile -o dump.callgrind
+  - I assumed not
+
+One of my team ran the profiler and identified the bottleneck -- and yes -- we could do better -- a lot.
+
+Let's try that out now.
 
 
-http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat
+============================
+Some other tools to consider
+============================
 
-Profiling C extensions
-----------------------
+For better visualizing
 
-Google Performance Tools:
+For C extensions
 
-https://code.google.com/p/gperftools/
-
-can be used to profile C extensions
-
-Just call ProfilerStart and ProfilerStop with ctypes around the code you
-want to profile
-
-.. nextslide::
-
-.. code-block:: python
-
-    import ctypes
-
-    libprof = ctypes.CDLL('/usr/local/lib/libprofiler.0.dylib')
-    libprof.ProfilerStart('/tmp/out.prof')
-    import numpy
-    a=numpy.linspace(0,100)
-    a*=32432432
-    libprof.ProfilerStop('/tmp/out.prof')
-
-.. code-block:: bash
-
-    # convert the profile to qcachegrind's format with google's pprof tool
-    $ pprof --callgrind  ~/virtualenvs/uwpce/lib/python2.7/site-packages/numpy/core/multiarray.so out.prof > output.callgrind
-    $ qcachegrind output.callgrind
+For memory Profiling
 
 
 SNAKEVIZ
@@ -572,7 +511,7 @@ Decorate the function you want to profile with ``@profile`` and run
 
     # the -v option will display the profile data immediately, instead
     # of just writing it to <filename.py>.lprof
-    $ kernprof.py -l -v integrate_main.py
+    $ kernprof -l -v integrate_main.py
 
     # load the output with
     $ python -m line_profiler integrate_main.py.lprof
@@ -580,20 +519,62 @@ Decorate the function you want to profile with ``@profile`` and run
 
 https://github.com/rkern/line_profiler
 
+qcachegrind / kcachegrind
+-------------------------
 
-pycallgraph
------------
+profiling tool based on Valgrind:
 
-Sometimes a quick view of the call graph will help
+http://kcachegrind.sourceforge.net/html/Valgrind.html
 
-Python Call Graph is a Python module that creates call graph
-visualizations
+a runtime instrumentation framework for Linux/x86
 
-pycallgraph graphviz ./integrate_main.py
+Can be used with Python profile data with a profile format conversion
 
-.. image:: images/pycallgraph.png
-  :height: 450px
+Doesn't give all the information that a native valgrind run would
+provide
 
+.. code-block:: python
+
+    # convert python profile to calltree format
+    pip install pyprof2calltree
+
+    python -m cProfile -o dump.profile integrate_main.py
+    pyprof2calltree -i dump.profile -o dump.callgrind
+
+
+http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindCalltreeFormat
+
+
+Profiling C extensions
+----------------------
+
+Google Performance Tools:
+
+https://code.google.com/p/gperftools/
+
+can be used to profile C extensions
+
+Just call ProfilerStart and ProfilerStop with ctypes around the code you
+want to profile
+
+.. nextslide::
+
+.. code-block:: python
+
+    import ctypes
+
+    libprof = ctypes.CDLL('/usr/local/lib/libprofiler.0.dylib')
+    libprof.ProfilerStart('/tmp/out.prof')
+    import numpy
+    a=numpy.linspace(0,100)
+    a*=32432432
+    libprof.ProfilerStop('/tmp/out.prof')
+
+.. code-block:: bash
+
+    # convert the profile to qcachegrind's format with google's pprof tool
+    $ pprof --callgrind  ~/virtualenvs/uwpce/lib/python2.7/site-packages/numpy/core/multiarray.so out.prof > output.callgrind
+    $ qcachegrind output.callgrind
 
 memory profilers
 ----------------
@@ -623,9 +604,14 @@ http://pythonhosted.org/Pympler/muppy.html
 
 http://jmdana.github.io/memprof/
 
-
+============================
 Boosting Python performance
----------------------------
+============================
+
+There are ways to better structure your Python code to improve performance
+
+A few key approaches
+--------------------
 
 -  Overhead in function/method runtime lookup can be significant for
    small frequent calls.
@@ -667,6 +653,56 @@ Use generators and iterators, rather than lists.
 
 Use iterators to pull in the data you need from databases, sockets,
 files, ...
+
+
+Distraction: pyGame
+-------------------
+
+There is a nice profiling example that uses PyGame:
+
+http://www.pygame.org/hifi.html
+
+Which you can install from binaries:
+
+Windows:
+http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame
+
+(you want the wheel file for the python you are running: probably cp35)
+
+Anaconda Python:
+
+First install miniconda. Then you can install pygame from anaconda.org.
+
+https://anaconda.org/cogsci
+
+
+A more complex profile
+----------------------
+
+The amount of data in the previous example is readable, so now we'll
+look at the output from a more complex application:
+examples/profiling/pygame/swarm.py
+
+This program consists of calculating the gravitational acceleration of
+bodies around a central mass and displaying them
+
+There are two major consumers of resources: one is our own code
+calculating the physics, the other is pygame drawing the results on the
+screen
+
+Our goal is to figure out whether the major bottleneck is in our own
+logic or in the pygame operations
+
+A simple way to get data for our own code is
+
+.. code-block:: python
+
+    python -m cProfile swarm.py  &> /tmp/output.txt
+    grep swarm.py /tmp/output.txt
+
+
+
+
 
 Questions?
 ----------
