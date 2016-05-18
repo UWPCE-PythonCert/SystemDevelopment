@@ -95,7 +95,9 @@
 <li><a class="reference internal" href="#pytz">pytz</a></li>
 <li><a class="reference internal" href="#time-calculations">time calculations</a></li>
 <li><a class="reference internal" href="#id2">time calculations</a></li>
+<li><a class="reference internal" href="#storing-datetimes">Storing datetimes</a></li>
 <li><a class="reference internal" href="#datetimes-in-sqlite3">datetimes in sqlite3</a></li>
+<li><a class="reference internal" href="#python-date-and-time-useful-links">Python Date and Time Useful links</a></li>
 <li><a class="reference internal" href="#questions">Questions?</a></li>
 </ul>
 </li>
@@ -160,8 +162,8 @@ frequently</p>
 <div class="section" id="dst">
 <h3><a class="reference external" href="http://en.wikipedia.org/wiki/Daylight_saving_time">DST</a><a class="headerlink" href="#dst" title="Permalink to this headline">¶</a></h3>
 <p>Daylight savings time creates discontinuities in a time series</p>
-<a class="reference internal image-reference" href="_images/dst_sf_graph.png"><img alt="_images/dst_sf_graph.png" src="_images/dst_sf_graph.png" style="height: 400px;" /></a>
-<a class="reference internal image-reference" href="_images/dst_fb_graph.png"><img alt="_images/dst_fb_graph.png" src="_images/dst_fb_graph.png" style="height: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/dst_sf_graph.png"><img alt="_images/dst_sf_graph.png" src="_images/dst_sf_graph.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="_images/dst_fb_graph.png"><img alt="_images/dst_fb_graph.png" src="_images/dst_fb_graph.png" style="height: 250px;" /></a>
 </div>
 <div class="section" id="on-representing-a-point-in-time">
 <h3>On representing a point in time<a class="headerlink" href="#on-representing-a-point-in-time" title="Permalink to this headline">¶</a></h3>
@@ -181,7 +183,7 @@ Coordonné)</a></li>
 the letter Z, e.g. 12:59Z</p>
 <p>It is similar to, but not the same as, Greenwich Mean Time (GMT). UTC is
 more precisely defined</p>
-<img alt="_images/Greenwich_clock.jpg" src="_images/Greenwich_clock.jpg" />
+<a class="reference internal image-reference" href="_images/Greenwich_clock.jpg"><img alt="_images/Greenwich_clock.jpg" src="_images/Greenwich_clock.jpg" style="height: 500px;" /></a>
 </div>
 <div class="section" id="unix-time">
 <h3><a class="reference external" href="http://en.wikipedia.org/wiki/Unix_time">UNIX time</a><a class="headerlink" href="#unix-time" title="Permalink to this headline">¶</a></h3>
@@ -210,6 +212,8 @@ reference database of the world&#8217;s timezones.</p>
 <p>As stated in the <a class="reference external" href="https://docs.python.org/3/library/datetime.html">datetime
 docs</a>,</p>
 <p>The rules for time adjustment across the world are more political than rational</p>
+<p>See: John Oliver &#8211; Daylight Saving Time - How Is This Still A Thing?</p>
+<p><a class="reference external" href="https://youtu.be/br0NW9ufUUw">https://youtu.be/br0NW9ufUUw</a></p>
 </div>
 <div class="section" id="from-datetime-import-time-date-datetime">
 <h3>from datetime import time, date, datetime<a class="headerlink" href="#from-datetime-import-time-date-datetime" title="Permalink to this headline">¶</a></h3>
@@ -231,10 +235,8 @@ docs</a>,</p>
 <blockquote>
 <div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">MINYEAR</span>
 <span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="mi">1</span>
-
 <span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">MAXYEAR</span>
 <span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="mi">9999</span>
-
 <span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">37337</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="o">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
@@ -362,8 +364,10 @@ timedelta.microseconds</p>
 <span class="ne">TypeError</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t subtract offset-naive and offset-aware datetimes</span>
 </pre></div>
 </div>
-<p>Storing datetimes
-Try to deal in UTC as much as possible.  Do not depend on the machine&#8217;s interpretation of local time.
+</div>
+<div class="section" id="storing-datetimes">
+<h3>Storing datetimes<a class="headerlink" href="#storing-datetimes" title="Permalink to this headline">¶</a></h3>
+<p>Try to deal in UTC as much as possible.  Do not depend on the machine&#8217;s interpretation of local time.
 For instance, datetime.now() on my Mac will return a naive datetime containing the local time.  Alternatively:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># return the current time as an aware datetime in UTC:</span>
 <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">pytz</span><span class="o">.</span><span class="n">UTC</span><span class="p">)</span>
@@ -395,8 +399,14 @@ converters</a>
 are supplied for date and datetime objects</p>
 <p>unfortunately, the default implementation does not handle timezone aware
 datetimes, but they are simply implementable</p>
-<p>let&#8217;s look at examples/datetime_naive_to_sqlite.py and
-examples/datetime_aware_to_sqlite.py</p>
+</div>
+<div class="section" id="python-date-and-time-useful-links">
+<h3>Python Date and Time Useful links<a class="headerlink" href="#python-date-and-time-useful-links" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://agiliq.com/blog/2009/02/understanding-datetime-tzinfo-timedelta-amp-timezo/">http://agiliq.com/blog/2009/02/understanding-datetime-tzinfo-timedelta-amp-timezo/</a></p>
+<p><a class="reference external" href="https://pymotw.com/3/calendar/index.html">https://pymotw.com/3/calendar/index.html</a></p>
+<p><a class="reference external" href="https://pymotw.com/3/datetime/index.html">https://pymotw.com/3/datetime/index.html</a></p>
+<p>Dealing with DST and the same time twice in one day
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0495/">https://www.python.org/dev/peps/pep-0495/</a></p>
 </div>
 <div class="section" id="questions">
 <h3>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h3>

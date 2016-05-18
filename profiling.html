@@ -94,21 +94,27 @@
 <li><a class="reference internal" href="#timeit-via-ipython-magic"><code class="docutils literal"><span class="pre">timeit</span></code> via iPython magic</a></li>
 <li><a class="reference internal" href="#exercise">Exercise</a></li>
 <li><a class="reference internal" href="#getting-more-detailed-with-profiling">Getting more detailed with Profiling</a></li>
-<li><a class="reference internal" href="#python-s-built-in-profiler">Python&#8217;s built-in profiler</a></li>
-<li><a class="reference internal" href="#cprofiler">cProfiler</a></li>
-<li><a class="reference internal" href="#distraction-pygame">Distraction: pyGame</a></li>
-<li><a class="reference internal" href="#a-more-complex-profile">A more complex profile</a></li>
+<li><a class="reference internal" href="#python-s-built-in-profilers">Python&#8217;s built-in profilers</a></li>
+<li><a class="reference internal" href="#cprofile">cProfile</a></li>
 <li><a class="reference internal" href="#analyzing-profile-data">Analyzing profile data</a></li>
 <li><a class="reference internal" href="#pstats"><code class="docutils literal"><span class="pre">pstats</span></code></a></li>
 <li><a class="reference internal" href="#id1">Analyzing profile data</a></li>
-<li><a class="reference internal" href="#qcachegrind-kcachegrind">qcachegrind / kcachegrind</a></li>
-<li><a class="reference internal" href="#profiling-c-extensions">Profiling C extensions</a></li>
+<li><a class="reference internal" href="#exercise-example">Exercise / Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#some-other-tools-to-consider">Some other tools to consider</a><ul>
 <li><a class="reference internal" href="#snakeviz">SNAKEVIZ</a></li>
 <li><a class="reference internal" href="#line-profiler">line profiler</a></li>
-<li><a class="reference internal" href="#pycallgraph">pycallgraph</a></li>
+<li><a class="reference internal" href="#qcachegrind-kcachegrind">qcachegrind / kcachegrind</a></li>
+<li><a class="reference internal" href="#profiling-c-extensions">Profiling C extensions</a></li>
 <li><a class="reference internal" href="#memory-profilers">memory profilers</a></li>
-<li><a class="reference internal" href="#boosting-python-performance">Boosting Python performance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#boosting-python-performance">Boosting Python performance</a><ul>
+<li><a class="reference internal" href="#a-few-key-approaches">A few key approaches</a></li>
 <li><a class="reference internal" href="#managing-memory">Managing memory</a></li>
+<li><a class="reference internal" href="#distraction-pygame">Distraction: pyGame</a></li>
+<li><a class="reference internal" href="#a-more-complex-profile">A more complex profile</a></li>
 <li><a class="reference internal" href="#questions">Questions?</a></li>
 </ul>
 </li>
@@ -222,31 +228,32 @@ forget about small efficiencies, say about 97% of the time:</p>
 referred to as Order of the function</p>
 <p>It describes how an algorithm behaves in terms of resource use as a
 function of amount of input data</p>
-<dl class="docutils">
-<dt>O(1) - (Constant performance) Execution time stays constant regardless of how much data is supplied</dt>
-<dd><ul class="first last simple">
+<p>O(1) - (Constant performance) Execution time stays constant regardless of how much data is supplied</p>
+<ul class="simple">
 <li>Example: adding to a dict</li>
 </ul>
-</dd>
-<dt>O(n) - Time goes up linearly with number of items.</dt>
-<dd><ul class="first last simple">
+<p>O(n) - Time goes up linearly with number of items.</p>
+<ul class="simple">
 <li>Example: scanning lists</li>
 </ul>
-</dd>
-<dt>O(n<sup>2</sup>) - Time goes up quadratically with number of items.</dt>
-<dd><ul class="first last simple">
+<p>O(n<sup>2</sup>) - Time goes up quadratically with number of items.</p>
+<ul class="simple">
 <li>Example: bubble sort, worst case</li>
 </ul>
-</dd>
-<dt>O(log(n)) - goes up with the log of number of items</dt>
-<dd><ul class="first last simple">
+<p>O(log(n)) - goes up with the log of number of items</p>
+<ul class="simple">
 <li>Example: bisection search</li>
 </ul>
-</dd>
-</dl>
+<img alt="_images/big_o.png" src="_images/big_o.png" />
+<p><strong>log?</strong> you expect me to remember that math???</p>
+<p>Let&#8217;s think about that a bit....</p>
+<p>Anyone know what a bisection search is?</p>
+<p>Why is that O(log(n))?</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p>Reference:</p>
 <p><a class="reference external" href="https://wiki.python.org/moin/TimeComplexity">https://wiki.python.org/moin/TimeComplexity</a></p>
-<img alt="_images/big_o.png" src="_images/big_o.png" />
 </div>
 <div class="section" id="measuring-time-with-a-stopwatch">
 <h3>Measuring time with a stopwatch<a class="headerlink" href="#measuring-time-with-a-stopwatch" title="Permalink to this headline">¶</a></h3>
@@ -347,17 +354,16 @@ loops start, so that code is not part of the test</p>
 </div>
 <div class="section" id="timeit-via-ipython-magic">
 <h3><code class="docutils literal"><span class="pre">timeit</span></code> via iPython magic<a class="headerlink" href="#timeit-via-ipython-magic" title="Permalink to this headline">¶</a></h3>
-<p>Note that the code is passed without quoting it</p>
+<p>Note that all that setup_code stuff is kind of a pain.</p>
+<p>iPython has your back (again)</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">timeit</span> pass
 
 <span class="n">u</span> <span class="o">=</span> <span class="bp">None</span>
-
 <span class="o">%</span><span class="k">timeit</span> u is None
 
 <span class="o">%</span><span class="k">timeit</span> -r 4 u == None
 
 <span class="kn">import</span> <span class="nn">time</span>
-
 <span class="o">%</span><span class="k">timeit</span> -n1 time.sleep(2)
 
 <span class="o">%</span><span class="k">timeit</span> -n 10000 &quot;f&quot; in &quot;food&quot;
@@ -397,21 +403,21 @@ loops start, so that code is not part of the test</p>
 <li>Cumulative time spent in subfunction calls</li>
 </ul>
 </div>
-<div class="section" id="python-s-built-in-profiler">
-<h3>Python&#8217;s built-in profiler<a class="headerlink" href="#python-s-built-in-profiler" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="python-s-built-in-profilers">
+<h3>Python&#8217;s built-in profilers<a class="headerlink" href="#python-s-built-in-profilers" title="Permalink to this headline">¶</a></h3>
 <p>Python comes with a couple profiling modules</p>
 <ul class="simple">
 <li>profile - older, pure Python. If you need to extend the profiler,
 this might be good. Otherwise, it&#8217;s slow.</li>
 <li>cProfile - same API as profile, but written in C for less overhead</li>
 </ul>
-<p>You almost always want to use cProfile</p>
+<p><strong>You almost always want to use ``cProfile``</strong></p>
 <p><a class="reference external" href="https://docs.python.org/3.5/library/profile.html">https://docs.python.org/3.5/library/profile.html</a></p>
 </div>
-<div class="section" id="cprofiler">
-<h3>cProfiler<a class="headerlink" href="#cprofiler" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cprofile">
+<h3>cProfile<a class="headerlink" href="#cprofile" title="Permalink to this headline">¶</a></h3>
 <p>Can be run as a module on an entire application</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python -m cProfile <span class="o">[</span>-o output_file<span class="o">]</span> <span class="o">[</span>-s sort_order<span class="o">]</span> integrate_main.py
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python -m cProfile <span class="o">[</span>-o output_file<span class="o">]</span> <span class="o">[</span>-s sort_order<span class="o">]</span> read_bna.py
 <span class="m">11111128</span> <span class="k">function</span> calls in 8.283 seconds
 Ordered by: standard name
 
@@ -430,56 +436,21 @@ ncalls  tottime  percall  cumtime  percall filename:lineno<span class="o">(</spa
 <li>filename:lineno &#8211; location of function</li>
 </ul>
 </div>
-<div class="section" id="distraction-pygame">
-<h3>Distraction: pyGame<a class="headerlink" href="#distraction-pygame" title="Permalink to this headline">¶</a></h3>
-<p>The next profiling example uses PyGame:</p>
-<p><a class="reference external" href="http://www.pygame.org/hifi.html">http://www.pygame.org/hifi.html</a></p>
-<p>Which you can install from binaries:</p>
-<p>Windows:
-<a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame</a></p>
-<p>(you want the wheel file for the python you are running: probably cp35)</p>
-<p>Anaconda Python:
-<a class="reference external" href="https://anaconda.org/cogsci">https://anaconda.org/cogsci</a></p>
-</div>
-<div class="section" id="a-more-complex-profile">
-<h3>A more complex profile<a class="headerlink" href="#a-more-complex-profile" title="Permalink to this headline">¶</a></h3>
-<p>The amount of data in the previous example is readable, so now we&#8217;ll
-look at the output from a more complex application:
-examples/profiling/pygame/swarm.py</p>
-<p>This program consists of calculating the gravitational acceleration of
-bodies around a central mass and displaying them</p>
-<p>There are two major consumers of resources: one is our own code
-calculating the physics, the other is pygame drawing the results on the
-screen</p>
-<p>Our goal is to figure out whether the major bottleneck is in our own
-logic or in the pygame operations</p>
-<p>A simple way to get data for our own code is</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">cProfile</span> <span class="n">swarm</span><span class="o">.</span><span class="n">py</span>  <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">grep</span> <span class="n">swarm</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">txt</span>
-</pre></div>
-</div>
-<p>Can run a single line of code similar to timeit:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;None is None&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Or from our old demo app examples/profiling/wikidef :</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;Definitions.article(&#39;python&#39;)&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="analyzing-profile-data">
 <h3>Analyzing profile data<a class="headerlink" href="#analyzing-profile-data" title="Permalink to this headline">¶</a></h3>
 <p>Output to a binary dump with -o &lt;filename&gt;</p>
 <p>While doing performance work, save your profiles for comparison later</p>
 <p>This helps ensure that any changes do actually increase performance</p>
 <p>A profile dump file can be read with <code class="docutils literal"><span class="pre">pstats</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pstats</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python -m pstats
 </pre></div>
 </div>
+<p>Gives you a command line interface</p>
+<p>(help for help...)</p>
 </div>
 <div class="section" id="pstats">
 <h3><code class="docutils literal"><span class="pre">pstats</span></code><a class="headerlink" href="#pstats" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">cProfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">prof_dump</span>  <span class="o">./</span><span class="n">define</span><span class="o">.</span><span class="n">py</span> <span class="n">Robot</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">cProfile</span> <span class="o">-</span><span class="n">o</span> <span class="n">prof_dump</span>  <span class="o">./</span><span class="n">read_bna</span><span class="o">.</span><span class="n">py</span>
 <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pstats</span>
 <span class="o">%</span> <span class="n">read</span> <span class="n">prof_dump</span>
 
@@ -509,9 +480,6 @@ logic or in the pygame operations</p>
 <span class="c1"># a decimal fraction between 0.0 and 1.0 inclusive (to select a percentage of lines),</span>
 <span class="c1"># or a regular expression (to pattern match the standard name that is printed.</span>
 <span class="c1"># If several restrictions are provided, then they are applied sequentially.</span>
-
-<span class="n">p</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="s1">&#39;./api.py&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -524,6 +492,55 @@ logic or in the pygame operations</p>
 <span class="n">prof</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="s1">&#39;^./[a-z]*.py:&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>I tend to write little scripts like this so I don&#8217;t have to remember the commands.</p>
+</div>
+<div class="section" id="exercise-example">
+<h3>Exercise / Example<a class="headerlink" href="#exercise-example" title="Permalink to this headline">¶</a></h3>
+<p>Real world example:</p>
+<p><code class="docutils literal"><span class="pre">Examples/profiling/bna_reader/read_bna.py</span></code></p>
+<p>BNA is a (old) text file format for holding geospatial data.</p>
+<p>We were using some old code of mine that read these files, generated an internal data structure of polygons, and rendered them to a PNG.</p>
+<p>As these files got big &#8211; this process started getting really slow.</p>
+<p>I had already optimized the file reading code a lot &#8211; so could we do better?</p>
+<blockquote>
+<div><ul class="simple">
+<li>I assumed not</li>
+</ul>
+</div></blockquote>
+<p>One of my team ran the profiler and identified the bottleneck &#8211; and yes &#8211; we could do better &#8211; a lot.</p>
+<p>Let&#8217;s try that out now.</p>
+</div>
+</div>
+<div class="section" id="some-other-tools-to-consider">
+<h2>Some other tools to consider<a class="headerlink" href="#some-other-tools-to-consider" title="Permalink to this headline">¶</a></h2>
+<p>For better visualizing</p>
+<p>For C extensions</p>
+<p>For memory Profiling</p>
+<div class="section" id="snakeviz">
+<h3>SNAKEVIZ<a class="headerlink" href="#snakeviz" title="Permalink to this headline">¶</a></h3>
+<p>A graphical profile viewer for Python</p>
+<p><a class="reference external" href="https://jiffyclub.github.io/snakeviz/">https://jiffyclub.github.io/snakeviz/</a></p>
+<p>Inspired by &#8220;Run Snake Run&#8221;: <a class="reference external" href="http://www.vrplumber.com/programming/runsnakerun/">http://www.vrplumber.com/programming/runsnakerun/</a></p>
+<p>(which only works with Python 2.* for now)</p>
+<img alt="_images/snakeviz.png" src="_images/snakeviz.png" />
+</div>
+<div class="section" id="line-profiler">
+<h3>line profiler<a class="headerlink" href="#line-profiler" title="Permalink to this headline">¶</a></h3>
+<p>Thus far, we&#8217;ve seen how to collect data on the performance of functions
+as atomic units</p>
+<p><code class="docutils literal"><span class="pre">line_profiler</span></code> is a module for doing line-by-line profiling of functions</p>
+<p><code class="docutils literal"><span class="pre">line_profiler</span></code> ships with its own profiler, <code class="docutils literal"><span class="pre">kernprof.py</span></code>.</p>
+<p>Enable line-by-line profiling with -l</p>
+<p>Decorate the function you want to profile with <code class="docutils literal"><span class="pre">&#64;profile</span></code> and run</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># the -v option will display the profile data immediately, instead</span>
+<span class="c1"># of just writing it to &lt;filename.py&gt;.lprof</span>
+$ kernprof -l -v integrate_main.py
+
+<span class="c1"># load the output with</span>
+$ python -m line_profiler integrate_main.py.lprof
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/rkern/line_profiler">https://github.com/rkern/line_profiler</a></p>
 </div>
 <div class="section" id="qcachegrind-kcachegrind">
 <h3>qcachegrind / kcachegrind<a class="headerlink" href="#qcachegrind-kcachegrind" title="Permalink to this headline">¶</a></h3>
@@ -565,40 +582,6 @@ $ qcachegrind output.callgrind
 </pre></div>
 </div>
 </div>
-<div class="section" id="snakeviz">
-<h3>SNAKEVIZ<a class="headerlink" href="#snakeviz" title="Permalink to this headline">¶</a></h3>
-<p>A graphical profile viewer for Python</p>
-<p><a class="reference external" href="https://jiffyclub.github.io/snakeviz/">https://jiffyclub.github.io/snakeviz/</a></p>
-<p>Inspired by &#8220;Run Snake Run&#8221;: <a class="reference external" href="http://www.vrplumber.com/programming/runsnakerun/">http://www.vrplumber.com/programming/runsnakerun/</a></p>
-<p>(which only works with Python 2.* for now)</p>
-<img alt="_images/snakeviz.png" src="_images/snakeviz.png" />
-</div>
-<div class="section" id="line-profiler">
-<h3>line profiler<a class="headerlink" href="#line-profiler" title="Permalink to this headline">¶</a></h3>
-<p>Thus far, we&#8217;ve seen how to collect data on the performance of functions
-as atomic units</p>
-<p><code class="docutils literal"><span class="pre">line_profiler</span></code> is a module for doing line-by-line profiling of functions</p>
-<p><code class="docutils literal"><span class="pre">line_profiler</span></code> ships with its own profiler, <code class="docutils literal"><span class="pre">kernprof.py</span></code>.</p>
-<p>Enable line-by-line profiling with -l</p>
-<p>Decorate the function you want to profile with <code class="docutils literal"><span class="pre">&#64;profile</span></code> and run</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># the -v option will display the profile data immediately, instead</span>
-<span class="c1"># of just writing it to &lt;filename.py&gt;.lprof</span>
-$ kernprof.py -l -v integrate_main.py
-
-<span class="c1"># load the output with</span>
-$ python -m line_profiler integrate_main.py.lprof
-</pre></div>
-</div>
-<p><a class="reference external" href="https://github.com/rkern/line_profiler">https://github.com/rkern/line_profiler</a></p>
-</div>
-<div class="section" id="pycallgraph">
-<h3>pycallgraph<a class="headerlink" href="#pycallgraph" title="Permalink to this headline">¶</a></h3>
-<p>Sometimes a quick view of the call graph will help</p>
-<p>Python Call Graph is a Python module that creates call graph
-visualizations</p>
-<p>pycallgraph graphviz ./integrate_main.py</p>
-<a class="reference internal image-reference" href="_images/pycallgraph.png"><img alt="_images/pycallgraph.png" src="_images/pycallgraph.png" style="height: 450px;" /></a>
-</div>
 <div class="section" id="memory-profilers">
 <h3>memory profilers<a class="headerlink" href="#memory-profilers" title="Permalink to this headline">¶</a></h3>
 <p>There aren&#8217;t any great ones</p>
@@ -618,8 +601,12 @@ memory profiling</p>
 <p><a class="reference external" href="http://pythonhosted.org/Pympler/muppy.html">http://pythonhosted.org/Pympler/muppy.html</a></p>
 <p><a class="reference external" href="http://jmdana.github.io/memprof/">http://jmdana.github.io/memprof/</a></p>
 </div>
+</div>
 <div class="section" id="boosting-python-performance">
-<h3>Boosting Python performance<a class="headerlink" href="#boosting-python-performance" title="Permalink to this headline">¶</a></h3>
+<h2>Boosting Python performance<a class="headerlink" href="#boosting-python-performance" title="Permalink to this headline">¶</a></h2>
+<p>There are ways to better structure your Python code to improve performance</p>
+<div class="section" id="a-few-key-approaches">
+<h3>A few key approaches<a class="headerlink" href="#a-few-key-approaches" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Overhead in function/method runtime lookup can be significant for
 small frequent calls.</li>
@@ -647,6 +634,36 @@ Numpy for fast array operations.</li>
 <p>Use generators and iterators, rather than lists.</p>
 <p>Use iterators to pull in the data you need from databases, sockets,
 files, ...</p>
+</div>
+<div class="section" id="distraction-pygame">
+<h3>Distraction: pyGame<a class="headerlink" href="#distraction-pygame" title="Permalink to this headline">¶</a></h3>
+<p>There is a nice profiling example that uses PyGame:</p>
+<p><a class="reference external" href="http://www.pygame.org/hifi.html">http://www.pygame.org/hifi.html</a></p>
+<p>Which you can install from binaries:</p>
+<p>Windows:
+<a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame</a></p>
+<p>(you want the wheel file for the python you are running: probably cp35)</p>
+<p>Anaconda Python:</p>
+<p>First install miniconda. Then you can install pygame from anaconda.org.</p>
+<p><a class="reference external" href="https://anaconda.org/cogsci">https://anaconda.org/cogsci</a></p>
+</div>
+<div class="section" id="a-more-complex-profile">
+<h3>A more complex profile<a class="headerlink" href="#a-more-complex-profile" title="Permalink to this headline">¶</a></h3>
+<p>The amount of data in the previous example is readable, so now we&#8217;ll
+look at the output from a more complex application:
+examples/profiling/pygame/swarm.py</p>
+<p>This program consists of calculating the gravitational acceleration of
+bodies around a central mass and displaying them</p>
+<p>There are two major consumers of resources: one is our own code
+calculating the physics, the other is pygame drawing the results on the
+screen</p>
+<p>Our goal is to figure out whether the major bottleneck is in our own
+logic or in the pygame operations</p>
+<p>A simple way to get data for our own code is</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">cProfile</span> <span class="n">swarm</span><span class="o">.</span><span class="n">py</span>  <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">grep</span> <span class="n">swarm</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="questions">
 <h3>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h3>

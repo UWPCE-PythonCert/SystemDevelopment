@@ -93,7 +93,7 @@ Session 8
 
 .. rst-class:: left
 
-  - `datetime <html_slides/06-datetime.html>`_
+  - :ref:`datetime`
 
   - :ref:`profiling`
 
