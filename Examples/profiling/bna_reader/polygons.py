@@ -225,6 +225,7 @@ class PolygonSet:
 
         # self._IndexArray.resize((self._IndexArray.shape[0] + 1))
         # self._IndexArray[-1] = self._PointsArray.shape[0]
+
         self._MetaDataList.append(metadata)
 
     def _get_bounding_box(self):

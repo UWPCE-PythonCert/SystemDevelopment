@@ -173,7 +173,7 @@ def write_bna(filename, polyset):
             outfile.write('%.8f, %.8f \n' % (point[0], point[1]))
 
 
-@profile
+# @profile
 def read_bna(filename, polytype="list", dtype=np.float64):
     """
     Read a bna file.
@@ -250,7 +250,7 @@ def read_bna(filename, polytype="list", dtype=np.float64):
 
 if __name__ == "__main__":
     # a sample run
-    # polys = read_bna("ChesapeakeBay.bna", "PolygonSet")
-    polys = read_bna("small.bna", "PolygonSet")
+    polys = read_bna("ChesapeakeBay.bna", "PolygonSet")
+    # polys = read_bna("small.bna", "PolygonSet")
     print(polys)
 
