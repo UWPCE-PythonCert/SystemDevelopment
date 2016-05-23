@@ -131,6 +131,8 @@ Notes on other topics, or that aren't specific to a particular lecture -- or are
 
 :ref:`building_extensions`
 
+:ref:`installing_wxpython`
+
 
 
 
