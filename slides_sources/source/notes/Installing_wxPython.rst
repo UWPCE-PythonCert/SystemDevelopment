@@ -165,6 +165,14 @@ Example::
         >>> wx.version()
         '3.0.3.dev1836+f764b32 gtk2 (phoenix)'
 
+You should then be able to run the examples in:
+
+``Examples/wxpython``
+
+::
+
+  python3 CalculatorDemo.py
+
 
 Author:
 
