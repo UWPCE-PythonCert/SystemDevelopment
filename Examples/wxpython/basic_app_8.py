@@ -7,10 +7,10 @@ This adds a text box and reads the input from it, and writes it
 to another text box
 """
 
-
+import os
 import wx
 
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 
 # This is how you pre-establish a file filter so that file dialogs
 # only show the extension(s) you want it to.
@@ -20,7 +20,8 @@ wildcard = "Python source (*.py)|*.py|"     \
            "Egg file (*.egg)|*.egg|"        \
            "All files (*.*)|*.*"
 
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+
 
 class AppLogic(object):
     """
@@ -29,13 +30,13 @@ class AppLogic(object):
     You generally don't want the real logic of the app mixed
     in with the GUI
 
-    In a real app, this would be a substantial collection of 
+    In a real app, this would be a substantial collection of
     modules, classes, etc...
     """
     def file_open(self, filename="default_name"):
         """This method opens a file"""
         print("Open a file: ")
-        print("I'd be opening file: %s now"%filename)
+        print("I'd be opening file: %s now" % filename)
 
     def file_close(self):
         """This method closes a file"""
@@ -47,29 +48,28 @@ class MainForm(wx.Panel):
     def __init__(self, *args, **kwargs):
         wx.Panel.__init__(self, *args, **kwargs)
 
-        ## add a button:
+        # add a button:
         theButton1 = wx.Button(self, label="Push Me")
         theButton1.Bind(wx.EVT_BUTTON, self.onButton)
 
-        ## add a static text lable:
+        # add a static text lable:
         label1 = wx.StaticText(self, label="Input Box:")
 
-        ## add a text control:
+        # add a text control:
         self.inTextControl = wx.TextCtrl(self)
 
-        ## add another button:
+        # add another button:
         theButton2 = wx.Button(self, label="GetData")
         theButton2.Bind(wx.EVT_BUTTON, self.onGetData)
 
-        ## add a static text lable:
+        # add a static text lable:
         label2 = wx.StaticText(self, label="Output Box:")
-        ## and another text control:
+        # and another text control:
         self.outTextControl = wx.TextCtrl(self, style=wx.TE_READONLY)
 
-
-        ## do the layout
+        # do the layout
         buttonSizer = wx.BoxSizer(wx.VERTICAL)
-        
+
         buttonSizer.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
         buttonSizer.Add(label1, 0, wx.ALIGN_LEFT | wx.TOP, 4)
         buttonSizer.Add(self.inTextControl, 0, wx.GROW | wx.ALL, 4)
@@ -78,14 +78,14 @@ class MainForm(wx.Panel):
         buttonSizer.Add(label2, 0, wx.ALIGN_LEFT | wx.TOP, 4)
         buttonSizer.Add(self.outTextControl, 0, wx.GROW | wx.ALL, 4)
 
-        ## need another sizer to get the horizonal placement right:
+        # need another sizer to get the horizonal placement right:
         mainSizer = wx.BoxSizer(wx.HORIZONTAL)
-        mainSizer.Add((1,1), 1)    # stretchable space
-        mainSizer.Add(buttonSizer, 0, wx.ALIGN_TOP) # the sizer with the buttons in it
-        mainSizer.Add((1,1), 1)    # stretchable space
+        mainSizer.Add((1, 1), 1)    # stretchable space
+        mainSizer.Add(buttonSizer, 0, wx.ALIGN_TOP)  # the sizer with the buttons in it
+        mainSizer.Add((1, 1), 1)    # stretchable space
 
         self.SetSizer(mainSizer)
-        
+
     def onButton(self, evt=None):
         print("You pushed one of the buttons!")
 
@@ -109,24 +109,24 @@ class TestFrame(wx.Frame):
 
         # Build up the menu bar:
         menuBar = wx.MenuBar()
-        
+
         fileMenu = wx.Menu()
-        openMenuItem = fileMenu.Append(wx.ID_ANY, "&Open", "Open a file" )
+        openMenuItem = fileMenu.Append(wx.ID_ANY, "&Open", "Open a file")
         self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)
 
-        closeMenuItem = fileMenu.Append(wx.ID_ANY, "&Close", "Close a file" )
+        closeMenuItem = fileMenu.Append(wx.ID_ANY, "&Close", "Close a file")
         self.Bind(wx.EVT_MENU, self.onClose, closeMenuItem)
 
         exitMenuItem = fileMenu.Append(wx.ID_EXIT, "Exit", "Exit the application")
         self.Bind(wx.EVT_MENU, self.onExit, exitMenuItem)
         menuBar.Append(fileMenu, "&File")
-        
+
         helpMenu = wx.Menu()
         helpMenuItem = helpMenu.Append(wx.ID_HELP, "Help", "Get help")
         menuBar.Append(helpMenu, "&Help")
 
         self.SetMenuBar(menuBar)
-        
+
     def onOpen(self, evt=None):
         """This method opens an existing file"""
         print("Open a file: ")
@@ -137,22 +137,22 @@ class TestFrame(wx.Frame):
         #
         # Finally, if the directory is changed in the process of getting files, this
         # dialog is set up to change the current working directory to the path chosen.
-        dlg = wx.FileDialog(
-            self, message="Choose a file",
-            defaultDir=os.getcwd(), 
-            defaultFile="",
-            wildcard=wildcard,
-            style=wx.OPEN | wx.CHANGE_DIR
-            )
+        dlg = wx.FileDialog(self,
+                            message="Choose a file",
+                            defaultDir=os.getcwd(),
+                            defaultFile="",
+                            wildcard=wildcard,
+                            style=wx.FD_OPEN | wx.FD_CHANGE_DIR
+                            )
 
-        # Show the dialog and retrieve the user response. If it is the OK response, 
+        # Show the dialog and retrieve the user response. If it is the OK response,
         # process the data.
         if dlg.ShowModal() == wx.ID_OK:
             # This returns a Python list of files that were selected.
             path = dlg.GetPath()
             print("I'd be opening file in onOpen ", path)
-            self.app_logic.file_open( path )
-        else :
+            self.app_logic.file_open(path)
+        else:
             print("The file dialog was canceled before anything was selected")
 
         # Destroy the dialog. Don't do this until you are done with it!
@@ -165,7 +165,7 @@ class TestFrame(wx.Frame):
 
     def onExit(self, evt=None):
         print("Exit the program here")
-        print("The event passed to onExit is type ", type(evt), end=' ')
+        print("The event passed to onExit is type:", type(evt), end=' ')
         self.Close()
 
 
@@ -183,8 +183,7 @@ class TestApp(wx.App):
 if __name__ == "__main__":
 
     app = TestApp(False)
-    ## set up the WIT -- to help debug sizers
+#    # set up the WIT -- to help debug sizers
 #    import wx.lib.inspection
 #    wx.lib.inspection.InspectionTool().Show()
     app.MainLoop()
-

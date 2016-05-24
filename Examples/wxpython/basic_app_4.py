@@ -179,15 +179,9 @@ class TestFrame(wx.Frame):
 
     def file_close(self):
         """This method closes a file"""
-<<<<<<< HEAD
-        print "Close a file: "
-        print "I'd be closing a file now"
-
-=======
-        print("Close a file: ")
+        print("Close a file:")
         print("I'd be closing a file now")
 
->>>>>>> 91dd68b69dd621219d82412b44d167779e56a82d
 
 class TestApp(wx.App):
     def OnInit(self):
