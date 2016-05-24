@@ -295,7 +295,7 @@ This is where menu bars, etc. are placed, and often the core GUI logic of the ap
           wx.Frame.__init__(self, *args, **kwargs)
 
 
-demo: ``Examples\wxpython\basic_app_1.py``
+demo: ``Examples/wxpython/basic_app_1.py``
 
 
 Controls
@@ -326,7 +326,7 @@ A ``wx.Frame`` has a menu bar you can add items to:
     self.SetMenuBar(menuBar)
 
 
-demo: ``Examples\wxpython\basic_app_2.py``
+demo: ``Examples/wxpython/basic_app_2.py``
 
 
 Event Handlers
@@ -347,7 +347,7 @@ The second parameter is the ``wx.Event`` object that initiated the call -- it ho
 I like to give the event parameter a default None, so the handler can be called from other parts of the code as well.
 
 
-demo: ``Examples\wxpython\basic_app_2.py``
+demo: ``Examples/wxpython/basic_app_2.py``
 
 
 Common Dialogs
@@ -441,7 +441,7 @@ Mostly the same as wx.Window, and other controls....
 
 
 
-code: ``Examples\wxpython\basic_app_4.py``
+code: ``Examples/wxpython/basic_app_4.py``
 
 
 wx.Panel
@@ -476,16 +476,16 @@ And use it in the Frame:
         self.buttonPanel = ButtonPanel(self)
 
 
-code: ``Examples\wxpython\basic_app_5.py``
+code: ``Examples/wxpython/basic_app_5.py``
 
 
 Control Layout
 --------------
 
 With more than one control, you need to figure out how to place them
-and how big to make them
+and how big to make them.
 
-You may have noticed that ``wx.Window`` takes ``pos`` and ``size`` parameters
+You may have noticed that ``wx.Window`` takes ``pos`` and ``size`` parameters.
 
 You may have also noticed that I didn't use them.
 
@@ -539,11 +539,11 @@ Instead of thinking in terms of what size and position a given control should be
 
 Sizers capture that logic and compute the sizes and locations for you.
 
-They will re-size things for you when anything changes -- adding, removing, changing labels, re-sizing the Window, etc...
-
+They will re-size things for you when anything changes:
+- adding, removing, changing labels
+- re-sizing the Window, etc...
 
 .. nextslide::
-
 
 Sizers take a while to wrap your brain around...
 
@@ -553,9 +553,7 @@ Nice discussion here:
 
 http://wiki.wxpython.org/UsingSizers
 
-
 I have the graphic posted on the wall by my desk...
-
 
 
 Sizer Example
@@ -565,10 +563,9 @@ The Basic ``BoxSizer``:
 
 - Lays out a row or column of controls...
 
+.. code-block:: python
 
-..code-block:: python
-
-    Sizer.Add( window, proportion, flag, border )
+    Sizer.Add(window, proportion, flag, border)
         ## do the layout
         S = wx.BoxSizer(wx.VERTICAL)
 
@@ -578,7 +575,7 @@ The Basic ``BoxSizer``:
         self.SetSizerAndFit(S)
 
 
-code: ``Examples\wxpython\basic_app_6.py``
+code: ``Examples/wxpython/basic_app_6.py``
 
 
 Nested Sizers
@@ -623,7 +620,7 @@ The Widget Inspection Tool (WIT) is very handy:
 (you can also bring it up from a menu event, or...)
 
 
-code: ``Examples\wxpython\basic_app_7.py``
+code: ``Examples/wxpython/basic_app_7.py``
 
 
 
@@ -638,7 +635,7 @@ Sizers for laying out stuff in grids...
 
 ``wx.GridBagSizer``
 
-(you can do it all with a GridBagSizer)
+(you can do it all with a ``GridBagSizer``)
 
 See the docs for info.
 
@@ -649,26 +646,22 @@ Hierarchies...
 wxPython has multiple independent hierarchies ...
 
 
-The nested parent-child relationship:
+**The nested parent-child relationship:**
 
 * every ``wx.Window`` has a parent
 * every ``wx.Window`` has zero or more children
 
-
-The class Hierarchy
+**The class Hierarchy**
 
 * sub classes of ``wx.Window``
 * classes with instances as attributes
 
-
-The Layout Hierarchy
+**The Layout Hierarchy**
 
 * Sizers within Sizers...
 * Arbitrarily deep.
 
-
-
-Each of these takes care of different concerns: confusing but powerful
+Each of these takes care of different concerns: confusing but powerful.
 
 
 Accessing inputs
@@ -676,19 +669,17 @@ Accessing inputs
 
 Much of the point of a GUI is to collect data from the user.
 
+So you need to be able to access what s/he has input.
 
-So you need to be able to access what s/he has input
-
-..code-block:: python
+.. code-block:: python
 
   ## add a text control:
   self.textControl = wx.TextCtrl(self)
 
   def onGetData(self, evt=None):
-      print "get data button pressed"
+      print("get data button pressed")
       contents = self.textControl.Value
-      print "the contents are:", contents
-
+      print("the contents are:", contents)
 
 Most controls have a ``.Value`` property
 
@@ -713,7 +704,7 @@ So you need to be able to set the values, too:
 You can set the ``.Value`` property too...
 
 
-example: ``Examples\wxpython\basic_app8.py``
+example: ``Examples/wxpython/basic_app8.py``
 
 
 Code-generated GUIs...
@@ -721,19 +712,15 @@ Code-generated GUIs...
 
 You shouldn't write the same repetitive code for a GUI...
 
-
 You may need to build a GUI to match data at run time.
-
 
 Lots of ways to do that with wxPython -- Sizers help a lot.
 
-
 Try to do it whenever you find yourself writing repetitive code...
-
 
 The key is how to do the event Binding:
 
-..code-block:: python
+.. code-block:: python
 
     def OnButton(self, evt):
         label = evt.GetEventObject().GetLabel()
@@ -741,7 +728,7 @@ The key is how to do the event Binding:
         do_somethign_with_label(label)
 
 
-example: ``Examples\wxpython/CalculatorDemo.py``
+example: ``Examples/wxpython/CalculatorDemo.py``
 
 
 .. nextslide::
@@ -760,7 +747,7 @@ The "lambda trick"
   ....
 
   def OnButton(self, Event, name):
-      print "In OnButton:", name
+      print("In OnButton:", name)
 
 
 http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks
@@ -769,23 +756,23 @@ http://wiki.wxpython.org/Passing%20Arguments%20to%20Callbacks
 Miscellaneous
 =============
 
+.. rst-class:: medium
+
+  Assorted handy features....
+
+
 Long Running Tasks
 ------------------
 
-The UI is locked up while an event is being handled
-
+The UI is locked up while an event is being handled.
 
 So you want all event handlers to run fast.
 
-
 But what if there is significant work to do?
-
 
 Enter: threading and multi-processing
 
-
 But: wxPython is not thread-safe: almost all wx methods must be called from within the same thread.
-
 
 Thread-safe operations: Creating and Posting Events
 
@@ -795,7 +782,6 @@ Thread-safe operations: Creating and Posting Events
 Easiest way to communicate with threads:
 
 ``wx.CallAfter``
-
 
 Puts an event on the event stack, calls the designated function or method when the stack is cleared:
 
@@ -817,21 +803,15 @@ BILS
 
 Browser Interface, Local Server
 
-
 Web app: Server runs on local machine
-
 
 Browser is the interface -- but all running local
 
-
 Can wrap the Browser window in a desktop app: Chrome Embedded Framework, wxWebkit, etc.
-
 
 Good way to get both a web app and desktop app with one codebase
 
-
 Example: Cameo Chemicals
-
 
 (PyCon 2009: Browser Interface, Local Server Application)
 
@@ -842,14 +822,12 @@ LAB
 Make a very simple address book app:
 
 1. Really basic data model is in ``address_book_data.py``
-2. Finish the form to edit an entry -- subclass of a ``wx.Panel`` (``entry_form.py``)
+2. Finish the form to edit an entry -- subclass of a ``wx.Panel``
+   (``entry_form.py``)
 3. The form goes on a ``wx.Frame`` (``address_book_app.py``)
-     add a way to switch between entries (``switcher.py``)
-4. Add a "new record" button
-5. Add file--save and file--open menus to the frame
-6. Add some validation, better layout, etc....
+4. Add a way to switch between entries (``switcher.py``)
+5. Add a "new record" button
+6. Add file-save and file-open menus to the frame
+7. Add some validation, better layout, etc....
 
-
-``Examples\wxpython\address_book\``
-
-
+``Examples/wxpython/address_book/``
