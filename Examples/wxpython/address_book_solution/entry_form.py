@@ -88,30 +88,30 @@ class AddBookForm(wx.Panel):
         load the data into the form from the data dict
         """
         data = self._entry
-        self.fname_text.Value = data.setdefault( u'first_name', "" ) 
-        self.lname_text.Value = data.setdefault( u'last_name', "" )
-        self.phone_text.Value = data.setdefault( u'phone', "" )
-        self.email_text.Value = data.setdefault( u'email', "" )
+        self.fname_text.Value = data.setdefault( 'first_name', "" ) 
+        self.lname_text.Value = data.setdefault( 'last_name', "" )
+        self.phone_text.Value = data.setdefault( 'phone', "" )
+        self.email_text.Value = data.setdefault( 'email', "" )
 
     def save_data(self):
         """
         save the data from the form from the data dict
         """
         data = self._entry
-        data[u'first_name'] = self.fname_text.Value
-        data[u'last_name'] = self.lname_text.Value 
-        data[u'phone'] = self.phone_text.Value
-        data[u'email'] = self.email_text.Value
+        data['first_name'] = self.fname_text.Value
+        data['last_name'] = self.lname_text.Value 
+        data['phone'] = self.phone_text.Value
+        data['email'] = self.email_text.Value
 
 
 # I like to have a little test app so it can be run on its own
 if __name__ == "__main__":
 
     # a sample entry:
-    entry = {u'email': u'PythonCHB@gmail.com',
-             u'first_name': u'Chris',
-             u'last_name': u'Barker',
-             u'phone': u'123-456-7890'}
+    entry = {'email': 'PythonCHB@gmail.com',
+             'first_name': 'Chris',
+             'last_name': 'Barker',
+             'phone': '123-456-7890'}
 
     app = wx.App(False)
     f = wx.Frame(None)

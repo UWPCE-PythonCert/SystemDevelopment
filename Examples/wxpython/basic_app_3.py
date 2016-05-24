@@ -62,7 +62,7 @@ class TestFrame(wx.Frame):
         saveasMenuItem = fileMenu.Append(wx.ID_ANY, "&Save As", "Create a new file")
         self.Bind(wx.EVT_MENU, self.onSaveAs, saveasMenuItem)
 
-        openMenuItem = fileMenu.Append(wx.ID_ANY, "&Open", "Open an existing file" )
+        openMenuItem = fileMenu.Append(wx.ID_ANY, "&Open", "Open an existing file")
         self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)
 
         closeMenuItem = fileMenu.Append(wx.ID_ANY, "&Close", "Close a file")

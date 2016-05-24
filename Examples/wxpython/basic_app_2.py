@@ -21,13 +21,13 @@ class AppLogic(object):
     """
     def file_open(self, filename="default_name"):
         """This method opens a file"""
-        print "Open a file: "
-        print "I'd be opening file: %s now"%filename
+        print("Open a file: ")
+        print("I'd be opening file: %s now"%filename)
 
     def file_close(self):
         """This method closes a file"""
-        print "Close a file: "
-        print "I'd be closing a file now"
+        print("Close a file: ")
+        print("I'd be closing a file now")
  
 
 class TestFrame(wx.Frame):
@@ -39,7 +39,7 @@ class TestFrame(wx.Frame):
 
         # Add a panel so it looks the correct on all platforms
         self.panel = wx.Panel(self, wx.ID_ANY)
- 
+        
 
         # Build up the menu bar:
         menuBar = wx.MenuBar()
@@ -62,17 +62,17 @@ class TestFrame(wx.Frame):
         self.SetMenuBar(menuBar)
 
     def onOpen(self, evt=None):
-        print "open menu selected"
-        print evt
+        print("open menu selected")
+        print(evt)
         self.app_logic.file_open()
 
     def onClose(self, evt=None):
-        print "close menu selected"
+        print("close menu selected")
         self.app_logic.file_close()
 
     def onExit(self, evt=None):
-        print "Exit the program here"
-        print "The event passed to onExit is type ", type(evt),
+        print("Exit the program here")
+        print("The event passed to onExit is type ", type(evt),)
         self.Close()
 
 

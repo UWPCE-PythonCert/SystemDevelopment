@@ -28,21 +28,21 @@ class Switcher(wx.Panel):
 
     def onPrev(self, evt=None):
         # save the data in the form
-        print "in onPrev" 
+        print("in onPrev") 
         self.add_book_frame.previous()
     def onNext(self, evt=None):
         # restore the form
-        print "in onNext"
-        self.add_book_frame.next()
+        print("in onNext")
+        next(self.add_book_frame)
 
 class TestFrame(wx.Frame):
     """
     simple Frame with jsut enough to text the Switcher
     """
-    def next(self):
-        print "next() called in frame"
+    def __next__(self):
+        print("next() called in frame")
     def previous(self):
-        print "previous() called in frame"
+        print("previous() called in frame")
 
 # I like to have a little test app so it can be run on its own
 if __name__ == "__main__":
