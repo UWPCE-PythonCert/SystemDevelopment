@@ -77,7 +77,7 @@ class AddBookFrame(wx.Frame):
 
         self.SetMenuBar(menuBar)
     
-    def next(self):
+    def __next__(self):
         """
         move to the next record in the address book
         """
@@ -85,7 +85,7 @@ class AddBookFrame(wx.Frame):
             self.entryPanel.entry = self.add_book.book[self.current_index+1]
             self.current_index+=1
         except IndexError:
-            print "At end of records...."
+            print("At end of records....")
     def previous(self):
         """
         move to the next record in the address book
@@ -113,24 +113,24 @@ class AddBookFrame(wx.Frame):
         if dlg.ShowModal() == wx.ID_OK:
             # This returns a Python list of files that were selected.
             path = dlg.GetPath()
-            print "I'd be opening file in onOpen ", path
+            print("I'd be opening file in onOpen ", path)
             self.add_book.load_from_file(filename=path)
         else :
-            print "The file dialog was canceled"
+            print("The file dialog was canceled")
         dlg.Destroy()
 
     def onSave(self, evt=None):
-        print "in onSave"
+        print("in onSave")
         self.SetStatusText("Saving: %s"%self.add_book.filename)
         self.add_book.save_to_file()
 
     def onClose(self, evt=None):
-        print "close menu selected"
+        print("close menu selected")
         self.add_book.close()
 
     def onExit(self, evt=None):
-        print "Exit the program here"
-        print "The event passed to onExit is type ", type(evt),
+        print("Exit the program here")
+        print("The event passed to onExit is type ", type(evt), end=' ')
         self.Close()
 
 

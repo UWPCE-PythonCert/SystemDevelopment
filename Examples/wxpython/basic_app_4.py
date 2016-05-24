@@ -34,13 +34,13 @@ class AppLogic(object):
 
     def file_open(self, filename="default_name"):
         """This method opens a file"""
-        print "Open a file: "
-        print "I'd be opening file: %s now"%filename
+        print("Open a file: ")
+        print("I'd be opening file: %s now"%filename)
 
     def file_close(self):
         """This method closes a file"""
-        print "Close a file: "
-        print "I'd be closing a file now"
+        print("Close a file: ")
+        print("I'd be closing a file now")
  
 
 class TestFrame(wx.Frame):
@@ -81,19 +81,19 @@ class TestFrame(wx.Frame):
 
     
     def onButton(self, evt=None):
-        print "You pushed the button!"
+        print("You pushed the button!")
         evt.Skip()
     def onRight(self, evt=None):
-        print "right click!"
+        print("right click!")
         evt.Skip()
 
     def onClose(self, evt=None):
-        print "close menu selected"
+        print("close menu selected")
         self.file_close()
 
     def onExit(self, evt=None):
-        print "Exit the program here"
-        print "The event passed to onExit is type ", type(evt),
+        print("Exit the program here")
+        print("The event passed to onExit is type ", type(evt), end=' ')
         self.Close()
 
     def onSaveAs ( self, evt=None ):
@@ -121,7 +121,7 @@ class TestFrame(wx.Frame):
         # process the data.
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-            print "In onSaveAs, the path is %s" % path
+            print("In onSaveAs, the path is %s" % path)
             # Normally, at this point you would save your data using the file and path
             # data that the user provided to you, but since we didn't actually start
             # with any data to work with, that would be difficult.
@@ -135,7 +135,7 @@ class TestFrame(wx.Frame):
             #
             # You might want to add some error checking :-)
         else :
-            print "The file dialog was canceled before anything was selected"
+            print("The file dialog was canceled before anything was selected")
 
         # Note that the current working dir didn't change. This is good since
         # that's the way we set it up.
@@ -147,7 +147,7 @@ class TestFrame(wx.Frame):
     
     def onOpen(self, evt=None):
         """This method opens an existing file"""
-        print "Open a file: "
+        print("Open a file: ")
         # Create the dialog. In this case the current directory is forced as the starting
         # directory for the dialog, and no default file name is forced. This can easilly
         # be changed in your program. This is an 'open' dialog, and allows multitple
@@ -168,10 +168,10 @@ class TestFrame(wx.Frame):
         if dlg.ShowModal() == wx.ID_OK:
             # This returns a Python list of files that were selected.
             path = dlg.GetPath()
-            print "I'd be opening file in onOpen ", path
+            print("I'd be opening file in onOpen ", path)
             self.app_logic.file_open( path )
         else :
-            print "The file dialog was canceled before anything was selected"
+            print("The file dialog was canceled before anything was selected")
 
         # Destroy the dialog. Don't do this until you are done with it!
         # BAD things can happen otherwise!
@@ -180,8 +180,8 @@ class TestFrame(wx.Frame):
 
     def file_close(self):
         """This method closes a file"""
-        print "Close a file: "
-        print "I'd be closing a file now"
+        print("Close a file: ")
+        print("I'd be closing a file now")
  
 
 class TestApp(wx.App):

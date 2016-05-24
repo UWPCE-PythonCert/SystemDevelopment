@@ -36,12 +36,12 @@ class AddressBook(object):
     def save_to_file(self, filename=None):
         if filename is not None :
             self.filename = filename
-        json.dump(self.book, open(self.filename, 'wb'), indent=4 )
+        json.dump(self.book, open(self.filename, 'w'), indent=4 )
 
     def load_from_file(self, filename=None):
         if filename is not None :
             self.filename = filename
-        self.book = json.load( open(self.filename, 'rb') )
+        self.book = json.load( open(self.filename, 'r') )
 
     def close(self):
         """
@@ -56,15 +56,15 @@ if __name__ == "__main__":
     a_book = AddressBook()
     a_book.load_from_file()
 
-    print "the data in the address book is:"
+    print("the data in the address book is:")
     pprint.pprint(a_book.book)
 
-    print 
-    print "the first entry is:"
+    print() 
+    print("the first entry is:")
     entry = a_book.book[0]
-    print entry
-    print "the first entry's name is:"
-    print entry['first_name'], entry['last_name']
+    print(entry)
+    print("the first entry's name is:")
+    print(entry['first_name'], entry['last_name'])
 
 
 

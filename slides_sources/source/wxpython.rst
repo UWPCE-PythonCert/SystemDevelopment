@@ -38,6 +38,7 @@ Multiple GUI frameworks available:
 * PyGame
 * Native GUIs: Cocoa (PyObjC), PythonWin
 * Kivy for touchscreen (mobile) platforms
+* Panda3d for 3D or 2D games
 * Some more minor ones...
 
 
