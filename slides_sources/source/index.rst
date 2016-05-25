@@ -133,6 +133,7 @@ Notes on other topics, or that aren't specific to a particular lecture -- or are
 
 :ref:`installing_wxpython`
 
+:ref:`installing_wxpython_demo`
 
 
 
