@@ -16,7 +16,7 @@ class AppLogic(object):
     You generally don't want the real logic of the app mixed
     in with the GUI
 
-    In a real app, this would be a substantial collection of 
+    In a real app, this would be a substantial collection of
     modules, classes, etc...
     """
     def file_open(self, filename="default_name"):
@@ -28,7 +28,7 @@ class AppLogic(object):
         """This method closes a file"""
         print("Close a file: ")
         print("I'd be closing a file now")
- 
+
 
 class TestFrame(wx.Frame):
     def __init__(self, app_logic, *args, **kwargs):
@@ -39,11 +39,11 @@ class TestFrame(wx.Frame):
 
         # Add a panel so it looks the correct on all platforms
         self.panel = wx.Panel(self, wx.ID_ANY)
-        
+
 
         # Build up the menu bar:
         menuBar = wx.MenuBar()
-        
+
         fileMenu = wx.Menu()
         openMenuItem = fileMenu.Append(wx.ID_ANY, "&Open", "Open a file" )
         self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)
@@ -54,7 +54,7 @@ class TestFrame(wx.Frame):
         exitMenuItem = fileMenu.Append(wx.ID_EXIT, "Exit", "Exit the application")
         self.Bind(wx.EVT_MENU, self.onExit, exitMenuItem)
         menuBar.Append(fileMenu, "&File")
-        
+
         helpMenu = wx.Menu()
         helpMenuItem = helpMenu.Append(wx.ID_HELP, "Help", "Get help")
         menuBar.Append(helpMenu, "&Help")

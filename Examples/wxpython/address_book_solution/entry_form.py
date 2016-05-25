@@ -8,7 +8,6 @@ This gets a Panel to itself
 
 import wx
 
-
 class AddBookForm(wx.Panel):
     def __init__(self, a_entry, *args, **kwargs):
         """
@@ -21,30 +20,19 @@ class AddBookForm(wx.Panel):
         self._entry = a_entry
 
         # create text boxes to edit: first name, last name, phone, email.
-        self.fname_text = wx.TextCtrl(self)
-        self.lname_text = wx.TextCtrl(self)
-        self.phone_text = wx.TextCtrl(self)
-        self.email_text = wx.TextCtrl(self)
+        self.inputs = {}
+        for field in self._entry:
+            self.inputs[field] = wx.TextCtrl(self)
 
         # use a FlexGridSizer:
         S = wx.FlexGridSizer(rows=0, cols=2, vgap=8, hgap=8)
         S.AddGrowableCol(idx=1, proportion=1)
 
-        S.Add(wx.StaticText(self, label="First Name:"), 0,
-              wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
-        S.Add(self.fname_text, flag=wx.EXPAND)
+        for field, ctrl in self.inputs.items():
+            S.Add(wx.StaticText(self, label=field), 0,
+                  wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+            S.Add(ctrl, flag=wx.EXPAND)
 
-        S.Add(wx.StaticText(self, label="Last Name:"), 0,
-              wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
-        S.Add(self.lname_text, flag=wx.EXPAND)
-
-        S.Add(wx.StaticText(self, label="Phone Number:"), 0,
-              wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
-        S.Add(self.phone_text, flag=wx.EXPAND)
-
-        S.Add(wx.StaticText(self, label="Email Address:"), 0,
-              wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
-        S.Add(self.email_text, flag=wx.EXPAND)
 
         # Save and Cancel buttons
         sav_but = wx.Button(self, label="Save Record")
@@ -89,20 +77,16 @@ class AddBookForm(wx.Panel):
         load the data into the form from the data dict
         """
         data = self._entry
-        self.fname_text.Value = data.setdefault('first_name', "")
-        self.lname_text.Value = data.setdefault('last_name', "")
-        self.phone_text.Value = data.setdefault('phone', "")
-        self.email_text.Value = data.setdefault('email', "")
+        for field in data:
+            self.inputs[field].Value = data.setdefault(field, "")
 
     def save_data(self):
         """
         save the data from the form from the data dict
         """
         data = self._entry
-        data['first_name'] = self.fname_text.Value
-        data['last_name'] = self.lname_text.Value
-        data['phone'] = self.phone_text.Value
-        data['email'] = self.email_text.Value
+        for field in data:
+            data[field] = self.inputs[field].Value
 
 
 # I like to have a little test app so it can be run on its own

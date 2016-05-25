@@ -28,7 +28,7 @@ class AppLogic(object):
     You generally don't want the real logic of the app mixed
     in with the GUI
 
-    In a real app, this would be a substantial collection of 
+    In a real app, this would be a substantial collection of
     modules, classes, etc...
     """
 
@@ -57,14 +57,14 @@ class ButtonPanel(wx.Panel):
 
         ## do the layout
         ## (try uncommenting the other, and see what happens...)
-        #S = wx.BoxSizer(wx.VERTICAL)
-        S = wx.BoxSizer(wx.HORIZONTAL)
-        
-        S.Add(theButton1, 0, wx.GROW | wx.ALL, 4)
-        S.Add(theButton2, 0, wx.GROW | wx.ALL, 4)
-        
+        S = wx.BoxSizer(wx.VERTICAL)
+        #S = wx.BoxSizer(wx.HORIZONTAL)
+
+        S.Add(theButton1, 1, wx.GROW | wx.ALL, 4)
+        S.Add(theButton2, 2, wx.GROW | wx.ALL, 4)
+
         self.SetSizerAndFit(S)
-        
+
     def onButton(self, evt=None):
         but_label = evt.EventObject.Label
         print("You pushed buttons:", but_label)
@@ -82,12 +82,12 @@ class TestFrame(wx.Frame):
 
         # Build up the menu bar:
         menuBar = wx.MenuBar()
-        
+
         fileMenu = wx.Menu()
-        
+
         saveasMenuItem = fileMenu.Append(wx.ID_ANY, "&Save As", "Create a new file")
         self.Bind(wx.EVT_MENU, self.onSaveAs, saveasMenuItem )
-        
+
         openMenuItem = fileMenu.Append(wx.ID_ANY, "&Open", "Open an existing file" )
         self.Bind(wx.EVT_MENU, self.onOpen, openMenuItem)
 
@@ -97,7 +97,7 @@ class TestFrame(wx.Frame):
         exitMenuItem = fileMenu.Append(wx.ID_EXIT, "Exit", "Exit the application")
         self.Bind(wx.EVT_MENU, self.onExit, exitMenuItem)
         menuBar.Append(fileMenu, "&File")
-        
+
         helpMenu = wx.Menu()
         helpMenuItem = helpMenu.Append(wx.ID_HELP, "Help", "Get help")
         menuBar.Append(helpMenu, "&Help")
@@ -125,7 +125,7 @@ class TestFrame(wx.Frame):
         # directory than the one initially set.
         dlg = wx.FileDialog(self,
                             message="Save file as ...",
-                            defaultDir=os.getcwd(), 
+                            defaultDir=os.getcwd(),
                             defaultFile="",
                             wildcard=wildcard,
                             style=wx.SAVE )
@@ -134,7 +134,7 @@ class TestFrame(wx.Frame):
         # the first filter in the list will be used by default.
         dlg.SetFilterIndex(2)
 
-        # Show the dialog and retrieve the user response. If it is the OK response, 
+        # Show the dialog and retrieve the user response. If it is the OK response,
         # process the data.
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -142,7 +142,7 @@ class TestFrame(wx.Frame):
             # Normally, at this point you would save your data using the file and path
             # data that the user provided to you, but since we didn't actually start
             # with any data to work with, that would be difficult.
-            # 
+            #
             # The code to do so would be similar to this, assuming 'data' contains
             # the data you want to save:
             #
@@ -161,8 +161,8 @@ class TestFrame(wx.Frame):
         # Destroy the dialog. Don't do this until you are done with it!
         # BAD things can happen otherwise!
         dlg.Destroy()
-        
-    
+
+
     def onOpen(self, evt=None):
         """This method opens an existing file"""
         print("Open a file: ")
@@ -175,13 +175,13 @@ class TestFrame(wx.Frame):
         # dialog is set up to change the current working directory to the path chosen.
         dlg = wx.FileDialog( self,
                              message="Choose a file",
-                             defaultDir=os.getcwd(), 
-                             defaultFile="", 
+                             defaultDir=os.getcwd(),
+                             defaultFile="",
                              wildcard=wildcard,
                              style=wx.OPEN | wx.CHANGE_DIR
                             )
 
-        # Show the dialog and retrieve the user response. If it is the OK response, 
+        # Show the dialog and retrieve the user response. If it is the OK response,
         # process the data.
         if dlg.ShowModal() == wx.ID_OK:
             # This returns a Python list of files that were selected.
@@ -200,7 +200,7 @@ class TestFrame(wx.Frame):
         """This method closes a file"""
         print("Close a file: ")
         print("I'd be closing a file now")
- 
+
 
 class TestApp(wx.App):
     def OnInit(self):
