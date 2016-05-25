@@ -80,7 +80,7 @@ class AddBookForm(wx.Panel):
         load the data into the form from the data dict
         """
         data = self._entry
-        for key, value in data.items():
+        for key in data:
             self.inputs[key].Value = data.setdefault(key, "")
 
     def save_data(self):
