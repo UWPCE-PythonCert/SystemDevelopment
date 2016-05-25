@@ -121,25 +121,26 @@ http://wxpython.org/Phoenix/docs/html/main.html
 Some starting points
 --------------------
 
-How to learn wxPython
+**How to learn wxPython**
 
-http://wiki.wxpython.org/How%20to%20Learn%20wxPython
+* http://wiki.wxpython.org/How%20to%20Learn%20wxPython
+
+**wxPython Style Guide**
+
+* http://wiki.wxpython.org/wxPython%20Style%20Guide
+
+**Notes on the Demo:**
+
+* http://www.blog.pythonlibrary.org/2010/10/15/the-wxpython-demo/
+
+**wxpython-users:** mailing list -- great resource (and great community):
+
+* https://groups.google.com/forum/?fromgroups#!forum/wxpython-users
 
 
-wxPython Style Guide
+**My own repository of samples:**
 
-http://wiki.wxpython.org/wxPython%20Style%20Guide
-
-
-The wxpython-users mailing list is a great resource (and great community):
-
-https://groups.google.com/forum/?fromgroups#!forum/wxpython-users
-
-
-My own repository of samples:
-
-https://github.com/PythonCHB/wxPythonDemos
-
+* https://github.com/PythonCHB/wxPythonDemos
 
 Pythonic code:
 --------------

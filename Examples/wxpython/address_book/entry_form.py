@@ -5,9 +5,13 @@ The basic form for the address book
 
 This is the GUI for editing a single record.
 
+This version only has First and Last name
+ - can you add the other fields?
+
 """
 
 import wx
+
 
 class AddBookForm(wx.Panel):
     def __init__(self, a_entry, *args, **kwargs):
@@ -20,23 +24,23 @@ class AddBookForm(wx.Panel):
 
         self._entry = a_entry
 
-        ## create text boxes to edit: first name, last name, phone, email.
+        # create text boxes to edit: first name, last name, phone, email.
         self.fname_text = wx.TextCtrl(self)
         self.lname_text = wx.TextCtrl(self)
-        ## still need phone and email here...
+        # still need phone and email here...
 
-        ## use a FlexGridSizer:
+        # use a FlexGridSizer:
         S = wx.FlexGridSizer(rows=0, cols=2, vgap=8, hgap=8)
         S.AddGrowableCol(idx=1, proportion=1)
 
         S.Add(wx.StaticText(self, label="First Name:"), 0,
-              wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL)
+              wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
         S.Add(self.fname_text, flag=wx.EXPAND)
-        
+
         S.Add(wx.StaticText(self, label="Last Name:"), 0,
-              wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL)
+              wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
         S.Add(self.lname_text, flag=wx.EXPAND)
-        
+
         # Save and Cancel buttons
         sav_but = wx.Button(self, label="Save Record")
         sav_but.Bind(wx.EVT_BUTTON, self.onSave)
@@ -45,15 +49,15 @@ class AddBookForm(wx.Panel):
 
         # a sizer for the buttons:
         but_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        but_sizer.Add((1,1), 1) #stretchable spave to shift buttons right
+        but_sizer.Add((1, 1), 1)  # stretchable space to shift buttons right
         but_sizer.Add(can_but, 0, wx.ALL, 4)
         but_sizer.Add(sav_but, 0, wx.ALL, 4)
 
-        #Put the whole thing in another sizer to
+        # Put the whole thing in another sizer to
         # layout the buttons...
         Outer_Sizer = wx.BoxSizer(wx.VERTICAL)
-        Outer_Sizer.Add(S, 0, wx.ALL|wx.EXPAND, 10)
-        Outer_Sizer.Add(but_sizer, 0, wx.EXPAND|wx.RIGHT, 10)
+        Outer_Sizer.Add(S, 0, wx.ALL | wx.EXPAND, 10)
+        Outer_Sizer.Add(but_sizer, 0, wx.EXPAND | wx.RIGHT, 10)
         self.SetSizerAndFit(Outer_Sizer)
 
         self.load_data()
@@ -61,12 +65,12 @@ class AddBookForm(wx.Panel):
     def onSave(self, evt=None):
         # save the data in the form
         self.save_data()
-    
+
     def onCancel(self, evt=None):
         # restore the form
         self.load_data()
 
-    ### propery for changing the active record
+    # propery for changing the active record
     def _get_entry(self, entry):
         return self._entry
 
@@ -80,8 +84,8 @@ class AddBookForm(wx.Panel):
         load the data into the form from the data dict
         """
         data = self._entry
-        self.fname_text.Value = data.setdefault( 'first_name', "" ) 
-        self.lname_text.Value = data.setdefault( 'last_name', "" )
+        self.fname_text.Value = data.setdefault('first_name', "")
+        self.lname_text.Value = data.setdefault('last_name', "")
 
     def save_data(self):
         """
@@ -89,7 +93,7 @@ class AddBookForm(wx.Panel):
         """
         data = self._entry
         data['first_name'] = self.fname_text.Value
-        data['last_name'] = self.lname_text.Value 
+        data['last_name'] = self.lname_text.Value
 
 
 # I like to have a little test app so it can be run on its own

@@ -13,7 +13,8 @@ import wx
 from address_book_data import AddressBook
 from entry_form import AddBookForm
 from switcher import Switcher
-        
+
+
 class AddBookFrame(wx.Frame):
     def __init__(self, add_book, *args, **kwargs):
         """
@@ -35,7 +36,7 @@ class AddBookFrame(wx.Frame):
 
         # create the entryPanel
         self.entryPanel = AddBookForm(add_book.book[self.current_index], self)
-        
+
         # put them in a Sizer to lay out
         S = wx.BoxSizer(wx.VERTICAL)
         S.Add(wx.StaticLine(self,style=wx.LI_HORIZONTAL), 0, wx.EXPAND)
@@ -47,7 +48,7 @@ class AddBookFrame(wx.Frame):
 
         # Build up the menu bar:
         menuBar = wx.MenuBar()
-        
+
         fileMenu = wx.Menu()
 
         closeMenuItem = fileMenu.Append(wx.ID_EXIT, "&Close", "Close the file" )
@@ -56,13 +57,13 @@ class AddBookFrame(wx.Frame):
         exitMenuItem = fileMenu.Append(wx.ID_EXIT, "Exit", "Exit the application")
         self.Bind(wx.EVT_MENU, self.onExit, exitMenuItem)
         menuBar.Append(fileMenu, "&File")
-        
+
         helpMenu = wx.Menu()
         helpMenuItem = helpMenu.Append(wx.ID_HELP, "Help", "Get help")
         menuBar.Append(helpMenu, "&Help")
 
         self.SetMenuBar(menuBar)
-    
+
     def __next__(self):
         """
         move to the next record in the address book
@@ -89,13 +90,13 @@ class AddBookFrame(wx.Frame):
         """This method opens an existing file"""
         dlg = wx.FileDialog(
             self, message="Choose a file",
-            defaultDir=os.getcwd(), 
+            defaultDir=os.getcwd(),
             defaultFile="",
             wildcard="*.json",
             style=wx.OPEN | wx.CHANGE_DIR
             )
 
-        # Show the dialog and retrieve the user response. If it is the OK response, 
+        # Show the dialog and retrieve the user response. If it is the OK response,
         # process the data.
         if dlg.ShowModal() == wx.ID_OK:
             # This returns a Python list of files that were selected.
@@ -134,10 +135,7 @@ if __name__ == "__main__":
 
     app = AddBookApp(False)
 
-
-
     ## set up the WIT -- to help debug sizers
     import wx.lib.inspection
     wx.lib.inspection.InspectionTool().Show()
     app.MainLoop()
-
