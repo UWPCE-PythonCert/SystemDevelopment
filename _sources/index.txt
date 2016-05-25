@@ -102,7 +102,7 @@ Session 9
 
 .. rst-class:: left
 
-  - :ref:wxpython
+  - :ref:`wxpython`
 
 
 Session 10
