@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="System Development With Python 2.0 documentation" href="index.html"/> 
 
   
@@ -39,6 +44,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -79,8 +85,11 @@
           
             
             
-                <!-- Local TOC -->
-                <div class="local-toc"><ul>
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Building Your Own Package</a><ul>
 <li><a class="reference internal" href="#why-build-a-package">Why Build a Package?</a><ul>
 <li><a class="reference internal" href="#what-is-a-package">What is a Package?</a></li>
@@ -113,8 +122,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">System Development With Python</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">System Development With Python</a>
+        
       </nav>
 
 
@@ -123,23 +134,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Building Your Own Package</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Building Your Own Package</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/packaging.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/packaging.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -149,8 +177,6 @@
 <span id="packaging"></span><h1>Building Your Own Package<a class="headerlink" href="#building-your-own-package" title="Permalink to this headline">¶</a></h1>
 <p>The very basics of what you need to know to make your own package.</p>
 <div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
 </div>
 <div class="section" id="why-build-a-package">
 <h2>Why Build a Package?<a class="headerlink" href="#why-build-a-package" title="Permalink to this headline">¶</a></h2>
@@ -445,6 +471,9 @@ $ python setup.py <span class="nb">test</span>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -478,7 +507,8 @@ $ python setup.py <span class="nb">test</span>
             VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

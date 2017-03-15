@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="System Development With Python 2.0 documentation" href="index.html"/> 
 
   
@@ -39,6 +44,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -79,8 +85,11 @@
           
             
             
-                <!-- Local TOC -->
-                <div class="local-toc"><ul>
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Threading and multiprocessing</a><ul>
 <li><a class="reference internal" href="#threading-multiprocessing">Threading / multiprocessing</a><ul>
 <li><a class="reference internal" href="#motivations-for-parallel-execution">Motivations for parallel execution</a></li>
@@ -136,8 +145,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">System Development With Python</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">System Development With Python</a>
+        
       </nav>
 
 
@@ -146,23 +157,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Threading and multiprocessing</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Threading and multiprocessing</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/threading-multiprocessing.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/threading-multiprocessing.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -375,42 +403,42 @@ atomically, but get interrupted midway</p>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Thread 1</th>
 <th class="head">Thread 2</th>
-<th class="head">&nbsp;</th>
+<th class="head">&#160;</th>
 <th class="head">Integer value</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>0</td>
 </tr>
 <tr class="row-odd"><td>read value</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>←</td>
 <td>0</td>
 </tr>
 <tr class="row-even"><td>increase value</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>0</td>
 </tr>
 <tr class="row-odd"><td>write back</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>→</td>
 <td>1</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>read value</td>
 <td>←</td>
 <td>1</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>increase value</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>1</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>write back</td>
 <td>→</td>
 <td>2</td>
@@ -430,42 +458,42 @@ atomically, but get interrupted midway</p>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Thread 1</th>
 <th class="head">Thread 2</th>
-<th class="head">&nbsp;</th>
+<th class="head">&#160;</th>
 <th class="head">Integer value</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>0</td>
 </tr>
 <tr class="row-odd"><td>read value</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>←</td>
 <td>0</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>read value</td>
 <td>←</td>
 <td>0</td>
 </tr>
 <tr class="row-odd"><td>increase value</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 <td>0</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>increase value</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>0</td>
 </tr>
 <tr class="row-odd"><td>write back</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>→</td>
 <td>1</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>write back</td>
 <td>→</td>
 <td>1</td>
@@ -900,6 +928,9 @@ farms jobs out to them:</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -933,7 +964,8 @@ farms jobs out to them:</p>
             VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
