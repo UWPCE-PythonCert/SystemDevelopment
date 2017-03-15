@@ -1,40 +1,75 @@
 Possible topics:
 
-- Debugging
-  - strategies
+Debugging
+  - Strategies
   - pdb/ipdb
-- Logging
-- Documentation (docstrings, sphinx)
-- PEP-8 (pep8/pylint/pychecker/pyflakes)
-- Persistance and Serialization
 
-- Packaging
-- Doctests unit testing and coverage
+Logging
 
-- Code Reviewing
+Documentation (docstrings, sphinx)
 
-- SQL Databases (DB-API w/ sqlite, postgres, mysql)
-- Non-relational DBs (ZODB, MongoDB, BSDdb)
-- SciPy
-  - ipython notebook (Jupyter)
+Code style:
+  - PEP-8
+  - pychecker
+  - pyflakes
+
+
+Unit testing
+  - unittest
+  - testing strategies
+  - fixtures
+  - mocking
+  - doctests
+  - coverage
+
+Packaging and package building
+
+The conda package system
+
+Code Reviewing
+
+Persistance and Serialization
+
+SQL Databases (DB-API w/ sqlite, postgres, mysql)
+
+Non-relational DBs (ZODB, MongoDB, BSDdb)
+
+Static Typing
+
+The SciPy stack
   - numpy
+  - scipy
+  - ipython notebook (Jupyter)
   - matplotlib
   - pandas
 
-- "advanced OO"
+Advanced OO
   - multiple inheritance / mixins
-  - \__new__(), super()
+  - __new__(), super()
   - type(), metaclasses
-- multi-threading and multip processing:
-- unicode and py2
-- writing py2/py3 compatible code
-- profiling: Maria
-- datetime, time, pytz
-- C extensions( C API, ctypes, cython)
-- Weak references
-- GUI programming / wxPython
-- Regular expressions
-- Asynchronous programming: asyc / await
+
+Concurrency:
+  - multi threading
+  - multi processing
+
+Asynchronous programming: asyc / await
+
+Unicode and py2
+
+Writing py2/py3 compatible code
+
+Profiling
+
+Datetime, time, pytz
+
+C extensions( C API, ctypes, cython )
+
+Reference Counting / Weak references
+
+GUI programming / wxPython
+
+Regular Expressions
+
 
 
 
