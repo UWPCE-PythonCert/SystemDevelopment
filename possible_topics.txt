@@ -70,6 +70,9 @@ GUI programming / wxPython
 
 Regular Expressions
 
+C Extensions: Cython, ctypes
+
+Functional Programming
 
 
 

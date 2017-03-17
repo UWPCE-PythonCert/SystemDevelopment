@@ -8,9 +8,9 @@ UW Certificate Program in Programming in Python
 
 Python 300
 
-Spring, 2016
+Spring, 2017
 
-March 29 through May 31st, Tuesday, 6 PM
+April 4 through June 6th:  Tuesday, 6 PM
 
 
 Brief Course Description
@@ -38,13 +38,13 @@ Maria McKinley `mariak@mariakathryn.net`
 Technology Requirements
 ------------------------
 
-Students will need a laptop computer with python 3.5.*, a development environment, and the ability to install additional software.
+Students will need a laptop computer with python 3.6.*, a development environment, and the ability to install additional software.
+
 
 Assessment Criteria & Course Expectations
 ------------------------------------------------
 
-
-Students are required to attend 8 out 10 classes and complete a significant software project in the Python language, either individually or as part of a small group. In addition, each student will be required to present some of their work in progress code for an in-class code review in teh middl eof the quarter.
+Students are required to attend 8 out 10 classes and complete a significant software project in the Python language, either individually or as part of a small group. In addition, each student will be required to present some of their work in progress for an in-class code review in the middle of the quarter.
 
 Courses in this program are arranged sequentially.  To recieve the certificate, students are required to earn a grade of Successful Completion (SC) in this course. Students must have  successfully completed all courses in the program to receive a certificate of completion.
 
@@ -52,7 +52,8 @@ Courses in this program are arranged sequentially.  To recieve the certificate, 
 The class project:
 ==================
 
-Each student will develop a substantial project throughout the class. It can be an individual project or a group project with a small group from the class (2-4 students). We suggest that you strongly consider a group project -- it will give you a chance to practice developing with others, as well as give you a built-in way to get code review, folks to bounce ideas off of, etc.
+Each student will develop a substantial project throughout the class. It can be an individual project or a group project with a small group from the class (2-4 students). We strongly suggest that you consider a group project -- it will give you a chance to practice developing with others, as well as give you a built-in way to get code review, folks to bounce ideas off of, etc.
+
 
 Requirements:
 -------------
