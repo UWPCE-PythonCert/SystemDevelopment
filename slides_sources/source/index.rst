@@ -26,6 +26,8 @@ Syllabus:
 Session 1
 =========
 
+April 4
+
 .. rst-class:: left
 
    - :ref:`debugging`
@@ -35,6 +37,8 @@ Session 1
 Session 2
 =========
 
+April 11
+
 .. rst-class:: left
 
   - :ref:`testing`
@@ -42,6 +46,8 @@ Session 2
 
 Session 3
 =========
+
+April 19
 
 .. rst-class:: left
 
@@ -52,6 +58,8 @@ Session 3
 
 Session 4
 =========
+
+April 25
 
 Code Reviews begin
 
@@ -64,6 +72,9 @@ Code Reviews begin
 
 Session 5
 =========
+
+May 2
+
 .. rst-class:: left
 
   - :ref:`nosql`
@@ -72,6 +83,8 @@ Session 5
 
 Session 6
 =========
+
+May 9
 
 .. rst-class:: left
 
@@ -83,6 +96,10 @@ Session 6
 Session 7
 =========
 
+May 16
+
+(Chris out)
+
 .. rst-class:: left
 
   - :ref:`threading`
@@ -90,6 +107,10 @@ Session 7
 
 Session 8
 =========
+
+May 23
+
+(Maria Out)
 
 .. rst-class:: left
 
@@ -100,6 +121,8 @@ Session 8
 Session 9
 =========
 
+May 30
+
 .. rst-class:: left
 
   - :ref:`wxpython`
@@ -107,6 +130,8 @@ Session 9
 
 Session 10
 ==========
+
+June 1: Early!
 
 Student Presentations
 
