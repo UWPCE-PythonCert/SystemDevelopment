@@ -1,26 +1,26 @@
 [
     {
-        "phone": "123-456-8888", 
-        "first_name": "Chris", 
-        "last_name": "Barker", 
+        "Phone": "123-456-8888",
+        "First Name": "Chris",
+        "Last Name": "Barker",
         "email": "PythonCHB@gmail.com"
-    }, 
+    },
     {
-        "phone": "510-555-1234", 
-        "first_name": "Fred", 
-        "last_name": "Jones", 
+        "Phone": "510-555-1234",
+        "First Name": "Fred",
+        "Last Name": "Jones",
         "email": "FredJones@some_company.com"
-    }, 
+    },
     {
-        "phone": "423-321-9876", 
-        "first_name": "Nancy", 
-        "last_name": "Wilson", 
+        "Phone": "423-321-9876",
+        "First Name": "Nancy",
+        "Last Name": "Wilson",
         "email": "Wilson.Nancy@gmail.com"
-    }, 
+    },
     {
-        "phone": "555-555-5555", 
-        "first_name": "Charles", 
-        "last_name": "Dickens", 
+        "Phone": "555-555-5555",
+        "First Name": "Charles",
+        "Last Name": "Dickens",
         "email": "chuck@victorian.england.com"
     }
 ]

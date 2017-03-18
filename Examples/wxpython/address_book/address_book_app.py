@@ -35,14 +35,16 @@ class AddBookFrame(wx.Frame):
         self.CreateStatusBar()
 
         # create the entryPanel
-        self.entryPanel = AddBookForm(add_book.book[self.current_index], self)
+        self.entryPanel = AddBookForm(add_book.fields,
+                                      add_book.book[self.current_index],
+                                      self)
 
         # put them in a Sizer to lay out
         S = wx.BoxSizer(wx.VERTICAL)
-        S.Add(wx.StaticLine(self,style=wx.LI_HORIZONTAL), 0, wx.EXPAND)
-        S.Add(self.entryPanel, 0, wx.ALL|wx.EXPAND, 4)
-        S.Add((1,5))
-        S.Add(wx.StaticLine(self,style=wx.LI_HORIZONTAL), 0, wx.EXPAND)
+        S.Add(wx.StaticLine(self, style=wx.LI_HORIZONTAL), 0, wx.EXPAND)
+        S.Add(self.entryPanel, 0, wx.ALL | wx.EXPAND, 4)
+        S.Add((1, 5))
+        S.Add(wx.StaticLine(self, style=wx.LI_HORIZONTAL), 0, wx.EXPAND)
 
         self.SetSizerAndFit(S)
 
@@ -51,7 +53,7 @@ class AddBookFrame(wx.Frame):
 
         fileMenu = wx.Menu()
 
-        closeMenuItem = fileMenu.Append(wx.ID_EXIT, "&Close", "Close the file" )
+        closeMenuItem = fileMenu.Append(wx.ID_EXIT, "&Close", "Close the file")
         self.Bind(wx.EVT_MENU, self.onClose, closeMenuItem)
 
         exitMenuItem = fileMenu.Append(wx.ID_EXIT, "Exit", "Exit the application")
@@ -69,8 +71,8 @@ class AddBookFrame(wx.Frame):
         move to the next record in the address book
         """
         try:
-            self.entryPanel.entry = self.add_book.book[self.current_index+1]
-            self.current_index+=1
+            self.entryPanel.entry = self.add_book.book[self.current_index + 1]
+            self.current_index += 1
         except IndexError:
             print("At end of records....")
 
@@ -79,7 +81,7 @@ class AddBookFrame(wx.Frame):
         move to the next record in the address book
         """
         if self.current_index > 0:
-            self.current_index-=1
+            self.current_index -= 1
             self.entryPanel.entry = self.add_book.book[self.current_index]
 
     def onNewRecord(self, evt=None):
@@ -88,13 +90,12 @@ class AddBookFrame(wx.Frame):
 
     def onOpen(self, evt=None):
         """This method opens an existing file"""
-        dlg = wx.FileDialog(
-            self, message="Choose a file",
-            defaultDir=os.getcwd(),
-            defaultFile="",
-            wildcard="*.json",
-            style=wx.OPEN | wx.CHANGE_DIR
-            )
+        dlg = wx.FileDialog(self, message="Choose a file",
+                            defaultDir=os.getcwd(),
+                            defaultFile="",
+                            wildcard="*.json",
+                            style=wx.OPEN | wx.CHANGE_DIR
+                            )
 
         # Show the dialog and retrieve the user response. If it is the OK response,
         # process the data.
@@ -103,10 +104,9 @@ class AddBookFrame(wx.Frame):
             path = dlg.GetPath()
             print("I'd be opening file in onOpen ", path)
             self.add_book.load_from_file(filename=path)
-        else :
+        else:
             print("The file dialog was canceled")
         dlg.Destroy()
-
 
     def onClose(self, evt=None):
         print("close menu selected")
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
     app = AddBookApp(False)
 
-    ## set up the WIT -- to help debug sizers
+    # set up the WIT -- to help debug sizers
     import wx.lib.inspection
     wx.lib.inspection.InspectionTool().Show()
     app.MainLoop()

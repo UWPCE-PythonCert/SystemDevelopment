@@ -8,8 +8,9 @@ This gets a Panel to itself
 
 import wx
 
+
 class AddBookForm(wx.Panel):
-    def __init__(self, a_entry, *args, **kwargs):
+    def __init__(self, fields, a_entry, *args, **kwargs):
         """
         create a new AddBookForm
 
@@ -19,20 +20,17 @@ class AddBookForm(wx.Panel):
 
         self._entry = a_entry
 
-        # create text boxes to edit: first name, last name, phone, email.
-        self.inputs = {}
-        for field in self._entry:
-            self.inputs[field] = wx.TextCtrl(self)
-
         # use a FlexGridSizer:
         S = wx.FlexGridSizer(rows=0, cols=2, vgap=8, hgap=8)
         S.AddGrowableCol(idx=1, proportion=1)
 
-        for field, ctrl in self.inputs.items():
-            S.Add(wx.StaticText(self, label=field), 0,
+        # create text boxes to edit: first name, last name, phone, email.
+        self.inputs = {}
+        for name in fields:
+            self.inputs[name] = wx.TextCtrl(self)
+            S.Add(wx.StaticText(self, label=name), 0,
                   wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
-            S.Add(ctrl, flag=wx.EXPAND)
-
+            S.Add(self.inputs[name], flag=wx.EXPAND)
 
         # Save and Cancel buttons
         sav_but = wx.Button(self, label="Save Record")
@@ -48,10 +46,10 @@ class AddBookForm(wx.Panel):
 
         # Put the whole thing in another sizer to
         # layout the buttons...
-        Outer_Sizer = wx.BoxSizer(wx.VERTICAL)
-        Outer_Sizer.Add(S, 0, wx.ALL | wx.EXPAND, 10)
-        Outer_Sizer.Add(but_sizer, 0, wx.EXPAND | wx.RIGHT, 10)
-        self.SetSizerAndFit(Outer_Sizer)
+        outer_sizer = wx.BoxSizer(wx.VERTICAL)
+        outer_sizer.Add(S, 0, wx.ALL | wx.EXPAND, 10)
+        outer_sizer.Add(but_sizer, 0, wx.EXPAND | wx.RIGHT, 10)
+        self.SetSizerAndFit(outer_sizer)
 
         self.load_data()
 
@@ -77,29 +75,32 @@ class AddBookForm(wx.Panel):
         load the data into the form from the data dict
         """
         data = self._entry
-        for field in data:
-            self.inputs[field].Value = data.setdefault(field, "")
+        for key in data:
+            self.inputs[key].Value = data.setdefault(key, "")
 
     def save_data(self):
         """
         save the data from the form from the data dict
         """
         data = self._entry
-        for field in data:
-            data[field] = self.inputs[field].Value
+        for key in data:
+            data[key] = self.inputs[key].Value
 
 
 # I like to have a little test app so it can be run on its own
 if __name__ == "__main__":
 
+    import address_book_data
+    fields = address_book_data.AddressBook.fields
+
     # a sample entry:
     entry = {'email': 'PythonCHB@gmail.com',
-             'first_name': 'Chris',
-             'last_name': 'Barker',
-             'phone': '123-456-7890'}
+             'First Name': 'Chris',
+             'Last Name': 'Barker',
+             'Phone': '123-456-7890'}
 
     app = wx.App(False)
     f = wx.Frame(None)
-    p = AddBookForm(entry, f)
+    p = AddBookForm(fields, entry, f)
     f.Show()
     app.MainLoop()

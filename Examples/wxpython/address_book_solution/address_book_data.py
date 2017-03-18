@@ -1,22 +1,24 @@
 #!/usr/bin/env python
 
 """
-application logic code for ultra simple 
+Application logic code for ultra simple
 address book app...
 """
 
 import json
 
-class AddressBook(object):
+
+class AddressBook():
     """
     very simple data model -- just a list of dicts
-    
+
     each dict represents an entry in the address book
     """
-    fields = [ "phone", 
-               "first_name",
-               "last_name",
-               "email",
+    # this is an ordered list of the field names.
+    fields = ["Phone",
+              "First Name",
+              "Last Name",
+              "email",
               ]
 
     def __init__(self, filename="a_book.json"):
@@ -26,7 +28,7 @@ class AddressBook(object):
 
     def new_record(self):
         """
-        and a new, empty record
+        And a new, empty record
 
         :returns index: index of the new, empty record
         """
@@ -34,14 +36,14 @@ class AddressBook(object):
         return len(self.book) - 1
 
     def save_to_file(self, filename=None):
-        if filename is not None :
+        if filename is not None:
             self.filename = filename
-        json.dump(self.book, open(self.filename, 'w'), indent=4 )
+        json.dump(self.book, open(self.filename, 'w'), indent=4)
 
     def load_from_file(self, filename=None):
-        if filename is not None :
+        if filename is not None:
             self.filename = filename
-        self.book = json.load( open(self.filename, 'r') )
+        self.book = json.load(open(self.filename, 'r'))
 
     def close(self):
         """
@@ -59,12 +61,9 @@ if __name__ == "__main__":
     print("the data in the address book is:")
     pprint.pprint(a_book.book)
 
-    print() 
+    print()
     print("the first entry is:")
     entry = a_book.book[0]
     print(entry)
     print("the first entry's name is:")
-    print(entry['first_name'], entry['last_name'])
-
-
-
+    print(entry['First Name'], entry['Last Name'])
