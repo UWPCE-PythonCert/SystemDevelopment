@@ -1,18 +1,17 @@
 Possible topics:
 
-Debugging
+Session 1:
+
+Logging - Chris
+
+Debugging - Maria
   - Strategies
+  - call stack
   - pdb/ipdb
 
-Logging
+Session 2:
 
-Documentation (docstrings, sphinx)
-
-Code style:
-  - PEP-8
-  - pychecker
-  - pyflakes
-
+(project outline due)
 
 Unit testing
   - unittest
@@ -22,11 +21,57 @@ Unit testing
   - doctests
   - coverage
 
-Packaging and package building
+Code style:
+  - docstrings
+  - PEP-8
+  - linters: pychecker, pylint, pyflakes
+
+
+Session 3:
+
+Packaging and package building - Chris
+
+Advanced OO
+  - multiple inheritance / mixins
+  - super()
+
+Code Reviewing - Maria
+
+Session 4
+
+(code reviews begin)
+
+Advanced OO (cont)
+  - __new__()
+  - type(), metaclasses
+
+Unicode
+
+Session 5
+
+Concurrency:  -- Maria
+  - multi threading
+  - multi processing
+
+Session 6
+
+Asynchronous programming: async / await --  Chris
+
+Session 7
+
+Session 8
+
+Session 9
+
+Session 10
+
+Project Presentations
+
+
+Optional Topics:
+----------------
 
 The conda package system
-
-Code Reviewing
 
 Persistance and Serialization
 
@@ -43,22 +88,10 @@ The SciPy stack
   - matplotlib
   - pandas
 
-Advanced OO
-  - multiple inheritance / mixins
-  - __new__(), super()
-  - type(), metaclasses
-
-Concurrency:
-  - multi threading
-  - multi processing
-
-Asynchronous programming: asyc / await
-
-Unicode and py2
 
 Writing py2/py3 compatible code
 
-Profiling
+Profiling/ Performance
 
 Datetime, time, pytz
 
