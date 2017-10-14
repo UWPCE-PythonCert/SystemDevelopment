@@ -29,7 +29,7 @@ Motivations for parallel execution
 
    - If a system handles asynchronous events, a seperate thread of
      execution could handle those events and let other threads do other
-     work
+     work.
 
    - Examples:
 
@@ -76,17 +76,17 @@ Threads versus processes in Python
 Threads are lightweight processes_, run in the address space of an OS
 process, true OS level threads.
 
-Therefor, a component of a a process.
+Therefore, a component of a process.
 
 .. _processes: https://en.wikipedia.org/wiki/Light-weight_process
 
-This allows multiple threads access to data in the same scope.
+This allows multiple threads to access and share data within the same scope.
 
-Threads can not gain the performance advantage of multiple processors
-due to the Global Interpreter Lock (GIL)
+Threads cannot gain the performance advantage of multiple processors
+due to the *Global Interpreter Lock* (GIL).
 
 But the GIL is released during IO, allowing IO bound processes to
-benefit from threading
+benefit from multi-threading.
 
 Processes
 ---------
@@ -100,13 +100,11 @@ The Python interpreter isn't lightweight!
 
 Communication between processes can be achieved via:
 
-``multiprocessing.Queue``
+   - ``multiprocessing.Queue``
+   - ``multiprocessing.Pipe``
+   - regular IPC (inter-process communication)
 
-``multiprocessing.Pipe``
-
-and regular IPC (inter-process communication)
-
-Data moved between processes must be pickleable
+Data moved between processes must be ``pickle``-able.
 
 
 GIL
@@ -123,7 +121,7 @@ execute, ensuring thread safety
 .. nextslide::
 
 The GIL is released during IO operations, so threads which spend time
-waiting on network or disk access can enjoy performance gains
+waiting on network or disk access can enjoy performance gains.
 
 The GIL is not unlike multitasking in humans, some things can truly be
 done in parallel, others have to be done by time slicing.
@@ -137,15 +135,15 @@ Not only will threads not help cpu-bound problems, but it can actually make thin
 
 
 Some alternative Python implementations such as Jython and IronPython
-have no GIL
+have no GIL.
 
 cPython and PyPy have one
 
-David Beazley's talk on the gil
+David Beazley's talk on the GIL
 
 -  https://www.youtube.com/watch?v=Obt-vMVdM8s
 
-More about the gil
+More about the GIL
 
 -  http://wiki.python.org/moin/GlobalInterpreterLock
 
@@ -193,7 +191,7 @@ together:
 
 We can do better than this
 
-The threading module
+The ``threading`` module
 --------------------
 
 Starting threads doesn't take much:
@@ -225,15 +223,15 @@ Starting threads doesn't take much:
 -  daemon threads get cut off at program exit, without any opportunity
    for cleanup. But you don't have to track and manage them. Useful for
    things like garbage collection, network keepalives, ..
--  You can block and wait for a thread to exit with thread.join()
+-  You can block and wait for a thread to exit with ``thread.join()``.
 
 
-Subclassing Thread
+Subclassing ``Thread``
 ------------------
 
-You can adding threading capability to your own classes
+You can adding ``threading`` capability to your own classes.
 
-Subclass Thread and implement the run method
+Subclass ``Thread`` and implement the ``run()`` method.
 
 
 .. code-block:: python
@@ -252,13 +250,13 @@ Subclass Thread and implement the run method
 Race Conditions
 ---------------
 
-In the last example we saw threads competing for access to stdout.
+In the last example we saw threads competing for access to ``stdout``.
 
 Worse, if competing threads try to update the same value, we might get
-an unexpected race condition
+an unexpected race condition.
 
 Race conditions occur when multiple statements need to execute
-atomically, but get interrupted midway
+atomically, but get interrupted midway.
 
 See ``Examples/race_condition.py``
 
@@ -309,18 +307,18 @@ http://en.wikipedia.org/wiki/Race_condition
 Deadlocks
 ---------
 
-Synchronization and Critical Sections are used to control race
-conditions
+*Synchronization* and *Critical Sections* are used to control race
+conditions.
 
 But they introduce other potential problems...
 
-like: http://en.wikipedia.org/wiki/Deadlock
+   - like: http://en.wikipedia.org/wiki/Deadlock
 
-"A deadlock is a situation in which two or more competing actions are
-each waiting for the other to finish, and thus neither ever does."
+*"A deadlock is a situation in which two or more competing actions are
+each waiting for the other to finish, and thus neither ever does."*
 
 *When two trains approach each other at a crossing, both shall come to a
-full stop and neither shall start up again until the other has gone*
+full stop and neither shall start up again until the other has gone.*
 
 See also *Livelock*:
 
@@ -334,22 +332,22 @@ Locks
 -----
 
 Lock objects allow threads to control access to a resource until they're
-done with it
+done with it.
 
-This is known as mutual exclusion, often called mutex
+This is known as mutual exclusion, often called *mutex*.
 
-Python 2 has a deprecated module called mutex for this. Use a Lock
+Python 2 has a deprecated module called ``mutex`` for this. Use a ``Lock``
 instead.
 
-A Lock has two states: locked and unlocked
+A ``Lock`` has two states: *locked* and *unlocked*.
 
-If multiple threads have access to the same Lock, they can police
-themselves by calling its ``.acquire()`` and ``.release()`` methods
+If multiple threads have access to the same ``Lock``, they can police
+themselves by calling its ``.acquire()`` and ``.release()`` methods.
 
-If a Lock is locked, .acquire will block until it becomes unlocked
+If a ``Lock`` is locked, ``.acquire`` will block until it becomes unlocked.
 
 These threads will wait in line politely for access to the statements in
-f()
+``f()``.
 
 .. nextslide::
 
@@ -408,15 +406,15 @@ by that thread
 
 Like an ``RLock``, but in reverse
 
-A Semaphore is given an initial counter value, defaulting to 1
+A ``Semaphore`` is given an initial counter value, defaulting to 1.
 
 Each call to ``acquire()`` decrements the counter, ``release()`` increments it
 
-If ``acquire()`` is called on a Semaphore with a counter of 0, it will block
+If ``acquire()`` is called on a ``Semaphore`` with a counter of 0, it will block
 until the Semaphore counter is greater than 0.
 
 Useful for controlling the maximum number of threads allowed to access a
-resource simultaneously
+resource simultaneously.
 
 http://en.wikipedia.org/wiki/Semaphore_(programming)
 
@@ -434,9 +432,9 @@ Multiple threads in the script write to stdout, and their output gets
 jumbled
 
 1. Add a locking mechanism to give each thread exclusive access to
-   stdout
+   stdout.
 
-2. Try adding a Semaphore to allow 2 threads access at once
+2. Try adding a ``Semaphore`` to allow 2 threads access at once.
 
 
 Managing thread results
@@ -445,14 +443,14 @@ Managing thread results
 We need a thread safe way of storing results from multiple threads of
 execution. That is provided by the Queue module.
 
-Queues allow multiple producers and multiple consumers to exchange data
+``Queue``'s allow multiple producers and multiple consumers to exchange data
 safely
 
-Size of the queue is managed with the maxsize kwarg
+Size of the queue is managed with the ``maxsize`` keyword argument.
 
-It will block consumers if empty and block producers if full
+It will block consumers if empty and block producers if full.
 
-If maxsize is less than or equal to zero, the queue size is infinite
+If ``maxsize`` is less than or equal to zero, the queue size is infinite.
 
 .. nextslide::
 
@@ -577,10 +575,10 @@ the maximum speed?
 Multiprocessing
 ---------------
 
-multiprocessing provides an API very similar to threading, so the
-transition is easy
+``multiprocessing`` provides an API very similar to ``threading``, so the
+transition is easy.
 
-use ``multiprocessing.Process`` instead of ``threading.Thread``
+Simply use ``multiprocessing.Process`` instead of ``threading.Thread``.
 
 .. code-block:: python
 
@@ -622,15 +620,15 @@ Also has its own versions of ``Lock``, ``RLock``, ``Semaphore``
 Pooling
 -------
 
-A processing pool contains worker processes with only a configured
-number running at one time
+A processing ``Pool`` contains worker processes, where at most a pre-specified
+number of them run at any single time.
 
 .. code-block:: python
 
     from multiprocessing import Pool
     pool = Pool(processes=4)
 
-The Pool module has several methods for adding jobs to the pool
+The ``Pool`` module contains several methods for adding jobs to the pool.
 
 ``apply_async(func[, args[, kwargs[, callback]]])``
 
@@ -668,9 +666,9 @@ Pooling example
 ThreadPool
 ----------
 
-Threading also has a pool
+Threading also has a pool.
 
-Confusingly, it lives in the multiprocessing module
+Confusingly, it lives in the ``multiprocessing`` module.
 
 ::
 
@@ -686,7 +684,7 @@ We're going to test making concurrent connections to a web service in:
 ``Examples/server/app.py``
 
 It is a WSGI application which can be run with Green Unicorn or another
-WSGI server
+WSGI server:
 
 ``$ gunicorn app:app --bind 0.0.0.0:37337``
 
@@ -694,26 +692,26 @@ WSGI server
 
 ``client-mp.py`` makes 100 processes to contact the web service
 
-``client-pooled.py`` creates a ThreadPool
+``client-pooled.py`` creates a ``ThreadPool``
 
-``client-pooled.py`` contains a results Queue, but doesn't use it. Can you
+``client-pooled.py`` contains a results ``Queue``, but doesn't use it. Can you
 collect all the output from the pool into a single data structure using
-this Queue?
+this ``Queue``?
 
 
 Other options
 -------------
 
 Traditionally, concurency has been achieved through multiple process
-communication and in-process threads, as we've seen
+communication and in-process threads, as we've seen.
 
-Another strategy is through micro-threads, implemented via coroutines
-and a scheduler
+Another strategy is employing micro-threads, implemented via coroutines
+and a scheduler.
 
 A coroutine is a generalization of a subroutine which allows multiple
-entry points for suspending and resuming execution
+entry points for suspending and resuming execution.
 
-The threading and the multiprocessing modules follow a preemptive
+The ``threading`` and the ``multiprocessing`` modules follow a preemptive
 multitasking model: http://en.wikipedia.org/wiki/Preemption_(computing)
 
 Coroutine based solutions follow a cooperative multitasking
@@ -761,42 +759,42 @@ By "jumping" to parallel coroutines, our application can simulate true
 threads.
 
 Creating the scheduler which does the jumping is an exercise for the
-reader, but look into these packages which handle the dirty work
+reader, but one look into the following packages which handle the dirty work:
 
 -  https://pypi.python.org/pypi/greenlet
 
-  - interface for creating coroutine based microthreads
+  - An interface for creating coroutine based microthreads.
 
 -  http://eventlet.net/
 
-  - a concurrent networking library, based on
-    greenlet. Developed for Second Life
+  - A concurrent networking library, based on
+    ``greenlet``. Developed for Second Life.
 
 -  http://www.gevent.org
 
-  - forked from eventlet. Built on top of greenlet and libevent,
-    a portable event loop with strong OS support
+  - Forked from ``eventlet``. Built on top of ``greenlet`` and ``libevent``,
+    it is a portable event loop with strong OS support.
 
--  Python 3.4+ : the asyncio module
+-  Python 3.4+ : the ``asyncio`` module
 
 
 Distributed programming
 -----------------------
 
 A distributed system is one in which components located on networked
-computers communicate and coordinate their actions by passing messages
+computers communicate and coordinate their actions by passing messages.
 
-There are lots of ways to do this at different layers. MPI, \*-RPC,
+There are lots of ways to do this at different layers: MPI, \*-RPC,
 Pyro, ...
 
 Celery
 ------
 
-"Celery is an asynchronous task queue/job queue based on distributed
-message passing"
+*"Celery is an asynchronous task queue/job queue based on distributed
+message passing"*
 
 Provides an API for defining tasks, and retrieving results from those
-tasks
+tasks.
 
 Messages are passed via a "message broker", of which Celery supports
 several:
